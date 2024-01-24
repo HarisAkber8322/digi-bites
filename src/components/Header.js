@@ -17,9 +17,9 @@ const HeaderComponent = (props) => {
     <>
       <Header theme={theme}>
         <div className="navbar_logo">
-        <button className="close_btn" onClick={props.HandleToggle} >
-            <FontAwesomeIcon icon={faBars} />      
-        </button>
+          <button className="close_btn" onClick={props.HandleToggle}>
+            <FontAwesomeIcon icon={faBars} />
+          </button>
           <Link href="/home">
             <Image src="/images/logo.png" alt="logo" />
           </Link>
@@ -69,7 +69,7 @@ const HeaderComponent = (props) => {
               <FontAwesomeIcon icon={faUser} />
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item>  
+              <Dropdown.Item>
                 <Link href="/users/user1"> USER 1</Link>
               </Dropdown.Item>
               <Dropdown.Item>
@@ -80,7 +80,7 @@ const HeaderComponent = (props) => {
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-          <ToggleThemeComponent HandleRigthToggle={props.HandleRigthToggle} />
+          <ToggleThemeComponent />
         </div>
       </Header>
     </>

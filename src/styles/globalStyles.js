@@ -86,13 +86,10 @@ export const Content = styled.div`
   width: ${(properties) =>
     properties?.toggle === "true" ? "calc(100% - 80px)" : "calc(100% - 250px)"};
   transition: 0.5s all ease-in-out;
-  margin-right: ${(properties) =>
-    properties?.rightoggle === "true" ? "0px" : "250px"};
-  background-color:#eeeeee; 
+  background-color: #eeeeee;
   padding-top: 70px;
-  margin-left:  ${(properties) =>
+  margin-left: ${(properties) =>
     properties?.toggle === "true" ? "80px " : "250px"};
-
 `;
 export const sideBar = styled.div`
   width: ${(properties) =>
@@ -132,28 +129,6 @@ export const sideBar = styled.div`
         }
       }
     }
-  }
-`;
-export const RightSideBar = styled.div`
-padding-top: 70px;
-  position: fixed;
-  right: ${(properties) =>
-    properties?.rightoggle === "true" ? "-250px" : "0px"};
-  width: 250px;
-  height: 100vh;
-  overflow: hidden;
-  transition: 0.5s all ease-in-out;
-  top: 0px;
-  background-color: #dd8188;
-  color: white;
-  font-size: 30px;
-  font-weight: 600;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  &:hover {
-    cursor: pointer;
-    background-color: #157347;
   }
 `;
 export const LoginFormContainer = styled.div`

@@ -13,12 +13,6 @@ const ToggleThemeComponent = (props) => {
       color={theme === "dark" ? "#111111" : "#ffc800"}
       onClick={toggleTheme}
     />
-    <FontAwesomeIcon
-    cursor={"pointer"}
-      icon={faSliders}
-      size={"1x"}
-      onClick={props.HandleRigthToggle}
-    />
     </>
   );
 };
