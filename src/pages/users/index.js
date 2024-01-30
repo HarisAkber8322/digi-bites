@@ -1,5 +1,5 @@
 // pages/users/index.js
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,9 +14,12 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
-const User = ({ users, totalCount }) => {
+import { observer } from "mobx-react";
+// import { MainStoreContext } from "@/store/Mainstore";
+const User = ({ users, totalCount , mainStore}) => {
   const router = useRouter();
-
+  // const MainStore = useContext(MainStoreContext);
+  // console.log("im here: ",mainStore.userList);
   const [sortOrder, setSortOrder] = useState("asc");
   const [searchQuery, setSearchQuery] = useState("");
   const PAGE_SIZE = 5;
@@ -26,7 +29,7 @@ const User = ({ users, totalCount }) => {
     const newSortOrder = sortOrder === "asc" ? "desc" : "asc";
     setSortOrder(newSortOrder);
   };
-  const filteredUsers = users
+  const filteredUsers = mainStore.userList
     .filter((user) =>
       user.name.toLowerCase().includes(searchQuery.toLowerCase())
     )
@@ -196,34 +199,34 @@ const User = ({ users, totalCount }) => {
     </main>
   );
 };
-export const getServerSideProps = async ({ query }) => {
-  const page = parseInt(query.page, 10) || 1;
+// export const getServerSideProps = async ({ query }) => {
+//   const page = parseInt(query.page, 10) || 1;
 
-  try {
-    const response = await axios.get(
-      `http://localhost:3001/api/users?page=${page}`
-    );
-    const { users, totalCount } = response.data;
+//   try {
+//     const response = await axios.get(
+//       `http://localhost:3001/api/users?page=${page}`
+//     );
+//     const { users, totalCount } = response.data;
 
-    if (!Array.isArray(users)) {
-      throw new Error("Users data is not an array");
-    }
+//     if (!Array.isArray(users)) {
+//       throw new Error("Users data is not an array");
+//     }
 
-    return {
-      props: {
-        users: JSON.parse(JSON.stringify(users)), // Convert ObjectId to strings
-        totalCount,
-      },
-    };
-  } catch (error) {
-    console.error("Error fetching users:", error);
-    return {
-      props: {
-        users: [],
-        totalCount: 0,
-      },
-    };
-  }
-};
+//     return {
+//       props: {
+//         users: JSON.parse(JSON.stringify(users)), // Convert ObjectId to strings
+//         totalCount,
+//       },
+//     };
+//   } catch (error) {
+//     console.error("Error fetching users:", error);
+//     return {
+//       props: {
+//         users: [],
+//         totalCount: 0,
+//       },
+//     };
+//   }
+// };
 
-export default User;
+export default observer(User);
