@@ -1,6 +1,6 @@
 import * as style from "../styles/globalStyles";
 import GlobalStyles, { Header } from "../styles/globalStyles";
-import React from "react";
+import React, { useContext } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faUser, faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -8,14 +8,14 @@ import Dropdown from "react-bootstrap/Dropdown";
 import ToggleThemeComponent from "./ToggleThemeButton";
 import { Image } from "react-bootstrap";
 import { useRouter } from "next/router";
-import { useTheme } from "./ThemeContext";
+import ThemeStore from "@/store/ThemeStore";
 const HeaderComponent = (props) => {
   const router = useRouter();
-  const { theme, toggleTheme } = useTheme();
+  const { themeMode } = useContext(ThemeStore);
 
   return (
     <>
-      <Header theme={theme}>
+      <Header theme={themeMode}>
         <div className="navbar_logo">
           <button className="close_btn" onClick={props.HandleToggle}>
             <FontAwesomeIcon icon={faBars} />

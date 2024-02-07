@@ -12,7 +12,7 @@ const App = ({ Component, pageProps }) => {
   const isSplash = router.pathname === "/";
   const mainStore = React.useContext(MainStoreContext);
   return (
-    <ThemeProvider>
+    <>
       {isSplash ? (
         <MyApp {...pageProps} mainStore={mainStore} />
       ) : (
@@ -21,7 +21,7 @@ const App = ({ Component, pageProps }) => {
         </Layout>
       )}
       <GlobalStyles />
-    </ThemeProvider>
+    </>
   );
 };
 export default observer(App);

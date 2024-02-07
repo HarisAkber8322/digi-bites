@@ -1,19 +1,22 @@
-import React, { useState } from "react";
-import { useTheme } from "./ThemeContext";
+import React, { useContext } from "react";
+import ThemeStoreContext from "@/store/ThemeStore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {  faMoon,  faSliders, faSun } from "@fortawesome/free-solid-svg-icons";
-const ToggleThemeComponent = (props) => {
-  const { theme, toggleTheme } = useTheme();
+import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
+import { observer } from "mobx-react-lite";
+
+const ToggleThemeComponent = () => {
+  const themeStore = useContext(ThemeStoreContext);
   return (
-    <>
-    <FontAwesomeIcon
-    cursor={"pointer"}
-      icon={theme === "dark" ? faMoon : faSun}
-      size={"1x"}
-      color={theme === "dark" ? "#111111" : "#ffc800"}
-      onClick={toggleTheme}
-    />
-    </>
+    <div>
+      {themeStore.themeMode}
+      <FontAwesomeIcon
+        cursor={"pointer"}
+        icon={themeStore.themeMode === "light" ? faSun : faMoon}
+        size={"1x"}
+        color={themeStore.themeMode === "light" ? "#ffc800" : "#111111"}
+        onClick={themeStore.toggleThemeMode}
+      />
+    </div>
   );
 };
-export default ToggleThemeComponent;
+export default observer(ToggleThemeComponent);
