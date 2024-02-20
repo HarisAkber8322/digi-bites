@@ -1,7 +1,7 @@
 // store.js
 import { makeAutoObservable } from "mobx";
 import axios from "axios";
-import React, { createContext } from "react";
+import React from "react";
 class AppStore {
   constructor() {
     makeAutoObservable(this);
@@ -25,5 +25,5 @@ class AppStore {
 }
 
 const MainStore = new AppStore();
-const MainStoreContext = createContext(MainStore);
+const MainStoreContext = React.createContext(MainStore);
 export default MainStoreContext;

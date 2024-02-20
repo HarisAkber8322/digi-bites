@@ -17,8 +17,8 @@ const GlobalStyles = createGlobalStyle`
 `;
 export const Header = styled.div`
   background-color: ${(props) =>
-    props.theme === "dark" ? "#f1f1f1" : "#343541"};
-  color: ${(props) => (props.theme === "dark" ? "#000" : "#fff")};
+    props.theme === "light" ? "#f1f1f1" : "#343541"};
+  color: ${(props) => (props.theme === "light" ? "#000" : "#fff")};
   text-align: center;
   height: 70px;
   position: fixed;

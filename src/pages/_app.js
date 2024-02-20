@@ -1,27 +1,30 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useRouter } from "next/router";
 import Layout from "../components/Layout";
-import ThemeProvider from "../components/ThemeContext";
+import ThemeStoreContext from "../store/ThemeStore";
 import "../styles/global.css";
 import GlobalStyles from "../styles/globalStyles";
 import MyApp from "./index";
-import MainStoreContext from "@/store/Mainstore";
+import MainStoreContext from "../store/Mainstore";
 import { observer } from "mobx-react";
 const App = ({ Component, pageProps }) => {
   const router = useRouter();
   const isSplash = router.pathname === "/";
-  const mainStore = React.useContext(MainStoreContext);
+  const mainStore = useContext(MainStoreContext);
+  const themeStore = useContext(ThemeStoreContext);
   return (
-    <>
-      {isSplash ? (
-        <MyApp {...pageProps} mainStore={mainStore} />
-      ) : (
-        <Layout>
-          <Component {...pageProps} mainStore={mainStore} />
-        </Layout>
-      )}
-      <GlobalStyles />
-    </>
+    <MainStoreContext.Provider value={mainStore}>
+      <ThemeStoreContext.Provider value={themeStore}>
+        {isSplash ? (
+          <MyApp {...pageProps} mainStore={mainStore} />
+        ) : (
+          <Layout themeStore={themeStore}>
+            <Component {...pageProps} mainStore={mainStore} themeStore={themeStore} />
+          </Layout>
+        )}
+        <GlobalStyles />
+      </ThemeStoreContext.Provider>
+    </MainStoreContext.Provider>
   );
 };
 export default observer(App);

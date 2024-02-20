@@ -1,10 +1,11 @@
 // store.js
-import { observable, action } from "mobx";
+import { makeAutoObservable } from "mobx";
 
 import React, { createContext } from "react";
 class Theme {
   themeMode = "light";
   constructor() {
+    makeAutoObservable(this);
     // Retrieve theme mode from localStorage if available
     if (typeof window !== "undefined") {
       // Retrieve theme mode from localStorage if available

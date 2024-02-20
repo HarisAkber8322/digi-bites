@@ -3,7 +3,8 @@ import HeaderComponent from "@/components/Header";
 import SideBarComponent from "./Sidebar";
 import { useState } from "react";
 import { Content } from "@/styles/globalStyles";
-const Layout = ({ children }) => {
+import { observer } from "mobx-react";
+const Layout = ({ children, themeStore }) => {
   const [toggle, setToggle] = useState(false);
   const HandleToggle = () => {
     setToggle(toggle ? false : true);
@@ -14,6 +15,7 @@ const Layout = ({ children }) => {
         toggle={toggle}
         setToggle={setToggle}
         HandleToggle={HandleToggle}
+        themeStore={themeStore}
       />
       <div className="main_content">
         <div>
@@ -24,4 +26,4 @@ const Layout = ({ children }) => {
     </>
   );
 };
-export default Layout;
+export default observer(Layout);
