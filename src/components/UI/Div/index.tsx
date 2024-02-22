@@ -1,8 +1,8 @@
 import { observer } from "mobx-react";
-
-const Div = ({ content, classNames, themeMode }: { content: string, classNames: string, themeMode: string }) => {
+import classNames from "classnames";
+const Div = ({ content, themeDivClasses, themeMode }: { content: string, themeDivClasses: string, themeMode: string }) => {
     return (
-        <div className={ classNames + themeMode === 'light' ? "bg-white" : "p-4 bg-black"} >
+        <div className={classNames(themeDivClasses,themeMode === 'light' ? "bg-white" : "bg-black")}> 
             {content}
         </div>
     )

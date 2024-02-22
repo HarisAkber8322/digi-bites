@@ -18,8 +18,8 @@ const GlobalStyles = createGlobalStyle`
 export const Header = styled.div`
   background-color: ${(props) =>
     props.theme === "light" ? "#f1f1f1" : "#343541"};
-  color: ${(props) => (props.theme === "light" ? "#000" : "#fff")};
-  text-align: center;
+  color: ${(props) => (props.theme === "light" ? "#000" : "#ffffff")};
+  /* text-align: center;
   height: 70px;
   position: fixed;
   z-index: 999999;
@@ -28,8 +28,8 @@ export const Header = styled.div`
   align-items: center;
   justify-content: space-between;
   padding-left: 17px;
-  padding-right: 25px;
-  .navbar_logo {
+  padding-right: 25px; */
+  /* .navbar_logo {
     display: flex;
     align-items: center;
     grid-gap: 40px;
@@ -44,12 +44,12 @@ export const Header = styled.div`
       &:hover {
         background-color: #157347;
       }
-    }
-    img {
+    } */
+    /* img {
       height: 50px;
-    }
-  }
-  .navbar_user {
+    } */
+  /* } */
+  /* .navbar_user {
     font-size: 20px;
     display: flex;
     align-items: center;
@@ -60,14 +60,14 @@ export const Header = styled.div`
       color: #ffffff !important;
       background-color: #157347 !important;
     }
-    .dropdown-item {
+    /* .dropdown-item {
       a {
         display: flex;
         width: 100%;
       }
-    }
-  }
-  div ul {
+    } */
+  /* } */
+  /* div ul {
     display: flex;
     grid-gap: 40px;
     font-size: 18px;
@@ -80,7 +80,7 @@ export const Header = styled.div`
         transition: 0.5s all ease-in-out;
       }
     }
-  }
+  } */
 `;
 export const Content = styled.div`
   width: ${(properties) =>

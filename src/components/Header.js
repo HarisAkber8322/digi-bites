@@ -18,30 +18,30 @@ const HeaderComponent = (props) => {
     <>
       {/* <Header theme={props.themeStore.themeMode}> */}
       <Div
-        classNames="p-4"
+      themeDivClasses={"fixed top-0 z-50 h-16 w-full flex items-center justify-between px-17 md:px-25"}
         themeMode={props.themeStore.themeMode}
         content={
           <>
-            <div className="navbar_logo">
-              <button className="close_btn" onClick={props.HandleToggle}>
+            <div className="flex items-center gap-10">
+              <button className="h-10 text-lg border border-solid border-green-600 rounded px-4 py-2 transition duration-500 ease-in-out hover:bg-green-600" onClick={props.HandleToggle}>
                 <FontAwesomeIcon icon={faBars} />
               </button>
               <Link href="/home">
-                <Image src="/images/logo.png" alt="logo" />
+                <Image className="h-12" src="/images/logo.png" alt="logo" />
               </Link>
             </div>
             <div className="navbar_menu">
-              <ul>
-                <li>
+              <ul className="flex gap-10 text-lg font-semibold items-center">
+                <li className="transition-all duration-500 ease-in-out">
                   <Link
                     href="/home"
                     className={router.pathname === "/home" ? "active" : ""}
                   >
                     {" "}
-                    <span>Home</span>{" "}
+                    <span className="">Home</span>{" "}
                   </Link>
                 </li>
-                <li>
+                <li className="transition-all duration-500 ease-in-out">
                   <Link
                     href="/users"
                     className={router.pathname === "/users" ? "active" : ""}
@@ -50,7 +50,7 @@ const HeaderComponent = (props) => {
                     <span> User </span>{" "}
                   </Link>
                 </li>
-                <li>
+                <li className="transition-all duration-500 ease-in-out">
                   <Link
                     href="/shop"
                     className={router.pathname === "/shop" ? "active" : ""}
@@ -59,7 +59,7 @@ const HeaderComponent = (props) => {
                     <span> Shop</span>{" "}
                   </Link>
                 </li>
-                <li>
+                <li className="transition-all duration-500 ease-in-out">
                   <Link
                     href="/contact"
                     className={router.pathname === "/contact" ? "active" : ""}
@@ -69,20 +69,20 @@ const HeaderComponent = (props) => {
                 </li>
               </ul>
             </div>
-            <div className="navbar_user">
+            <div className="text-lg flex items-center gap-10">
               <Dropdown>
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   <FontAwesomeIcon icon={faUser} />
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item>
-                    <Link href="/users/user1"> USER 1</Link>
+                  <Dropdown.Item className="focus-within:text-white focus-within:bg-green-600 hover:text-white hover:bg-green-600">
+                    <Link  className="flex w-full" href="/users/user1"> USER 1</Link>
                   </Dropdown.Item>
-                  <Dropdown.Item>
-                    <Link href="#"> USER 2</Link>
+                  <Dropdown.Item className="focus-within:text-white focus-within:bg-green-600 hover:text-white hover:bg-green-600">
+                    <Link  className="flex w-full" href="#"> USER 2</Link>
                   </Dropdown.Item>
-                  <Dropdown.Item>
-                    <Link href="#"> USER 3</Link>
+                  <Dropdown.Item className="focus-within:text-white focus-within:bg-green-600 hover:text-white hover:bg-green-600">
+                    <Link className="flex w-full" href="#"> USER 3</Link>
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
