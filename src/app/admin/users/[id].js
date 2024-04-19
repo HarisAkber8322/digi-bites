@@ -13,7 +13,7 @@ const ViewUser = ({ user }) => {
     const fetchUser = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/api/users/${user._id}`
+          `http://localhost:3001/api/users/${user._id}`,
         );
         setUserData(response.data);
       } catch (error) {
@@ -43,7 +43,7 @@ const ViewUser = ({ user }) => {
         <span className="font-semibold">Role:</span> {userData.role}
       </p>
       <p className="text-lg text-gray-900 mb-2">
-        <span className="font-semibold">Phone Number:</span>{" "}
+        <span className="font-semibold">Phone Number:</span> 
         {userData.phoneNumber}
       </p>
     </div>
@@ -53,7 +53,7 @@ const ViewUser = ({ user }) => {
 export const getServerSideProps = async ({ params }) => {
   try {
     const response = await axios.get(
-      `http://localhost:3001/api/users/${params.id}`
+      `http://localhost:3001/api/users/${params.id}`,
     );
     const user = response.data;
 

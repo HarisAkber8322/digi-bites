@@ -27,8 +27,7 @@ const LoginForm = () => {
     setSubmitting(false);
   };
 
-
-const colorCode=  "green";
+  const colorCode = "green";
   return (
     <style.SplashContainer>
       <div>

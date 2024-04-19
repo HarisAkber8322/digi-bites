@@ -1,4 +1,5 @@
 // store.js
+"use client";
 import { makeAutoObservable } from "mobx";
 import axios from "axios";
 import React from "react";
@@ -19,9 +20,9 @@ class AppStore {
       console.error("Error loading users:", error);
     }
   }
-  // get users() {
-  //   return this.userList;
-  // }
+    // get users() {
+    //   return this.userList;
+    // }
 }
 
 const MainStore = new AppStore();

@@ -12,7 +12,7 @@ const AddEditUser = ({ initialUserData, submitButtonText, isEdit, title }) => {
           fname: "",
           role: "",
           phoneNumber: "",
-        }
+        },
   );
   const handleInputChange = (e) => {
     if (e.target.name) {

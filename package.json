@@ -1,5 +1,5 @@
 {
-  "name": "your-first-app",
+  "name": "digi-bites",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,12 +10,12 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@ducanh2912/next-pwa": "latest",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@next/swc-win32-x64-msvc": "^14.2.2",
     "@types/node": "20.10.4",
-    "@types/react": "18.2.43",
-    "@types/react-dom": "18.2.17",
     "autoprefixer": "^10.4.16",
     "axios": "^1.6.3",
     "body-parser": "^1.20.2",
@@ -31,13 +31,15 @@
     "formik": "^2.4.5",
     "mobx": "^6.12.0",
     "mobx-react": "^9.1.0",
+    "mobx-react-lite": "^4.0.7",
     "mongodb": "^4.17.2",
     "mongodb-memory-server": "^9.1.3",
-    "next": "14.0.4",
+    "next": "14.1.4",
+    "next-google-fonts": "^2.2.0",
     "postcss": "^8.4.32",
-    "react": "18.2.0",
+    "react": "^18.2.0",
     "react-bootstrap": "^2.9.1",
-    "react-dom": "18.2.0",
+    "react-dom": "^18.2.0",
     "react-fontawesome": "^1.7.1",
     "react-router-dom": "^6.20.1",
     "styled-components": "^6.1.1",
@@ -46,7 +48,12 @@
     "yup": "^1.3.2"
   },
   "devDependencies": {
+    "@types/node": "20.12.4",
+    "@types/react": "^18.2.79",
+    "@types/react-dom": "^18.2.25",
     "babel-plugin-styled-components": "^2.1.4",
-    "prettier": "^3.1.1"
+    "prettier": "^3.1.1",
+    "typescript": "5.3.3",
+    "webpack": "^5.91.0"
   }
 }
