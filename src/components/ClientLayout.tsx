@@ -1,6 +1,6 @@
 "use client";
 import React, { useContext } from "react";
-import HeaderComponent from "@/components/Header";
+import HeaderComponent from "@/components/ClientComponent/Header";
 import SideBarComponent from "@/components/Sidebar";
 import { useState } from "react";
 import { observer } from "mobx-react";
