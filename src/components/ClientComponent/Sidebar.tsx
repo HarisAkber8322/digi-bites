@@ -1,5 +1,5 @@
 import React from "react";
-import * as style from "../styles/globalStyles";
+// import * as style from "../styles/globalStyles";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { observer } from "mobx-react";
@@ -12,7 +12,7 @@ import {
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { usePathname, useRouter } from "next/navigation";
-import Div from "./UI/Div";
+import Div from "../UI/Div";
 import classNames from "classnames";
 const SideBarComponent = ({ toggle }: { toggle: boolean }) => {
   const router = usePathname();

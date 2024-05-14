@@ -1,15 +1,15 @@
-"use client";
 // store.js
+"use client";
 import { makeAutoObservable } from "mobx";
-
 import React, { createContext } from "react";
+
 class Theme {
   themeMode = "light";
+
   constructor() {
     makeAutoObservable(this);
     // Retrieve theme mode from localStorage if available
     if (typeof window !== "undefined") {
-      // Retrieve theme mode from localStorage if available
       const storedThemeMode = localStorage.getItem("themeMode");
       if (storedThemeMode) {
         this.themeMode = storedThemeMode;
@@ -28,3 +28,4 @@ class Theme {
 const ThemeStore = new Theme();
 const ThemeStoreContext = createContext(ThemeStore);
 export default ThemeStoreContext;
+
