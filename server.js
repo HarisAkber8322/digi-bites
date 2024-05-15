@@ -14,32 +14,32 @@ app.prepare().then(() => {
   const PAGE_SIZE = 5;
   server.get("/api/users", async (req, res) => {
     const page = parseInt(req.query.page, 10) || 1;
-    const searchQuery = req.query.q || '';
-    const sortOrder = req.query.sort || 'asc';
-  
+    const searchQuery = req.query.q || "";
+    const sortOrder = req.query.sort || "asc";
+
     try {
       const db = await connectToDatabase();
       const usersCollection = db.collection("users");
-  
+
       const totalCount = await usersCollection.countDocuments();
       const totalPages = Math.ceil(totalCount / PAGE_SIZE);
-  
+
       const skip = (page - 1) * PAGE_SIZE;
-  
+
       const users = await usersCollection
-        .find({ name: { $regex: new RegExp(searchQuery, 'i') } }) // Case-insensitive search
-        .sort({ name: sortOrder === 'asc' ? 1 : -1 })
+        .find({ name: { $regex: new RegExp(searchQuery, "i") } }) // Case-insensitive search
+        .sort({ name: sortOrder === "asc" ? 1 : -1 })
         .skip(skip)
         .limit(PAGE_SIZE)
         .toArray();
-  
+
       res.status(200).json({ users, totalCount, totalPages });
     } catch (error) {
       console.error("Error:", error);
       res.status(500).json({ error: "Internal server error" });
     }
   });
-  
+
   // server.get("/api/users", async (req, res) => {
   //   try {
   //     const page = parseInt(req.query.page, 10) || 1;
@@ -113,7 +113,7 @@ app.prepare().then(() => {
       } else {
         console.error(
           "Error adding user: Insert operation did not return the expected result",
-          result
+          result,
         );
         res.status(500).json({ error: "Internal server error" });
       }
@@ -160,7 +160,7 @@ app.prepare().then(() => {
 
       const result = await usersCollection.updateOne(
         { _id: userId },
-        { $set: updateData }
+        { $set: updateData },
       );
 
       if (result.matchedCount === 0) {

@@ -9,11 +9,16 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
     "paths": {
       "@/*": ["./src/*"]
     }
@@ -22,22 +27,10 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/components/Sidebar.js",
-    "src/components/ImageComponent.js",
-    "src/pages/index.js",
-    "src/pages/_app.js",
-    "src/pages/index.js",
-    "src/pages/_app.js",
-    "src/components/Header.js",
-    "src/pages/users/index.js",
-    "src/pages/shop/index.js",
-    "src/pages/home/index.js",
-    "src/pages/contact/index.js",
-    "src/pages/_app.js",
-    "src/components/ImageComponent.js",
-    "src/components/Header.js",
-    "src/components/Footer.js",
-    "src/components/Layout.js"
+    ".next/types/**/*.ts",
+    "src/app/**/*.ts",
+    "src/app/**/*.tsx",
+    "src/app/**/*.js"
   ],
   "exclude": ["node_modules"]
 }

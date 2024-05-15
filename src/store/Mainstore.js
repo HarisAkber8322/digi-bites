@@ -1,7 +1,8 @@
 // store.js
+"use client";
 import { makeAutoObservable } from "mobx";
 import axios from "axios";
-import React, { createContext } from "react";
+import React from "react";
 class AppStore {
   constructor() {
     makeAutoObservable(this);
@@ -19,11 +20,11 @@ class AppStore {
       console.error("Error loading users:", error);
     }
   }
-  // get users() {
-  //   return this.userList;
-  // }
+    // get users() {
+    //   return this.userList;
+    // }
 }
 
 const MainStore = new AppStore();
-const MainStoreContext = createContext(MainStore);
+const MainStoreContext = React.createContext(MainStore);
 export default MainStoreContext;

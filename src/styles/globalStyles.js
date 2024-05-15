@@ -15,73 +15,73 @@ const GlobalStyles = createGlobalStyle`
   position: relative;
 }
 `;
-export const Header = styled.div`
-  background-color: ${(props) =>
-    props.theme === "dark" ? "#f1f1f1" : "#343541"};
-  color: ${(props) => (props.theme === "dark" ? "#000" : "#fff")};
-  text-align: center;
-  height: 70px;
-  position: fixed;
-  z-index: 999999;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-left: 17px;
-  padding-right: 25px;
-  .navbar_logo {
-    display: flex;
-    align-items: center;
-    grid-gap: 40px;
-    .close_btn {
-      font-size: 25px;
-      border: 1px solid #157347;
-      border-radius: 5px;
-      padding-right: 10px;
-      padding-left: 10px;
-      height: 40px;
-      transition: 0.5s all ease-in-out;
-      &:hover {
-        background-color: #157347;
-      }
-    }
-    img {
-      height: 50px;
-    }
-  }
-  .navbar_user {
-    font-size: 20px;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    grid-gap: 40px;
-    .dropdown-item:focus,
-    .dropdown-item:hover {
-      color: #ffffff !important;
-      background-color: #157347 !important;
-    }
-    .dropdown-item {
-      a {
-        display: flex;
-        width: 100%;
-      }
-    }
-  }
-  div ul {
-    display: flex;
-    grid-gap: 40px;
-    font-size: 18px;
-    font-weight: 600;
-    align-items: center;
+// export const Header = styled.div`
+//   background-color: ${(props) =>
+//     props.theme === "light" ? "#f1f1f1" : "#343541"};
+//   color: ${(props) => (props.theme === "light" ? "#000" : "#ffffff")};
+//   text-align: center;
+//   height: 70px;
+//   position: fixed;
+//   z-index: 999999;
+//   width: 100%;
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   padding-left: 17px;
+//   padding-right: 25px;
+//   .navbar_logo {
+//     display: flex;
+//     align-items: center;
+//     grid-gap: 40px;
+//     .close_btn {
+//       font-size: 25px;
+//       border: 1px solid #157347;
+//       border-radius: 5px;
+//       padding-right: 10px;
+//       padding-left: 10px;
+//       height: 40px;
+//       transition: 0.5s all ease-in-out;
+//       &:hover {
+//         background-color: #157347;
+//       }
+//     }
+//     img {
+//       height: 50px;
+//     }
+//   }
+//   .navbar_user {
+//     font-size: 20px;
+//     display: flex;
+//     align-items: center;
+//     flex-direction: row;
+//     grid-gap: 40px;
+//     .dropdown-item:focus,
+//     .dropdown-item:hover {
+//       color: #ffffff !important;
+//       background-color: #157347 !important;
+//     }
+//     /* .dropdown-item {
+//       a {
+//         display: flex;
+//         width: 100%;
+//       }
+//     } */
+//    }
+//   div ul {
+//     display: flex;
+//     grid-gap: 40px;
+//     font-size: 18px;
+//     font-weight: 600;
+//     align-items: center;
 
-    li {
-      transition: 0.5s all ease-in-out;
-      &:hover a span {
-        transition: 0.5s all ease-in-out;
-      }
-    }
-  }
-`;
+//     li {
+//       transition: 0.5s all ease-in-out;
+//       &:hover a span {
+//         transition: 0.5s all ease-in-out;
+//       }
+//     }
+//   }
+// `;
 export const Content = styled.div`
   width: ${(properties) =>
     properties?.toggle === "true" ? "calc(100% - 80px)" : "calc(100% - 250px)"};

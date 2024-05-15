@@ -1,10 +1,12 @@
 // src/db.js
-const { MongoClient } = require('mongodb');
-require('dotenv').config();
+const { MongoClient } = require("mongodb");
+require("dotenv").config();
 
 const mongoURI = process.env.MONGODB_URI;
 if (!mongoURI) {
-  throw new Error('MongoDB connection string is missing. Please check your .env file.');
+  throw new Error(
+    "MongoDB connection string is missing. Please check your .env file.",
+  );
 }
 const client = new MongoClient(mongoURI, {
   useNewUrlParser: true,
@@ -21,7 +23,7 @@ exports.connectToDatabase = async function () {
     cachedDb = db;
     return db;
   } catch (error) {
-    console.error('Error connecting to MongoDB:', error);
+    console.error("Error connecting to MongoDB:", error);
     throw error;
   }
 };
