@@ -14,8 +14,8 @@ const Div = ({
   return (
     <div
       className={classNames(
-        themeDivClasses,
         themeStore.themeMode === "light" ? "bg-white" : "bg-black",
+        themeDivClasses,
       )}
     >
       {content}

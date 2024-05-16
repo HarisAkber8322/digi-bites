@@ -20,6 +20,11 @@ const config: Config = {
         pepperBlack: "#111111",
         dullBlakc: "#333333",
       },
+      screens: {
+        xs: { max: "767px" }, //Mobile
+        sm: { min: "768px", max: "1365px" }, //Tablet
+        md: { min: "1366px" }, //Desktop
+      },
     },
   },
   plugins: [],
