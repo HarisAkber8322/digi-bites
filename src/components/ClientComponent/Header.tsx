@@ -27,7 +27,7 @@ const HeaderComponent = (props: {
   return (
     <>
       <Div
-        themeDivClasses={"fixed top-0 z-50 flex items-center w-full shadow-sm"}
+        themeDivClasses={"fixed top-0  flex items-center w-full shadow-sm shadow-lg z-[999999]"}
         content={
           <>
             <div className="w-[1180px] m-auto h-[64px] flex justify-between flex-row items-center">
