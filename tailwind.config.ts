@@ -19,6 +19,7 @@ const config: Config = {
         gray: "#aaaaaa",
         pepperBlack: "#111111",
         dullBlakc: "#333333",
+        lightorange: "#fc6a57",
       },
       screens: {
         xs: { max: "767px" }, //Mobile

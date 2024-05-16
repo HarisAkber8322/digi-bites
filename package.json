@@ -11,9 +11,10 @@
   },
   "dependencies": {
     "@ducanh2912/next-pwa": "latest",
-    "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "@fortawesome/fontawesome-svg-core": "^6.5.2",
+    "@fortawesome/free-brands-svg-icons": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
-    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@fortawesome/react-fontawesome": "^0.2.1",
     "@next/swc-win32-x64-msvc": "^14.2.2",
     "@types/node": "20.10.4",
     "autoprefixer": "^10.4.16",
