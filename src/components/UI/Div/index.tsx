@@ -5,17 +5,26 @@ import { useContext } from "react";
 const Div = ({
   content,
   themeDivClasses,
+  lightColor,
+  darkColor,
 }: {
   content: React.ReactNode;
   themeDivClasses: string;
-
+  lightColor?: string;
+  darkColor?: string;
 }) => {
   const themeStore = useContext(ThemeStoreContext);
   return (
     <div
       className={classNames(
-        themeStore.themeMode === "light" ? "bg-white" : "bg-black",
-        themeDivClasses,
+        themeStore.themeMode === "light"
+          ? lightColor 
+            ? lightColor
+            : "bg-white"
+          : darkColor 
+            ? darkColor
+            : "bg-black",
+        themeDivClasses
       )}
     >
       {content}
