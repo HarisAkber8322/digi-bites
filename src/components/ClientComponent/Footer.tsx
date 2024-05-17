@@ -5,7 +5,7 @@ import { faPinterest, faLinkedin, faFacebook } from "@fortawesome/free-brands-sv
 
 const Footer: React.FC = () => {
   return (
-    <div className={classNames(["bg-lightorange "])}>
+    <div className={classNames(["bg-lightorange mt-0.5 text-white"])}>
       <div className="container mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
         {/* NEWS LETTER Section */}
         <div className="flex justify-center items-center"><h1 className="font-bold text-2xl  ">DigiBites</h1></div>
@@ -20,7 +20,7 @@ const Footer: React.FC = () => {
             />
             <button
               type="submit"
-              className="bg-yellow text-black p-2 rounded-md"
+              className="border-dullyelow text-black p-2 rounded-md"
             >
               Subscribe
             </button>
@@ -61,9 +61,11 @@ const Footer: React.FC = () => {
           </ul>
         </div>
       </div>
-      <div className="text-center text-gray-600 mt-4">
+      <hr className="border-grey-500"></hr>
+      <div className="text-center text-gray-600 mt-0">
         DIGIBITE © 2024
       </div>
+      
     </div>
   );
 };
