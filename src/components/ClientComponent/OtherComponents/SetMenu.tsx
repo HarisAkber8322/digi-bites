@@ -43,8 +43,15 @@ import Link from "next/link";
 const SetMenu = () => {
   return (
     <>
+          <div className="mt-14 flex justify-center">
+        <Text
+          themeDivClasses=" text-3xl font-bold  "
+          content={"Set Menu"}
+        />
+      </div>
       <Div themeDivClasses={"bg-pepperBlack "} content={
-        <div className="grid grid-cols-4 mt-12 ml-20 mr-20 gap-4">
+        
+        <div className="grid grid-cols-4 mt-7 ml-20 mr-20 gap-4">
           {MenuList.map((menuItem, index) => (
             <Link key={index} href={menuItem.link} className="cursor-pointer">
               <Div themeDivClasses={" overflow-hidden rounded-xl h-80 shadow-xl"} content={
