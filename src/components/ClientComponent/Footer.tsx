@@ -9,7 +9,7 @@ const Footer: React.FC = () => {
       <div className="container mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
         {/* NEWS LETTER Section */}
         <div className="flex justify-center items-center"><h1 className="font-bold text-2xl  ">DigiBites</h1></div>
-        <div className="">
+        <div className="flex flex-col">
           <h5 className="font-bold text-lg mb-2">NEWS LETTER</h5>
           <p>Subscribe to our news letter to get latest updates</p>
           <form className="mt-2">
@@ -18,12 +18,14 @@ const Footer: React.FC = () => {
               placeholder="Your email address"
               className="p-2 text-gray-700 border rounded-md mr-2"
             />
+            <div className="border-dullyelow text-white p-2 rounded-md">
             <button
               type="submit"
-              className="border-dullyelow text-black p-2 rounded-md"
+              className=""
             >
               Subscribe
             </button>
+            </div>
           </form>
           <div className="flex space-x-2 mt-2">
             {/* Social Media Icons */}
