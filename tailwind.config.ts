@@ -19,6 +19,7 @@ const config: Config = {
         gray: "#aaaaaa",
         pepperBlack: "#111111",
         dullBlack: "#333333",
+        dullyellow: "#fbbc09",
         lightorange: "#fc6a57",
       },
       screens: {
