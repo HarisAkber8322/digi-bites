@@ -33,7 +33,7 @@ const ClientLayout = ({ children }: { children: React.ReactNode }) => {
           <FooterComponent />
         </>
       }
-      themeDivClasses={classNames(["ease-in-out duration-300 w-full"])}
+      themeDivClasses={classNames(["ease-in-out duration-300 w-full "])}
     />
   );
 };

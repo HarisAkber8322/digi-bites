@@ -16,7 +16,7 @@ const CategorySlider = () => {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 4,
           slidesToScroll: 1,
         },
       },
@@ -42,7 +42,6 @@ const CategorySlider = () => {
       <div className="mt-10 flex justify-center">
         <Text themeDivClasses="text-3xl font-bold" content="All Categories" />
       </div>
-
       <div className="mt-7 mx-20  ">
         <Slider {...settings}>
           {MenuList.map((menuItem, index) => (

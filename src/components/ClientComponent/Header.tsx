@@ -1,123 +1,248 @@
-import React, { useContext } from "react";
+// import React, { useContext } from "react";
+// import Link from "next/link";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import {
+//   faBars,
+//   faUser,
+//   faXmark,
+//   faSearch,
+// } from "@fortawesome/free-solid-svg-icons";
+// import Dropdown from "react-bootstrap/Dropdown";
+// import ToggleThemeComponent from "../ToggleThemeButton";
+// import { Image } from "react-bootstrap";
+// import { usePathname } from "next/navigation";
+// import ThemeStore from "@/store/ThemeStore";
+// import { observer } from "mobx-react";
+// import Div from "../UI/Div";
+// import Text from "../UI/Text";
+// import SearchInput from "./OtherComponents/SearchInput"; // Assuming your path
+
+// const HeaderComponent = (props: {
+//   themeStore: { themeMode: string };
+//   HandleToggle: React.MouseEventHandler<HTMLButtonElement> | undefined;
+// }) => {
+//   const router = usePathname();
+//   // const { themeMode } = useContext(ThemeStore);
+
+//   const handleSearch = (searchTerm: string) => {
+//     // Implement your search logic here
+//     console.log("Search term:", searchTerm);
+//   };
+
+//   return (
+//     <>
+//       <Div
+//         themeDivClasses={
+//           "md:fixed md:top-0  md:flex md:items-center md:w-full md:shadow-sm md:shadow-lg md:z-[999999]"
+//         }
+//         content={
+//           <>
+//             <div className="md:w-[1180px] md:m-auto md:h-[64px] md:flex md:justify-between md:flex-row md:items-center">
+//               <div className="md:flex md:gap-4 md:flex-row md:items-center ">
+//                 <div className="xs:flex xs:items-center xs:justify-center xs:pt-5">
+//                   <Link href="/home">
+//                     <Image
+//                       className="h-12 items-center"
+//                       src="/images/digibites.png"
+//                       alt="logo"
+//                     />
+//                   </Link>
+//                 </div>
+//                 <div className="navbar_menu md:left-0 ">
+//                   <ul className="md:flex md:gap-10 md:text-lg md:font-semibold md:items-center ">
+//                     <li className="md:transition-all md:duration-500 md:ease-in-out">
+//                       <Link
+//                         href="/home"
+//                         className={router === "/home" ? "active" : ""}
+//                       >
+//                         <Text
+//                           themeDivClasses="md:text-md md:font-semibold"
+//                           content={"Home"}
+//                         />
+//                       </Link>
+//                     </li>
+//                     <li className="md:transition-all md:duration-500 md:ease-in-out">
+//                       <Link
+//                         href="/users"
+//                         className={router === "/users" ? "active" : ""}
+//                       >
+//                         <Text
+//                           themeDivClasses="md:text-md md:font-semibold"
+//                           content={"users"}
+//                         />
+//                       </Link>
+//                     </li>
+//                     <li className="md:transition-all md:duration-500 md:ease-in-out">
+//                       <Link
+//                         href="/shop"
+//                         className={router === "/shop" ? "active" : ""}
+//                       >
+//                         <Text
+//                           themeDivClasses="md:text-md md:font-semibold"
+//                           content={"shop"}
+//                         />
+//                       </Link>
+//                     </li>
+//                     <li className="md:transition-all md:duration-500 md:ease-in-out">
+//                       <Link
+//                         href="/contact"
+//                         className={router === "/contact" ? "active" : ""}
+//                       >
+//                         <Text
+//                           themeDivClasses="md:text-md md:font-semibold"
+//                           content={"contact"}
+//                         />
+//                       </Link>
+//                     </li>
+//                   </ul>
+//                 </div>
+//               </div>
+//               <div className="md:flex md:items-center md:gap-5">
+//                 <div className="md:flex md:items-center ">
+//                   <SearchInput onSearch={handleSearch} />{" "}
+//                   {/* Added SearchInput */}
+//                 </div>
+//                 <div className="md:text-lg md:flex md:items-center md:gap-5">
+//                   <Link href={"/client/profile/"} className="cursor-pointer">
+//                     <Text
+//                       content={<FontAwesomeIcon icon={faUser} />}
+//                       themeDivClasses=""
+//                     />
+//                   </Link>
+//                   <ToggleThemeComponent themeStore={props.themeStore} />
+//                 </div>
+//               </div>
+//             </div>
+//           </>
+//         }
+//       />
+//     </>
+//   );
+// };
+
+// export default observer(HeaderComponent);
+
+import React, { useState } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBars,
-  faUser,
-  faXmark,
-  faSearch,
-} from "@fortawesome/free-solid-svg-icons";
-import Dropdown from "react-bootstrap/Dropdown";
+import { faBars, faUser, faXmark, faSearch } from "@fortawesome/free-solid-svg-icons";
 import ToggleThemeComponent from "../ToggleThemeButton";
 import { Image } from "react-bootstrap";
 import { usePathname } from "next/navigation";
-import ThemeStore from "@/store/ThemeStore";
 import { observer } from "mobx-react";
 import Div from "../UI/Div";
 import Text from "../UI/Text";
 import SearchInput from "./OtherComponents/SearchInput"; // Assuming your path
 
-const HeaderComponent = (props: {
-  themeStore: { themeMode: string };
-  HandleToggle: React.MouseEventHandler<HTMLButtonElement> | undefined;
-}) => {
+const HeaderComponent = (props: { themeStore: { themeMode: string }; HandleToggle: React.MouseEventHandler<HTMLButtonElement> | undefined; }) => {
   const router = usePathname();
-  // const { themeMode } = useContext(ThemeStore);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleSearch = (searchTerm: string) => {
-    // Implement your search logic here
     console.log("Search term:", searchTerm);
+  };
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
   return (
     <>
       <Div
-        themeDivClasses={
-          "fixed top-0  flex items-center w-full shadow-sm shadow-lg z-[999999]"
-        }
+        themeDivClasses="md:fixed md:top-0 md:flex md:items-center md:w-full md:shadow-sm md:shadow-lg md:z-[999999]"
         content={
           <>
-            <div className="w-[1180px] m-auto h-[64px] flex justify-between flex-row items-center">
-              <div className="flex gap-4 flex-row items-center ">
-                <div className="">
+            <div className="md:w-[1180px] md:m-auto md:h-[64px] md:flex md:justify-between md:flex-row md:items-center">
+              <div className="md:flex md:gap-4 md:flex-row md:items-center ">
+                <div className="xs:flex xs:items-center xs:justify-center xs:pt-5">
                   <Link href="/home">
-                    <Image
-                      className="h-12"
-                      src="/images/digibites.png"
-                      alt="logo"
-                    />
+                    <Image className="h-12 items-center" src="/images/digibites.png" alt="logo" />
                   </Link>
                 </div>
-                <div className="navbar_menu left-0 ">
-                  <ul className="flex gap-10 text-lg font-semibold items-center ">
-                    <li className="transition-all duration-500 ease-in-out">
-                      <Link
-                        href="/home"
-                        className={router === "/home" ? "active" : ""}
-                      >
-                        <Text
-                          themeDivClasses="text-md font-semibold"
-                          content={"Home"}
-                        />
+                <div className="md:hidden">
+                  <Text
+                    themeDivClasses="text-xl cursor-pointer"
+                    content={
+                      <FontAwesomeIcon icon={faBars} onClick={toggleMenu} />
+                    }
+                  />
+                </div>
+                <div className={`navbar_menu xs:hidden duration-75 md:left-0 md:block`}>
+                  <ul className="md:flex md:gap-10 md:text-lg md:font-semibold md:items-center ">
+                    <li className="md:transition-all md:duration-500 md:ease-in-out">
+                      <Link href="/users" className={router === "/users" ? "active" : ""}>
+                        <Text themeDivClasses="md:text-md md:font-semibold" content={"users"} />
                       </Link>
                     </li>
-                    <li className="transition-all duration-500 ease-in-out">
-                      <Link
-                        href="/users"
-                        className={router === "/users" ? "active" : ""}
-                      >
-                        <Text
-                          themeDivClasses="text-md font-semibold"
-                          content={"users"}
-                        />
+                    <li className="md:transition-all md:duration-500 md:ease-in-out">
+                      <Link href="/shop" className={router === "/shop" ? "active" : ""}>
+                        <Text themeDivClasses="md:text-md md:font-semibold" content={"shop"} />
                       </Link>
                     </li>
-                    <li className="transition-all duration-500 ease-in-out">
-                      <Link
-                        href="/shop"
-                        className={router === "/shop" ? "active" : ""}
-                      >
-                        <Text
-                          themeDivClasses="text-md font-semibold"
-                          content={"shop"}
-                        />
-                      </Link>
-                    </li>
-                    <li className="transition-all duration-500 ease-in-out">
-                      <Link
-                        href="/contact"
-                        className={router === "/contact" ? "active" : ""}
-                      >
-                        <Text
-                          themeDivClasses="text-md font-semibold"
-                          content={"contact"}
-                        />
+                    <li className="md:transition-all md:duration-500 md:ease-in-out">
+                      <Link href="/contact" className={router === "/contact" ? "active" : ""}>
+                        <Text themeDivClasses="md:text-md md:font-semibold" content={"contact"} />
                       </Link>
                     </li>
                   </ul>
                 </div>
               </div>
-              <div className="flex items-center gap-5">
-                <div className="flex items-center ">
-                  <SearchInput onSearch={handleSearch} />{" "}
-                  {/* Added SearchInput */}
+              <div className="md:flex md:items-center md:gap-5">
+                <div className="md:flex md:items-center">
+                  <SearchInput onSearch={handleSearch} /> {/* Added SearchInput */}
                 </div>
-                <div className="text-lg flex items-center gap-5">
+                <div className="md:text-lg md:flex md:items-center md:gap-5">
                   <Link href={"/client/profile/"} className="cursor-pointer">
-                    <Text
-                      content={<FontAwesomeIcon icon={faUser} />}
-                      themeDivClasses=""
-                    />
+                    <Text content={<FontAwesomeIcon icon={faUser} />} themeDivClasses="" />
                   </Link>
                   <ToggleThemeComponent themeStore={props.themeStore} />
                 </div>
               </div>
             </div>
+               <Div
+              themeDivClasses={`fixed top-0 left-0 h-full w-[86%]  transform ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out z-[999998]`}
+              content={
+                <>
+                  <div className="p-4 flex justify-between items-center">
+                    <Image className="h-12" src="/images/digibites.png" alt="logo" />
+                    <Text
+                      themeDivClasses="text-xl cursor-pointer"
+                      content={
+                        <FontAwesomeIcon icon={faXmark} onClick={toggleMenu} />
+                      }
+                    />
+                  </div>
+                  <ul className="flex flex-col gap-4 text-lg font-semibold p-4">
+                    <li>
+                      <Link href="/home" onClick={toggleMenu}>
+                        <Text themeDivClasses="text-md font-semibold" content={"Home"} />
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/users" onClick={toggleMenu}>
+                        <Text themeDivClasses="text-md font-semibold" content={"users"} />
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/shop" onClick={toggleMenu}>
+                        <Text themeDivClasses="text-md font-semibold" content={"shop"} />
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/contact" onClick={toggleMenu}>
+                        <Text themeDivClasses="text-md font-semibold" content={"contact"} />
+                      </Link>
+                    </li>
+                  </ul>
+                </>
+              }
+            />
           </>
         }
       />
-    </>
+          </>
   );
-};
+}
 
 export default observer(HeaderComponent);
+
