@@ -1,61 +1,68 @@
 // pages/profilepage.tsx
 "use client";
-import React from 'react';
-import { observer } from 'mobx-react';
-import Image from 'next/image';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSquare } from '@fortawesome/free-solid-svg-icons';
-import Div from '../../../components/UI/Div';
-import Text from '../../../components/UI/Text';
-import dynamic from 'next/dynamic';
+import React from "react";
+import { observer } from "mobx-react";
+import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Div from "../../../components/UI/Div";
+import Text from "../../../components/UI/Text";
+import dynamic from "next/dynamic";
+import { CardData } from "../../../utills/constants"; // Adjust the path as needed
 
 const Profile = () => {
-  const cards = Array.from({ length: 18 }, (_, i) => ({
-    id: i + 1,
-    icon: faSquare, // Replace with your desired icon
-    name: `Card ${i + 1}`,
-  }));
-
   return (
-    <Div themeDivClasses="min-h-screen bg-gray-100" content={
-      <>
-        <Div themeDivClasses="relative" content={
-          <>
+    <Div
+      themeDivClasses="min-h-screen w-[1180px] m-auto "
+      lightColor="bg-white"
+      darkColor="bg-pepperblack"
+      content={
+        <>
+          <div className="relative">
             <Image
               src="/images/cover-photo.jpg" // Replace with actual cover photo path
               alt="Cover"
               width={1200}
               height={400}
-              className="w-full h-64 object-cover"
+              className="w-full h-64 object-cover bg-dullyellow"
             />
-            <Div themeDivClasses="absolute top-48 left-8" content={
+            <div className="absolute top-20 left-8 rounded-full w-[250px] h-[250px]">
               <Image
                 src="/images/profile-photo.jpg" // Replace with actual profile photo path
                 alt="Profile"
-                width={150}
-                height={150}
-                className="w-32 h-32 rounded-full border-4 border-white"
+                width={250}
+                height={250}
+                className="rounded-full border-4 border-white bg-yellow-200"
               />
-            } />
-          </>
-        } />
-        <Div themeDivClasses="mt-16 p-8" content={
-          <Div themeDivClasses="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" content={
-            <>
-              {cards.map((card) => (
-                <Div key={card.id} themeDivClasses="flex flex-col items-center justify-center p-4 border rounded-lg bg-white shadow-md" content={
-                  <>
-                    <Text themeDivClasses="text-4xl" content={<FontAwesomeIcon icon={card.icon} />} />
-                    <Text themeDivClasses="mt-2 text-lg font-semibold" content={card.name} />
-                  </>
-                } />
+            </div>
+          </div>
+          <div className="mt-16 px-0 p-8">
+            <div className="grid grid-cols-6 md:grid-cols-6 lg:grid-cols-6 gap-5">
+              {CardData.map((card) => (
+                <Div
+                  key={card.id}
+                  themeDivClasses="w-[172px] h-[172px] flex flex-col items-center justify-center p-0 m-0 rounded-lg bg-dullgrey shadow-md"
+                  content={
+                    <>
+                      <Text
+                        themeDivClasses="text-6xl"
+                        content={<FontAwesomeIcon icon={card.icon} />}
+                      />
+                      <Text
+                        themeDivClasses="mt-2 text-lg"
+                        content={card.name}
+                      />
+                    </>
+                  }
+                />
               ))}
-            </>
-          } />
-        } />
-      </>
-    } />
+            </div>
+          </div>
+        </>
+      }
+    />
   );
-}
+};
 
-export default observer(dynamic(() => Promise.resolve(Profile), { ssr: false }));
+export default observer(
+  dynamic(() => Promise.resolve(Profile), { ssr: false })
+);

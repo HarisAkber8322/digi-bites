@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import "../styles/global.css";
 import Layout from "@/components/ClientLayout";
 import ClientLayout from "@/components/ClientLayout";
+import AdminLayout from "@/components/AdminLayout";
 interface JSXElementProps {
   children: ReactNode;
 }
@@ -13,9 +14,9 @@ interface HTMLAttributes extends JSXElementProps {
   dir?: string;
 }
 
-interface HeadProps extends JSXElementProps { }
+interface HeadProps extends JSXElementProps {}
 
-interface BodyProps extends JSXElementProps { }
+interface BodyProps extends JSXElementProps {}
 
 interface HTMLProps extends JSXElementProps {
   lang?: string;
@@ -76,11 +77,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             }
             `}</style>
       </head>
-      <body>  
-      <ClientLayout>
-        {children}
-      </ClientLayout>         
-    </body>
-    </html >
+      <body>
+        {/* <AdminLayout>{children}</AdminLayout> */}
+        <ClientLayout>{children}</ClientLayout>
+      </body>
+    </html>
   );
 }

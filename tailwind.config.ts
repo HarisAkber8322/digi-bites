@@ -21,6 +21,7 @@ const config: Config = {
         dullBlack: "#333333",
         dullyellow: "#fbbc09",
         lightorange: "#fc6a57",
+        dullgrey: "#f6f6f6",
       },
       screens: {
         xs: { max: "767px" }, //Mobile
