@@ -16,7 +16,7 @@ const Div = ({
   const themeStore = useContext(ThemeStoreContext);
   return (
     <div
-      className={classNames(
+      className={classNames (
         themeStore.themeMode === "light"
           ? lightColor 
             ? lightColor

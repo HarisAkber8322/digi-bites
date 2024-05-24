@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
   return (
     <footer className=" w-full">
 
-      <Text themeDivClasses="bg-amber-100 mx-auto flex flex-col items-center" content={
+      <Text themeDivClasses="bg-blue1 mx-auto flex flex-col items-center" content={
         <>
         {/* Social Media Icons */}
         <div className="">
@@ -25,7 +25,7 @@ const Footer: React.FC = () => {
         </div>
         {/* Navigation Links */}
         <nav className="mb-6 ">
-          <ul className="flex space-x-4 text-xl font-medium">
+          <ul className="flex space-x-4 text-xl font-semibold">
             <li><a href="#" className="ml-6 hover:text-dullyellow">Home</a></li>
             <li><a href="#" className="ml-6 hover:text-dullyellow">News</a></li>
             <li><a href="#" className="ml-6 hover:text-dullyellow">About</a></li>

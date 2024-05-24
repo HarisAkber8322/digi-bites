@@ -17,11 +17,17 @@ const config: Config = {
         ExtraLightGray: "#eeeeee",
         lightGray: "#dddddd",
         gray: "#aaaaaa",
-        pepperBlack: "#111111",
+        pepperBlack: "#303030",
+        pepperblack2: "#343434",
         dullBlack: "#333333",
         dullyellow: "#fbbc09",
         lightorange: "#fc6a57",
         dullgrey: "#f6f6f6",
+        blue1: "#2ec4b6",
+        blue2: "#cbf3f0",
+        white1: "#ffffff",
+        brown1: "#ffbf69",
+        orange1: "#ff9f1c",
       },
       screens: {
         xs: { max: "767px" }, //Mobile

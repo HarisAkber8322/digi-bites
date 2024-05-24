@@ -40,7 +40,7 @@ const HeaderComponent = (props: {
             <div className="w-[1180px] m-auto h-[64px] flex justify-between flex-row items-center">
               <div className="flex gap-4 flex-row items-center ">
                 <div className="">
-                  <Link href="/home">
+                  <Link href="/">
                     <Image
                       className="h-12"
                       src="/images/digibites.png"
@@ -50,17 +50,6 @@ const HeaderComponent = (props: {
                 </div>
                 <div className="navbar_menu left-0 ">
                   <ul className="flex gap-10 text-lg font-semibold items-center ">
-                    <li className="transition-all duration-500 ease-in-out">
-                      <Link
-                        href="/home"
-                        className={router === "/home" ? "active" : ""}
-                      >
-                        <Text
-                          themeDivClasses="text-md font-semibold"
-                          content={"Home"}
-                        />
-                      </Link>
-                    </li>
                     <li className="transition-all duration-500 ease-in-out">
                       <Link
                         href="/users"

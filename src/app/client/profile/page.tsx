@@ -36,11 +36,13 @@ const Profile = () => {
             </div>
           </div>
           <div className="mt-16 px-0 p-8">
-            <div className="grid grid-cols-6 md:grid-cols-6 lg:grid-cols-6 gap-5">
+            <div className="grid grid-cols-2 sm:grid-cols-6 md:grid-cols-6 gap-5">
               {CardData.map((card) => (
                 <Div
                   key={card.id}
-                  themeDivClasses="w-[172px] h-[172px] flex flex-col items-center justify-center p-0 m-0 rounded-lg bg-dullgrey shadow-md"
+                  lightColor="bg-blue2"
+                  darkColor="bg-pepperblack2"
+                  themeDivClasses="w-[172px] h-[172px] flex flex-col items-center justify-center p-0 m-0 rounded-[30px] shadow-md transition duration-300 hover:bg-slate-100 hover:bg-opacity-20"
                   content={
                     <>
                       <Text
