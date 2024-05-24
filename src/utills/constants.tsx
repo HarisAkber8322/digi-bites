@@ -122,9 +122,8 @@ export const MenuList = [
     // Add more menu items as needed
   ];
 
-  // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
-// import { faSquare, faBars, faUser, faXmark, faCircleInfo,  } from '@fortawesome/free-solid-svg-icons';
-import { faAddressBook, faBell, faChartBar, faCircle, faCircleCheck, faCircleQuestion, faClipboard, faComment, faFaceGrinStars, faFileZipper, faFolder, faHandshake, faHourglassEmpty, faListAlt, faMessage, faMoneyBill1, faNewspaper, faRectangleXmark, faSquare, faStickyNote, faUser, } from '@fortawesome/free-regular-svg-icons';
+
+import { faAddressBook, faBell, faChartBar, faCircleCheck, faCircleQuestion, faClipboard, faComment, faFaceGrinStars, faFileZipper, faFolder, faHandshake, faHourglassEmpty, faListAlt, faMessage, faMoneyBill1, faNewspaper, faRectangleXmark, faSquare, faStickyNote, faUser, } from '@fortawesome/free-regular-svg-icons';
 import { faShield } from '@fortawesome/free-solid-svg-icons';
 
 
