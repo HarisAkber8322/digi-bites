@@ -19,7 +19,7 @@ const config: Config = {
         gray: "#aaaaaa",
         pepperBlack: "#303030",
         pepperblack2: "#343434",
-        dullBlack: "#333333",
+        dullblack: "#333333",
         dullyellow: "#fbbc09",
         lightorange: "#fc6a57",
         dullgrey: "#f6f6f6",

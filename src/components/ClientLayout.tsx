@@ -27,7 +27,8 @@ const ClientLayout = ({ children }: { children: React.ReactNode }) => {
             themeStore={themeStore}
           />
           <Div
-            themeDivClasses={classNames(["ease-in-out duration-300 w-full pt-[64px] min-h-[100vh] bg-pepperBlack"])}
+            darkColor="bg-pepperBlack"
+            themeDivClasses={classNames(["ease-in-out duration-300 w-full pt-[64px] min-h-[100vh]  pb-[300px]"])}
             content={children}
           />
           <FooterComponent />

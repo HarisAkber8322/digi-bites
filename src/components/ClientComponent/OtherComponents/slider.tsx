@@ -42,7 +42,7 @@ const Slider: React.FC<SliderProps> = ({ interval = 3000 }) => {
 
   return (
     <div className="relative rounded-xl z-50 w-full m-auto h-[287px]">
-      <div className="absolute rounded-xl z-40 bg-black bg-opacity-25 w-full h-full"></div>
+      <div className="absolute rounded-xl z-40 w-full h-full"></div>
       <div className="overflow-hidden">
         {images.map((image, index) => (
           <img

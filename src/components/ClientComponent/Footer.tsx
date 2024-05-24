@@ -3,6 +3,7 @@ import { FaFacebook, FaInstagram, FaTwitter, FaGoogle, FaYoutube } from 'react-i
 import Text from '../UI/Text';
 import { Image } from "react-bootstrap";
 import Link from "next/link";
+import { text } from 'stream/consumers';
 
 const Footer: React.FC = () => {
   return (
@@ -11,10 +12,14 @@ const Footer: React.FC = () => {
       <Text themeDivClasses="bg-blue1 mx-auto flex flex-col items-center" content={
         <>
         {/* Social Media Icons */}
-        <div className="">
-                  <Link href="/home">
-                    <Image className="h-12 my-3" src="/images/digibites.png" alt="logo" />
+        <div className="flex flex-rows">
+                  <Link href="/">
+                    <Image className="h-12 my-3 md:drop-shadow-md " src="/images/digibites.png" alt="logo" />
                   </Link>
+                  <Text
+                        themeDivClasses="flex drop-shadow-md justify-center items-center text-6xl text-dullyellow font-bold"
+                        content="Resturant"
+                  />
                 </div>
         <div className="flex space-x-8 mb-6 text-4xl">
           <FaFacebook className="hover:text-blue-600" />
