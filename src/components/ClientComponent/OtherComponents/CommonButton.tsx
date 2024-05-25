@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ThemeStore from "@/store/themeStore";
+import ThemeStore from "@/store/ThemeStore";
 import { observer } from "mobx-react";
 import Link from "next/link";
 // import Div from "../../UI/Div";

@@ -11,7 +11,7 @@
 // import ToggleThemeComponent from "../ToggleThemeButton";
 // import { Image } from "react-bootstrap";
 // import { usePathname } from "next/navigation";
-// import ThemeStore from "@/store/themeStore";
+// import ThemeStore from "@/store/ThemeStore";
 // import { observer } from "mobx-react";
 // import Div from "../UI/Div";
 // import Text from "../UI/Text";

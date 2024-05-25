@@ -6,7 +6,11 @@
 // import CommonButton from "../OtherComponents/CommonButton";
 // import { MenuList } from "../../../utills/constants";
 // import classNames from "classnames";
-// import ThemeStoreContext from "@/store/themeStore";
+<<<<<<< HEAD
+// import ThemeStoreContext from "@/store/ThemeStore";
+=======
+// import ThemeStoreContext from "../store/ThemeStore";
+>>>>>>> c0f458a0bb154eb8a09e72f12246498391ee219d
 // interface MenuItem {
 //   name: string;
 //   image: string;
@@ -353,7 +357,7 @@ import Div from "../../UI/Div";
 import Text from "../../UI/Text";
 import Image from "next/image";
 import CommonButton from "../OtherComponents/CommonButton";
-import ThemeStoreContext from "@/store/themeStore";
+import ThemeStoreContext from "@/store/ThemeStore";
 import PopupComponent from "../OtherComponents/PopUp";
 import { MenuList } from "@/utills/constants";
 

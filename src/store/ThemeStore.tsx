@@ -1,5 +1,3 @@
-// store.js
-"use client";
 import { makeAutoObservable } from "mobx";
 import React, { createContext } from "react";
 
@@ -28,4 +26,3 @@ class Theme {
 const ThemeStore = new Theme();
 const ThemeStoreContext = createContext(ThemeStore);
 export default ThemeStoreContext;
-

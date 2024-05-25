@@ -2,9 +2,6 @@ import React, { useState, useContext }  from "react";
 import Div from "../../UI/Div";
 import Text from "../../UI/Text";
 import Image from "next/image";
-import ThemeStoreContext from "@/store/themeStore";
-import classNames from "classnames";
-import { observer } from "mobx-react";
 interface AddOn {
   name: string;
   price: number;
