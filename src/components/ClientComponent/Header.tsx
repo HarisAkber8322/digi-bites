@@ -11,7 +11,7 @@
 // import ToggleThemeComponent from "../ToggleThemeButton";
 // import { Image } from "react-bootstrap";
 // import { usePathname } from "next/navigation";
-// import ThemeStore from "@/store/ThemeStore";
+// import ThemeStore from "../store/ThemeStore";
 // import { observer } from "mobx-react";
 // import Div from "../UI/Div";
 // import Text from "../UI/Text";
@@ -135,7 +135,7 @@ import Text from "../UI/Text";
 import SearchInput from "./OtherComponents/SearchInput"; 
 import Category from "./OtherComponents/category";// Assuming your path
 
-const HeaderComponent = (props: { themeStore: { themeMode: string }; HandleToggle: React.MouseEventHandler<HTMLButtonElement> | undefined; }) => {
+const HeaderComponent = () => {
   const router = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -151,7 +151,6 @@ const HeaderComponent = (props: { themeStore: { themeMode: string }; HandleToggl
     <>
       <Div
         lightColor="bg-blue2"
-      darkColor="bg-white"
         themeDivClasses="md:fixed md:top-0 md:flex md:items-center md:w-full md:drop-shadow-md md:z-[999999] "
         content={
           <>
@@ -199,7 +198,7 @@ const HeaderComponent = (props: { themeStore: { themeMode: string }; HandleToggl
                   <Link href={"/client/profile/Cart"} className="cursor-pointer">
                     <Text content={<FontAwesomeIcon icon={faCartPlus} />} themeDivClasses="" />
                   </Link>
-                  {/* <ToggleThemeComponent themeStore={props.themeStore} /> */}
+                  <ToggleThemeComponent />
                 </div>
               </div>
             </div>

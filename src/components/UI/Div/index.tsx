@@ -1,6 +1,6 @@
 import { observer } from "mobx-react";
 import classNames from "classnames";
-import ThemeStoreContext from "@/store/ThemeStore";
+import ThemeStoreContext from "../../../store/ThemeStore";
 import { useContext } from "react";
 const Div = ({
   content,

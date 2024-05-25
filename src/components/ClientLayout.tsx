@@ -3,15 +3,15 @@ import React, { useContext, useState } from "react";
 import HeaderComponent from "@/components/ClientComponent/Header";
 import { observer } from "mobx-react";
 import dynamic from "next/dynamic";
-import ThemeStoreContext from "@/store/ThemeStore";
+import ThemeStoreContext from "../store/ThemeStore";
 import classNames from "classnames";
 import Div from "./UI/Div";
 import FooterComponent from "./ClientComponent/Footer";
 
 
 const ClientLayout = ({ children }: { children: React.ReactNode }) => {
-  const [toggle, setToggle] = useState(false);
-  const themeStore = useContext(ThemeStoreContext);
+  // const [toggle, setToggle] = useState(false);
+  // const themeStore = useContext(ThemeStoreContext);
 
 
   return (
@@ -19,8 +19,7 @@ const ClientLayout = ({ children }: { children: React.ReactNode }) => {
     <Div
       content={
         <>
-          <HeaderComponent
-          />
+          <HeaderComponent/>
           <Div
             darkColor="bg-pepperBlack"
             themeDivClasses={classNames(["ease-in-out duration-300 w-full pt-[64px] min-h-[100vh]  pb-[300px]"])}
