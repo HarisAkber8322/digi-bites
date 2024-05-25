@@ -1,7 +1,7 @@
 import { observer } from "mobx-react";
 import { ReactNode, useContext } from "react";
 import classNames from "classnames";
-import ThemeStoreContext from "@/store/ThemeStore";
+import ThemeStoreContext from "@/store/themeStore";
 
 const Text = ({
   content,

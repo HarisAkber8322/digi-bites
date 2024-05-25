@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { observer } from 'mobx-react';
-import classNames from 'classnames';
+import React, { useState, useEffect } from "react";
+import { observer } from "mobx-react";
+import classNames from "classnames";
+import Image from "next/image";
 
 const images = [
   "/images/Screenshot (2).png",
@@ -10,7 +11,7 @@ const images = [
   "/images/Screenshot (5).png",
   "/images/Screenshot(4).png",
   "/images/Screenshot (2).png",
-  "/images/Screenshot (3).png"
+  "/images/Screenshot (3).png",
 ];
 
 interface SliderProps {
@@ -28,7 +29,9 @@ const Slider: React.FC<SliderProps> = ({ interval = 3000 }) => {
   }, [interval]);
 
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? images.length - 1 : prevIndex - 1));
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+    );
   };
 
   const handleNext = () => {
@@ -45,14 +48,19 @@ const Slider: React.FC<SliderProps> = ({ interval = 3000 }) => {
       <div className="absolute rounded-xl z-40 w-full h-full"></div>
       <div className="overflow-hidden">
         {images.map((image, index) => (
-          <img
+          <Image
+            width={100}
+            height={100}
             key={index}
             src={image}
             alt={`Slide ${index}`}
             onClick={() => handleClick(index)}
             className={classNames(
-              "cursor-pointer rounded-xl absolute inset-0 w-full h-full object-cover transition-opacity duration-1000",
-              { "opacity-0": index !== currentIndex, "opacity-100": index === currentIndex }
+              "cursor-pointer rounded-xl absolute inset-0 !w-full !h-full object-cover transition-opacity duration-1000",
+              {
+                "opacity-0": index !== currentIndex,
+                "opacity-100": index === currentIndex,
+              }
             )}
           />
         ))}
@@ -74,4 +82,3 @@ const Slider: React.FC<SliderProps> = ({ interval = 3000 }) => {
 };
 
 export default observer(Slider);
-

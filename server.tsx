@@ -117,7 +117,7 @@ app.prepare().then(() => {
         );
         res.status(500).json({ error: "Internal server error" });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error adding user:", error);
       if (error.code === 11000) {
         return res

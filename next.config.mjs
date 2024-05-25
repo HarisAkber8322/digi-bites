@@ -7,7 +7,7 @@ const withPWA = withPWAInit({
   aggressiveFrontEndNavCaching: true,
   reloadOnOnline: true,
   swcMinify: true,
-  disable: false,
+  disable: process.env.NODE_ENV === 'production',
   workboxOptions: {
     disableDevLogs: true,
   },
@@ -15,11 +15,14 @@ const withPWA = withPWAInit({
 
 const nextConfig = {
   reactStrictMode: true,
-  styledComponents: {
-    ssr: true, // Enable server-side rendering
-    displayName: process.env.NODE_ENV !== "development", // Display component names in development
-    preprocess: false, // Disable styled-components' built-in CSS minification
-    // Add any other options you want here
+  webpack: (config, { isServer }) => {
+    config.snapshot = {
+      managedPaths: [
+        /node_modules\/@next\/swc-/,
+        /node_modules\/fsevents/,
+      ],
+    };
+    return config;
   },
 };
 

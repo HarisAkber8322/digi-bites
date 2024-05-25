@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     telephone: false,
   },
   icons: {
-    shortcut: "/favicon.ico",
+    // shortcut: "/favicon.ico",
     apple: [{ url: "/next.png", sizes: "180x180" }],
   },
 };

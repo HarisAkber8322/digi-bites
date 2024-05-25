@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 import HeaderComponent from "@/components/ClientComponent/Header";
 import { observer } from "mobx-react";
 import dynamic from "next/dynamic";
-import ThemeStoreContext from "@/store/ThemeStore";
+import ThemeStoreContext from "@/store/themeStore";
 import classNames from "classnames";
 import Div from "./UI/Div";
 import FooterComponent from "./ClientComponent/Footer";

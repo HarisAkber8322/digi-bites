@@ -1,12 +1,16 @@
 import React from "react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import * as style from "../styles/globalStyles";
+import { Formik, Field, Form, ErrorMessage, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import Link from "next/link";
-import { Image } from "react-bootstrap";
+import { Image } from "react-bootstrap"; // Ensure this path is correct and the module exports the necessary components
 
-const LoginForm = () => {
-  const initialValues = {
+interface LoginFormValues {
+  email: string;
+  password: string;
+}
+
+const LoginForm: React.FC = () => {
+  const initialValues: LoginFormValues = {
     email: "",
     password: "",
   };
@@ -16,7 +20,7 @@ const LoginForm = () => {
     password: Yup.string().required("*"),
   });
 
-  const onSubmit = async (values, { setSubmitting }) => {
+  const onSubmit = async (values: LoginFormValues, { setSubmitting }: FormikHelpers<LoginFormValues>) => {
     // Simulate login logic (replace with actual authentication logic)
     console.log("Logging in with:", values);
 
@@ -27,65 +31,67 @@ const LoginForm = () => {
     setSubmitting(false);
   };
 
-  const colorCode = "green";
+  const colorCode = "green";  // This variable is defined but not used
   return (
-    <style.SplashContainer>
+    <div>
       <div>
         <Image src="/images/logo.png" alt="logo" />
       </div>
-      <style.LoginFormContainer>
+      <div>
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={onSubmit}
         >
-          <Form>
-            <div className="form_heading">
-              <h1>LOGIN FORM</h1>
-            </div>
-            <div className="form-group">
-              <div className="lable_error_wrap">
-                <label htmlFor="email">Email:</label>
-                <ErrorMessage
+          {({ isSubmitting }) => (
+            <Form>
+              <div className="form_heading">
+                <h1>LOGIN FORM</h1>
+              </div>
+              <div className="form-group">
+                <div className="label_error_wrap">
+                  <label htmlFor="email">Email:</label>
+                  <ErrorMessage
+                    name="email"
+                    component="div"
+                    className="error-message"
+                  />
+                </div>
+                <Field
+                  placeholder="Enter your email"
+                  type="email"
+                  id="email"
                   name="email"
-                  component="div"
-                  className="error-message"
+                  className="form-control"
                 />
               </div>
-              <Field
-                placeholder="Enter your email"
-                type="email"
-                id="email"
-                name="email"
-                className="form-control"
-              />
-            </div>
 
-            <div className="form-group">
-              <div className="lable_error_wrap">
-                <label htmlFor="password">Password:</label>
-                <ErrorMessage
+              <div className="form-group">
+                <div className="label_error_wrap">
+                  <label htmlFor="password">Password:</label>
+                  <ErrorMessage
+                    name="password"
+                    component="div"
+                    className="error-message"
+                  />
+                </div>
+                <Field
+                  placeholder="Enter your password"
+                  type="password"
+                  id="password"
                   name="password"
-                  component="div"
-                  className="error-message"
+                  className="form-control"
                 />
               </div>
-              <Field
-                placeholder="Enter your password"
-                type="password"
-                id="password"
-                name="password"
-                className="form-control"
-              />
-            </div>
-            <div className="form-group">
-              <button type="submit" className="submit-button" disabled={false}>
-                Login
-              </button>
-            </div>
-          </Form>
+              <div className="form-group">
+                <button type="submit" className="submit-button" disabled={isSubmitting}>
+                  Login
+                </button>
+              </div>
+            </Form>
+          )}
         </Formik>
-      </style.LoginFormContainer>
+      </div>
       {/* <div>
       <h2>Users from FutureTechStore:</h2>
       <ul>
@@ -94,7 +100,7 @@ const LoginForm = () => {
         ))}
       </ul>
     </div> */}
-    </style.SplashContainer>
+    </div>
   );
 };
 

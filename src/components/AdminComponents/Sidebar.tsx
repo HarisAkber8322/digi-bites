@@ -1,5 +1,4 @@
 import React from "react";
-// import * as style from "../styles/globalStyles";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { observer } from "mobx-react";

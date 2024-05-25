@@ -6,7 +6,7 @@
 // import CommonButton from "../OtherComponents/CommonButton";
 // import { MenuList } from "../../../utills/constants";
 // import classNames from "classnames";
-// import ThemeStoreContext from "@/store/ThemeStore";
+// import ThemeStoreContext from "@/store/themeStore";
 // interface MenuItem {
 //   name: string;
 //   image: string;
@@ -353,10 +353,9 @@ import Div from "../../UI/Div";
 import Text from "../../UI/Text";
 import Image from "next/image";
 import CommonButton from "../OtherComponents/CommonButton";
-import { Setmenuitems } from "../../../utills/constants";
-import classNames from "classnames";
-import ThemeStoreContext from "@/store/ThemeStore";
+import ThemeStoreContext from "@/store/themeStore";
 import PopupComponent from "../OtherComponents/PopUp";
+import { MenuList } from "@/utills/constants";
 
 interface MenuItem {
   name: string;
@@ -475,7 +474,7 @@ const SetMenu = () => {
         themeDivClasses={"bg-pepperBlack"}
         content={
           <div className="grid grid-cols-4 mt-7 ml-20 mr-20 gap-4">
-            {Setmenuitems.slice(0, 4).map((menuItem: MenuItem, index: number) => (
+            {MenuList.slice(0, 4).map((menuItem: MenuItem, index: number) => (
               <div
                 key={index}
                 className="cursor-pointer"
