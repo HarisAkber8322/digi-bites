@@ -44,7 +44,7 @@ next-env.d.ts
 /sw.js
 /sw.js.map
 /swe-worker-development.js
-/
+
 # Workbox configuration files
 /workbox-config.js
 /workbox-*.js
