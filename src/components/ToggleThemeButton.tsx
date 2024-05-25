@@ -4,17 +4,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { observer } from "mobx-react";
 
-const ToggleThemeComponent = ({ themeStore }) => {
-  // const themeStore = useContext(ThemeStoreContext);
-  // const { themeMode } = themeStore;
-  // console.log(themeStore)
+const ToggleThemeComponent = () => {
+  const themeStore = useContext(ThemeStoreContext);
+  const { themeMode } = themeStore;
   return (
     <div>
       <FontAwesomeIcon
         cursor={"pointer"}
-        icon={themeStore.themeMode === "light" ? faMoon : faSun}
+        icon={themeMode === "light" ? faMoon : faSun}
         size={"1x"}
-        color={themeStore.themeMode === "light" ? "#111111" : "#ffc800"}
+        color={themeMode === "light" ? "#111111" : "#ffc800"}
         onClick={themeStore.toggleThemeMode}
       />
     </div>

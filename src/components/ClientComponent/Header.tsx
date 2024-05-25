@@ -122,7 +122,7 @@
 
 // export default observer(HeaderComponent);
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faUser, faXmark, faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -133,8 +133,7 @@ import { observer } from "mobx-react";
 import Div from "../UI/Div";
 import Text from "../UI/Text";
 import SearchInput from "./OtherComponents/SearchInput"; // Assuming your path
-
-const HeaderComponent = (props: { themeStore: { themeMode: string }; HandleToggle: React.MouseEventHandler<HTMLButtonElement> | undefined; }) => {
+const HeaderComponent = () => {
   const router = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -149,7 +148,7 @@ const HeaderComponent = (props: { themeStore: { themeMode: string }; HandleToggl
   return (
     <>
       <Div
-      lightColor="bg-blue2"
+        lightColor="bg-blue2"
         themeDivClasses="md:fixed md:top-0 md:flex md:items-center md:w-full md:drop-shadow-md md:z-[999999] "
         content={
           <>
@@ -196,11 +195,11 @@ const HeaderComponent = (props: { themeStore: { themeMode: string }; HandleToggl
                   <Link href={"/client/profile/profile"} className="cursor-pointer">
                     <Text content={<FontAwesomeIcon icon={faUser} />} themeDivClasses="" />
                   </Link>
-                  <ToggleThemeComponent themeStore={props.themeStore} />
+                  <ToggleThemeComponent />
                 </div>
               </div>
             </div>
-               <Div
+            <Div
               themeDivClasses={`fixed top-0 left-0 h-full w-[86%]  transform ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out z-[999998]`}
               content={
                 <>
@@ -241,7 +240,7 @@ const HeaderComponent = (props: { themeStore: { themeMode: string }; HandleToggl
           </>
         }
       />
-          </>
+    </>
   );
 }
 
