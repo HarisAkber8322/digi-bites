@@ -13,15 +13,20 @@ import "slick-carousel/slick/slick-theme.css";
 const App = ({ Component, pageProps }: any) => {
   return (
     <>
-    <div className="mt-5 w-full md:w-[1180px] m-auto">
-      <Slider />
-    </div>
-    <div className="">
-      <CategorySlider/>
-    </div>
-    <div>
-      <SetMenuComponent/>
-    </div>
+      <div className="mt-5 w-full md:w-[1180px] m-auto">
+        <Slider />
+      </div>
+      <div className="w-full md:w-[1180px] m-auto">
+        <CategorySlider />
+      </div>
+      <div className="w-full bg-[#f1f1f1] py-16 m-auto">
+        <div className="w-full md:w-[1180px] m-auto">
+          <CategorySlider />
+        </div>
+      </div>
+      <div className="w-full md:w-[1180px] m-auto">
+        <SetMenuComponent />
+      </div>
     </>
   );
 };
