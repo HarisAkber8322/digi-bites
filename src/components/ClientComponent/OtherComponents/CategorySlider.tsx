@@ -45,8 +45,8 @@ const CategorySlider = () => {
       <div className="mt-7 mx-20  ">
         <Slider {...settings}>
           {MenuList.map((menuItem, index) => (
-            <div key={index} className="">
-              <Link  href={menuItem.link} className="flex  flex-col justify-center items-center gap-2 w-32 ml-5 ">
+            <div key={index} className="!flex !justify-center">
+              <Link  href={menuItem.link} className="flex  flex-col justify-center items-center gap-2 w-32  ">
                 <div className="rounded-full overflow-hidden w-32 h-32">
                   <Image
                     className="object-cover"
