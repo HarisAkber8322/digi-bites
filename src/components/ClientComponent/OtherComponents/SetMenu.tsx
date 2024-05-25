@@ -6,11 +6,7 @@
 // import CommonButton from "../OtherComponents/CommonButton";
 // import { MenuList } from "../../../utills/constants";
 // import classNames from "classnames";
-<<<<<<< HEAD
 // import ThemeStoreContext from "@/store/ThemeStore";
-=======
-// import ThemeStoreContext from "../store/ThemeStore";
->>>>>>> c0f458a0bb154eb8a09e72f12246498391ee219d
 // interface MenuItem {
 //   name: string;
 //   image: string;
