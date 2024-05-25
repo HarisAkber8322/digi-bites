@@ -11,7 +11,7 @@ const CommonButton = () => {
     <>
     
         <button className="flex w-[95%] rounded-[4px] overflow-hidden " >
-        <Link className="flex justify-center p-1 bg-amber-900 w-full text-lg  text-white" href={"#"}>
+        <Link className="flex justify-center p-1 bg-brown1 w-full text-lg  text-white" href={"#"}>
             Quick View
         </Link>
         </button>

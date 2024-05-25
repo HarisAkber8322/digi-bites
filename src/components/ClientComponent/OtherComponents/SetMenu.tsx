@@ -353,7 +353,7 @@ import Div from "../../UI/Div";
 import Text from "../../UI/Text";
 import Image from "next/image";
 import CommonButton from "../OtherComponents/CommonButton";
-import { MenuList } from "../../../utills/constants";
+import { Setmenuitems } from "../../../utills/constants";
 import classNames from "classnames";
 import ThemeStoreContext from "@/store/ThemeStore";
 import PopupComponent from "../OtherComponents/PopUp";
@@ -475,7 +475,7 @@ const SetMenu = () => {
         themeDivClasses={"bg-pepperBlack"}
         content={
           <div className="grid grid-cols-4 mt-7 ml-20 mr-20 gap-4">
-            {MenuList.slice(0, 4).map((menuItem: MenuItem, index: number) => (
+            {Setmenuitems.slice(0, 4).map((menuItem: MenuItem, index: number) => (
               <div
                 key={index}
                 className="cursor-pointer"

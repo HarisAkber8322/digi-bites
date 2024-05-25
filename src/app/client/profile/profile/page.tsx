@@ -12,12 +12,12 @@ import { CardData } from "../../../../utills/constants"; // Adjust the path as n
 const Profile = () => {
   return (
     <Div
-      themeDivClasses="min-h-screen w-[1180px] m-auto "
+      themeDivClasses="min-h-screen md:w-[1180px] m-auto "
       lightColor="bg-white"
       darkColor="bg-pepperblack"
       content={
         <>
-          <div className="relative">
+          <div className="md:relative ">
             <Image
               src="/images/cover-photo.jpg" // Replace with actual cover photo path
               alt="Cover"
@@ -40,9 +40,9 @@ const Profile = () => {
               {CardData.map((card) => (
                 <Div
                   key={card.id}
-                  lightColor="bg-blue2"
+                  lightColor="bg-white"
                   darkColor="bg-pepperblack2"
-                  themeDivClasses="w-[172px] h-[172px] flex flex-col items-center justify-center p-0 m-0 rounded-[30px] shadow-md transition duration-300 hover:bg-slate-100 hover:bg-opacity-20"
+                  themeDivClasses="w-[172px] h-[172px] flex flex-col items-center justify-center p-0 m-0 rounded-[30px] shadow-md transition duration-300 hover:bg-ExtraLightGray hover:bg-opacity-20"
                   content={
                     <>
                       <Text

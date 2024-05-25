@@ -125,15 +125,17 @@
 import React, { useContext, useState } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faUser, faXmark, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faUser, faXmark, faSearch, faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import ToggleThemeComponent from "../ToggleThemeButton";
 import { Image } from "react-bootstrap";
 import { usePathname } from "next/navigation";
 import { observer } from "mobx-react";
 import Div from "../UI/Div";
 import Text from "../UI/Text";
-import SearchInput from "./OtherComponents/SearchInput"; // Assuming your path
-const HeaderComponent = () => {
+import SearchInput from "./OtherComponents/SearchInput"; 
+import Category from "./OtherComponents/category";// Assuming your path
+
+const HeaderComponent = (props: { themeStore: { themeMode: string }; HandleToggle: React.MouseEventHandler<HTMLButtonElement> | undefined; }) => {
   const router = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -149,6 +151,7 @@ const HeaderComponent = () => {
     <>
       <Div
         lightColor="bg-blue2"
+      darkColor="bg-white"
         themeDivClasses="md:fixed md:top-0 md:flex md:items-center md:w-full md:drop-shadow-md md:z-[999999] "
         content={
           <>
@@ -170,9 +173,7 @@ const HeaderComponent = () => {
                 <div className={`navbar_menu xs:hidden duration-75 md:left-0 md:block`}>
                   <ul className="md:flex md:gap-10 md:text-lg md:font-semibold md:items-center ">
                     <li className="md:transition-all md:duration-500 md:ease-in-out">
-                      <Link href="/category" className={router === "/category" ? "active" : ""}>
-                        <Text themeDivClasses="md:text-md md:font-semibold" content={"category"} />
-                      </Link>
+                      <Category/>
                     </li>
                     <li className="md:transition-all md:duration-500 md:ease-in-out">
                       <Link href="/shop" className={router === "/shop" ? "active" : ""}>
@@ -195,7 +196,10 @@ const HeaderComponent = () => {
                   <Link href={"/client/profile/profile"} className="cursor-pointer">
                     <Text content={<FontAwesomeIcon icon={faUser} />} themeDivClasses="" />
                   </Link>
-                  <ToggleThemeComponent />
+                  <Link href={"/client/profile/Cart"} className="cursor-pointer">
+                    <Text content={<FontAwesomeIcon icon={faCartPlus} />} themeDivClasses="" />
+                  </Link>
+                  {/* <ToggleThemeComponent themeStore={props.themeStore} /> */}
                 </div>
               </div>
             </div>
