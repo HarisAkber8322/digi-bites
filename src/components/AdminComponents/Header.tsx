@@ -11,7 +11,7 @@ import ThemeStore from "@/store/ThemeStore";
 import { observer } from "mobx-react";
 import Div from "../UI/Div";
 import Text from "../UI/Text";
-const HeaderComponent = (props: { themeStore: { themeMode: string; }; HandleToggle: React.MouseEventHandler<HTMLButtonElement> | undefined; }) => {
+const HeaderComponent = () => {
   const router = usePathname();
   // const { themeMode } = useContext(ThemeStore);
   return (
@@ -69,7 +69,7 @@ const HeaderComponent = (props: { themeStore: { themeMode: string; }; HandleTogg
             </div>
             <div className="text-lg flex items-center gap-10">
               <Text content={<FontAwesomeIcon icon={faUser} />} themeDivClasses="" />
-              <ToggleThemeComponent themeStore={props.themeStore} />
+              <ToggleThemeComponent />
             </div>
           </>
         }

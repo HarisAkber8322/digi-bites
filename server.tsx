@@ -12,7 +12,7 @@ app.prepare().then(() => {
   server.use(cors());
   server.use(express.json());
   const PAGE_SIZE = 5;
-  server.get("/api/users", async (req, res) => {
+  server.get("/api/users", async (req: { query: { page: string; q: string; sort: string; }; }, res: { status: (arg0: number) => { (): any; new(): any; json: { (arg0: { users?: any; totalCount?: any; totalPages?: number; error?: string; }): void; new(): any; }; }; }) => {
     const page = parseInt(req.query.page, 10) || 1;
     const searchQuery = req.query.q || "";
     const sortOrder = req.query.sort || "asc";
@@ -65,7 +65,7 @@ app.prepare().then(() => {
   //     res.status(500).json({ error: "Internal server error" });
   //   }
   // });
-  server.get("/api/users/:id", async (req, res) => {
+  server.get("/api/users/:id", async (req: { params: { id: any; }; }, res: { status: (arg0: number) => { (): any; new(): any; json: { (arg0: { error: string; }): void; new(): any; }; }; }) => {
     try {
       const db = await connectToDatabase();
       const usersCollection = db.collection("users");
@@ -84,7 +84,7 @@ app.prepare().then(() => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
-  server.post("/api/users", async (req, res) => {
+  server.post("/api/users", async (req: { body: { name: any; fname: any; role: any; phoneNumber: any; }; }, res: { status: (arg0: number) => { (): any; new(): any; json: { (arg0: { error?: string; message?: string; user?: { _id: any; name: any; fname: any; role: any; phoneNumber: any; }; }): void; new(): any; }; }; }) => {
     try {
       const { name, fname, role, phoneNumber } = req.body;
 
@@ -119,7 +119,6 @@ app.prepare().then(() => {
       }
     } catch (error) {
       console.error("Error adding user:", error);
-
       if (error.code === 11000) {
         return res
           .status(400)
@@ -129,7 +128,7 @@ app.prepare().then(() => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
-  server.delete("/api/users/:id", async (req, res) => {
+  server.delete("/api/users/:id", async (req: { params: { id: any; }; }, res: { status: (arg0: number) => { (): any; new(): any; json: { (arg0: { error: string; }): void; new(): any; }; end: { (): void; new(): any; }; }; }) => {
     try {
       const db = await connectToDatabase();
       const usersCollection = db.collection("users");
@@ -148,7 +147,7 @@ app.prepare().then(() => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
-  server.put("/api/users/:id", async (req, res) => {
+  server.put("/api/users/:id", async (req: { params: { id: any; }; body: { [x: string]: any; _id: any; }; }, res: { status: (arg0: number) => { (): any; new(): any; json: { (arg0: { error?: string; message?: string; }): void; new(): any; }; }; }) => {
     try {
       const db = await connectToDatabase();
       const usersCollection = db.collection("users");
@@ -174,11 +173,11 @@ app.prepare().then(() => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
-  server.all("*", (req, res) => {
+  server.all("*", (req: any, res: any) => {
     return handle(req, res);
   });
   const PORT = process.env.PORT || 3001;
-  server.listen(PORT, (err) => {
+  server.listen(PORT, (err: any) => {
     if (err) throw err;
     console.log(`Server is running on http://localhost:${PORT}`);
   });

@@ -13,9 +13,6 @@ const ClientLayout = ({ children }: { children: React.ReactNode }) => {
   const [toggle, setToggle] = useState(false);
   const themeStore = useContext(ThemeStoreContext);
 
-  const HandleToggle = () => {
-    setToggle(!toggle);
-  };
 
   return (
 
@@ -23,8 +20,6 @@ const ClientLayout = ({ children }: { children: React.ReactNode }) => {
       content={
         <>
           <HeaderComponent
-            HandleToggle={HandleToggle}
-            themeStore={themeStore}
           />
           <Div
             darkColor="bg-pepperBlack"
