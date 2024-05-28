@@ -26,7 +26,7 @@ const MenuCard: React.FC<MenuCardProps> = ({ menuItem, handleCardClick }) => (
         <>
           <div>
             <Image
-              className="items-center"
+              className="items-center !w-full !h-[180px]"
               src={menuItem.image}
               width={300}
               height={250}

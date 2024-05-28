@@ -132,6 +132,54 @@ export const cardList = [
 ];
 export const menuData = [
   {
+    category: "Burger",
+    items: [
+      {
+        name: "Cheese burger",
+        price: 90,
+        image: "/images/burger.jpg", // Adjust path according to your project structure
+        description: "Juicy beef patty with melted cheese in a soft bun.",
+        link: "#",
+      },
+      {
+        name: "Zinger Burger",
+        price: 90,
+        image: "/images/burger.jpg", // Adjust path according to your project structure
+        description: "Juicy beef patty with melted cheese in a soft bun.",
+        link: "#",
+      },
+      {
+        name: "Chicken Burger",
+        price: 90,
+        image: "/images/burger.jpg", // Adjust path according to your project structure
+        description: "Juicy beef patty with melted cheese in a soft bun.",
+        link: "#",
+      },
+      {
+        name: "Paty Burger",
+        price: 90,
+        image: "/images/burger.jpg", // Adjust path according to your project structure
+        description: "Juicy beef patty with melted cheese in a soft bun.",
+        link: "#",
+      },
+      {
+        name: "Grill Burger",
+        price: 90,
+        image: "/images/burger.jpg", // Adjust path according to your project structure
+        description: "Juicy beef patty with melted cheese in a soft bun.",
+        link: "#",
+      },
+      {
+        name: "Mity Burger",
+        price: 90,
+        image: "/images/burger.jpg", // Adjust path according to your project structure
+        description: "Juicy beef patty with melted cheese in a soft bun.",
+        link: "#",
+      },
+      // Add more Burger items here...
+    ],
+  },
+  {
     category: "Biryani",
     items: [
       {
@@ -179,19 +227,7 @@ export const menuData = [
       // Add more Biryani items here...
     ],
   },
-  {
-    category: "Drinks",
-    items: [
-      {
-        name: "Lemonade",
-        price: 50,
-        image: "/images/lemonade.jpg", // Adjust path according to your project structure
-        description: "Refreshing lemonade with a hint of mint.",
-        link: "#",
-      },
-      // Add more Drinks items here...
-    ],
-  },
+
   {
     category: "Pizza",
     items: [
@@ -218,17 +254,18 @@ export const menuData = [
       // Add more Sandwich items here...
     ],
   },
+
   {
-    category: "Burger",
+    category: "Drinks",
     items: [
       {
-        name: "Cheeseburger",
-        price: 90,
-        image: "/images/burger.jpg", // Adjust path according to your project structure
-        description: "Juicy beef patty with melted cheese in a soft bun.",
+        name: "Lemonade",
+        price: 50,
+        image: "/images/lemonade.jpg", // Adjust path according to your project structure
+        description: "Refreshing lemonade with a hint of mint.",
         link: "#",
       },
-      // Add more Burger items here...
+      // Add more Drinks items here...
     ],
   },
 ];
