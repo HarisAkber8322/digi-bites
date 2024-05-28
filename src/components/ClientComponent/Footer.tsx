@@ -21,7 +21,7 @@ const Footer: React.FC = () => {
         content={
           <>
             <div
-              className=" w-full md:h-[195px] mx-auto flex flex-col relative"
+              className=" w-full md:h-[200px] mx-auto flex flex-col relative"
               style={{
                 background: `url('/images/wave.svg') bottom center no-repeat`,
                 backgroundSize: "cover",
