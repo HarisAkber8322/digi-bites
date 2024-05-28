@@ -258,7 +258,7 @@ const HeaderComponent = () => {
                     />
                   </Link>
                   <Link
-                    href={"/client/profile/Cart"}
+                    href={"/client/cart"}
                     className="cursor-pointer"
                   >
                     <Text
