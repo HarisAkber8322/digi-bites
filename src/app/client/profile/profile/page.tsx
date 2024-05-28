@@ -40,7 +40,7 @@ const Profile = () => {
               {CardData.map((card) => (
                 <Div
                   key={card.id}
-                  lightColor="bg-white"
+                  lightColor="bg-ExtraLightGray"
                   darkColor="bg-pepperblack2"
                   themeDivClasses="w-[172px] h-[172px] flex flex-col items-center justify-center p-0 m-0 rounded-[30px] shadow-md transition duration-300 hover:bg-ExtraLightGray hover:bg-opacity-20"
                   content={
