@@ -17,10 +17,10 @@ const Card = ({ menuItem }: { menuItem: MenuItem }) => (
   <Link
     href={menuItem.link}
     passHref
-    className="relative  hover:bg-black duration-75 group duration-500 cursor-pointer overflow-hidden relative text-dullyellow h-[350px] w-[350px] rounded-2xl transform transition-transform hover:scale-105 hover:shadow-2xl "
+    className="relative  hover:bg-black duration-75 group duration-500 cursor-pointer overflow-hidden relative text-white h-[350px] w-[350px] rounded-2xl transform transition-transform hover:scale-105 hover:shadow-2xl "
   >
     <div
-      className="w-[350px] h-[350px] bg-dullyellow bg-cover bg-center  text-gray-800 hover:opacity-50"
+      className="w-[350px] h-[350px] bg-cover bg-center hover:opacity-75"
       style={{ backgroundImage: `url(${menuItem.image})`}}
     >
       
@@ -62,7 +62,7 @@ const Card = ({ menuItem }: { menuItem: MenuItem }) => (
     </div>
     <div className="absolute bg-gray-50 -bottom-8 w-full p-3 flex flex-col gap-1 group-hover:bottom-32  group-hover:duration-600 duration-500">
       <span className="text-white font-bold text-center text-xl">{menuItem.name}</span>
-      <p className="text-white">{menuItem.description}</p>
+      <p className="text-white text-center">{menuItem.description}</p>
     </div>
   </Link>
 );

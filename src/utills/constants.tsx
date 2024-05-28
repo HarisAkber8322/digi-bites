@@ -114,7 +114,6 @@ export const cardList = [
     image: "/images/1.jpg", // Adjust path according to your project structure
     description: "Delicious zinger burger with crispy chicken patty.",
     link: "/client/profile/profile",
-
   },
   {
     name: "Suggestions",
@@ -122,7 +121,6 @@ export const cardList = [
     image: "/images/burger.jpeg", // Adjust path according to your project structure
     description: "Delicious zinger burger with crispy chicken patty.",
     link: "#",
-
   },
   {
     name: "Favourites",
@@ -130,7 +128,108 @@ export const cardList = [
     image: "/images/burger.jpeg", // Adjust path according to your project structure
     description: "Delicious zinger burger with crispy chicken patty.",
     link: "#",
-
+  },
+];
+export const menuData = [
+  {
+    category: "Biryani",
+    items: [
+      {
+        name: "Chicken Biryani",
+        price: 100,
+        image: "/images/burger.jpeg", // Adjust path according to your project structure
+        description: "Aromatic rice dish with tender chicken pieces.",
+        link: "/client/profile/profile",
+      },
+      {
+        name: "mutton Biryani",
+        price: 100,
+        image: "/images/biryani.jpg", // Adjust path according to your project structure
+        description: "Aromatic rice dish with tender chicken pieces.",
+        link: "/client/profile/profile",
+      },
+      {
+        name: "Chicken Biryani",
+        price: 100,
+        image: "/images/burger.jpeg", // Adjust path according to your project structure
+        description: "Aromatic rice dish with tender chicken pieces.",
+        link: "/client/profile/profile",
+      },
+      {
+        name: "mutton Biryani",
+        price: 100,
+        image: "/images/biryani.jpg", // Adjust path according to your project structure
+        description: "Aromatic rice dish with tender chicken pieces.",
+        link: "/client/profile/profile",
+      },
+      {
+        name: "Chicken Biryani",
+        price: 100,
+        image: "/images/burger.jpeg", // Adjust path according to your project structure
+        description: "Aromatic rice dish with tender chicken pieces.",
+        link: "/client/profile/profile",
+      },
+      {
+        name: "mutton Biryani",
+        price: 100,
+        image: "/images/biryani.jpg", // Adjust path according to your project structure
+        description: "Aromatic rice dish with tender chicken pieces.",
+        link: "/client/profile/profile",
+      },
+      // Add more Biryani items here...
+    ],
+  },
+  {
+    category: "Drinks",
+    items: [
+      {
+        name: "Lemonade",
+        price: 50,
+        image: "/images/lemonade.jpg", // Adjust path according to your project structure
+        description: "Refreshing lemonade with a hint of mint.",
+        link: "#",
+      },
+      // Add more Drinks items here...
+    ],
+  },
+  {
+    category: "Pizza",
+    items: [
+      {
+        name: "Margherita Pizza",
+        price: 200,
+        image: "/images/pizza.jpg", // Adjust path according to your project structure
+        description: "Classic Margherita with fresh mozzarella and basil.",
+        link: "#",
+      },
+      // Add more Pizza items here...
+    ],
+  },
+  {
+    category: "Sandwich",
+    items: [
+      {
+        name: "Club Sandwich",
+        price: 80,
+        image: "/images/sandwich.jpg", // Adjust path according to your project structure
+        description: "Triple-layered sandwich with ham, cheese, and veggies.",
+        link: "#",
+      },
+      // Add more Sandwich items here...
+    ],
+  },
+  {
+    category: "Burger",
+    items: [
+      {
+        name: "Cheeseburger",
+        price: 90,
+        image: "/images/burger.jpg", // Adjust path according to your project structure
+        description: "Juicy beef patty with melted cheese in a soft bun.",
+        link: "#",
+      },
+      // Add more Burger items here...
+    ],
   },
 ];
 

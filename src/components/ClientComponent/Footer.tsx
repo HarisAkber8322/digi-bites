@@ -61,7 +61,7 @@ const Footer: React.FC = () => {
                 />
               </div>
               <div className=" absolute bottom-1 w-full flex flex-row items-center justify-between">
-                <div className="text-white">
+                <div className="text-ExtraLightGray">
                   <h2>Copyright ©2024</h2>
                 </div>
                 <div className="flex space-x-4 mr-6 text-xl text-dullyellow">
