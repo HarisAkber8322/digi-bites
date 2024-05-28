@@ -75,10 +75,10 @@ const CardGrid = () => (
     <Div
       darkColor="bg-pepperblack2"
       lightColor="bg-ExtraLightGray"
-      themeDivClasses={"h-[400px]  content-center "}
+      themeDivClasses={" py-20  content-center"}
       content={
         <>
-          <div className="flex justify-around ">
+          <div className="flex justify-around w-full md:w-[1180px] m-auto">
             {cardList.slice(0, 3).map((menuItem: MenuItem, index: number) => (
               <Card key={index} menuItem={menuItem} />
             ))}

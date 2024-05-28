@@ -23,7 +23,7 @@ const App = ({ Component, pageProps }: any) => {
     {/* <div>
       <SetMenuComponent/>
     </div> */}
-    <div>
+    <div >
       <CardGrid/>
     </div>
     </>
