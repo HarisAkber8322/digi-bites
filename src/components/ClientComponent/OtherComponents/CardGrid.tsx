@@ -60,7 +60,7 @@ const Card = ({ menuItem }: { menuItem: MenuItem }) => (
         </svg>
       </div>
     </div>
-    <div className="absolute bg-gray-50 -bottom-8 w-full p-3 flex flex-col gap-1 group-hover:bottom-8 group-hover:duration-600 duration-500">
+    <div className="absolute bg-gray-50 -bottom-8 w-full p-3 flex flex-col gap-1 group-hover:bottom-20 group-hover:duration-600 duration-500">
       <span className="text-dullyellow font-bold text-center text-xl">{menuItem.name}</span>
       <p className="text-dullyellow">{menuItem.description}</p>
     </div>
