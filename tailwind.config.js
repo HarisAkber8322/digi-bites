@@ -27,7 +27,7 @@ const config: Config = {
         blue2: "#cbf3f0",
         white1: "#ffffff",
         brown1: "#ffbf69",
-        orange1: "#ff9f1c",
+        orange1: "#F36A3E",
       },
       screens: {
         xs: { max: "767px" }, //Mobile

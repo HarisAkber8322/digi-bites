@@ -14,9 +14,12 @@ interface MenuItem {
 }
 
 const Card = ({ menuItem }: { menuItem: MenuItem }) => (
-  <Link href={menuItem.link} passHref className="relative group duration-500 cursor-pointer overflow-hidden relative text-gray-50 h-72 w-56 rounded-2xl hover:duration-700 duration-700">
-
-    <div className="w-56 h-72 bg-lime-400 text-gray-800">
+  <Link
+    href={menuItem.link}
+    passHref
+    className="relative group duration-500 cursor-pointer overflow-hidden relative text-gray-50 h-[350px] w-[350px] rounded-2xl transform transition-transform hover:scale-105 hover:shadow-2xl"
+  >
+    <div className="w-[350px] h-[350px] bg-dullyellow text-gray-800">
       <div className="flex flex-row justify-between">
         <svg
           className="fill-current stroke-current w-8 h-8 p-2 hover:bg-lime-200 rounded-full m-1"
@@ -54,8 +57,10 @@ const Card = ({ menuItem }: { menuItem: MenuItem }) => (
       </div>
     </div>
     <div className="absolute bg-gray-50 -bottom-24 w-56 p-3 flex flex-col gap-1 group-hover:-bottom-0 group-hover:duration-600 duration-500">
-      <span className="text-lime-400 font-bold text-xs">{menuItem.name}</span>
-      <span className="text-gray-800 font-bold text-3xl">${menuItem.price}</span>
+      <span className="text-pepperblack2 font-bold text-xs">{menuItem.name}</span>
+      <span className="text-gray-800 font-bold text-3xl">
+        ${menuItem.price}
+      </span>
       <p className="text-neutral-800">{menuItem.description}</p>
     </div>
   </Link>
@@ -63,16 +68,21 @@ const Card = ({ menuItem }: { menuItem: MenuItem }) => (
 
 const CardGrid = () => (
   <>
-    <div className="mt-14 flex justify-center">
+    {/* <div className="mt-14 flex justify-center">
       <Text themeDivClasses="text-3xl font-bold" content={"Menu"} />
-    </div>
-    <Div themeDivClasses={"bg-pepperBlack"} content={
-      <div className="grid grid-cols-3 mt-7 ml-20 mr-20 gap-4">
-        {MenuList.slice(0, 3).map((menuItem: MenuItem, index: number) => (
-          <Card key={index} menuItem={menuItem} />
-        ))}
-      </div>
-    } />
+    </div> */}
+    <Div
+      darkColor="bg-pepperblack2"
+      lightColor="bg-ExtraLightGray" 
+      themeDivClasses={"h-[400px]  content-center "}
+      content={
+        <div className="flex justify-around ">
+          {MenuList.slice(0, 3).map((menuItem: MenuItem, index: number) => (
+            <Card key={index} menuItem={menuItem} />
+          ))}
+        </div>
+      }
+    />
   </>
 );
 

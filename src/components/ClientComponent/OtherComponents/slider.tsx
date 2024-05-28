@@ -49,14 +49,14 @@ const Slider: React.FC<SliderProps> = ({ interval = 3000 }) => {
       <div className="overflow-hidden">
         {images.map((image, index) => (
           <Image
-            width={100}
-            height={100}
+            width={1180}
+            height={300}
             key={index}
             src={image}
             alt={`Slide ${index}`}
             onClick={() => handleClick(index)}
             className={classNames(
-              "cursor-pointer rounded-xl absolute inset-0 !w-full !h-full object-cover transition-opacity duration-1000",
+              "cursor-pointer rounded-xl absolute !w-full !h-full inset-0 object-cover transition-opacity duration-1000",
               {
                 "opacity-0": index !== currentIndex,
                 "opacity-100": index === currentIndex,
