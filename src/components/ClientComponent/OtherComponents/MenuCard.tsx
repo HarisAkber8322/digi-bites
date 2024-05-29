@@ -21,13 +21,25 @@ interface MenuCardProps {
 }
 
 const MenuCard: React.FC<MenuCardProps> = ({ menuItem, handleCardClick, isFavorite, onFavoriteToggle }) => {
-  const handleFavoriteClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    onFavoriteToggle(menuItem);
+  const addToCart = (item: any) => {
+    const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+    const existingItem = cartItems.find((cartItem: any) => cartItem.name === item.name);
+    const handleFavoriteClick = (e: React.MouseEvent) => {
+      e.stopPropagation();
+      onFavoriteToggle(menuItem);
+    };
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      cartItems.push({ ...item, quantity: 1 });
+    }
+
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    handleCardClick(item);
   };
 
   return (
-    <div className="relative cursor-pointer" onClick={() => handleCardClick(menuItem)}>
+    <div className="cursor-pointer" onClick={() => handleCardClick(menuItem)}>
       <Div
         themeDivClasses={"overflow-hidden rounded-xl h-72 shadow-xl"}
         content={
@@ -40,7 +52,7 @@ const MenuCard: React.FC<MenuCardProps> = ({ menuItem, handleCardClick, isFavori
                 height={250}
                 alt={menuItem.name}
               />
-              <button
+               <button
                 className="absolute top-2 right-2 text-2xl"
                 onClick={handleFavoriteClick}
               >
@@ -61,9 +73,20 @@ const MenuCard: React.FC<MenuCardProps> = ({ menuItem, handleCardClick, isFavori
                 content={`$${menuItem.price}`}
               />
             </div>
-            <div className="flex justify-center">
-                <CommonButton />
-              </div>
+            <div className="flex w-full justify-center">
+                <button
+                  className="flex w-[95%] rounded-[4px] overflow-hidden"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    addToCart(menuItem);
+                  }}
+                >
+                  <Text themeDivClasses="flex justify-center p-1 bg-dullyellow w-full text-lg text-white" content={<>
+                    Add to Cart
+                    </>}
+                  />
+                </button>
+            </div>
           </>
         }
       />
