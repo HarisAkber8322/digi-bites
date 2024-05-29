@@ -127,7 +127,7 @@ export const cardList = [
     price: 300,
     image: "/images/burger.jpeg", // Adjust path according to your project structure
     description: "Delicious zinger burger with crispy chicken patty.",
-    link: "#",
+    link: "/client/favorite",
   },
 ];
 export const menuData = [
@@ -176,6 +176,20 @@ export const menuData = [
         description: "Juicy beef patty with melted cheese in a soft bun.",
         link: "#",
       },
+      {
+        name: "Grill Burger",
+        price: 90,
+        image: "/images/burger.jpg", // Adjust path according to your project structure
+        description: "Juicy beef patty with melted cheese in a soft bun.",
+        link: "#",
+      },
+      {
+        name: "Mity Burger",
+        price: 90,
+        image: "/images/burger.jpg", // Adjust path according to your project structure
+        description: "Juicy beef patty with melted cheese in a soft bun.",
+        link: "#",
+      },
       // Add more Burger items here...
     ],
   },
@@ -187,43 +201,23 @@ export const menuData = [
         price: 100,
         image: "/images/burger.jpeg", // Adjust path according to your project structure
         description: "Aromatic rice dish with tender chicken pieces.",
-        link: "/client/profile/profile",
+        link: "#",
       },
       {
         name: "mutton Biryani",
         price: 100,
         image: "/images/biryani.jpg", // Adjust path according to your project structure
         description: "Aromatic rice dish with tender chicken pieces.",
-        link: "/client/profile/profile",
+        link: "#",
       },
       {
-        name: "Chicken Biryani",
+        name: "karachi Biryani",
         price: 100,
         image: "/images/burger.jpeg", // Adjust path according to your project structure
         description: "Aromatic rice dish with tender chicken pieces.",
-        link: "/client/profile/profile",
+        link: "#",
       },
-      {
-        name: "mutton Biryani",
-        price: 100,
-        image: "/images/biryani.jpg", // Adjust path according to your project structure
-        description: "Aromatic rice dish with tender chicken pieces.",
-        link: "/client/profile/profile",
-      },
-      {
-        name: "Chicken Biryani",
-        price: 100,
-        image: "/images/burger.jpeg", // Adjust path according to your project structure
-        description: "Aromatic rice dish with tender chicken pieces.",
-        link: "/client/profile/profile",
-      },
-      {
-        name: "mutton Biryani",
-        price: 100,
-        image: "/images/biryani.jpg", // Adjust path according to your project structure
-        description: "Aromatic rice dish with tender chicken pieces.",
-        link: "/client/profile/profile",
-      },
+
       // Add more Biryani items here...
     ],
   },

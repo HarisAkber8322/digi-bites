@@ -219,12 +219,12 @@ const HeaderComponent = () => {
                     </li>
                     <li className="md:transition-all md:duration-500 md:ease-in-out">
                       <Link
-                        href="/shop"
-                        className={router === "/shop" ? "active" : ""}
+                        href="/client/favorite"
+                        // className={router === "/shop" ? "active" : ""}
                       >
                         <Text
                           themeDivClasses="md:text-md md:font-semibold"
-                          content={"shop"}
+                          content={"Favorites"}
                         />
                       </Link>
                     </li>
@@ -249,7 +249,7 @@ const HeaderComponent = () => {
                 </div>
                 <div className="md:text-lg md:flex md:items-center md:gap-5">
                   <Link
-                    href={"/client/profile/profile"}
+                    href={"/client/profile"}
                     className="cursor-pointer"
                   >
                     <Text

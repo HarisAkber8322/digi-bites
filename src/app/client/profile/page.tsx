@@ -4,10 +4,10 @@ import React from "react";
 import { observer } from "mobx-react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Div from "../../../../components/UI/Div";
-import Text from "../../../../components/UI/Text";
+import Div from "../../../components/UI/Div";
+import Text from "../../../components/UI/Text";
 import dynamic from "next/dynamic";
-import { CardData } from "../../../../utills/constants"; // Adjust the path as needed
+import { CardData } from "../../../utills/constants"; // Adjust the path as needed
 
 const Profile = () => {
   return (

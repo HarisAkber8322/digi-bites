@@ -17,7 +17,7 @@ const Card = ({ menuItem }: { menuItem: MenuItem }) => (
   <Link
     href={menuItem.link}
     passHref
-    className="relative  duration-75 group duration-500 cursor-pointer overflow-hidden relative text-white h-[350px] w-[350px] rounded-2xl transform transition-transform hover:scale-105 hover:shadow-2xl  hover:bg-black"
+    className="relative  duration-75 group duration-500 cursor-pointer overflow-hidden relative text-white h-[350px] w-[350px] rounded-2xl transform transition-transform hover:scale-105 hover:shadow-2xl  hover:bg-blacka"
   >
     <div
       className="w-[350px] h-[350px] bg-cover bg-center hover:opacity-75"

@@ -23,9 +23,9 @@ const App = ({ Component, pageProps }: any) => {
       <div className="mt-5 w-full md:w-[1180px] m-auto">
         <Slider />
       </div>
-      <div className="w-full md:w-[1180px] m-auto">
+      {/* <div className="w-full md:w-[1180px] m-auto">
         <CategorySlider />
-      </div>
+      </div> */}
       {/* <div>
         <SetMenuComponent/>
       </div> */}
