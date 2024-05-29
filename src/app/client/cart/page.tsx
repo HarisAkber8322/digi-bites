@@ -59,10 +59,12 @@
 // export default Cart;
 
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Div from "../../../components/UI/Div";
 import Text from "../../../components/UI/Text";
 import Image from "next/image";
+import MainStoreContext from "@/store/Mainstore";
+import { observer } from "mobx-react";
 
 interface CartItem {
   name: string;
@@ -79,7 +81,7 @@ interface CartItem {
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-
+  const MainStore = useContext(MainStoreContext);
   useEffect(() => {
     const items = JSON.parse(localStorage.getItem("cartItems") || "[]");
     setCartItems(items);
@@ -89,6 +91,7 @@ const Cart = () => {
     const updatedCartItems = cartItems.filter(
       (item) => item.name !== itemToRemove.name
     );
+    MainStore.setCartCount(MainStore.cartCount-1);
     localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
     setCartItems(updatedCartItems);
   };
@@ -162,43 +165,43 @@ const Cart = () => {
                                   themeDivClasses="text-xs pt-2"
                                   content={`$${item.price}`}
                                 />
-                              
+
                               </div>
                             </div>
                           </div>
                           <div className="flex align-middle gap-x-8" >
-                          <Div themeDivClasses="flex"
-                          darkColor="bg-pepperBlack" content={<>
-                            <button
-                                    className="px-3 py-1 bg-gray-200 rounded-l"
-                                    onClick={() =>
-                                      handleQuantityChange(
-                                        item,
-                                        item.quantity - 1 >= 1
-                                          ? item.quantity - 1
-                                          : 1
-                                      )
-                                    }
-                                  >
-                                    <Text themeDivClasses=" " content={"-"} />
-                                  </button>
-                                  <Text
-                                    themeDivClasses="text-lg font-semibold"
-                                    content={` ${item.quantity}`}
-                                  />
-                                  <button
-                                    className="px-3 py-1 bg-gray-200 rounded-r"
-                                    onClick={() =>
-                                      handleQuantityChange(
-                                        item,
-                                        item.quantity + 1
-                                      )
-                                    }
-                                  >
-                                    <Text themeDivClasses=" " content={"+"} />
-                                  </button></>}
-                                 
+                            <Div themeDivClasses="flex"
+                              darkColor="bg-pepperBlack" content={<>
+                                <button
+                                  className="px-3 py-1 bg-gray-200 rounded-l"
+                                  onClick={() =>
+                                    handleQuantityChange(
+                                      item,
+                                      item.quantity - 1 >= 1
+                                        ? item.quantity - 1
+                                        : 1
+                                    )
+                                  }
+                                >
+                                  <Text themeDivClasses=" " content={"-"} />
+                                </button>
+                                <Text
+                                  themeDivClasses="text-lg font-semibold"
+                                  content={` ${item.quantity}`}
                                 />
+                                <button
+                                  className="px-3 py-1 bg-gray-200 rounded-r"
+                                  onClick={() =>
+                                    handleQuantityChange(
+                                      item,
+                                      item.quantity + 1
+                                    )
+                                  }
+                                >
+                                  <Text themeDivClasses=" " content={"+"} />
+                                </button></>}
+
+                            />
                             <button
                               className="text-red-500"
                               onClick={() => removeFromCart(item)}
@@ -227,4 +230,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default observer(Cart);

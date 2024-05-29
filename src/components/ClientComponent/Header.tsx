@@ -227,7 +227,7 @@
 // const HeaderComponent = () => {
 //   const router = usePathname();
 //   const [isMenuOpen, setIsMenuOpen] = useState(false);
-//   const [cartCount, setCartCount] = useState(0);
+//   const [MainStore.cartCount, setCartCount] = useState(0);
 
 //   useEffect(() => {
 //     const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
@@ -292,9 +292,9 @@
 //                       content={
 //                         <>
 //                           <FontAwesomeIcon icon={faCartShopping} />
-//                           {cartCount > 0 && (
+//                           {MainStore.cartCount > 0 && (
 //                             <span className="bg-red-500 text-white text-xs rounded-full px-2 py-1 ml-1 relative bottom-4">
-//                               {cartCount}
+//                               {MainStore.cartCount}
 //                             </span>
 //                           )}
 //                         </>
@@ -329,7 +329,7 @@
 // const HeaderComponent = () => {
 //   const router = usePathname();
 //   const [isMenuOpen, setIsMenuOpen] = useState(false);
-//   const [cartCount, setCartCount] = useState(0);
+//   const [MainStore.cartCount, setCartCount] = useState(0);
 
 //   useEffect(() => {
 //     const updateCartCount = () => {
@@ -409,9 +409,9 @@
 //                       content={
 //                         <>
 //                           <FontAwesomeIcon icon={faCartShopping} />
-//                           {cartCount > 0 && (
+//                           {MainStore.cartCount > 0 && (
 //                             <span className="bg-red-500 text-white text-xs rounded-full px-2 py-1 ml-1 relative bottom-4">
-//                               {cartCount}
+//                               {MainStore.cartCount}
 //                             </span>
 //                           )}
 //                         </>
@@ -433,7 +433,7 @@
 // export default observer(HeaderComponent);
 
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faUser, faCartShopping } from "@fortawesome/free-solid-svg-icons";
@@ -443,17 +443,17 @@ import { usePathname } from "next/navigation";
 import Div from "../UI/Div";
 import Text from "../UI/Text";
 import { observer } from "mobx-react";
+import MainStoreContext from "@/store/Mainstore";
 
 const HeaderComponent = () => {
   const router = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [cartCount, setCartCount] = useState(0);
-
+  const MainStore = useContext(MainStoreContext);
   useEffect(() => {
     const updateCartCount = () => {
       const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
       const totalCount = cartItems.reduce((acc: number, item: any) => acc + item.quantity, 0);
-      setCartCount(totalCount);
+      MainStore.setCartCount(totalCount);
     };
 
     // Listen for changes in localStorage
@@ -539,9 +539,9 @@ const HeaderComponent = () => {
                       content={
                         <>
                           <FontAwesomeIcon icon={faCartShopping} />
-                          {cartCount > 0 && (
+                          {MainStore.cartCount > 0 && (
                             <span className="bg-red-500 text-white text-xs rounded-full px-2 py-1 ml-1 relative bottom-4">
-                              {cartCount}
+                              {MainStore.cartCount}
                             </span>
                           )}
                         </>
