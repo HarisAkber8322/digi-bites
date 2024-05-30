@@ -111,21 +111,21 @@ export const cardList = [
   {
     name: "Today Top Picks",
     price: 100,
-    image: "/images/1.jpg", // Adjust path according to your project structure
+    image: "/images/c3.png", // Adjust path according to your project structure
     description: "Delicious zinger burger with crispy chicken patty.",
     link: "/client/profile/profile",
   },
   {
     name: "Suggestions",
     price: 200,
-    image: "/images/burger.jpeg", // Adjust path according to your project structure
+    image: "/images/c2.png", // Adjust path according to your project structure
     description: "Delicious zinger burger with crispy chicken patty.",
     link: "#",
   },
   {
     name: "Favourites",
     price: 300,
-    image: "/images/burger.jpeg", // Adjust path according to your project structure
+    image: "/images/c1.png", // Adjust path according to your project structure
     description: "Delicious zinger burger with crispy chicken patty.",
     link: "/client/favorite",
   },
@@ -137,56 +137,56 @@ export const menuData = [
       {
         name: "Cheese burger",
         price: 90,
-        image: "/images/burger.jpg", // Adjust path according to your project structure
+        image: "/images/b1.jpg", // Adjust path according to your project structure
         description: "Juicy beef patty with melted cheese in a soft bun.",
         link: "#",
       },
       {
         name: "Zinger Burger",
         price: 90,
-        image: "/images/burger.jpg", // Adjust path according to your project structure
+        image: "/images/b2.jpg", // Adjust path according to your project structure
         description: "Juicy beef patty with melted cheese in a soft bun.",
         link: "#",
       },
       {
         name: "Chicken Burger",
         price: 90,
-        image: "/images/burger.jpg", // Adjust path according to your project structure
+        image: "/images/b4.jpg", // Adjust path according to your project structure
         description: "Juicy beef patty with melted cheese in a soft bun.",
         link: "#",
       },
       {
         name: "Paty Burger",
         price: 90,
-        image: "/images/burger.jpg", // Adjust path according to your project structure
+        image: "/images/b3.jpg", // Adjust path according to your project structure
         description: "Juicy beef patty with melted cheese in a soft bun.",
         link: "#",
       },
       {
         name: "Grill Burger",
         price: 90,
-        image: "/images/burger.jpg", // Adjust path according to your project structure
+        image: "/images/b5.jpg", // Adjust path according to your project structure
         description: "Juicy beef patty with melted cheese in a soft bun.",
         link: "#",
       },
       {
         name: "Mity Burger",
         price: 90,
-        image: "/images/burger.jpg", // Adjust path according to your project structure
+        image: "/images/b6.jpg", // Adjust path according to your project structure
         description: "Juicy beef patty with melted cheese in a soft bun.",
         link: "#",
       },
       {
         name: "Grill Burger",
         price: 90,
-        image: "/images/burger.jpg", // Adjust path according to your project structure
+        image: "/images/b7.jpg", // Adjust path according to your project structure
         description: "Juicy beef patty with melted cheese in a soft bun.",
         link: "#",
       },
       {
         name: "Mity Burger",
         price: 90,
-        image: "/images/burger.jpg", // Adjust path according to your project structure
+        image: "/images/b8.jpg", // Adjust path according to your project structure
         description: "Juicy beef patty with melted cheese in a soft bun.",
         link: "#",
       },
@@ -199,21 +199,56 @@ export const menuData = [
       {
         name: "Chicken Biryani",
         price: 100,
-        image: "/images/burger.jpeg", // Adjust path according to your project structure
+        image: "/images/br1.jpg", // Adjust path according to your project structure
         description: "Aromatic rice dish with tender chicken pieces.",
         link: "#",
       },
       {
         name: "mutton Biryani",
         price: 100,
-        image: "/images/biryani.jpg", // Adjust path according to your project structure
+        image: "/images/br3.jpg", // Adjust path according to your project structure
         description: "Aromatic rice dish with tender chicken pieces.",
         link: "#",
       },
       {
         name: "karachi Biryani",
         price: 100,
-        image: "/images/burger.jpeg", // Adjust path according to your project structure
+        image: "/images/br4.jpg", // Adjust path according to your project structure
+        description: "Aromatic rice dish with tender chicken pieces.",
+        link: "#",
+      },
+      {
+        name: "Chicken Biryani",
+        price: 100,
+        image: "/images/br5.jpg", // Adjust path according to your project structure
+        description: "Aromatic rice dish with tender chicken pieces.",
+        link: "#",
+      },
+      {
+        name: "mutton Biryani",
+        price: 100,
+        image: "/images/br6.jpg", // Adjust path according to your project structure
+        description: "Aromatic rice dish with tender chicken pieces.",
+        link: "#",
+      },
+      {
+        name: "karachi Biryani",
+        price: 100,
+        image: "/images/br7.jpg", // Adjust path according to your project structure
+        description: "Aromatic rice dish with tender chicken pieces.",
+        link: "#",
+      },
+      {
+        name: "mutton Biryani",
+        price: 100,
+        image: "/images/br8.jpg", // Adjust path according to your project structure
+        description: "Aromatic rice dish with tender chicken pieces.",
+        link: "#",
+      },
+      {
+        name: "karachi Biryani",
+        price: 100,
+        image: "/images/br9.jpg", // Adjust path according to your project structure
         description: "Aromatic rice dish with tender chicken pieces.",
         link: "#",
       },
@@ -228,7 +263,63 @@ export const menuData = [
       {
         name: "Margherita Pizza",
         price: 200,
-        image: "/images/pizza.jpg", // Adjust path according to your project structure
+        image: "/images/p1.jpg", // Adjust path according to your project structure
+        description: "Classic Margherita with fresh mozzarella and basil.",
+        link: "#",
+      },
+      {
+        name: "Margherita Pizza",
+        price: 200,
+        image: "/images/p2.jpg", // Adjust path according to your project structure
+        description: "Classic Margherita with fresh mozzarella and basil.",
+        link: "#",
+      },
+      {
+        name: "Margherita Pizza",
+        price: 200,
+        image: "/images/p3.jpg", // Adjust path according to your project structure
+        description: "Classic Margherita with fresh mozzarella and basil.",
+        link: "#",
+      },
+      {
+        name: "Margherita Pizza",
+        price: 200,
+        image: "/images/p4.jpg", // Adjust path according to your project structure
+        description: "Classic Margherita with fresh mozzarella and basil.",
+        link: "#",
+      },
+      {
+        name: "Margherita Pizza",
+        price: 200,
+        image: "/images/p5.jpg", // Adjust path according to your project structure
+        description: "Classic Margherita with fresh mozzarella and basil.",
+        link: "#",
+      },
+      {
+        name: "Margherita Pizza",
+        price: 200,
+        image: "/images/p6.jpg", // Adjust path according to your project structure
+        description: "Classic Margherita with fresh mozzarella and basil.",
+        link: "#",
+      },
+      {
+        name: "Margherita Pizza",
+        price: 200,
+        image: "/images/p7.jpg", // Adjust path according to your project structure
+        description: "Classic Margherita with fresh mozzarella and basil.",
+        link: "#",
+      },
+      {
+        name: "Margherita Pizza",
+        price: 200,
+        image: "/images/p8.jpg", // Adjust path according to your project structure
+        description: "Classic Margherita with fresh mozzarella and basil.",
+        link: "#",
+      },
+      {
+        name: "Margherita Pizza",
+        price: 200,
+        image: "/images/p9.jpg", // Adjust path according to your project structure
         description: "Classic Margherita with fresh mozzarella and basil.",
         link: "#",
       },
@@ -241,7 +332,63 @@ export const menuData = [
       {
         name: "Club Sandwich",
         price: 80,
-        image: "/images/sandwich.jpg", // Adjust path according to your project structure
+        image: "/images/sa1.jpg", // Adjust path according to your project structure
+        description: "Triple-layered sandwich with ham, cheese, and veggies.",
+        link: "#",
+      },
+      {
+        name: "Club Sandwich",
+        price: 80,
+        image: "/images/sa2.jpg", // Adjust path according to your project structure
+        description: "Triple-layered sandwich with ham, cheese, and veggies.",
+        link: "#",
+      },
+      {
+        name: "Club Sandwich",
+        price: 80,
+        image: "/images/sa3.jpg", // Adjust path according to your project structure
+        description: "Triple-layered sandwich with ham, cheese, and veggies.",
+        link: "#",
+      },
+      {
+        name: "Club Sandwich",
+        price: 80,
+        image: "/images/sa4.jpg", // Adjust path according to your project structure
+        description: "Triple-layered sandwich with ham, cheese, and veggies.",
+        link: "#",
+      },
+      {
+        name: "Club Sandwich",
+        price: 80,
+        image: "/images/sa5.jpg", // Adjust path according to your project structure
+        description: "Triple-layered sandwich with ham, cheese, and veggies.",
+        link: "#",
+      },
+      {
+        name: "Club Sandwich",
+        price: 80,
+        image: "/images/sa6.jpg", // Adjust path according to your project structure
+        description: "Triple-layered sandwich with ham, cheese, and veggies.",
+        link: "#",
+      },
+      {
+        name: "Club Sandwich",
+        price: 80,
+        image: "/images/sa7.jpg", // Adjust path according to your project structure
+        description: "Triple-layered sandwich with ham, cheese, and veggies.",
+        link: "#",
+      },
+      {
+        name: "Club Sandwich",
+        price: 80,
+        image: "/images/sa8.jpg", // Adjust path according to your project structure
+        description: "Triple-layered sandwich with ham, cheese, and veggies.",
+        link: "#",
+      },
+      {
+        name: "Club Sandwich",
+        price: 80,
+        image: "/images/sa9.jpg", // Adjust path according to your project structure
         description: "Triple-layered sandwich with ham, cheese, and veggies.",
         link: "#",
       },
@@ -255,7 +402,63 @@ export const menuData = [
       {
         name: "Lemonade",
         price: 50,
-        image: "/images/lemonade.jpg", // Adjust path according to your project structure
+        image: "/images/d1.jpg", // Adjust path according to your project structure
+        description: "Refreshing lemonade with a hint of mint.",
+        link: "#",
+      },
+      {
+        name: "Lemonade",
+        price: 50,
+        image: "/images/d2.jpg", // Adjust path according to your project structure
+        description: "Refreshing lemonade with a hint of mint.",
+        link: "#",
+      },
+      {
+        name: "Lemonade",
+        price: 50,
+        image: "/images/d3.jpg", // Adjust path according to your project structure
+        description: "Refreshing lemonade with a hint of mint.",
+        link: "#",
+      },
+      {
+        name: "Lemonade",
+        price: 50,
+        image: "/images/d4.jpg", // Adjust path according to your project structure
+        description: "Refreshing lemonade with a hint of mint.",
+        link: "#",
+      },
+      {
+        name: "Lemonade",
+        price: 50,
+        image: "/images/d5.jpg", // Adjust path according to your project structure
+        description: "Refreshing lemonade with a hint of mint.",
+        link: "#",
+      },
+      {
+        name: "Lemonade",
+        price: 50,
+        image: "/images/d6.jpg", // Adjust path according to your project structure
+        description: "Refreshing lemonade with a hint of mint.",
+        link: "#",
+      },
+      {
+        name: "Lemonade",
+        price: 50,
+        image: "/images/d7.jpg", // Adjust path according to your project structure
+        description: "Refreshing lemonade with a hint of mint.",
+        link: "#",
+      },
+      {
+        name: "Lemonade",
+        price: 50,
+        image: "/images/d8.jpg", // Adjust path according to your project structure
+        description: "Refreshing lemonade with a hint of mint.",
+        link: "#",
+      },
+      {
+        name: "Lemonade",
+        price: 50,
+        image: "/images/d9.jpg", // Adjust path according to your project structure
         description: "Refreshing lemonade with a hint of mint.",
         link: "#",
       },

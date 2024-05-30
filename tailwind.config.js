@@ -25,7 +25,7 @@ const config: Config = {
         dullgrey: "#f6f6f6",
         blue1: "#2ec4b6",
         blue2: "#cbf3f0",
-        white1: "#ffffff",
+        white1: "#fafafa",
         brown1: "#ffbf69",
         orange1: "#F36A3E",
       },

@@ -17,13 +17,12 @@ const Card = ({ menuItem }: { menuItem: MenuItem }) => (
   <Link
     href={menuItem.link}
     passHref
-    className="relative  duration-75 group duration-500 cursor-pointer overflow-hidden relative text-white h-[350px] w-[350px] rounded-2xl transform transition-transform hover:scale-105 hover:shadow-2xl  hover:bg-blacka"
+    className="relative duration-75 group duration-500 cursor-pointer overflow-hidden relative text-white h-[350px] w-[350px] rounded-2xl transform transition-transform hover:scale-105 hover:shadow-2xl bg-black "
   >
     <div
-      className="w-[350px] h-[350px] bg-cover bg-center hover:opacity-75"
-      style={{ backgroundImage: `url(${menuItem.image})`}}
+      className="w-[350px] h-[350px] bg-cover bg-center hover:opacity-25 "
+      style={{ backgroundImage: `url(${menuItem.image})` }}
     >
-      
       <div className="flex flex-row justify-between">
         <svg
           className="fill-current stroke-current w-8 h-8 p-2 hover:bg-orange1 rounded-full m-1"
@@ -59,11 +58,14 @@ const Card = ({ menuItem }: { menuItem: MenuItem }) => (
           ></path> */}
         </svg>
       </div>
+      
+       
     </div>
-    <div className="absolute bg-gray-50 -bottom-8 w-full p-3 flex flex-col gap-1 group-hover:bottom-32  group-hover:duration-600 duration-500">
-      <span className="text-white font-bold text-center text-xl">{menuItem.name}</span>
-      <p className="text-white text-center">{menuItem.description}</p>
-    </div>
+    <span className="text-white font-bold text-center text-2xl absolute bg-gray-50 -bottom-48 w-full p-3 flex flex-col gap-1 group-hover:bottom-32  group-hover:duration-600 duration-500">
+          {menuItem.name}
+        
+        <p className=" text-center text-xl">{menuItem.description}</p>
+        </span>
   </Link>
 );
 
@@ -75,10 +77,10 @@ const CardGrid = () => (
     <Div
       darkColor="bg-pepperblack2"
       lightColor="bg-ExtraLightGray"
-      themeDivClasses={" py-20  content-center"}
+      themeDivClasses={" py-20  content-center "}
       content={
         <>
-          <div className="flex justify-around w-full md:w-[1180px] m-auto">
+          <div className="flex justify-around w-full md:w-[1180px] m-auto ">
             {cardList.slice(0, 3).map((menuItem: MenuItem, index: number) => (
               <Card key={index} menuItem={menuItem} />
             ))}

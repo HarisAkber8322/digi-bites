@@ -25,6 +25,8 @@ const FavoritePage: React.FC = () => {
 
   return (
     <Div
+      lightColor='white1'
+      darkColor='pepperBlack:'
       themeDivClasses={"m-auto w-[1180px]"}
       content={
         <div className="mt-7">
