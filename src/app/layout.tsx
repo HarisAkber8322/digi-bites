@@ -78,7 +78,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             `}</style>
       </head>
       <body>
-        <AdminLayout>{children}</AdminLayout>
+        <AdminLayout >{children}</AdminLayout>
         {/* <ClientLayout>{children}</ClientLayout> */}
       </body>
     </html>
