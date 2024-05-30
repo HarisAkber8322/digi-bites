@@ -34,15 +34,17 @@ const Menu: React.FC<MenuProps> = ({ handleCardClick }) => {
 
   return (
     <Div
-      themeDivClasses={"bg-pepperBlack"}
+    darkColor="bg-pepperBlack"
+    lightColor="bg-white1"
+      themeDivClasses={""}
       content={
-        <div className="mt-7">
+        <div className="my-[28px]">
           {menuData.map((categoryData, categoryIndex) => (
-            <div key={categoryIndex} className="mb-10">
+            <div key={categoryIndex} className="mb-[28px]">
               <Text
                 content={
                   <>
-                    <h2 className="text-2xl font-bold mb-4">
+                    <h2 className="text-2xl font-bold align-middle">
                       {categoryData.category}
                     </h2>
                     {categoryData.items.length > 6 && (
@@ -61,7 +63,7 @@ const Menu: React.FC<MenuProps> = ({ handleCardClick }) => {
                 }
                 themeDivClasses="flex flex-rows justify-between"
               />
-              <div className="grid grid-cols-6 gap-4">
+              <div className="grid grid-cols-6 gap-4 my-[28px]">
                 {categoryData.items.slice(0, 6).map((menuItem, itemIndex) => (
                   <MenuCard
                     key={itemIndex}

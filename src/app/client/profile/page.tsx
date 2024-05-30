@@ -13,7 +13,7 @@ const Profile = () => {
   return (
     <Div
       themeDivClasses="min-h-screen md:w-[1180px] m-auto "
-      lightColor="bg-white"
+      lightColor="bg-white1"
       darkColor="bg-pepperblack"
       content={
         <>

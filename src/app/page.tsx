@@ -20,7 +20,7 @@ const App = ({ Component, pageProps }: any) => {
 
   return (
     <>
-      <div className="mt-5 w-full md:w-[1180px] m-auto">
+      <div className="mt-[28px] w-full md:w-[1180px] m-auto">
         <Slider />
       </div>
       {/* <div className="w-full md:w-[1180px] m-auto">
@@ -29,7 +29,7 @@ const App = ({ Component, pageProps }: any) => {
       {/* <div>
         <SetMenuComponent/>
       </div> */}
-      <div>
+      <div className="my-[28px]">
         <CardGrid />
       </div>
       <div className="w-full md:w-[1180px] m-auto">

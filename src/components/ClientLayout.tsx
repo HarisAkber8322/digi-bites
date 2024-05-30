@@ -22,13 +22,14 @@ const ClientLayout = ({ children }: { children: React.ReactNode }) => {
           <HeaderComponent/>
           <Div
             darkColor="bg-pepperBlack"
-            themeDivClasses={classNames(["ease-in-out duration-300 w-full pt-[64px] min-h-[100vh]  pb-[300px]"])}
+            lightColor="bg-white1"
+            themeDivClasses={classNames([" w-full pt-[64px] min-h-[100vh]  pb-[300px]"])}
             content={children}
           />
           <FooterComponent />
         </>
       }
-      themeDivClasses={classNames(["ease-in-out duration-300 w-full "])}
+      themeDivClasses={classNames([" w-full "])}
     />
   );
 };

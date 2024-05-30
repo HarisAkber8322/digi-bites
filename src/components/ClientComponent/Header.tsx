@@ -9,11 +9,15 @@ import Div from "../UI/Div";
 import Text from "../UI/Text";
 import { observer } from "mobx-react";
 import MainStoreContext from "@/store/Mainstore";
+import { menuData } from "../../utills/constants"; // Adjust the path to where your menuData is located
 
 const HeaderComponent = () => {
   const router = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(null);
   const MainStore = useContext(MainStoreContext);
+
   useEffect(() => {
     const updateCartCount = () => {
       const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
@@ -21,24 +25,31 @@ const HeaderComponent = () => {
       MainStore.setCartCount(totalCount);
     };
 
-    // Listen for changes in localStorage
     window.addEventListener('storage', updateCartCount);
-
-    // Initial count update
     updateCartCount();
 
-    // Cleanup function
     return () => {
       window.removeEventListener('storage', updateCartCount);
     };
-  }, []);
-
-  const handleSearch = (searchTerm: string) => {
-    console.log("Search term:", searchTerm);
-  };
+  }, [MainStore]);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleMouseEnter = () => {
+    if (dropdownTimeout) {
+      clearTimeout(dropdownTimeout);
+      setDropdownTimeout(null);
+    }
+    setIsDropdownOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    const timeout = setTimeout(() => {
+      setIsDropdownOpen(false);
+    }, 1000);
+    setDropdownTimeout(timeout as NodeJS.Timeout);
   };
 
   return (
@@ -66,6 +77,24 @@ const HeaderComponent = () => {
                 </div>
                 <div className={`navbar_menu xs:hidden duration-75 md:left-0 md:block`}>
                   <ul className="md:flex md:gap-10 md:text-lg md:font-semibold md:items-center">
+                    <li
+                      className="md:transition-all md:duration-500 md:ease-in-out relative"
+                      onMouseEnter={handleMouseEnter}
+                      onMouseLeave={handleMouseLeave}
+                    >
+                      <span className="md:cursor-pointer">Categories</span>
+                      {isDropdownOpen && (
+                        <ul className="absolute bg-white shadow-lg rounded-md mt-2 z-10">
+                          {menuData.map((category) => (
+                            <li key={category.category} className="px-4 hover:bg-yellow-100 rounded-xl text-base font-semibold w-40">
+                              <Link href={`/client/category/${category.category}`}>
+                                {category.category}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </li>
                     <li className="md:transition-all md:duration-500 md:ease-in-out">
                       <Link
                         href="/client/favorite"
@@ -79,7 +108,7 @@ const HeaderComponent = () => {
                     </li>
                     <li className="md:transition-all md:duration-500 md:ease-in-out">
                       <Link href="/contact" className={router === "/contact" ? "active" : ""}>
-                        <Text themeDivClasses="md:text-md md:font-semibold" content={"contact"} />
+                        <Text themeDivClasses="md:text-md md:font-semibold" content={"Contact"} />
                       </Link>
                     </li>
                   </ul>
@@ -90,14 +119,8 @@ const HeaderComponent = () => {
                   {/* <SearchInput onSearch={handleSearch} /> */}
                 </div>
                 <div className="md:text-lg md:flex md:items-center md:gap-5">
-                  <Link
-                    href={"/client/profile"}
-                    className="cursor-pointer"
-                  >
-                    <Text
-                      content={<FontAwesomeIcon icon={faUser} />}
-                      themeDivClasses=""
-                    />
+                  <Link href={"/client/profile"} className="cursor-pointer">
+                    <Text content={<FontAwesomeIcon icon={faUser} />} themeDivClasses="" />
                   </Link>
                   <Link href="/client/cart" className="cursor-pointer">
                     <Text
@@ -116,8 +139,8 @@ const HeaderComponent = () => {
                   </Link>
                   <ToggleThemeComponent />
                 </div>
-              </div >
-            </div >
+              </div>
+            </div>
           </>
         }
       />

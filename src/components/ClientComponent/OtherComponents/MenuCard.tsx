@@ -49,12 +49,13 @@ const MenuCard: React.FC<MenuCardProps> = ({
   return (
     <div className="cursor-pointer" onClick={() => handleCardClick(menuItem)}>
       <Div
-        themeDivClasses={"overflow-hidden rounded-xl h-72 shadow-xl"}
+      
+        themeDivClasses={"overflow-hidden rounded-xl h-[240px] shadow-xl"}
         content={
           <>
             <div className="relative">
               <Image
-                className="items-center !w-full !h-[180px]"
+                className="items-center !w-full !h-[130px]"
                 src={menuItem.image}
                 width={300}
                 height={250}
@@ -73,24 +74,27 @@ const MenuCard: React.FC<MenuCardProps> = ({
             </div>
             <div className="flex flex-col items-center justify-center">
               <Text
-                themeDivClasses="text-lg mt-2 font-semibold"
+                lightColor="text-dullblack"
+                themeDivClasses="text-medium mt-2 font-semibold"
                 content={menuItem.name}
               />
               <Text
-                themeDivClasses="text-lg font-semibold"
+                darkColor="text-dullyellow"
+                lightColor="text-dullyellow"
+                themeDivClasses="text-medium font-semibold"
                 content={`$${menuItem.price}`}
               />
             </div>
             <div className="flex w-full justify-center">
               <button
-                className="flex w-[95%] rounded-[4px] overflow-hidden"
+                className="flex w-[50%] rounded-[20px] overflow-hidden"
                 onClick={(e) => {
                   e.stopPropagation();
                   addToCart(menuItem);
                 }}
               >
                 <Text
-                  themeDivClasses="flex justify-center p-1 bg-dullyellow w-full text-lg text-white"
+                  themeDivClasses="flex justify-center p-1 bg-dullyellow w-full text-normal text-white"
                   content={<>Add to Cart</>}
                 />
               </button>

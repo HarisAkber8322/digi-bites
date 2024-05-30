@@ -2,6 +2,7 @@ import { observer } from "mobx-react";
 import classNames from "classnames";
 import ThemeStoreContext from "@/store/ThemeStore";
 import { useContext } from "react";
+
 const Div = ({
   content,
   themeDivClasses,
@@ -16,14 +17,15 @@ const Div = ({
   const themeStore = useContext(ThemeStoreContext);
   return (
     <div
-      className={classNames (
+      className={classNames(
+        "ease-in-out duration-300", // Adding transition classes here
         themeStore.themeMode === "light"
-          ? lightColor 
+          ? lightColor
             ? lightColor
             : "bg-white"
-          : darkColor 
-            ? darkColor
-            : "bg-black",
+          : darkColor
+          ? darkColor
+          : "bg-black",
         themeDivClasses
       )}
     >
@@ -31,4 +33,5 @@ const Div = ({
     </div>
   );
 };
+
 export default observer(Div);
