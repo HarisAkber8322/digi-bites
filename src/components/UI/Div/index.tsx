@@ -22,7 +22,7 @@ const Div = ({
         themeStore.themeMode === "light"
           ? lightColor
             ? lightColor
-            : "bg-white"
+            : "bg-white1"
           : darkColor
           ? darkColor
           : "bg-black",
