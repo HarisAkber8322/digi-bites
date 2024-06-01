@@ -78,8 +78,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             `}</style>
       </head>
       <body>
-        <AdminLayout>{children}</AdminLayout>
-        {/* <ClientLayout>{children}</ClientLayout> */}
+        {/* <AdminLayout >{children}</AdminLayout> */}
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );

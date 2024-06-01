@@ -9,7 +9,7 @@ const Dashboard: React.FC = () => {
     <Div
       themeDivClasses={"w-[1180px] m-auto"}
       content={
-       <>Dashboard </>
+       <> <h2>dasfboard</h2> </>
       }
     />
   );

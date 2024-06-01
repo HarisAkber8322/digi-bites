@@ -1,38 +1,58 @@
 import React from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { observer } from "mobx-react";
-import {
-  faBars,
-  faContactBook,
-  faHome,
-  faShop,
-  faUser,
-  faXmark,
-} from "@fortawesome/free-solid-svg-icons";
-import { usePathname, useRouter } from "next/navigation";
-// import Div from "./UI/Div";
+import { faHome, faBars } from "@fortawesome/free-solid-svg-icons";
+import { Image } from "react-bootstrap";
+import Div from "../UI/Div";
+import Text from "../UI/Text";
 import classNames from "classnames";
-const SideBarComponent = ({ toggle }: { toggle: boolean }) => {
-  const router = usePathname();
-  return (
-    <>
-      <div className={classNames(["w-[250px] bg-slate-100 h-[100vh] pt-[70px] ease-in-out duration-300", toggle ? "ml-[-250px]" : "ml-0"])}>
-        <ul className="flex gap-4 flex-col">
-          <li>
-            <Link
-              href="/users"
-              className={classNames([" px-4 py-2 text-lg gap-4 flex items-center", router === "/users" ? "active" : ""])}            >
 
-              <span>
-                <FontAwesomeIcon icon={faUser} />
-              </span>
-              <span className="list_text"> User </span>
-            </Link>
-          </li>
-        </ul>
-      </div>
-    </>
+interface SideBarProps {
+  toggle: boolean;
+  // Add other props if needed
+}
+
+const SideBarComponent: React.FC<SideBarProps> = (props) => {
+  return (
+    <Div
+      themeDivClasses={classNames([
+        "ease-in-out duration-300 h-screen  border-r border-lightGray pt-32 fixed",
+        props.toggle ? "w-[80px]" : "!w-[250px]",
+      ])}
+      content={
+        <>
+          <ul className="w-full">
+            <li className=" duration-500">
+              <Link
+                className={classNames([
+                  "ease-in-out duration-300 h-screen text-base font-semibold py-5 px-8  items-center ",
+                  props.toggle ? "pl-7" : "pl-12",
+                ])}
+                href="/admin/dashboard"
+              >
+                <Text
+                  themeDivClasses=""
+                  content={
+                    <>
+                      <FontAwesomeIcon icon={faHome} />{" "}
+                    </>
+                  }
+                />
+                <Text
+                  themeDivClasses={classNames([
+                    " duration-300 ease-in-out",
+                    ,
+                    props.toggle ? "text-[0px]" : "text-base",
+                  ])}
+                  content={<>Dashboard</>}
+                />
+              </Link>
+            </li>
+          </ul>
+        </>
+      }
+    />
   );
 };
-export default observer(SideBarComponent);
+
+export default SideBarComponent;
