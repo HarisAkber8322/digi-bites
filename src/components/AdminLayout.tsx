@@ -27,7 +27,7 @@ const Layout = (
     </MainStoreContext.Provider> */}
      <HeaderComponent toggle={toggle} setToggle={setToggle} handleToggle={HandleToggle}/>
       <div className="flex ">
-        <SideBarComponent  toggle={toggle} 
+        <SideBarComponent  toggle={false} 
         //  themeStore={themeStore} 
         />
        
