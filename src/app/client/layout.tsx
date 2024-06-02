@@ -1,21 +1,15 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React from "react";
 import HeaderComponent from "@/components/ClientComponent/Header";
 import { observer } from "mobx-react";
 import dynamic from "next/dynamic";
-import ThemeStoreContext from "@/store/ThemeStore";
 import classNames from "classnames";
-import Div from "./UI/Div";
-import FooterComponent from "./ClientComponent/Footer";
+import Div from "@/components/UI/Div";
+import FooterComponent from "@/components/ClientComponent/Footer";
 
 
 const ClientLayout = ({ children }: { children: React.ReactNode }) => {
-  // const [toggle, setToggle] = useState(false);
-  // const themeStore = useContext(ThemeStoreContext);
-
-
   return (
-
     <Div
       content={
         <>
