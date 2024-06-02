@@ -133,6 +133,7 @@ export const cardList = [
 export const menuData = [
   {
     category: "Burger",
+    image: "/images/burger.jpg", // Unique image for Drinks category
     items: [
       {
         name: "Cheese burger",
@@ -195,6 +196,7 @@ export const menuData = [
   },
   {
     category: "Biryani",
+    image: "/images/biryani.jpg",
     items: [
       {
         name: "Chicken Biryani",
@@ -259,6 +261,7 @@ export const menuData = [
 
   {
     category: "Pizza",
+    image: "/images/pizza.jpg",
     items: [
       {
         name: "Margherita Pizza",
@@ -328,6 +331,7 @@ export const menuData = [
   },
   {
     category: "Sandwich",
+    image: "/images/sandwich.jpg",
     items: [
       {
         name: "Club Sandwich",
@@ -398,6 +402,7 @@ export const menuData = [
 
   {
     category: "Drinks",
+    image: "/images/drink.jpg",
     items: [
       {
         name: "Lemonade",

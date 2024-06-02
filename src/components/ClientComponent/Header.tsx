@@ -77,8 +77,11 @@ const HeaderComponent = () => {
                 </div>
                 <div className={`navbar_menu xs:hidden duration-75 md:left-0 md:block`}>
                   <ul className="md:flex md:gap-10 md:text-lg md:font-semibold md:items-center">
+                    <Text
+                    themeDivClasses=""
+                    content={
                     <li
-                      className="md:transition-all md:duration-500 md:ease-in-out relative"
+                      className=""
                       onMouseEnter={handleMouseEnter}
                       onMouseLeave={handleMouseLeave}
                     >
@@ -86,7 +89,7 @@ const HeaderComponent = () => {
                       {isDropdownOpen && (
                         <ul className="absolute bg-white shadow-lg rounded-md mt-2 z-10">
                           {menuData.map((category) => (
-                            <li key={category.category} className="px-4 hover:bg-yellow-100 rounded-xl text-base font-semibold w-40">
+                            <li key={category.category} className="px-4 text-black hover:bg-yellow-100 rounded-xl text-base font-semibold w-40">
                               <Link href={`/client/category/${category.category}`}>
                                 {category.category}
                               </Link>
@@ -95,6 +98,7 @@ const HeaderComponent = () => {
                         </ul>
                       )}
                     </li>
+                    }/>
                     <li className="md:transition-all md:duration-500 md:ease-in-out">
                       <Link
                         href="/client/favorite"
