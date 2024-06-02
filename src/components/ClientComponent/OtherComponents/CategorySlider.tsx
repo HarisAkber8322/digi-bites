@@ -5,6 +5,8 @@ import Image from "next/image";
 import Text from "../../UI/Text";
 import Link from "next/link";
 import { observer } from "mobx-react";
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
 
 interface ArrowProps {
   className?: string;
@@ -56,7 +58,7 @@ const CategorySlider: React.FC = () => {
 
   return (
     <>
-      <div className="mt-7 flex justify-center">
+      <div className="mt-7 flex justify-center ">
         <Text themeDivClasses="text-3xl font-bold" content="All Categories" />
       </div>
       <div className="mt-7">
