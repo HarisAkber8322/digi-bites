@@ -4,16 +4,16 @@ import React from "react";
 import { observer } from "mobx-react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Div from "../../../../components/UI/Div";
-import Text from "../../../../components/UI/Text";
+import Div from "../../../components/UI/Div";
+import Text from "../../../components/UI/Text";
 import dynamic from "next/dynamic";
-import { CardData } from "../../../../utills/constants"; // Adjust the path as needed
+import { CardData } from "../../../utills/constants"; // Adjust the path as needed
 
 const Profile = () => {
   return (
     <Div
       themeDivClasses="min-h-screen md:w-[1180px] m-auto "
-      lightColor="bg-white"
+      lightColor="bg-white1"
       darkColor="bg-pepperblack"
       content={
         <>
@@ -40,7 +40,7 @@ const Profile = () => {
               {CardData.map((card) => (
                 <Div
                   key={card.id}
-                  lightColor="bg-white"
+                  lightColor="bg-ExtraLightGray"
                   darkColor="bg-pepperblack2"
                   themeDivClasses="w-[172px] h-[172px] flex flex-col items-center justify-center p-0 m-0 rounded-[30px] shadow-md transition duration-300 hover:bg-ExtraLightGray hover:bg-opacity-20"
                   content={

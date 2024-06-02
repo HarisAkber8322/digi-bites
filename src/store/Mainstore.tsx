@@ -11,7 +11,7 @@ class AppStore {
 
   user = {};
   userList = [];
-
+  cartCount= 0;
   async loadUsers() {
     try {
       const response = await axios.get("http://localhost:3001/api/users");
@@ -19,6 +19,9 @@ class AppStore {
     } catch (error) {
       console.error("Error loading users:", error);
     }
+  }
+  setCartCount(value: number) {
+    this.cartCount = value;
   }
     // get users() {
     //   return this.userList;

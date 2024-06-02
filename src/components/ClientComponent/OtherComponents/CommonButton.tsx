@@ -10,9 +10,9 @@ const CommonButton = () => {
   return (
     <>
     
-        <button className="flex w-[95%] rounded-[4px] overflow-hidden " >
-        <Link className="flex justify-center p-1 bg-brown1 w-full text-lg  text-white" href={"#"}>
-            Quick View
+        <button className="flex w-[50%] rounded-[30px] overflow-hidden " >
+        <Link className="flex justify-center p-1 bg-dullyellow w-full text-lg  text-white" href={"#"}>
+            Add To Cart
         </Link>
         </button>
     

@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Div from "../../UI/Div";
 import Text from "../../UI/Text";
-import { MenuList } from "../../../utills/constants";
+import { cardList } from "../../../utills/constants";
 
 interface MenuItem {
   name: string;
@@ -14,12 +14,18 @@ interface MenuItem {
 }
 
 const Card = ({ menuItem }: { menuItem: MenuItem }) => (
-  <Link href={menuItem.link} passHref className="relative group duration-500 cursor-pointer overflow-hidden relative text-gray-50 h-72 w-56 rounded-2xl hover:duration-700 duration-700">
-
-    <div className="w-56 h-72 bg-lime-400 text-gray-800">
+  <Link
+    href={menuItem.link}
+    passHref
+    className="relative duration-75 group duration-500 cursor-pointer overflow-hidden relative text-white h-[350px] w-[350px] rounded-2xl transform transition-transform hover:scale-105 hover:shadow-2xl bg-black "
+  >
+    <div
+      className="w-[350px] h-[350px] bg-cover bg-center hover:opacity-25 "
+      style={{ backgroundImage: `url(${menuItem.image})` }}
+    >
       <div className="flex flex-row justify-between">
         <svg
-          className="fill-current stroke-current w-8 h-8 p-2 hover:bg-lime-200 rounded-full m-1"
+          className="fill-current stroke-current w-8 h-8 p-2 hover:bg-orange1 rounded-full m-1"
           height="100"
           preserveAspectRatio="xMidYMid meet"
           viewBox="0 0 100 100"
@@ -35,44 +41,53 @@ const Card = ({ menuItem }: { menuItem: MenuItem }) => (
           ></path>
         </svg>
         <svg
-          className="fill-current stroke-current w-8 h-8 p-2 m-1 hover:bg-lime-200 rounded-full"
+          className="fill-current stroke-current w-8 h-8 p-2 m-1 "
           height="100"
           preserveAspectRatio="xMidYMid meet"
           viewBox="0 0 100 100"
           width="100"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <path
+          {/* <path
             className="svg-stroke-primary"
             d="M50,17.4h0M50,50h0m0,32.6h0M50,22a4.7,4.7,0,1,1,4.7-4.6A4.7,4.7,0,0,1,50,22Zm0,32.7A4.7,4.7,0,1,1,54.7,50,4.7,4.7,0,0,1,50,54.7Zm0,32.6a4.7,4.7,0,1,1,4.7-4.7A4.7,4.7,0,0,1,50,87.3Z"
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth="8"
-          ></path>
+          ></path> */}
         </svg>
       </div>
+      
+       
     </div>
-    <div className="absolute bg-gray-50 -bottom-24 w-56 p-3 flex flex-col gap-1 group-hover:-bottom-0 group-hover:duration-600 duration-500">
-      <span className="text-lime-400 font-bold text-xs">{menuItem.name}</span>
-      <span className="text-gray-800 font-bold text-3xl">${menuItem.price}</span>
-      <p className="text-neutral-800">{menuItem.description}</p>
-    </div>
+    <span className="text-white font-bold text-center text-2xl absolute bg-gray-50 -bottom-48 w-full p-3 flex flex-col gap-1 group-hover:bottom-32  group-hover:duration-600 duration-500">
+          {menuItem.name}
+        
+        <p className=" text-center text-xl">{menuItem.description}</p>
+        </span>
   </Link>
 );
 
 const CardGrid = () => (
   <>
-    <div className="mt-14 flex justify-center">
+    {/* <div className="mt-14 flex justify-center">
       <Text themeDivClasses="text-3xl font-bold" content={"Menu"} />
-    </div>
-    <Div themeDivClasses={"bg-pepperBlack"} content={
-      <div className="grid grid-cols-3 mt-7 ml-20 mr-20 gap-4">
-        {MenuList.slice(0, 3).map((menuItem: MenuItem, index: number) => (
-          <Card key={index} menuItem={menuItem} />
-        ))}
-      </div>
-    } />
+    </div> */}
+    <Div
+      darkColor="bg-pepperblack2"
+      lightColor="bg-ExtraLightGray"
+      themeDivClasses={" py-20  content-center "}
+      content={
+        <>
+          <div className="flex justify-around w-full md:w-[1180px] m-auto ">
+            {cardList.slice(0, 3).map((menuItem: MenuItem, index: number) => (
+              <Card key={index} menuItem={menuItem} />
+            ))}
+          </div>
+        </>
+      }
+    />
   </>
 );
 

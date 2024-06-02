@@ -39,10 +39,10 @@ const CategorySlider = () => {
 
   return (
     <>
-      <div className="mt-10 flex justify-center">
+      <div className="mt-7 flex justify-center">
         <Text themeDivClasses="text-3xl font-bold" content="All Categories" />
       </div>
-      <div className="mt-7 mx-20  ">
+      <div className="mt-7 ">
         <Slider {...settings}>
           {MenuList.map((menuItem, index) => (
             <div key={index} className="!flex !justify-center">
@@ -53,7 +53,7 @@ const CategorySlider = () => {
                     src={menuItem.image}
                     alt={menuItem.name}
                     width={130}
-                    height={130}
+                    height={130}                    
                   />
                 </div>
                 <Text

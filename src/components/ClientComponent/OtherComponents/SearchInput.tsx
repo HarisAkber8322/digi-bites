@@ -33,7 +33,7 @@ function SearchInput({ onSearch }: SearchInputProps) {
           placeholder="Search categories..."
           value={searchTerm}
           onChange={handleChange}
-          className="rounded-lg pl-10 px-3 py-2 border border-blue2 w-[330px] h-[30px] hover:bg-slate-100" // Added hover class
+          className="rounded-lg pl-10 px-3 py-2 border border-dullyellow w-[330px] h-[30px] hover:bg-slate-100" // Added hover class
         />
       </div>
     </form>
