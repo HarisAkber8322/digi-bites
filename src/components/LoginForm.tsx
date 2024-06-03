@@ -20,7 +20,10 @@ const LoginForm: React.FC = () => {
     password: Yup.string().required("*"),
   });
 
-  const onSubmit = async (values: LoginFormValues, { setSubmitting }: FormikHelpers<LoginFormValues>) => {
+  const onSubmit = async (
+    values: LoginFormValues,
+    { setSubmitting }: FormikHelpers<LoginFormValues>,
+  ) => {
     // Simulate login logic (replace with actual authentication logic)
     console.log("Logging in with:", values);
 
@@ -31,7 +34,7 @@ const LoginForm: React.FC = () => {
     setSubmitting(false);
   };
 
-  const colorCode = "green";  // This variable is defined but not used
+  const colorCode = "green"; // This variable is defined but not used
   return (
     <div>
       <div>
@@ -84,7 +87,11 @@ const LoginForm: React.FC = () => {
                 />
               </div>
               <div className="form-group">
-                <button type="submit" className="submit-button" disabled={isSubmitting}>
+                <button
+                  type="submit"
+                  className="submit-button"
+                  disabled={isSubmitting}
+                >
                   Login
                 </button>
               </div>

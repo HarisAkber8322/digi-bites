@@ -24,9 +24,9 @@ const Div = ({
             ? lightColor
             : "bg-white"
           : darkColor
-          ? darkColor
-          : "bg-black",
-        themeDivClasses
+            ? darkColor
+            : "bg-black",
+        themeDivClasses,
       )}
     >
       {content}

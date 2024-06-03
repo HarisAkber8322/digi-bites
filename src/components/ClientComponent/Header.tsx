@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faUser, faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBars,
+  faUser,
+  faCartShopping,
+} from "@fortawesome/free-solid-svg-icons";
 import ToggleThemeComponent from "../ToggleThemeButton";
 import { Image } from "react-bootstrap";
 import { usePathname } from "next/navigation";
@@ -15,21 +19,26 @@ const HeaderComponent = () => {
   const router = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(
+    null,
+  );
   const MainStore = useContext(MainStoreContext);
 
   useEffect(() => {
     const updateCartCount = () => {
       const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
-      const totalCount = cartItems.reduce((acc: number, item: any) => acc + item.quantity, 0);
+      const totalCount = cartItems.reduce(
+        (acc: number, item: any) => acc + item.quantity,
+        0,
+      );
       MainStore.setCartCount(totalCount);
     };
 
-    window.addEventListener('storage', updateCartCount);
+    window.addEventListener("storage", updateCartCount);
     updateCartCount();
 
     return () => {
-      window.removeEventListener('storage', updateCartCount);
+      window.removeEventListener("storage", updateCartCount);
     };
   }, [MainStore]);
 
@@ -72,33 +81,41 @@ const HeaderComponent = () => {
                 <div className="md:hidden">
                   <Text
                     themeDivClasses="text-xl cursor-pointer"
-                    content={<FontAwesomeIcon icon={faBars} onClick={toggleMenu} />}
+                    content={
+                      <FontAwesomeIcon icon={faBars} onClick={toggleMenu} />
+                    }
                   />
                 </div>
-                <div className={`navbar_menu xs:hidden duration-75 md:left-0 md:block`}>
+                <div
+                  className={`navbar_menu xs:hidden duration-75 md:left-0 md:block`}
+                >
                   <ul className="md:flex md:gap-10 md:text-lg md:font-semibold md:items-center">
                     <Text
-                    themeDivClasses=""
-                    content={
-                    <li
-                      className=""
-                      onMouseEnter={handleMouseEnter}
-                      onMouseLeave={handleMouseLeave}
-                    >
-                      <span className="md:cursor-pointer">Categories</span>
-                      {isDropdownOpen && (
-                        <ul className="absolute bg-white shadow-lg rounded-md mt-2 z-10">
-                          {menuData.map((category) => (
-                            <li key={category.category} className="px-4 text-black hover:bg-yellow-100 rounded-xl text-base font-semibold w-40">
-                              <Link href={`/category/${category.category}`}>
-                                {category.category}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </li>
-                    }/>
+                      themeDivClasses=""
+                      content={
+                        <li
+                          className=""
+                          onMouseEnter={handleMouseEnter}
+                          onMouseLeave={handleMouseLeave}
+                        >
+                          <span className="md:cursor-pointer">Categories</span>
+                          {isDropdownOpen && (
+                            <ul className="absolute bg-white shadow-lg rounded-md mt-2 z-10">
+                              {menuData.map((category) => (
+                                <li
+                                  key={category.category}
+                                  className="px-4 text-black hover:bg-yellow-100 rounded-xl text-base font-semibold w-40"
+                                >
+                                  <Link href={`/category/${category.category}`}>
+                                    {category.category}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </li>
+                      }
+                    />
                     <li className="md:transition-all md:duration-500 md:ease-in-out">
                       <Link
                         href="/favorite"
@@ -111,8 +128,14 @@ const HeaderComponent = () => {
                       </Link>
                     </li>
                     <li className="md:transition-all md:duration-500 md:ease-in-out">
-                      <Link href="/contact" className={router === "/contact" ? "active" : ""}>
-                        <Text themeDivClasses="md:text-md md:font-semibold" content={"Contact"} />
+                      <Link
+                        href="/contact"
+                        className={router === "/contact" ? "active" : ""}
+                      >
+                        <Text
+                          themeDivClasses="md:text-md md:font-semibold"
+                          content={"Contact"}
+                        />
                       </Link>
                     </li>
                   </ul>
@@ -124,7 +147,10 @@ const HeaderComponent = () => {
                 </div>
                 <div className="md:text-lg md:flex md:items-center md:gap-5">
                   <Link href={"/profile"} className="cursor-pointer">
-                    <Text content={<FontAwesomeIcon icon={faUser} />} themeDivClasses="" />
+                    <Text
+                      content={<FontAwesomeIcon icon={faUser} />}
+                      themeDivClasses=""
+                    />
                   </Link>
                   <Link href="/cart" className="cursor-pointer">
                     <Text

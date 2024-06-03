@@ -31,7 +31,7 @@ const MenuCard: React.FC<MenuCardProps> = ({
   const addToCart = (item: any) => {
     const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
     const existingItem = cartItems.find(
-      (cartItem: any) => cartItem.name === item.name
+      (cartItem: any) => cartItem.name === item.name,
     );
     if (existingItem) {
       existingItem.quantity += 1;
@@ -49,7 +49,6 @@ const MenuCard: React.FC<MenuCardProps> = ({
   return (
     <div className="cursor-pointer" onClick={() => handleCardClick(menuItem)}>
       <Div
-      
         themeDivClasses={"overflow-hidden rounded-xl h-[240px] shadow-xl"}
         content={
           <>

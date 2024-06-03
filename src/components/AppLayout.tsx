@@ -8,15 +8,18 @@ import ClientLayout from "@/components/ClientLayout";
 
 const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const pathname = usePathname();
-  const isAdminRoute = pathname.startsWith('/admin');
+  const isAdminRoute = pathname.startsWith("/admin");
   return (
-    <>{isAdminRoute ?
-      <AdminLayout children={children} />
-      : <ClientLayout children={children} />
-    }</>
+    <>
+      {isAdminRoute ? (
+        <AdminLayout>{children}</AdminLayout>
+      ) : (
+        <ClientLayout>{children}</ClientLayout>
+      )}
+    </>
   );
 };
 
 export default observer(
-  dynamic(() => Promise.resolve(AppLayout), { ssr: false })
+  dynamic(() => Promise.resolve(AppLayout), { ssr: false }),
 );

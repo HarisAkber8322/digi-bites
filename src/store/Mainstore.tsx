@@ -3,15 +3,22 @@
 import { makeAutoObservable } from "mobx";
 import axios from "axios";
 import React from "react";
+interface Users {
+  fname: string;
+  lname: string;
+  email: string;
+  contact_no: string;
+  type: string;
+}
 class AppStore {
   constructor() {
     makeAutoObservable(this);
     this.loadUsers();
   }
 
-  user = {};
-  userList = [];
-  cartCount= 0;
+  user: Partial<Users> = {};
+  userList: Users[] = [];
+  cartCount = 0;
   async loadUsers() {
     try {
       const response = await axios.get("http://localhost:3001/api/users");
@@ -23,9 +30,9 @@ class AppStore {
   setCartCount(value: number) {
     this.cartCount = value;
   }
-    // get users() {
-    //   return this.userList;
-    // }
+  // get users() {
+  //   return this.userList;
+  // }
 }
 
 const MainStore = new AppStore();

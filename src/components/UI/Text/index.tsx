@@ -21,12 +21,12 @@ const Text = ({
       className={classNames(
         themeDivClasses,
         themeStore.themeMode === "light"
-          ? lightColor 
+          ? lightColor
             ? lightColor
             : "text-black"
-          : darkColor 
+          : darkColor
             ? darkColor
-            : "text-white"
+            : "text-white",
       )}
     >
       {content}
