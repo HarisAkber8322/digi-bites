@@ -31,7 +31,10 @@ const SideBarComponent: React.FC<SideBarProps> = (props) => {
                   themeDivClasses=""
                   content={
                     <>
-                      <FontAwesomeIcon className="text-lightorange" icon={faHome} />{" "}
+                      <FontAwesomeIcon
+                        className="text-lightorange"
+                        icon={faHome}
+                      />{" "}
                     </>
                   }
                 />
@@ -57,7 +60,10 @@ const SideBarComponent: React.FC<SideBarProps> = (props) => {
                   themeDivClasses=""
                   content={
                     <>
-                      <FontAwesomeIcon className="text-lightorange" icon={faUser} />{" "}
+                      <FontAwesomeIcon
+                        className="text-lightorange"
+                        icon={faUser}
+                      />{" "}
                     </>
                   }
                 />

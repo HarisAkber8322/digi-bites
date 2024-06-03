@@ -346,7 +346,6 @@
 // };
 // export default observer(SetMenu);
 
-
 import React, { useState, useContext } from "react";
 import { observer } from "mobx-react";
 import Div from "../../UI/Div";
@@ -371,7 +370,7 @@ const SetMenu = () => {
   const themeStore = useContext(ThemeStoreContext);
 
   const [selectedMenuItem, setSelectedMenuItem] = useState<MenuItem | null>(
-    null
+    null,
   );
   const [quantity, setQuantity] = useState(1);
   const [addOns, setAddOns] = useState<{
@@ -435,7 +434,7 @@ const SetMenu = () => {
   const handleQuantityChange = (
     name: string,
     value: number,
-    type: "addOn" | "funOption"
+    type: "addOn" | "funOption",
   ) => {
     if (type === "addOn") {
       setAddOns((prevAddOns) => ({

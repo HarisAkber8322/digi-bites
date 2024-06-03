@@ -15,7 +15,7 @@ import { observer } from "mobx-react";
 import MainStoreContext from "@/store/Mainstore";
 import classNames from "classnames";
 
- interface HeaderProps {
+interface HeaderProps {
   toggle: boolean;
   setToggle: React.Dispatch<React.SetStateAction<boolean>>;
   handleToggle: () => void;
@@ -33,14 +33,13 @@ const HeaderComponent: React.FC<HeaderProps> = ({
       const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
       const totalCount = cartItems.reduce(
         (acc: number, item: any) => acc + item.quantity,
-        0
+        0,
       );
       MainStore.setCartCount(totalCount);
     };
 
     // Listen for changes in localStorage
     window.addEventListener("storage", updateCartCount);
-
     // Initial count update
     updateCartCount();
 
@@ -48,15 +47,21 @@ const HeaderComponent: React.FC<HeaderProps> = ({
     return () => {
       window.removeEventListener("storage", updateCartCount);
     };
-  }, []);
+  }, [MainStore]);
 
   return (
     <>
       <Div
-      themeDivClasses={classNames(["md:fixed md:top-0 w-full md:flex md:items-center  md:drop-shadow-md md:z-[999999]"])}
+        themeDivClasses={classNames([
+          "md:fixed md:top-0 w-full md:flex md:items-center  md:drop-shadow-md md:z-[999999]",
+        ])}
         content={
           <>
-            <div className= {classNames(["md:h-[64px] px-8 w-full md:flex md:justify-between md:flex-row md:items-center"])}>
+            <div
+              className={classNames([
+                "md:h-[64px] px-8 w-full md:flex md:justify-between md:flex-row md:items-center",
+              ])}
+            >
               <div className="md:flex md:gap-4 md:flex-row md:items-center">
                 <button className="close_btn" onClick={handleToggle}>
                   <Text

@@ -20,7 +20,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         handleToggle={HandleToggle}
       />
       <div className="flex ">
-        <SideBarComponent toggle={toggle}/>
+        <SideBarComponent toggle={toggle} />
         <Div
           content={children}
           lightColor="bg-lightGray"
@@ -34,5 +34,5 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 export default observer(
-  dynamic(() => Promise.resolve(AdminLayout), { ssr: false })
+  dynamic(() => Promise.resolve(AdminLayout), { ssr: false }),
 );
