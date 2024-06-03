@@ -33,6 +33,6 @@
     "src/app/**/*.js",
     "tailwind.config.js",
     "postcss.config.ts"
-, "postcss.config.js"  ],
+, "postcss.config.js", "src/db.js", "server.js", "server.js"  ],
   "exclude": ["node_modules"]
 }

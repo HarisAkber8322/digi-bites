@@ -1,3 +1,4 @@
+// RootLayout.tsx
 "use client";
 import React from "react";
 import HeaderComponent from "@/components/ClientComponent/Header";
@@ -6,7 +7,6 @@ import dynamic from "next/dynamic";
 import classNames from "classnames";
 import Div from "@/components/UI/Div";
 import FooterComponent from "@/components/ClientComponent/Footer";
-
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (

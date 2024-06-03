@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import "../styles/global.css";
-import { Poppins } from "@next/font/google";
+import { Poppins } from "next/font/google";
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700", "300", "900"], // specify weights you need
