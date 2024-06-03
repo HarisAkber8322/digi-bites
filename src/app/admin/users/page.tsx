@@ -1,4 +1,3 @@
-// pages/client/burger.tsx
 "use client";
 import Div from '@/components/UI/Div';
 import Text from '@/components/UI/Text';

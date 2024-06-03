@@ -83,7 +83,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({
                   {/* <SearchInput onSearch={handleSearch} /> */}
                 </div>
                 <div className="md:text-lg md:flex md:items-center md:gap-5">
-                  <Link href="/client/cart" className="cursor-pointer">
+                  <Link href="/cart" className="cursor-pointer">
                     <Text
                       content={
                         <>

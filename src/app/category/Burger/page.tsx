@@ -1,10 +1,10 @@
-// pages/client/burger.tsx
+// pages/burger.tsx
 "use client";
 import React, { useState } from 'react';
-import Div from '../../../../components/UI/Div'; // Adjust according to your project structure
+import Div from '@/components/UI/Div'; // Adjust according to your project structure
 import Text from '@/components/UI/Text'; // Adjust according to your project structure
-import MenuCard from '../../../../components/ClientComponent/OtherComponents/MenuCard'; // Adjust according to your project structure
-import { menuData } from '../../../../utills/constants'; // Adjust according to your project structure
+import MenuCard from '@/components/ClientComponent/OtherComponents/MenuCard'; // Adjust according to your project structure
+import { menuData } from '@/utills/constants'; // Adjust according to your project structure
 
 const BurgerPage: React.FC = () => {
   const categoryData = menuData.find(cat => cat.category.toLowerCase() === 'burger');

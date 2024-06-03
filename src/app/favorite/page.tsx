@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import Div from '../../../components/UI/Div'; // Adjust according to your project structure
-import MenuCard from '../../../components/ClientComponent/OtherComponents/MenuCard'; // Adjust according to your project structure
+import Div from '../../components/UI/Div'; // Adjust according to your project structure
+import MenuCard from '../../components/ClientComponent/OtherComponents/MenuCard'; // Adjust according to your project structure
 import Text from '@/components/UI/Text'; // Adjust according to your project structure
 
 const FavoritePage: React.FC = () => {

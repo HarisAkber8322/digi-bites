@@ -4,7 +4,7 @@
 // import Text from "../../UI/Text";
 // import Image from "next/image";
 // import CommonButton from "../OtherComponents/CommonButton";
-// import { MenuList } from "../../../utills/constants";
+// import { MenuList } from "@/utills/constants";
 // import classNames from "classnames";
 // import ThemeStoreContext from "@/store/ThemeStore";
 // interface MenuItem {

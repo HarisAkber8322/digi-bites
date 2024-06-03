@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Div from "../../UI/Div"; // Adjust according to your project structure
 import MenuCard from "./MenuCard"; // Adjust according to your project structure
-import { menuData } from "../../../utills/constants"; // Adjust according to your project structure
+import { menuData } from "@/utills/constants"; // Adjust according to your project structure
 import Text from "@/components/UI/Text"; // Adjust according to your project structure
 import { FaArrowRight } from "react-icons/fa"; // Import the arrow icon from react-icons library
 
@@ -50,7 +50,7 @@ const Menu: React.FC<MenuProps> = ({ handleCardClick }) => {
                     {categoryData.items.length > 6 && (
                       <div className="flex justify-end ">
                         <Link
-                          href={`/client/category/${categoryData.category}`}
+                          href={`/category/${categoryData.category}`}
                         >
                           <div className="flex items-center bg-dullyellow text-white py-2 px-2 rounded">
                             <FaArrowRight className="mr-1" /> {/* Arrow icon */}

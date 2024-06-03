@@ -1,5 +1,6 @@
 "use client";
-import React, { useContext } from "react";
+import React from "react";
+import "./style.css" 
 import HeaderComponent from "@/components/AdminComponents/Header";
 import SideBarComponent from "@/components/AdminComponents/Sidebar";
 import { useState } from "react";
@@ -19,7 +20,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         setToggle={setToggle}
         handleToggle={HandleToggle}
       />
-      <div className="flex ">
+      <div className="flex">
         <SideBarComponent toggle={toggle}/>
         <Div
           content={children}

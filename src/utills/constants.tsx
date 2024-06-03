@@ -4,7 +4,7 @@ export const MenuList = [
     price: 100,
     image: "/images/burger.jpeg", // Adjust path according to your project structure
     description: "Delicious zinger burger with crispy chicken patty.",
-    link: "/client/profile/Setmenu",
+    link: "/profile/Setmenu",
     addOns: [
       { name: "Coke", price: 2 },
       { name: "Water", price: 1 },
@@ -113,7 +113,7 @@ export const cardList = [
     price: 100,
     image: "/images/c3.png", // Adjust path according to your project structure
     description: "Delicious zinger burger with crispy chicken patty.",
-    link: "/client/profile/profile",
+    link: "/profile/profile",
   },
   {
     name: "Suggestions",
@@ -127,7 +127,7 @@ export const cardList = [
     price: 300,
     image: "/images/c1.png", // Adjust path according to your project structure
     description: "Delicious zinger burger with crispy chicken patty.",
-    link: "/client/favorite",
+    link: "/favorite",
   },
 ];
 export const menuData = [
