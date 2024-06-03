@@ -1,4 +1,8 @@
 // components/LoginForm.tsx
+import Text from '@/components/UI/Text';
+import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
+import { faEarDeaf } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 
 const LoginForm = () => {
@@ -17,7 +21,7 @@ const LoginForm = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password }), 
       });
 
       if (res.ok) {
@@ -35,7 +39,11 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-8 border border-gray-300 rounded-lg shadow-lg bg-white">
+    <>
+    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-6 border border-gray-300 rounded-lg shadow-lg bg-white">
+        <Text themeDivClasses='font-bold text-xl flex justify-center mb-8' content={<>
+        LOGIN FOAM
+        </>} />
       <div className="mb-4">
         <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email:</label>
         <input
@@ -63,18 +71,18 @@ const LoginForm = () => {
             onClick={togglePasswordVisibility}
             className="absolute inset-y-0 right-0 px-3 flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
-            {showPassword ? "Hide" : "Show"}
+            {showPassword ? <FontAwesomeIcon icon={faEyeSlash}/> : <FontAwesomeIcon icon={faEye}/>}
           </button>
         </div>
       </div>
       <button
         type="submit"
-        className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-dullyellow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
       >
         Login
       </button>
     </form>
-  );
+    </> );
 };
 
 export default LoginForm;
