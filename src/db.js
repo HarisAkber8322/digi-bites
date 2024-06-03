@@ -12,7 +12,7 @@ const client = new MongoClient(mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-let cachedDb = null as any; // Explicitly specify the type as 'any'
+let cachedDb = null; // Explicitly specify the type as 'any'
 exports.connectToDatabase = async function () {
   if (cachedDb && client.isConnected) {
     return cachedDb;

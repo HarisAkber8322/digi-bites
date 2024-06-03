@@ -17,10 +17,10 @@ const Card = ({ menuItem }: { menuItem: MenuItem }) => (
   <Link
     href={menuItem.link}
     passHref
-    className="relative duration-75 group duration-500 cursor-pointer overflow-hidden relative text-white h-[350px] w-[350px] rounded-2xl transform transition-transform hover:scale-105 hover:shadow-2xl bg-black "
+    className="relative duration-75 group duration-500 cursor-pointer overflow-hidden relative text-white h-[350px] w-[350px] rounded-2xl transform transition-transform hover:scale-105 hover:shadow-2xl  "
   >
     <div
-      className="w-[350px] h-[350px] bg-cover bg-center hover:opacity-25 "
+      className="w-[350px] h-[350px] bg-cover bg-center hover:opacity-50 "
       style={{ backgroundImage: `url(${menuItem.image})` }}
     >
       <div className="flex flex-row justify-between">
@@ -58,14 +58,13 @@ const Card = ({ menuItem }: { menuItem: MenuItem }) => (
           ></path> */}
         </svg>
       </div>
-      
-       
-    </div>
-    <span className="text-white font-bold text-center text-2xl absolute bg-gray-50 -bottom-48 w-full p-3 flex flex-col gap-1 group-hover:bottom-32  group-hover:duration-600 duration-500">
+      <div className="text-black absolute bg-gray-50 -bottom-48 w-full p-3 flex flex-col gap-1 group-hover:bottom-32  group-hover:duration-600 duration-500">
+        <span className=" font-bold text-center text-2xl ">
           {menuItem.name}
-        
-        <p className=" text-center text-xl">{menuItem.description}</p>
         </span>
+        <p className=" text-center text-xl">{menuItem.description}</p>
+      </div>
+    </div>
   </Link>
 );
 

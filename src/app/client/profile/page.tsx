@@ -12,7 +12,7 @@ import { CardData } from "../../../utills/constants"; // Adjust the path as need
 const Profile = () => {
   return (
     <Div
-      themeDivClasses="min-h-screen md:w-[1180px] m-auto "
+      themeDivClasses="min-h-screen md:w-[1180px] m-auto pt-6"
       lightColor="bg-white1"
       darkColor="bg-pepperblack"
       content={

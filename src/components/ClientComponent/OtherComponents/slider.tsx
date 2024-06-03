@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react";
 import classNames from "classnames";
 import Image from "next/image";
-
+import Text from "../../UI/Text";
 const images = [
   "/images/s1.jpg",
   "/images/s2.png",
@@ -64,22 +64,29 @@ const Slider: React.FC<SliderProps> = ({ interval = 3000 }) => {
             )}
           />
         ))}
-        
       </div>
-      
-      
-      <button
-        onClick={handlePrev}
-        className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 text-white p-2 rounded-full z-50"
-      >
-        &#10094;
-      </button>
-      <button
-        onClick={handleNext}
-        className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 text-white p-2 rounded-full z-50"
-      >
-        &#10095;
-      </button>
+
+      <Text
+      lightColor="text-white"
+      darkColor="text-white"
+        themeDivClasses=""
+        content={
+          <>
+            <button
+              onClick={handlePrev}
+              className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 bg-opacity-50  p-2 rounded-full z-50"
+            >
+              &#10094;
+            </button>
+            <button
+              onClick={handleNext}
+              className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 bg-opacity-50  p-2 rounded-full z-50"
+            >
+              &#10095;
+            </button>
+          </>
+        }
+      />
     </div>
   );
 };

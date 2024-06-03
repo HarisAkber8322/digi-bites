@@ -1,26 +1,22 @@
 // pages/client/burger.tsx
 "use client";
-import Div from "@/components/UI/Div";
-import Text from "@/components/UI/Text";
-import { observer } from "mobx-react-lite";
-import React, { useState } from "react"; // Adjust according to your project structure
+import Div from '@/components/UI/Div';
+import Text from '@/components/UI/Text';
+import React, { useState } from 'react';// Adjust according to your project structure
 
 const Dashboard: React.FC = () => {
+ 
   return (
     <Div
-      themeDivClasses={"w-full "}
-      darkColor="bg-pepperBlack"
-      content={
-        <>
-          <Text themeDivClasses={""} 
-          content={<>
-          <h1>DashBoard</h1>
-          </>} 
-          />
-        </>
-      }
-    />
+    lightColor='bg-transparent'
+    themeDivClasses={""}
+    content={
+      <div className=''>
+        <Text themeDivClasses='text-3xl font-bold mb-5' content="Dashboard" />
+      </div>
+    }
+  />
   );
 };
 
-export default  observer (Dashboard);
+export default Dashboard;
