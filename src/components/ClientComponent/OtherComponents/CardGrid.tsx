@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Div from "../../UI/Div";
 import Text from "../../UI/Text";
-import { cardList } from "../../../utills/constants";
+import { cardList } from "@/utills/constants";
 
 interface MenuItem {
   name: string;

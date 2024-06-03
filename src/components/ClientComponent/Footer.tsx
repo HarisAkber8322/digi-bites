@@ -17,23 +17,23 @@ const Footer: React.FC = () => {
       <Div
         lightColor="bg-ExtraLightGray"
         darkColor="bg-peperblack2"
-        themeDivClasses=" flex "
+        themeDivClasses="client_side flex pt-8 "
         content={
           <>
             <div
-              className=" w-full md:h-[200px] mx-auto flex flex-col relative"
+              className=" w-full md:h-[400px] mx-auto flex flex-col relative"
               style={{
                 background: `url('/images/wave.svg') bottom center no-repeat`,
                 backgroundSize: "cover",
               }}
             >
-              <div className="flex flex-row ">
+              <div className="flex flex-row pb-16">
                 <Link href="/" passHref>
                   <Image
                     className=" mx-6 md:drop-shadow-md justify-center"
                     src="/images/digibites.png"
                     alt="logo"
-                    width={300}
+                    width={200}
                     height={300}
                   />
                 </Link>
@@ -52,7 +52,7 @@ const Footer: React.FC = () => {
                             <Link href="/contact">Contact Us</Link>
                           </li>
                           <li>
-                            <Link href="/privacy">Privacy Policy</Link>
+                            <Link href="/privacy-policy">Privacy Policy</Link>
                           </li>
                         </ul>
                       </nav>

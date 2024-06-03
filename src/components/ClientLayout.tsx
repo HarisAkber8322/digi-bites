@@ -8,7 +8,7 @@ import classNames from "classnames";
 import Div from "@/components/UI/Div";
 import FooterComponent from "@/components/ClientComponent/Footer";
 
-const RootLayout = ({ children }: { children: React.ReactNode }) => {
+const ClientLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <Div
       content={
@@ -29,5 +29,5 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 };
 
 export default observer(
-  dynamic(() => Promise.resolve(RootLayout), { ssr: false })
+  dynamic(() => Promise.resolve(ClientLayout), { ssr: false })
 );

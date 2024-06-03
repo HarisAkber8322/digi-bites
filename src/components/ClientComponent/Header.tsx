@@ -55,7 +55,7 @@ const HeaderComponent = () => {
   return (
     <>
       <Div
-        themeDivClasses="md:fixed md:top-0 md:flex md:items-center md:w-full md:drop-shadow-md md:z-[999999]"
+        themeDivClasses="client_side md:fixed md:top-0 md:flex md:items-center md:w-full md:drop-shadow-md md:z-[999999]"
         content={
           <>
             <div className="md:w-[1180px] md:m-auto md:h-[64px] md:flex md:justify-between md:flex-row md:items-center">
@@ -90,7 +90,7 @@ const HeaderComponent = () => {
                         <ul className="absolute bg-white shadow-lg rounded-md mt-2 z-10">
                           {menuData.map((category) => (
                             <li key={category.category} className="px-4 text-black hover:bg-yellow-100 rounded-xl text-base font-semibold w-40">
-                              <Link href={`/client/category/${category.category}`}>
+                              <Link href={`/category/${category.category}`}>
                                 {category.category}
                               </Link>
                             </li>
@@ -101,8 +101,8 @@ const HeaderComponent = () => {
                     }/>
                     <li className="md:transition-all md:duration-500 md:ease-in-out">
                       <Link
-                        href="/client/favorite"
-                        className={router === "/client/favorite" ? "active" : ""}
+                        href="/favorite"
+                        className={router === "/favorite" ? "active" : ""}
                       >
                         <Text
                           themeDivClasses="md:text-md md:font-semibold"
@@ -123,10 +123,10 @@ const HeaderComponent = () => {
                   {/* <SearchInput onSearch={handleSearch} /> */}
                 </div>
                 <div className="md:text-lg md:flex md:items-center md:gap-5">
-                  <Link href={"/client/profile"} className="cursor-pointer">
+                  <Link href={"/profile"} className="cursor-pointer">
                     <Text content={<FontAwesomeIcon icon={faUser} />} themeDivClasses="" />
                   </Link>
-                  <Link href="/client/cart" className="cursor-pointer">
+                  <Link href="/cart" className="cursor-pointer">
                     <Text
                       content={
                         <>

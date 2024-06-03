@@ -1,6 +1,6 @@
 import React from "react";
 import Slider from "react-slick";
-import { menuData } from "../../../utills/constants"; // Adjust the import path if needed
+import { menuData } from "@/utills/constants"; // Adjust the import path if needed
 import Image from "next/image";
 import Text from "../../UI/Text";
 import Link from "next/link";
@@ -65,7 +65,7 @@ const CategorySlider: React.FC = () => {
         <Slider {...settings}>
           {menuData.map((category, index) => (
             <div key={index} className="!flex !justify-center">
-              <Link href={`/client/category/${category.category}`} className="flex flex-col justify-center items-center gap-2 w-32">
+              <Link href={`/category/${category.category}`} className="flex flex-col justify-center items-center gap-2 w-32">
                 <div className="rounded-full overflow-hidden w-32 h-32">
                   <Image
                     className="object-cover !w-full !h-full"

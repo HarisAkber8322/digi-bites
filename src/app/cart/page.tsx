@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, useContext } from "react";
-import Div from "../../../components/UI/Div";
-import Text from "../../../components/UI/Text";
+import Div from "../../components/UI/Div";
+import Text from "../../components/UI/Text";
 import Image from "next/image";
 import MainStoreContext from "@/store/Mainstore";
 import { observer } from "mobx-react";
