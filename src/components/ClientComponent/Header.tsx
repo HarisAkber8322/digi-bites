@@ -1,3 +1,4 @@
+"use client"
 import React, { useState, useEffect, useContext } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,27 +10,30 @@ import {
 import ToggleThemeComponent from "../ToggleThemeButton";
 import { Image } from "react-bootstrap";
 import { usePathname } from "next/navigation";
+// import { useRouter } from "next/router";
 import Div from "../UI/Div";
 import Text from "../UI/Text";
 import { observer } from "mobx-react";
 import MainStoreContext from "@/store/Mainstore";
 import { menuData } from "../../utills/constants"; // Adjust the path to where your menuData is located
+import dynamic from "next/dynamic";
 
 const HeaderComponent = () => {
   const router = usePathname();
+  // const routerTwo = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(
-    null,
+    null
   );
   const MainStore = useContext(MainStoreContext);
-
+  const { isLoggedin, logout } = MainStore;
   useEffect(() => {
     const updateCartCount = () => {
       const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
       const totalCount = cartItems.reduce(
         (acc: number, item: any) => acc + item.quantity,
-        0,
+        0
       );
       MainStore.setCartCount(totalCount);
     };
@@ -62,7 +66,7 @@ const HeaderComponent = () => {
   };
 
   return (
-    <>
+    <> 
       <Div
         themeDivClasses="client_side md:fixed md:top-0 md:flex md:items-center md:w-full md:drop-shadow-md md:z-[999999]"
         content={
@@ -146,12 +150,7 @@ const HeaderComponent = () => {
                   {/* <SearchInput onSearch={handleSearch} /> */}
                 </div>
                 <div className="md:text-lg md:flex md:items-center md:gap-5">
-                  <Link href={"/profile"} className="cursor-pointer">
-                    <Text
-                      content={<FontAwesomeIcon icon={faUser} />}
-                      themeDivClasses=""
-                    />
-                  </Link>
+                 
                   <Link href="/cart" className="cursor-pointer">
                     <Text
                       content={
@@ -164,10 +163,35 @@ const HeaderComponent = () => {
                           )}
                         </>
                       }
-                      themeDivClasses=""
+                      themeDivClasses="text-dullyellow"
                     />
                   </Link>
+
                   <ToggleThemeComponent />
+                  {isLoggedin ? (
+                    <Link href={"/profile"} className="cursor-pointer">
+                      <Text
+                        content={<FontAwesomeIcon icon={faUser} />}
+                        themeDivClasses="text-dullyellow"
+                      />
+                    </Link>
+                  ) : (
+                    <Link href={"/login"}  className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-dullyellow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                      <Text content={"login"} themeDivClasses="" lightColor="text-white" darkColor="text-white"/>
+                    </Link>
+                  )}
+                  {/* {isLoggedin &&
+                    <button
+                      onClick={() => {
+                        logout(false);
+                        // routerTwo.push("/login");
+                      }}
+                      className="w-full  py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-dullyellow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                      Logout
+                    </button>
+                  } */}
                 </div>
               </div>
             </div>
@@ -178,4 +202,4 @@ const HeaderComponent = () => {
   );
 };
 
-export default observer(HeaderComponent);
+export default observer(dynamic(() => Promise.resolve(HeaderComponent), { ssr: false }));
