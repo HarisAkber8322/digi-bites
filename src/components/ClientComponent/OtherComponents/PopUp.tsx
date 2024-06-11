@@ -1,4 +1,4 @@
-import React, { useState, useContext }  from "react";
+import React, { useState, useContext } from "react";
 import Div from "../../UI/Div";
 import Text from "../../UI/Text";
 import Image from "next/image";
@@ -22,29 +22,28 @@ interface MenuItem {
   funOptions: FunOption[];
 }
 
-    interface PopProps {
-    selectedMenuItem: MenuItem | null;
-    quantity: number;
-    addOns: {
-        [key: string]: { selected: boolean; quantity: number; price: number };
-    };
-    funOptions: {
-        [key: string]: { selected: boolean; quantity: number; price: number };
-    };
-    handleCloseModal: () => void;
-    handleAddOnChange: (name: string) => void;
-    handleFunOptionChange: (name: string) => void;
-    handleQuantityChange: (
-        name: string,
-        value: number,
-        type: "addOn" | "funOption"
-    ) => void;
-    setQuantity: (quantity: number) => void;
-    calculateTotal: () => number;
-    }
+interface PopProps {
+  selectedMenuItem: MenuItem | null;
+  quantity: number;
+  addOns: {
+    [key: string]: { selected: boolean; quantity: number; price: number };
+  };
+  funOptions: {
+    [key: string]: { selected: boolean; quantity: number; price: number };
+  };
+  handleCloseModal: () => void;
+  handleAddOnChange: (name: string) => void;
+  handleFunOptionChange: (name: string) => void;
+  handleQuantityChange: (
+    name: string,
+    value: number,
+    type: "addOn" | "funOption",
+  ) => void;
+  setQuantity: (quantity: number) => void;
+  calculateTotal: () => number;
+}
 
 const Pop: React.FC<PopProps> = ({
-    
   selectedMenuItem,
   quantity,
   addOns,
@@ -178,16 +177,16 @@ const Pop: React.FC<PopProps> = ({
                             handleQuantityChange(
                               addOn.name,
                               parseInt(e.target.value),
-                              "addOn"
+                              "addOn",
                             )
                           }
                           min={1}
-                        //   className={classNames(
-                        //     "w-12 p-2 text-center bg-transparent",
-                        //     themeStore.themeMode === "light"
-                        //       ? "text-black"
-                        //       : "text-white"
-                        //   )}
+                          //   className={classNames(
+                          //     "w-12 p-2 text-center bg-transparent",
+                          //     themeStore.themeMode === "light"
+                          //       ? "text-black"
+                          //       : "text-white"
+                          //   )}
                         />
                         <div className="flex ml-2">
                           <button
@@ -198,7 +197,7 @@ const Pop: React.FC<PopProps> = ({
                                 addOns[addOn.name]?.quantity - 1 >= 1
                                   ? addOns[addOn.name]?.quantity - 1
                                   : 1,
-                                "addOn"
+                                "addOn",
                               )
                             }
                           >
@@ -210,7 +209,7 @@ const Pop: React.FC<PopProps> = ({
                               handleQuantityChange(
                                 addOn.name,
                                 addOns[addOn.name]?.quantity + 1,
-                                "addOn"
+                                "addOn",
                               )
                             }
                           >

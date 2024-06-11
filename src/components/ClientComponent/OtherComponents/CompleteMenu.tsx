@@ -21,7 +21,7 @@ const Menu: React.FC<MenuProps> = ({ handleCardClick }) => {
   const handleFavoriteToggle = (menuItem: any) => {
     setFavorites((prevFavorites) => {
       const isFavorite = prevFavorites.some(
-        (item) => item.name === menuItem.name
+        (item) => item.name === menuItem.name,
       );
       const updatedFavorites = isFavorite
         ? prevFavorites.filter((item) => item.name !== menuItem.name)
@@ -34,8 +34,8 @@ const Menu: React.FC<MenuProps> = ({ handleCardClick }) => {
 
   return (
     <Div
-    darkColor="bg-pepperBlack"
-    lightColor="bg-white1"
+      darkColor="bg-pepperBlack"
+      lightColor="bg-white1"
       themeDivClasses={""}
       content={
         <div className="my-[28px]">
@@ -49,9 +49,7 @@ const Menu: React.FC<MenuProps> = ({ handleCardClick }) => {
                     </h2>
                     {categoryData.items.length > 6 && (
                       <div className="flex justify-end ">
-                        <Link
-                          href={`/category/${categoryData.category}`}
-                        >
+                        <Link href={`/category/${categoryData.category}`}>
                           <div className="flex items-center bg-dullyellow text-white py-2 px-2 rounded">
                             <FaArrowRight className="mr-1" /> {/* Arrow icon */}
                             {/* <span>View More</span> */}
@@ -70,7 +68,7 @@ const Menu: React.FC<MenuProps> = ({ handleCardClick }) => {
                     menuItem={menuItem}
                     handleCardClick={handleCardClick}
                     isFavorite={favorites.some(
-                      (item) => item.name === menuItem.name
+                      (item) => item.name === menuItem.name,
                     )}
                     onFavoriteToggle={handleFavoriteToggle}
                   />

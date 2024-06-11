@@ -66,5 +66,5 @@ const Profile = () => {
 };
 
 export default observer(
-  dynamic(() => Promise.resolve(Profile), { ssr: false })
+  dynamic(() => Promise.resolve(Profile), { ssr: false }),
 );

@@ -1,9 +1,7 @@
 "use client";
-import Div from "@/components/UI/Div"
+import Div from "@/components/UI/Div";
 
 const AboutPage = () => {
-    return (
-        <Div themeDivClasses="" content={<>About page</>} />
-    )
-}
+  return <Div themeDivClasses="" content={<>About page</>} />;
+};
 export default AboutPage;

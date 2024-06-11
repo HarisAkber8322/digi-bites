@@ -7,7 +7,7 @@ const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700", "300", "900"], // specify weights you need
   subsets: ["latin"], // specify subsets you need
 });
-const APP_NAME = "digi-bites";
+const APP_NAME = "Digital Bites";
 const APP_DESCRIPTION = "Cafeteria Management General Solution";
 export const metadata: Metadata = {
   applicationName: APP_NAME,
@@ -36,14 +36,13 @@ export const viewport: Viewport = {
 };
 
 const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
- 
   return (
     <html lang="en" dir="ltr">
       <head>
         <style>{`
             html, body, #__next {
               height: 100%;
-              font-family: ${poppins.style.fontFamily.replace(/'/g, '')};
+              font-family: ${poppins.style.fontFamily.replace(/'/g, "")};
             }
             #__next {
               margin: 0 auto;
@@ -54,9 +53,9 @@ const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             `}</style>
       </head>
       <body>
-         <AppLayout children={children} />
+        <AppLayout>{children}</AppLayout>
       </body>
     </html>
   );
-}
+};
 export default RootLayout;

@@ -1,9 +1,7 @@
 "use client";
-import Div from "@/components/UI/Div"
+import Div from "@/components/UI/Div";
 
 const ContactPage = () => {
-    return (
-        <Div themeDivClasses="" content={<>contact page</>} />
-    )
-}
+  return <Div themeDivClasses="" content={<>contact page</>} />;
+};
 export default ContactPage;

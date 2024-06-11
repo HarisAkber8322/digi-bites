@@ -1,11 +1,21 @@
+// pages/burger.tsx
 "use client";
-import { observer } from "mobx-react";
-import dynamic from "next/dynamic";
+import Div from "@/components/UI/Div";
+import Text from "@/components/UI/Text";
+import React, { useState } from "react"; // Adjust according to your project structure
 
-const Admin = () => {
+const Dashboard: React.FC = () => {
   return (
-    <div>Admin Page Content</div>
+    <Div
+      lightColor="bg-transparent"
+      themeDivClasses={""}
+      content={
+        <div className="">
+          <Text themeDivClasses="text-3xl font-bold mb-5" content="Dashboard" />
+        </div>
+      }
+    />
   );
 };
 
-export default observer(dynamic(() => Promise.resolve(Admin), { ssr: false }));
+export default Dashboard;

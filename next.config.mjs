@@ -7,7 +7,7 @@ const withPWA = withPWAInit({
   aggressiveFrontEndNavCaching: true,
   reloadOnOnline: true,
   swcMinify: true,
-  disable: process.env.NODE_ENV === 'production',
+  disable: process.env.NODE_ENV === "production",
   workboxOptions: {
     disableDevLogs: true,
   },
@@ -17,10 +17,7 @@ const nextConfig = {
   reactStrictMode: true,
   webpack: (config, { isServer }) => {
     config.snapshot = {
-      managedPaths: [
-        /node_modules\/@next\/swc-/,
-        /node_modules\/fsevents/,
-      ],
+      managedPaths: [/node_modules\/@next\/swc-/, /node_modules\/fsevents/],
     };
     return config;
   },

@@ -5,7 +5,7 @@ import Image from "next/image";
 import Text from "../../UI/Text";
 import Link from "next/link";
 import { observer } from "mobx-react";
-import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 interface ArrowProps {
@@ -17,7 +17,15 @@ interface ArrowProps {
 const Arrow: React.FC<ArrowProps> = ({ className, style, onClick }) => (
   <div
     className={className}
-    style={{ ...style, color: 'black', backgroundColor: 'black', borderRadius: '50%', width: '17px', height: '17px', zIndex: 0 }}
+    style={{
+      ...style,
+      color: "black",
+      backgroundColor: "black",
+      borderRadius: "50%",
+      width: "17px",
+      height: "17px",
+      zIndex: 0,
+    }}
     onClick={onClick}
   />
 );
@@ -65,7 +73,10 @@ const CategorySlider: React.FC = () => {
         <Slider {...settings}>
           {menuData.map((category, index) => (
             <div key={index} className="!flex !justify-center">
-              <Link href={`/category/${category.category}`} className="flex flex-col justify-center items-center gap-2 w-32">
+              <Link
+                href={`/category/${category.category}`}
+                className="flex flex-col justify-center items-center gap-2 w-32"
+              >
                 <div className="rounded-full overflow-hidden w-32 h-32">
                   <Image
                     className="object-cover !w-full !h-full"

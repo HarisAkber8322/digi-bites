@@ -25,13 +25,16 @@ const SideBarComponent: React.FC<SideBarProps> = (props) => {
                   "ease-in-out duration-300 h-screen text-base font-semibold py-5 px-8  items-center ",
                   props.toggle ? "pl-7" : "pl-12",
                 ])}
-                href="/admin/dashboard"
+                href="/admin"
               >
                 <Text
                   themeDivClasses=""
                   content={
                     <>
-                      <FontAwesomeIcon className="text-lightorange" icon={faHome} />{" "}
+                      <FontAwesomeIcon
+                        className="text-lightorange"
+                        icon={faHome}
+                      />{" "}
                     </>
                   }
                 />
@@ -57,7 +60,10 @@ const SideBarComponent: React.FC<SideBarProps> = (props) => {
                   themeDivClasses=""
                   content={
                     <>
-                      <FontAwesomeIcon className="text-lightorange" icon={faUser} />{" "}
+                      <FontAwesomeIcon
+                        className="text-lightorange"
+                        icon={faUser}
+                      />{" "}
                     </>
                   }
                 />

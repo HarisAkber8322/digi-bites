@@ -13,7 +13,7 @@ const ToggleThemeComponent = () => {
         cursor={"pointer"}
         icon={themeMode === "light" ? faMoon : faSun}
         size={"1x"}
-        color={themeMode === "light" ? "#111111" : "#ffc800"}
+        color={"#fbbc09"}
         onClick={themeStore.toggleThemeMode}
       />
     </div>
