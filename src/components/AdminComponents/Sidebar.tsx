@@ -34,7 +34,7 @@ const SideBarComponent: React.FC<SideBarProps> = (props) => {
                   href={item.link}
                 >
                   <Text
-                    themeDivClasses="!group-hover:text-white"
+                    themeDivClasses="group-hover:text-white"
                     lightColor={
                       router === item.link ? "text-white" : "text-lightorange"
                     }
@@ -49,7 +49,7 @@ const SideBarComponent: React.FC<SideBarProps> = (props) => {
                   />
                   <Text
                     themeDivClasses={classNames([
-                      "duration-300 ease-in-out !group-hover:text-white",
+                      "duration-300 ease-in-out group-hover:text-white",
                       ,
                       props.toggle ? "text-[0px]" : "text-base",
                     ])}

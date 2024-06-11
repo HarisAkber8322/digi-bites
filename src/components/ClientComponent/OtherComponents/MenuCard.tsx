@@ -29,6 +29,7 @@ const MenuCard: React.FC<MenuCardProps> = ({
 }) => {
   const MainStore = useContext(MainStoreContext);
   const addToCart = (item: any) => {
+    MainStore.setCartCount(MainStore.cartCount + 1);
     const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
     const existingItem = cartItems.find(
       (cartItem: any) => cartItem.name === item.name,
@@ -38,7 +39,6 @@ const MenuCard: React.FC<MenuCardProps> = ({
     } else {
       cartItems.push({ ...item, quantity: 1 });
     }
-    MainStore.setCartCount(MainStore.cartCount + 1);
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
     handleCardClick(item);
   };

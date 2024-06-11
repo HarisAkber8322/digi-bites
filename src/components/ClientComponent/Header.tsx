@@ -208,6 +208,4 @@ const HeaderComponent = () => {
   );
 };
 
-export default observer(
-  dynamic(() => Promise.resolve(HeaderComponent), { ssr: false }),
-);
+export default observer(HeaderComponent);
