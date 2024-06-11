@@ -6,15 +6,17 @@ import React, { useState } from "react"; // Adjust according to your project str
 
 const Dashboard: React.FC = () => {
   return (
-    <Div
-      lightColor="bg-transparent"
-      themeDivClasses={""}
-      content={
-        <div className="">
-          <Text themeDivClasses="text-3xl font-bold mb-5" content="Dashboard" />
-        </div>
-      }
-    />
+    <div>
+      <Text
+        themeDivClasses="text-3xl font-bold block mb-5"
+        content="Dashboard"
+      />
+      <Div
+        lightColor="bg-transparent"
+        themeDivClasses={""}
+        content={<div className=""></div>}
+      />
+    </div>
   );
 };
 

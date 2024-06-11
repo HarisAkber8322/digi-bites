@@ -53,13 +53,13 @@ const HeaderComponent: React.FC<HeaderProps> = ({
     <>
       <Div
         themeDivClasses={classNames([
-          "md:fixed md:top-0 w-full md:flex md:items-center  md:drop-shadow-md md:z-[999999]",
+          "md:fixed md:top-0 w-full md:flex md:items-center md:drop-shadow-md md:z-[999999]",
         ])}
         content={
           <>
             <div
               className={classNames([
-                "md:h-[64px] px-8 w-full md:flex md:justify-between md:flex-row md:items-center",
+                "md:h-[64px] px-5 w-full md:flex md:justify-between md:flex-row md:items-center",
               ])}
             >
               <div className="md:flex md:gap-4 md:flex-row md:items-center">

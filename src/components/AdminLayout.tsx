@@ -24,9 +24,10 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         <Div
           content={children}
           lightColor="bg-lightGray"
+          darkColor="bg-lightBlack"
           themeDivClasses={classNames([
-            "children ease-in-out duration-300 w-full min-h-[100vh] p-4 md:p-8 !pt-[96px]",
-            toggle ? "ml-[80px]" : "!ml-[250px]",
+            "children ease-in-out duration-300 w-full min-h-[100vh] p-4 md:p-8 !mt-[64px]",
+            toggle ? "ml-[50px]" : "!ml-[220px]",
           ])}
         />
       </div>
