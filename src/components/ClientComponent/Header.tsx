@@ -68,7 +68,7 @@ const HeaderComponent = () => {
   return (
     <>
       <Div
-        themeDivClasses="client_side md:fixed md:top-0 md:flex md:items-center md:w-full md:drop-shadow-md md:z-[999999]"
+        themeDivClasses="md:fixed md:top-0 md:flex md:items-center md:w-full md:drop-shadow-md md:z-[999999]"
         content={
           <>
             <div className="md:w-[1180px] md:m-auto md:h-[64px] md:flex md:justify-between md:flex-row md:items-center">

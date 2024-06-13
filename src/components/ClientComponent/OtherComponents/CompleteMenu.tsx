@@ -38,7 +38,7 @@ const Menu: React.FC<MenuProps> = ({ handleCardClick }) => {
       lightColor="bg-white1"
       themeDivClasses={""}
       content={
-        <div className="my-[28px]">
+        <div className="py-[28px]">
           {menuData.map((categoryData, categoryIndex) => (
             <div key={categoryIndex} className="mb-[28px]">
               <Text

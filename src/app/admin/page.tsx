@@ -8,17 +8,16 @@ import BusinessAnalytics from "../../components/AdminComponents/AdminOthersComp/
 const Dashboard: React.FC = () => {
   return (
     <div>
-      <Text
-        themeDivClasses="text-3xl font-bold block mb-5"
-        content="Dashboard"
-      />
+
       <Div
-        lightColor="bg-transparent"
+        lightColor="bg-lightGray"
+        darkColor="bg-lightBlack"
         themeDivClasses={""}
         content={
           <>
             <Div
-              darkColor="bg-pepperBlack"
+              darkColor="bg-lightBlack"
+              lightColor="bg-lightGray"
               themeDivClasses="flex flex-col pb-[35px]"
               content={
                 <>
