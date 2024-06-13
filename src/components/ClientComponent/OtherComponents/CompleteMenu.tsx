@@ -35,7 +35,7 @@ const Menu: React.FC<MenuProps> = ({ handleCardClick }) => {
   return (
     <Div
       darkColor="bg-pepperBlack"
-      lightColor="bg-white1"
+      lightColor="bg-bgGrey"
       themeDivClasses={""}
       content={
         <div className="my-[28px]">
@@ -50,7 +50,7 @@ const Menu: React.FC<MenuProps> = ({ handleCardClick }) => {
                     {categoryData.items.length > 6 && (
                       <div className="flex justify-end ">
                         <Link href={`/category/${categoryData.category}`}>
-                          <div className="flex items-center bg-dullyellow text-white py-2 px-2 rounded">
+                          <div className="flex items-center bg-themeYellow text-white py-2 px-2 rounded">
                             <FaArrowRight className="mr-1" /> {/* Arrow icon */}
                             {/* <span>View More</span> */}
                           </div>

@@ -25,7 +25,7 @@ const Card = ({ menuItem }: { menuItem: MenuItem }) => (
     >
       <div className="flex flex-row justify-between">
         <svg
-          className="fill-current stroke-current w-8 h-8 p-2 hover:bg-orange1 rounded-full m-1"
+          className="fill-current stroke-current w-8 h-8 p-2 hover:bg-themeOrange rounded-full m-1"
           height="100"
           preserveAspectRatio="xMidYMid meet"
           viewBox="0 0 100 100"
@@ -74,7 +74,7 @@ const CardGrid = () => (
       <Text themeDivClasses="text-3xl font-bold" content={"Menu"} />
     </div> */}
     <Div
-      darkColor="bg-pepperblack2"
+      darkColor="bg-pepperBlack"
       lightColor="bg-ExtraLightGray"
       themeDivClasses={" py-20  content-center "}
       content={

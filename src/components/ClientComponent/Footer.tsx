@@ -38,8 +38,8 @@ const Footer: React.FC = () => {
                   />
                 </Link>
                 <Text
-                  lightColor="text-dullyellow"
-                  darkColor="text-dullyellow"
+                  lightColor="text-themeYellow"
+                  darkColor="text-themeYellow"
                   themeDivClasses="w-full flex justify-end mx-6 "
                   content={
                     <>
@@ -64,7 +64,7 @@ const Footer: React.FC = () => {
                 <div className="text-ExtraLightGray">
                   <h2>Copyright ©2024</h2>
                 </div>
-                <div className="flex space-x-4 mr-6 text-xl text-dullyellow">
+                <div className="flex space-x-4 mr-6 text-xl text-themeYellow">
                   <FaFacebook className="hover:text-blue-600" />
                   <FaInstagram className="hover:text-pink-600" />
                   <FaTwitter className="hover:text-blue-400" />

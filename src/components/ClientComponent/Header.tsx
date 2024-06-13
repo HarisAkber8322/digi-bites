@@ -162,7 +162,7 @@ const HeaderComponent = () => {
                           )}
                         </>
                       }
-                      themeDivClasses="text-dullyellow"
+                      themeDivClasses="text-themeYellow"
                     />
                   </Link>
 
@@ -171,13 +171,13 @@ const HeaderComponent = () => {
                     <Link href={"/profile"} className="cursor-pointer">
                       <Text
                         content={<FontAwesomeIcon icon={faUser} />}
-                        themeDivClasses="text-dullyellow"
+                        themeDivClasses="text-themeYellow"
                       />
                     </Link>
                   ) : (
                     <Link
                       href={"/login"}
-                      className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-dullyellow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-themeYellow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
                       <Text
                         content={"login"}
@@ -193,7 +193,7 @@ const HeaderComponent = () => {
                         logout(false);
                         // routerTwo.push("/login");
                       }}
-                      className="w-full  py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-dullyellow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      className="w-full  py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-themeYellow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
                       Logout
                     </button>
