@@ -4,7 +4,7 @@ import LoginFoamComponent from "../../components/ClientComponent/OtherComponents
 const ContactPage = () => {
   return (
     <Div
-      themeDivClasses="mt-6"
+      themeDivClasses="grid h-[100vh] items-center !bg-transparent"
       darkColor="bg-papperBlack"
       content={
         <>

@@ -88,21 +88,6 @@ const HeaderComponent: React.FC<HeaderProps> = ({
                   {/* <SearchInput onSearch={handleSearch} /> */}
                 </div>
                 <div className="md:text-lg md:flex md:items-center md:gap-5">
-                  <Link href="/cart" className="cursor-pointer">
-                    <Text
-                      content={
-                        <>
-                          <FontAwesomeIcon icon={faCartShopping} />
-                          {MainStore.cartCount > 0 && (
-                            <span className="bg-red-500 text-white text-xs rounded-full px-2 py-1 ml-1 relative bottom-4">
-                              {MainStore.cartCount}
-                            </span>
-                          )}
-                        </>
-                      }
-                      themeDivClasses=""
-                    />
-                  </Link>
                   <ToggleThemeComponent />
                 </div>
               </div>

@@ -47,7 +47,7 @@ const LoginForm = () => {
     <>
       <form
         onSubmit={handleSubmit}
-        className="max-w-md mx-auto p-6 border border-gray-300 rounded-lg shadow-lg bg-white"
+        className="w-[400px] h-fit mx-auto p-6 rounded-lg shadow-lg bg-white"
       >
         <Text
           themeDivClasses="font-bold text-xl flex justify-center mb-8"
@@ -67,7 +67,7 @@ const LoginForm = () => {
             defaultValue={MainStore.user.email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full px-3 py-2 border border-lightGray rounded-md shadow-sm focus:outline-none focus:lightorange focus:border-lightorange sm:text-sm"
           />
         </div>
         <div className="mb-6">
@@ -85,7 +85,7 @@ const LoginForm = () => {
               defaultValue={MainStore.user.password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full px-3 py-2 border border-lightGray rounded-md shadow-sm focus:outline-none focus:lightorange focus:border-lightorange sm:text-sm"
             />
             <button
               type="button"
