@@ -2,17 +2,37 @@
 "use client";
 import Div from "@/components/UI/Div";
 import Text from "@/components/UI/Text";
-import React, { useState } from "react"; // Adjust according to your project structure
+import React, { useState } from "react"; 
+import BusinessAnalytics from "../../components/AdminComponents/AdminOthersComp/BusinessAnalytics"// Adjust according to your project structure
 
 const Dashboard: React.FC = () => {
   return (
     <Div
-      lightColor="bg-transparent"
+      lightColor=""
       themeDivClasses={""}
       content={
-        <div className="">
-          <Text themeDivClasses="text-3xl font-bold mb-5" content="Dashboard" />
-        </div>
+        <>
+          <Div
+            darkColor="bg-pepperBlack"
+            themeDivClasses="flex flex-col pb-[35px]"
+            content={
+              <>
+                <Text
+                  themeDivClasses="text-xl font-semibold "
+                  lightColor="text-lightorange"
+                  darkColor="text-lightorange"
+                  content="Welcome, Admin."
+                />
+                <Text
+                  themeDivClasses="text-medium font-semibold "
+                  content="Monitor your business analytics and statistics"
+                />
+              </>
+            }
+            
+          />
+            <BusinessAnalytics />
+        </>
       }
     />
   );

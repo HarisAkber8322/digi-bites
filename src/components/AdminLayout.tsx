@@ -23,7 +23,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         <SideBarComponent toggle={toggle} />
         <Div
           content={children}
-          lightColor="bg-lightGray"
+          darkColor="bg-pepperBlack"
           themeDivClasses={classNames([
             "children ease-in-out duration-300 w-full min-h-[100vh] p-4 md:p-8 !pt-[96px]",
             toggle ? "ml-[80px]" : "!ml-[250px]",

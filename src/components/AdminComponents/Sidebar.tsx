@@ -19,7 +19,7 @@ const SideBarComponent: React.FC<SideBarProps> = (props) => {
       content={
         <>
           <ul className="w-full flex flex-col gap-5">
-            <li className=" duration-500">
+            <li className=" duration-500 h-[29px] ">
               <Link
                 className={classNames([
                   "ease-in-out duration-300 h-screen text-base font-semibold py-5 px-8  items-center ",
@@ -32,7 +32,7 @@ const SideBarComponent: React.FC<SideBarProps> = (props) => {
                   content={
                     <>
                       <FontAwesomeIcon
-                        className="text-lightorange"
+                        className="text-lightorange  "
                         icon={faHome}
                       />{" "}
                     </>
