@@ -20,7 +20,7 @@ class AppStore {
   // router = useRouter();
   user = {
     email: "admin@digibites.com",
-    password: "tacos"
+    password: "tacos",
   };
   userList: Users[] = [];
   cartCount = 0;
@@ -36,8 +36,8 @@ class AppStore {
       console.error("Error loading users:", error);
     }
   }
-  handleLogin = (user: { email: string; password: string; }) => {
-    console.log(user)
+  handleLogin = (user: { email: string; password: string }) => {
+    console.log(user);
     if (user.email === "admin@digibites.com" && user.password === "tacos") {
       this.setIsLoggedIn(true);
     }
@@ -46,7 +46,7 @@ class AppStore {
     this.cartCount = value;
   }
   logout(value: boolean) {
-      this.setIsLoggedIn(value);
+    this.setIsLoggedIn(value);
   }
 
   // get users() {

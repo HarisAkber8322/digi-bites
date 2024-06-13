@@ -492,9 +492,8 @@ import {
   faRectangleXmark,
   faSquare,
   faStickyNote,
-  faUser,
 } from "@fortawesome/free-regular-svg-icons";
-import { faShield } from "@fortawesome/free-solid-svg-icons";
+import { faShield, faHome, faUser } from "@fortawesome/free-solid-svg-icons";
 
 export const CardData = [
   {
@@ -588,4 +587,17 @@ export const CardData = [
     name: "Login",
   },
   // Add more cards as needed
+];
+
+export const sidebarItems = [
+  {
+    title: "Dashboard",
+    link: "/admin",
+    icon: faHome,
+  },
+  {
+    title: "Users",
+    link: "/admin/users",
+    icon: faUser,
+  },
 ];

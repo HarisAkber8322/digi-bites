@@ -18,7 +18,7 @@ const ClientLayout = ({ children }: { children: React.ReactNode }) => {
             darkColor="bg-pepperBlack"
             lightColor="bg-white1"
             themeDivClasses={classNames([
-              " w-full pt-[64px] min-h-[100vh]  pb-[300px]",
+              " w-full pt-[64px] min-h-[100vh]",
             ])}
             content={children}
           />
