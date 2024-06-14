@@ -3,6 +3,24 @@ import React from "react";
 import Div from "../../UI/Div";
 import Text from "../../UI/Text";
 import { observer } from "mobx-react";
+
+const businessData = [
+  { name: "Pending", imageUrl: "/images/Icons/icons8-pending-96.png" },
+  { name: "Confirmed", imageUrl: "/images/Icons/icons8-confirmed-96.png" },
+  {
+    name: "Processing",
+    imageUrl: "/images/Icons/icons8-submit-progress-96.png",
+  },
+  { name: "Ready for pickup", imageUrl: "/images/Icons/icons8-waiter-96.png" },
+];
+
+const smallDivData = [
+  { name: "Picked ", imageUrl: "/images/Icons/icons8-done-96.png" },
+  { name: "Canceled", imageUrl: "/images/Icons/icons8-clear-search-96.png" },
+  { name: "Returned", imageUrl: "/images/Icons/icons8-homework-96.png" },
+  { name: "Discard", imageUrl: "/images/Icons/icons8-fail-96.png" },
+];
+
 const BusinessAnalytics = () => {
   return (
     <Div
@@ -12,25 +30,62 @@ const BusinessAnalytics = () => {
         <>
           {/* Upper Corner Text */}
           <Text
-            themeDivClasses="text-lg font-medium mb-8 block"
-            content={<>Business Analytics</>}
+            themeDivClasses="text-lg flex flex-row items-center font-medium mb-6 gap-2"
+            content={
+              <>
+                <img
+                  src={"/images/Icons/icons8-rank-96.png"}
+                  alt="name"
+                  className="h-8 w-8"
+                />
+                Business Analytics
+              </>
+            }
           />
 
           {/* Grid of Divs */}
-          <div className="grid grid-cols-4 gap-5 ">
-            {Array.from({ length: 4 }).map((_, index) => (
+          <div className="grid grid-cols-4 gap-5">
+            {businessData.map((data, index) => (
               <Div
                 key={index}
-                themeDivClasses="h-[130px] shadow border border-ExtraLightGray rounded-xl"
-                content={<Text themeDivClasses="" content={index + 1} />}
+                themeDivClasses="h-[130px] flex items-center shadow border border-ExtraLightGray rounded-xl relative"
+                content={
+                  <>
+                    <Text
+                      themeDivClasses="pl-4 text-medium font-medium"
+                      content={data.name}
+                    />
+                    <div className="absolute top-2 right-2">
+                      <img
+                        src={data.imageUrl}
+                        alt={data.name}
+                        className="h-8 w-8"
+                      />
+                    </div>
+                  </>
+                }
               />
             ))}
-            {Array.from({ length: 4 }).map((_, index) => (
+            {smallDivData.map((data, index) => (
               <Div
                 key={index}
-                themeDivClasses="h-[65px] rounded-xl shadow"
-                lightColor="bg-ExtraLightGray"
-                content={<Text themeDivClasses="" content={index + 1} />}
+                themeDivClasses="h-[65px] rounded-xl flex  items-center "
+                lightColor="bg-bgGrey"
+                content={
+                  <>
+                    <div className=" flex justify-start pl-4 ">
+                      <img
+                        src={data.imageUrl}
+                        alt={data.name}
+                        className="h-6 w-6"
+                      />
+                    </div>
+                    <Text
+                      themeDivClasses="pl-2 font-medium text-gray"
+                      content={data.name}
+                    />
+                  </>
+                }
               />
             ))}
           </div>

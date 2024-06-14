@@ -18,7 +18,7 @@ const SideBarComponent: React.FC<SideBarProps> = (props) => {
         "ease-in-out duration-300 h-screen pt-24 fixed",
         props.toggle ? "!w-[50px]" : "w-[220px]",
       ])}
-      darkColor="bg-black !shadow-orange"
+      darkColor="bg-black !shadow-yellow"
       content={
         <>
           <ul className="w-full flex flex-col gap-2">

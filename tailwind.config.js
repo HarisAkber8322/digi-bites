@@ -15,7 +15,7 @@ const config = {
       colors: {
         transparent: "#00000000",
       // gray
-        bgGrey: "#f6f6f6",
+        bgGrey: "#f1f1f1",
         ExtraLightGray: "#eeeeee",
         lightGray: "#dddddd",
         gray: "#aaaaaa",
@@ -27,7 +27,7 @@ const config = {
         themeOrange: "#fc6a57",
       },
       boxShadow: {
-        orange: "0 20px 5px #fc6a57", // Adjust the color and opacity as needed
+        yellow: "0 20px 5px #fbbc09", // Adjust the color and opacity as needed
       },
       screens: {
         xs: { max: "767px" }, //Mobile
