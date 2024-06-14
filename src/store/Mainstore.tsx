@@ -5,12 +5,14 @@ import axios from "axios";
 import React from "react";
 // import { useRouter } from "next/navigation";
 interface Users {
+  // _id: string;
   fname: string;
   lname: string;
   email: string;
   password: string;
   contact_no: string;
   type: string;
+  social_links: [{ name: string, link: string }]
 }
 class AppStore {
   constructor() {

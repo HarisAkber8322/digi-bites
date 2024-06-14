@@ -493,7 +493,7 @@ import {
   faSquare,
   faStickyNote,
 } from "@fortawesome/free-regular-svg-icons";
-import { faShield, faHome, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faShield, faHome, faUser, faFolderTree } from "@fortawesome/free-solid-svg-icons";
 
 export const CardData = [
   {
@@ -599,5 +599,10 @@ export const sidebarItems = [
     title: "Users",
     link: "/admin/users",
     icon: faUser,
+  },
+  {
+    title: "Orders",
+    link: "/admin/orders",
+    icon: faFolderTree,
   },
 ];
