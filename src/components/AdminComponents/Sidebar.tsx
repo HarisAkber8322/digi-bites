@@ -28,20 +28,20 @@ const SideBarComponent: React.FC<SideBarProps> = (props) => {
                   className={classNames([
                     "ease-in-out duration-300 text-base font-semibold py-2 px-5 flex gap-3 items-center  ",
                     props.toggle ? "pl-4" : "pl-5",
-                    router === item.link ? "bg-lightorange" : "",
-                    "hover:bg-lightorange group",
+                    router === item.link ? "bg-themeYellow" : "",
+                    "hover:bg-themeYellow group",
                   ])}
                   href={item.link}
                 >
                   <Text
                     themeDivClasses="group-hover:text-white"
                     lightColor={
-                      router === item.link ? "text-white" : "text-lightorange"
+                      router === item.link ? "text-white" : "text-themeYellow"
                     }
                     content={
                       <>
                         <FontAwesomeIcon
-                          // className="text-lightorange"
+                          // className="text-themeYellow"
                           icon={item.icon}
                         />
                       </>
@@ -54,7 +54,7 @@ const SideBarComponent: React.FC<SideBarProps> = (props) => {
                       props.toggle ? "text-[0px]" : "text-base",
                     ])}
                     lightColor={
-                      router === item.link ? "text-white" : "text-lightorange"
+                      router === item.link ? "text-white" : "text-themeYellow"
                     }
                     content={<>{item.title}</>}
                   />

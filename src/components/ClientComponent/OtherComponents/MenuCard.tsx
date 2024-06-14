@@ -67,7 +67,7 @@ const MenuCard: React.FC<MenuCardProps> = ({
                 {isFavorite ? (
                   <AiFillHeart className="text-red-500" />
                 ) : (
-                  <AiOutlineHeart className="text-dullyellow" />
+                  <AiOutlineHeart className="text-themeYellow" />
                 )}
               </button>
             </div>
@@ -78,8 +78,8 @@ const MenuCard: React.FC<MenuCardProps> = ({
                 content={menuItem.name}
               />
               <Text
-                darkColor="text-dullyellow"
-                lightColor="text-dullyellow"
+                darkColor="text-themeYellow"
+                lightColor="text-themeYellow"
                 themeDivClasses="text-medium font-semibold"
                 content={`$${menuItem.price}`}
               />
@@ -93,7 +93,7 @@ const MenuCard: React.FC<MenuCardProps> = ({
                 }}
               >
                 <Text
-                  themeDivClasses="flex justify-center p-1 bg-dullyellow w-full text-normal text-white"
+                  themeDivClasses="flex justify-center p-1 bg-themeYellow w-full text-normal text-white"
                   content={<>Add to Cart</>}
                 />
               </button>

@@ -11,7 +11,7 @@ const CommonButton = () => {
     <>
       <button className="flex w-[50%] rounded-[30px] overflow-hidden ">
         <Link
-          className="flex justify-center p-1 bg-dullyellow w-full text-lg  text-white"
+          className="flex justify-center p-1 bg-themeYellow w-full text-lg  text-white"
           href={"#"}
         >
           Add To Cart

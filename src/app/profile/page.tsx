@@ -13,7 +13,7 @@ const Profile = () => {
   return (
     <Div
       themeDivClasses="min-h-screen md:w-[1180px] m-auto pt-6"
-      lightColor="bg-white1"
+      lightColor="bg-bgGrey"
       darkColor="bg-pepperblack"
       content={
         <>
@@ -23,7 +23,7 @@ const Profile = () => {
               alt="Cover"
               width={1200}
               height={400}
-              className="w-full h-64 object-cover bg-dullyellow"
+              className="w-full h-64 object-cover bg-themeYellow"
             />
             <div className="absolute top-20 left-8 rounded-full w-[250px] h-[250px]">
               <Image
@@ -41,7 +41,7 @@ const Profile = () => {
                 <Div
                   key={card.id}
                   lightColor="bg-ExtraLightGray"
-                  darkColor="bg-pepperblack2"
+                  darkColor="bg-pepperBlack"
                   themeDivClasses="w-[172px] h-[172px] flex flex-col items-center justify-center p-0 m-0 rounded-[30px] shadow-md transition duration-300 hover:bg-ExtraLightGray hover:bg-opacity-20"
                   content={
                     <>

@@ -84,7 +84,7 @@ const Cart = () => {
                     <Div
                       key={index}
                       themeDivClasses="flex  shadow-xl rounded-lg items-center justify-between p-4 "
-                      darkColor="bg-pepperblack2"
+                      darkColor="bg-pepperBlack"
                       content={
                         <>
                           <div className="flex ">

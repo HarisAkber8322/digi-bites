@@ -31,7 +31,7 @@ const BurgerPage: React.FC = () => {
 
   return (
     <Div
-      lightColor="bg-white1"
+      lightColor="bg-bgGrey"
       darkColor="pepperBlack"
       themeDivClasses={"w-[1180px] m-auto"}
       content={
