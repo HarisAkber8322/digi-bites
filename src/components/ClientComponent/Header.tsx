@@ -175,17 +175,33 @@ const HeaderComponent = () => {
                       />
                     </Link>
                   ) : (
-                    <Link
-                      href={"/login"}
-                      className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-themeYellow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    <div className="grid grid-cols-2 gap-4" >
+                    
+                     <Link
+                     href={"/login"}
+                     className="w-full py-2 px-4  border-transparent rounded-md shadow-sm text-center text-sm font-medium !border !border-themeYellow bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                   >
+                     <Text
+                       content={" login"}
+                       themeDivClasses="border-thr"
+                       lightColor="text-themeYellow"
+                       darkColor="text-white"
+                     />
+                   </Link>
+                   <Link
+                      href={"/signup"}
+                      className="w-full py-2 px-4 border border-transparent rounded-md text-center shadow-sm text-sm font-medium text-white bg-themeYellow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
                       <Text
-                        content={"login"}
+                        content={"Sign up"}
                         themeDivClasses=""
-                        lightColor="text-white"
-                        darkColor="text-white"
+                        lightColor="text-white "
+                        darkColor="text-white "
+
                       />
                     </Link>
+                    </div>
+                    
                   )}
                   {/* {isLoggedin &&
                     <button
