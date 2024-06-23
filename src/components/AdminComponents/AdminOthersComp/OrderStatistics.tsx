@@ -4,6 +4,7 @@ import Text from "../../UI/Text";
 import { Line } from "react-chartjs-2";
 import { observer } from "mobx-react";
 import 'chart.js/auto';
+import { Image } from "react-bootstrap";
 
 type Period = "Year" | "Month" | "Week";
 const getGraphData = (period: Period) => {
@@ -89,7 +90,7 @@ const OrderStatistics: React.FC = () => {
 
   return (
     <Div
-      themeDivClasses="w-[715px] h-[415px] rounded-xl shadow-xl p-6 my-6 relative "
+      themeDivClasses="col-span-2 h-[415px]  rounded-xl shadow-xl p-6 my-6 relative "
       darkColor="bg-pepperBlack"
       content={
         <>
@@ -98,7 +99,7 @@ const OrderStatistics: React.FC = () => {
             themeDivClasses="text-lg flex flex-row items-center font-medium mb-6 gap-2"
             content={
               <>
-                <img
+                <Image
                   src={"/images/Icons/icons8-total-sales-96.png"}
                   alt="name"
                   className="h-8 w-8"
