@@ -1,7 +1,7 @@
 "use client";
 import Div from "@/components/UI/Div";
 import LoginFoamComponent from "../../components/ClientComponent/OtherComponents/LoginFoam";
-const ContactPage = () => {
+const LoginPage = () => {
   return (
     <Div
       themeDivClasses="grid h-[100vh] items-center !bg-transparent"
@@ -14,4 +14,4 @@ const ContactPage = () => {
     />
   );
 };
-export default ContactPage;
+export default LoginPage;

@@ -1,7 +1,7 @@
 "use client";
 import Div from "@/components/UI/Div";
 import SignupFormComponent from "@/components/ClientComponent/OtherComponents/SignupForm";
-const ContactPage = () => {
+const SignUpPage = () => {
   return (
     <Div
       themeDivClasses="grid h-[100vh] items-center !bg-transparent"
@@ -14,4 +14,4 @@ const ContactPage = () => {
     />
   );
 };
-export default ContactPage;
+export default SignUpPage;

@@ -1,17 +1,17 @@
 "use client";
 import Div from "@/components/UI/Div";
-import ForgetPassFormComponent from "@/components/ClientComponent/OtherComponents/ForgetPassForm";
-const ForgetPasswordPage = () => {
+import SuggestionsComponent from "@/components/ClientComponent/OtherComponents/suggestions";
+const SuggestionsPage = () => {
   return (
     <Div
       themeDivClasses="grid h-[100vh] items-center !bg-transparent"
       darkColor="bg-papperBlack"
       content={
         <>
-          <ForgetPassFormComponent />
+          <SuggestionsComponent/>
         </>
       }
     />
   );
 };
-export default ForgetPasswordPage;
+export default SuggestionsPage;

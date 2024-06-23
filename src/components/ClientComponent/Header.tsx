@@ -133,6 +133,17 @@ const HeaderComponent = () => {
                     </li>
                     <li className="md:transition-all md:duration-500 md:ease-in-out">
                       <Link
+                        href="/suggestions"
+                        className={router === "/suggestion" ? "active" : ""}
+                      >
+                        <Text
+                          themeDivClasses="md:text-md md:font-semibold"
+                          content={"Suggestions"}
+                        />
+                      </Link>
+                    </li>
+                    <li className="md:transition-all md:duration-500 md:ease-in-out">
+                      <Link
                         href="/contact"
                         className={router === "/contact" ? "active" : ""}
                       >
