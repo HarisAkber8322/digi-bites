@@ -127,7 +127,7 @@ const OrderStatistics: React.FC = () => {
           </div>
 
           {/* Graph Display */}
-          <div className="mt-8 ">
+          <div className="mt-8">
             <Line data={getGraphData(selectedPeriod)} options={getGraphOptions(selectedPeriod)} />
           </div>
         </>

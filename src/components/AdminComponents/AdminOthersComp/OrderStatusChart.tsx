@@ -42,13 +42,13 @@ const getPieOptions = () => ({
 const OrderStatusChart: React.FC = () => {
   return (
     <Div
-      themeDivClasses=" h-[415px] col-span-1 rounded-xl shadow-xl  my-6 relative"
+      themeDivClasses=" h-[415px] col-span-1 flex flex-col justify-center items-center rounded-xl shadow-xl  my-6 relative"
       darkColor="bg-pepperBlack"
       content={
         <>
           {/* Upper Corner Text */}
           <Text
-            themeDivClasses="text-lg p-4 flex flex-row items-center font-medium mb-2 gap-2 border-b shadow border-ExtraLightGray"
+            themeDivClasses="text-lg p-4 w-full flex flex-row items-center font-medium mb-2 gap-2 border-b shadow border-ExtraLightGray"
             content={
               <>
                 Order Status Statistics

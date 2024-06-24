@@ -7,6 +7,7 @@ import {
   faCartShopping,
 } from "@fortawesome/free-solid-svg-icons";
 import ToggleThemeComponent from "../ToggleThemeButton";
+import AdminProfileComponent from "../AdminComponents/AdminOthersComp/AdminProfile";
 import { Image } from "react-bootstrap";
 import { usePathname } from "next/navigation";
 import Div from "../UI/Div";
@@ -87,7 +88,8 @@ const HeaderComponent: React.FC<HeaderProps> = ({
                 <div className="md:flex md:items-center">
                   {/* <SearchInput onSearch={handleSearch} /> */}
                 </div>
-                <div className="md:text-lg md:flex md:items-center md:gap-5">
+                <div className="md:text-lg md:flex md:items-center md:gap-8">
+                  <AdminProfileComponent/>
                   <ToggleThemeComponent />
                 </div>
               </div>
