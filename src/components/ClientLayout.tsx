@@ -15,11 +15,9 @@ const ClientLayout = ({ children }: { children: React.ReactNode }) => {
         <>
           <HeaderComponent />
           <Div
-            darkColor="bg-pepperBlack"
+            darkColor="bg-lightBlack"
             lightColor="bg-bgGrey"
-            themeDivClasses={classNames([
-              " w-full pt-[64px] min-h-[100vh]",
-            ])}
+            themeDivClasses={classNames(["w-full pt-[64px] min-h-[100vh]"])}
             content={children}
           />
           <FooterComponent />
@@ -31,5 +29,5 @@ const ClientLayout = ({ children }: { children: React.ReactNode }) => {
 };
 
 export default observer(
-  dynamic(() => Promise.resolve(ClientLayout), { ssr: false }),
+  dynamic(() => Promise.resolve(ClientLayout), { ssr: false })
 );
