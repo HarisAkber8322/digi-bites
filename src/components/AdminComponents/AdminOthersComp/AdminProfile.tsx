@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignOutAlt, faUser, faEnvelope, faGear } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSignOutAlt,
+  faUser,
+  faEnvelope,
+  faGear,
+} from "@fortawesome/free-solid-svg-icons";
 import { Image } from "react-bootstrap";
 import classNames from "classnames";
 import Div from "../../UI/Div";
 import Text from "../../UI/Text";
+import Link from "next/link";
 
 const AdminProfile: React.FC = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -20,17 +26,19 @@ const AdminProfile: React.FC = () => {
 
   return (
     <div className="relative inline-block text-left">
-      <div onClick={toggleDropdown} className="cursor-pointer flex items-center gap-2">
-      <div className="flex flex-col">
-        <Text themeDivClasses="text-xs font-semibold" content="Admin" />
-        <Text themeDivClasses="text-xs" content="Master Admin" />
+      <div
+        onClick={toggleDropdown}
+        className="cursor-pointer flex items-center gap-2"
+      >
+        <div className="flex flex-col">
+          <Text themeDivClasses="text-xs font-semibold" content="Admin" />
+          <Text themeDivClasses="text-xs" content="Master Admin" />
         </div>
         <Image
           className="h-10 w-10 rounded-full"
           src="./images/admin.png" // Replace with actual profile photo path
           alt="Admin Profile Photo"
         />
-       
       </div>
 
       {dropdownOpen && (
@@ -46,20 +54,27 @@ const AdminProfile: React.FC = () => {
         >
           <div className="py-1">
             <div className="px-4 py-5 text-sm text-gray-700 flex gap-3 items-start   border-b  border-ExtraLightGray">
-            <Image
-          className="h-7 w-7 rounded-full"
-          src="./images/admin.png" // Replace with actual profile photo path
-          alt="Admin Profile Photo"
-        />
-        <div className="flex flex-col gap-2"> <span>admin</span>
-              <span className="font-normal text-slate-400">a*******@admin.com</span>
-             </div>
-              
+              <Image
+                className="h-8 w-8 rounded-full"
+                src="./images/admin.png" // Replace with actual profile photo path
+                alt="Admin Profile Photo"
+              />
+              <div className="flex flex-col gap-2">
+                {" "}
+                <span>admin</span>
+                <span className="font-normal text-slate-400">
+                  a*******@admin.com
+                </span>
+              </div>
             </div>
-            <div className="px-4 py-3 text-sm text-gray-700 flex items-center  border-b  border-ExtraLightGray">
+            <Link
+              href={"/admin/settings"}
+              className="px-4 py-3 text-sm text-gray-700 flex items-center  border-b  border-ExtraLightGray"
+            >
               <FontAwesomeIcon icon={faGear} className="mr-2" />
               <span>Settings</span> {/* Replace with actual email */}
-            </div>
+            </Link>
+
             <div
               onClick={handleLogout}
               className="px-4 py-3 text-sm text-gray-700 flex items-center cursor-pointer hover:bg-gray-100 "
