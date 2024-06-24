@@ -1,4 +1,7 @@
-// components/SignUpForm.tsx
+"use client";
+import React, { useContext, useState } from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import Text from "@/components/UI/Text";
 import MainStoreContext from "@/store/Mainstore";
 import { faFacebookF, faGoogle } from "@fortawesome/free-brands-svg-icons";
@@ -7,30 +10,41 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { observer } from "mobx-react";
 import Link from "next/link";
 import { Button } from "react-bootstrap";
-import { useContext, useState } from "react";
+import Div from "@/components/UI/Div";
+import Image from "next/image";
 
 const SignUpForm = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const MainStore = useContext(MainStoreContext);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // Check if password and confirm password match
-    if (password !== confirmPassword) {
-      console.log("Passwords do not match");
-      return;
-    }
+  const initialValues = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  };
 
+  const validationSchema = Yup.object().shape({
+    firstName: Yup.string().required("First name is required"),
+    lastName: Yup.string().required("Last name is required"),
+    email: Yup.string()
+      .email("Invalid email address")
+      .required("Email is required"),
+    password: Yup.string()
+      .min(6, "Password must be at least 6 characters")
+      .required("Password is required"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password"), undefined], "Passwords must match")
+      .required("Confirm Password is required"),
+  });
+
+  const handleSubmit = async (values: typeof initialValues) => {
     let user = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
+      firstName: values.firstName,
+      lastName: values.lastName,
+      email: values.email,
+      password: values.password,
     };
     MainStore.handleSignUp(user);
   };
@@ -40,149 +54,204 @@ const SignUpForm = () => {
   };
 
   return (
-    <form
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
       onSubmit={handleSubmit}
-      className="w-[400px] h-fit mx-auto p-6 rounded-lg shadow-lg bg-white"
     >
-      <Text
-        themeDivClasses="font-bold text-xl flex justify-center mb-8"
-        content={<>SIGN UP FORM</>}
-      />
-      <div className="grid grid-cols-2 gap-2">
-      <div className="mb-4">
-        <label
-          htmlFor="firstName"
-          className="block text-sm font-medium text-gray-700"
-        >
-          First Name:
-        </label>
-        <input
-          type="text"
-          id="firstName"
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-          required
-          className="mt-1 block w-full px-3 py-2 border border-lightGray rounded-md shadow-sm focus:outline-none focus:themeOrange focus:border-themeOrange sm:text-sm"
-        />
-      </div>
-      <div className="mb-4">
-        <label
-          htmlFor="lastName"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Last Name:
-        </label>
-        <input
-          type="text"
-          id="lastName"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-          required
-          className="mt-1 block w-full px-3 py-2 border border-lightGray rounded-md shadow-sm focus:outline-none focus:themeOrange focus:border-themeOrange sm:text-sm"
-        />
-      </div>
-      </div>
-      
-      <div className="mb-4">
-        <label
-          htmlFor="email"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Email:
-        </label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          className="mt-1 block w-full px-3 py-2 border border-lightGray rounded-md shadow-sm focus:outline-none focus:themeOrange focus:border-themeOrange sm:text-sm"
-        />
-      </div>
-      <div className="mb-4">
-        <label
-          htmlFor="password"
-          className="block text-sm font-medium text-gray-700"
-        >
-          New Password:
-        </label>
-        <div className="relative">
-          <input
-            type={showPassword ? "text" : "password"}
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="mt-1 block w-full px-3 py-2 border border-lightGray rounded-md shadow-sm focus:outline-none focus:themeOrange focus:border-themeOrange sm:text-sm"
+      {({ isSubmitting }) => (
+        <Form className="">
+          <Div
+            themeDivClasses="w-[400px]  mx-auto p-6 rounded-lg shadow-lg"
+            content={
+              <>
+                <Text
+                  themeDivClasses="font-bold text-xl flex justify-center"
+                  content={<>Register To</>}
+                />
+                <div
+                  onClick={() => MainStore.changePage("/")}
+                  className="cursor-pointer"
+                >
+                  <Image
+                    width={150}
+                    height={135}
+                    className="text-center m-auto mb-8"
+                    src="/images/digibites.png"
+                    alt="logo"
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="relative mb-4">
+                    <label
+                      htmlFor="firstName"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      <Text themeDivClasses="" content={<>First Name:</>} />
+                    </label>
+                    <Field
+                      type="text"
+                      id="firstName"
+                      name="firstName"
+                      placeholder="Enter your first name"
+                      className="mt-1 block w-full px-3 py-2 border border-lightGray rounded-md shadow-sm focus:outline-none focus:themeOrange focus:border-themeOrange sm:text-sm"
+                    />
+                    <ErrorMessage
+                      name="firstName"
+                      component="div"
+                      className="text-themeYellow text-xs absolute left-2 bottom-[-15px]"
+                    />
+                  </div>
+                  <div className="relative mb-4">
+                    <label
+                      htmlFor="lastName"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      <Text themeDivClasses="" content={<>Last Name:</>} />
+                    </label>
+                    <Field
+                      type="text"
+                      id="lastName"
+                      name="lastName"
+                      placeholder="Enter your last name"
+                      className="mt-1 block w-full px-3 py-2 border border-lightGray rounded-md shadow-sm focus:outline-none focus:themeOrange focus:border-themeOrange sm:text-sm"
+                    />
+                    <ErrorMessage
+                      name="lastName"
+                      component="div"
+                      className="text-themeYellow text-xs absolute left-2 bottom-[-15px]"
+                    />
+                  </div>
+                </div>
+                <div className="relative mb-4">
+                  <label htmlFor="email" className="block text-sm font-medium">
+                    <Text themeDivClasses="" content={<> Email:</>} />
+                  </label>
+                  <Field
+                    type="email"
+                    id="email"
+                    name="email" placeholder="Enter your email"
+                    className="mt-1 block w-full px-3 py-2 border border-lightGray rounded-md shadow-sm focus:outline-none focus:themeOrange focus:border-themeOrange sm:text-sm"
+                  />
+                  <ErrorMessage
+                    name="email"
+                    component="div"
+                    className="text-themeYellow text-xs absolute left-2 bottom-[-15px]"
+                  />
+                </div>
+                <div className="relative mb-4">
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    <Text themeDivClasses="" content={<> New Password:</>} />
+                  </label>
+                  <div className="relative">
+                    <Field
+                      type={showPassword ? "text" : "password"}
+                      id="password"
+                      name="password"
+                      placeholder="Enter your password"
+                      className="mt-1 block w-full px-3 py-2 border border-lightGray rounded-md shadow-sm focus:outline-none focus:themeOrange focus:border-themeOrange sm:text-sm"
+                    />
+                    <button
+                      type="button"
+                      onClick={togglePasswordVisibility}
+                      className="absolute inset-y-0 right-0 px-3 flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                      {showPassword ? (
+                        <FontAwesomeIcon icon={faEyeSlash} />
+                      ) : (
+                        <FontAwesomeIcon icon={faEye} />
+                      )}
+                    </button>
+                  </div>
+                  <ErrorMessage
+                    name="password"
+                    component="div"
+                    className="text-themeYellow text-xs absolute left-2 bottom-[-15px]"
+                  />
+                </div>
+                <div className="relative mb-4">
+                  <label
+                    htmlFor="confirmPassword"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    <Text
+                      themeDivClasses=""
+                      content={<> Confirm Password:</>}
+                    />
+                  </label>
+
+                  <div className="relative">
+                    <Field
+                      type={showPassword ? "text" : "password"}
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      placeholder="Confirm your password"
+                      className="mt-1 block w-full px-3 py-2 border border-lightGray rounded-md shadow-sm focus:outline-none focus:themeOrange focus:border-themeOrange sm:text-sm"
+                    />
+                    <button
+                      type="button"
+                      onClick={togglePasswordVisibility}
+                      className="absolute inset-y-0 right-0 px-3 flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                      {showPassword ? (
+                        <FontAwesomeIcon icon={faEyeSlash} />
+                      ) : (
+                        <FontAwesomeIcon icon={faEye} />
+                      )}
+                    </button>
+                  </div>
+                  <ErrorMessage
+                    name="confirmPassword"
+                    component="div"
+                    className="text-themeYellow text-xs absolute left-2 bottom-[-15px]"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-themeYellow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  {isSubmitting ? "Signing up..." : "Sign Up"}
+                </button>
+                <div className="mt-4 flex justify-between text-sm">
+                  <Link
+                    href="/login"
+                    className="text-themeOrange hover:underline"
+                  >
+                    Already have an account? Login
+                  </Link>
+                </div>
+                {/* <div className="grid grid-cols-2 gap-4"> */}
+                <div className="mt-6 flex justify-center">
+                  <Button className="w-full py-2 px-4 mb-2 flex justify-center items-center bg-blue-600  rounded-md shadow-sm text-sm font-medium text-gray-700 text-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <FontAwesomeIcon
+                      icon={faFacebookF}
+                      color="white"
+                      className="h-3 w-3 mr-2"
+                    />
+                    Continue with Facebook
+                  </Button>
+                </div>
+                <div className="mt-2 flex justify-center">
+                  <Button className="w-full py-2 px-4 flex justify-center items-center  text-white bg-red-500 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <FontAwesomeIcon
+                      icon={faGoogle}
+                      color="white"
+                      className="h-3 w-3 mr-2"
+                    />
+                    Continue with Google
+                  </Button>
+                </div>
+                {/* </div> */}
+              </>
+            }
           />
-          <button
-            type="button"
-            onClick={togglePasswordVisibility}
-            className="absolute inset-y-0 right-0 px-3 flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            {showPassword ? (
-              <FontAwesomeIcon icon={faEyeSlash} />
-            ) : (
-              <FontAwesomeIcon icon={faEye} />
-            )}
-          </button>
-        </div>
-      </div>
-      <div className="mb-4">
-        <label
-          htmlFor="password"
-          className="block text-sm font-medium text-gray-700"
-        >
-         Confirm Password:
-        </label>
-        <div className="relative">
-        <input
-          type="password"
-          id="confirmPassword"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          required
-          className="mt-1 block w-full px-3 py-2 border border-lightGray rounded-md shadow-sm focus:outline-none focus:themeOrange focus:border-themeOrange sm:text-sm"/>
-          <button
-            type="button"
-            onClick={togglePasswordVisibility}
-            className="absolute inset-y-0 right-0 px-3 flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            {showPassword ? (
-              <FontAwesomeIcon icon={faEyeSlash} />
-            ) : (
-              <FontAwesomeIcon icon={faEye} />
-            )}
-          </button>
-        </div>
-      </div>
-      <button
-        type="submit"
-        className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-themeYellow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-      >
-        Sign Up
-      </button>
-      <div className="mt-4 flex justify-between text-sm">
-        <Link href="/login" className="text-themeOrange hover:underline">
-          Already have an account? Login
-        </Link>
-      </div>
-      <div className="grid grid-cols-2  gap-4">
-      <div className="mt-6 flex justify-center">
-        <Button className="w-full py-2 px-4 mb-2 h-14  flex justify-center items-center bg-blue-600 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 text-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-          <FontAwesomeIcon icon={faFacebookF} color="white" className="h-5 w-5 mr-2"  />
-          Continue with Facebook
-        </Button>
-      </div>
-      <div className="mt-2 flex justify-center ">
-        <Button className="w-full py-2 px-4 flex mt-4 h-14 justify-center items-center border text-white bg-red-500 border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-          <FontAwesomeIcon icon={faGoogle} color="white" className="h-5 w-5 mr-2"  />
-          Continue with Google
-        </Button>
-      </div>
-      </div>
-      
-    </form>
+        </Form>
+      )}
+    </Formik>
   );
 };
 

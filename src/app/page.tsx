@@ -23,10 +23,10 @@ const App = () => {
             <SetMenuComponent/>
           </div>
       */}
-      <div className="my-[28px]">
+      <div className="w-full m-auto py-[28px]">
         <CardGrid />
       </div>
-      <div className="w-full md:w-[1180px] m-auto">
+      <div className="w-full md:w-[1180px] m-auto py-[28px]">
         <CompleteMenu handleCardClick={handleCardClick} />
       </div>
     </>

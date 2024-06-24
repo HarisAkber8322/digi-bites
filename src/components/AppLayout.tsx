@@ -2,9 +2,10 @@
 import React from "react";
 import { observer } from "mobx-react";
 import dynamic from "next/dynamic";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import AdminLayout from "@/components/AdminLayout";
 import ClientLayout from "@/components/ClientLayout";
+import ClientLoginLayout from "./ClientComponent/ClientLoginLayout";
 
 const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const pathname = usePathname();
@@ -13,6 +14,8 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     <>
       {isAdminRoute ? (
         <AdminLayout>{children}</AdminLayout>
+      ) : pathname === "/login" ||  pathname === "/signup" ? (
+        <ClientLoginLayout>{children}</ClientLoginLayout>
       ) : (
         <ClientLayout>{children}</ClientLayout>
       )}
@@ -21,5 +24,5 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 };
 
 export default observer(
-  dynamic(() => Promise.resolve(AppLayout), { ssr: false }),
+  dynamic(() => Promise.resolve(AppLayout), { ssr: false })
 );
