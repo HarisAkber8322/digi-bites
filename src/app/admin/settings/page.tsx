@@ -1,17 +1,17 @@
 "use client";
 import Div from "@/components/UI/Div";
-import LoginFoamComponent from "../../components/ClientComponent/OtherComponents/LoginFoam";
-const LoginPage = () => {
+import SettingsPageComponent from "@/components/AdminComponents/AdminOthersComp/AdminProfileSetting";
+const SettingsPage = () => {
   return (
     <Div
       themeDivClasses="grid h-[100vh] items-center !bg-transparent"
       darkColor="bg-papperBlack"
       content={
         <>
-          <LoginFoamComponent />
+          <SettingsPageComponent />
         </>
       }
     />
   );
 };
-export default LoginPage;
+export default SettingsPage;

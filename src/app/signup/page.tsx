@@ -1,17 +1,17 @@
 "use client";
 import Div from "@/components/UI/Div";
-import LoginFoamComponent from "../../components/ClientComponent/OtherComponents/LoginFoam";
-const LoginPage = () => {
+import SignupFormComponent from "@/components/ClientComponent/OtherComponents/SignupForm";
+const SignUpPage = () => {
   return (
     <Div
       themeDivClasses="grid h-[100vh] items-center !bg-transparent"
       darkColor="bg-papperBlack"
       content={
         <>
-          <LoginFoamComponent />
+          <SignupFormComponent />
         </>
       }
     />
   );
 };
-export default LoginPage;
+export default SignUpPage;

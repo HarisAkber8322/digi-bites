@@ -1,17 +1,17 @@
 "use client";
 import Div from "@/components/UI/Div";
-import LoginFoamComponent from "../../components/ClientComponent/OtherComponents/LoginFoam";
-const LoginPage = () => {
+import SuggestionsComponent from "@/components/ClientComponent/OtherComponents/suggestions";
+const SuggestionsPage = () => {
   return (
     <Div
       themeDivClasses="grid h-[100vh] items-center !bg-transparent"
       darkColor="bg-papperBlack"
       content={
         <>
-          <LoginFoamComponent />
+          <SuggestionsComponent/>
         </>
       }
     />
   );
 };
-export default LoginPage;
+export default SuggestionsPage;

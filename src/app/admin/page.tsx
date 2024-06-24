@@ -3,39 +3,44 @@
 import Div from "@/components/UI/Div";
 import Text from "@/components/UI/Text";
 import React, { useState } from "react";
-import BusinessAnalytics from "../../components/AdminComponents/AdminOthersComp/BusinessAnalytics"// Adjust according to your project structure
+import BusinessAnalytics from "../../components/AdminComponents/AdminOthersComp/BusinessAnalytics"; // Adjust according to your project structure
+import OrderStatistics from "@/components/AdminComponents/AdminOthersComp/OrderStatistics";
+import OrderStatusChart from "@/components/AdminComponents/AdminOthersComp/OrderStatusChart";
 
 const Dashboard: React.FC = () => {
   return (
     <div>
-
       <Div
-        lightColor="bg-lightGray"
+        lightColor="bg-bgGrey"
         darkColor="bg-lightBlack"
         themeDivClasses={""}
         content={
           <>
             <Div
               darkColor="bg-lightBlack"
-              lightColor="bg-lightGray"
-              themeDivClasses="flex flex-col pb-[35px]"
+              lightColor="bg-bgGrey"
+              themeDivClasses="flex flex-col mb-5"
               content={
                 <>
                   <Text
-                    themeDivClasses="text-xl font-semibold "
-                    lightColor="text-lightorange"
-                    darkColor="text-lightorange"
+                    themeDivClasses="text-3xl font-bold block "
                     content="Welcome, Admin."
                   />
                   <Text
-                    themeDivClasses="text-medium font-semibold "
+                    themeDivClasses="text-medium font-semibold text-themeYellow "
                     content="Monitor your business analytics and statistics"
                   />
                 </>
               }
-
             />
-            <BusinessAnalytics /></>
+            <BusinessAnalytics />
+            <div className="grid grid-cols-3 gap-5 w-full overflow-hidden">
+
+            <OrderStatistics/>
+            <OrderStatusChart/>
+            </div>
+            
+          </>
         }
       />
     </div>
