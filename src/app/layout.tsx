@@ -2,13 +2,16 @@ import type { Metadata, Viewport } from "next";
 import "../styles/global.css";
 import { Poppins } from "next/font/google";
 import AppLayout from "@/components/AppLayout";
+import { MainProvider } from "@/store/Mainstore"; // Import MainProvider
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700", "300", "900"], // specify weights you need
   subsets: ["latin"], // specify subsets you need
 });
+
 const APP_NAME = "Digital Bites";
 const APP_DESCRIPTION = "Cafeteria Management General Solution";
+
 export const metadata: Metadata = {
   applicationName: APP_NAME,
   title: {
@@ -31,6 +34,7 @@ export const metadata: Metadata = {
     apple: [{ url: "/favicon.ico", sizes: "180x180" }],
   },
 };
+
 export const viewport: Viewport = {
   themeColor: "#FFFFFF",
 };
@@ -53,9 +57,12 @@ const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             `}</style>
       </head>
       <body>
-        <AppLayout>{children}</AppLayout>
+        <MainProvider> {/* Wrap the application in MainProvider */}
+          <AppLayout>{children}</AppLayout>
+        </MainProvider>
       </body>
     </html>
   );
 };
+
 export default RootLayout;

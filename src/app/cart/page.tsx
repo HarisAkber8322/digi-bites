@@ -40,8 +40,15 @@ const Cart = () => {
     const updatedCartItems = cartItems.map((cartItem) =>
       cartItem.name === item.name
         ? { ...cartItem, quantity: newQuantity }
-        : cartItem,
+        : cartItem
     );
+  
+    // Calculate the change in quantity
+    const quantityChange = newQuantity - item.quantity;
+  
+    // Update the MainStore.cartCount
+    MainStore.setCartCount(MainStore.cartCount + quantityChange);
+  
     localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
     setCartItems(updatedCartItems);
   };
