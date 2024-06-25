@@ -30,7 +30,7 @@ const Slider: React.FC<SliderProps> = ({ interval = 3000 }) => {
 
   const handlePrev = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1,
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
     );
   };
 
@@ -46,22 +46,25 @@ const Slider: React.FC<SliderProps> = ({ interval = 3000 }) => {
   return (
     <div className="relative rounded-xl z-0 w-full m-auto h-[287px]  ">
       <div className="absolute rounded-xl z-20 w-full h-full bg-black opacity-5"></div>
-      <div className="overflow-hidden bg-contain">
+      <div className="overflow-hidden">
         {images.map((image, index) => (
-          <Image
-            width={1180}
-            height={50}
+          <div
             key={index}
-            src={image}
-            alt={`Slide ${index}`}
             onClick={() => handleClick(index)}
             className={classNames(
-              "cursor-pointer absolute rounded-xl z-10 !h-[287px] inset-0 object-cover transition-opacity duration-1000",
+              "cursor-pointer absolute rounded-xl z-10 transition-opacity duration-1000 bg-cover bg-center",
               {
                 "opacity-0": index !== currentIndex,
                 "opacity-100": index === currentIndex,
-              },
+              }
             )}
+            style={{
+              backgroundImage: `url(${image})`,
+              width: "1180px",
+              height: "300px",
+            }}
+            role="img"
+            aria-label={`Slide ${index}`}
           />
         ))}
       </div>

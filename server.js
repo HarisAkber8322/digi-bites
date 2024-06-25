@@ -4,6 +4,8 @@ const next = require("next");
 const cors = require("cors");
 const { ObjectId } = require("mongodb");
 const { connectToDatabase } = require("./src/db");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
@@ -93,7 +95,7 @@ app.prepare().then(() => {
       } else {
         console.error(
           "Error adding user: Insert operation did not return the expected result",
-          result,
+          result
         );
         res.status(500).json({ error: "Internal server error" });
       }
@@ -141,7 +143,7 @@ app.prepare().then(() => {
 
       const result = await usersCollection.updateOne(
         { _id: userId },
-        { $set: updateData },
+        { $set: updateData }
       );
 
       if (result.matchedCount === 0) {
@@ -152,6 +154,69 @@ app.prepare().then(() => {
       res.status(200).json({ message: "User updated successfully" });
     } catch (error) {
       console.error("Error updating user:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  server.post("/api/auth/login", async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+      const db = await connectToDatabase();
+      const usersCollection = db.collection("users");
+      const user = await usersCollection.findOne({ email });
+
+      if (!user) {
+        return res.status(401).json({ error: "Invalid email or password" });
+      }
+
+      const passwordMatch = await bcrypt.compare(password, user.password);
+      if (!passwordMatch) {
+        return res.status(401).json({ error: "Invalid email or password" });
+      }
+
+      const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY, { expiresIn: "1h" });
+
+      res.status(200).json({ token });
+    } catch (error) {
+      console.error("Error logging in:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  server.post("/api/auth/signup", async (req, res) => {
+    const { fname, lname, email, password } = req.body;
+
+    try {
+      const db = await connectToDatabase();
+      const usersCollection = db.collection("users");
+
+      const existingUser = await usersCollection.findOne({ email });
+      if (existingUser) {
+        return res.status(400).json({ error: "User with this email already exists" });
+      }
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      const newUser = {
+        fname,
+        lname,
+        email,
+        password: hashedPassword
+      };
+
+      const result = await usersCollection.insertOne(newUser);
+
+      if (result.acknowledged) {
+        const token = jwt.sign({ id: result.insertedId }, process.env.SECRET_KEY, {
+          expiresIn: "1h",
+        });
+        res.status(201).json({ token });
+      } else {
+        res.status(500).json({ error: "Internal server error" });
+      }
+    } catch (error) {
+      console.error("Error signing up:", error);
       res.status(500).json({ error: "Internal server error" });
     }
   });

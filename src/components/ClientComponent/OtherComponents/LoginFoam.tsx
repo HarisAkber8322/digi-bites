@@ -1,7 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Text from "@/components/UI/Text";
-import MainStoreContext from "@/store/Mainstore";
+import UserStoreContext from "@/store/UserStore";
 import { faFacebookF, faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,12 +13,12 @@ import Image from "next/image";
 import Div from "@/components/UI/Div";
 
 const LoginForm = () => {
-  const MainStore = useContext(MainStoreContext);
-  const { isLoggedin, handleLogin } = MainStore;
+  const UserStore = useContext(UserStoreContext);
+  const { isLoggedin, handleLogin } = UserStore;
   const [showPassword, setShowPassword] = useState(false);
   const initialValues = {
-    email: MainStore.user.email,
-    password: MainStore.user.password,
+    email: UserStore.user.email,
+    password: UserStore.user.password,
   };
 
   const validationSchema = Yup.object().shape({
@@ -32,7 +32,7 @@ const LoginForm = () => {
   ) => {
     try {
       await handleLogin(values);
-      if (MainStore.isLoggedin) {
+      if (UserStore.isLoggedin) {
         console.log("Login successful");
       } else {
         console.log("Login failed");
@@ -65,7 +65,7 @@ const LoginForm = () => {
                   content={<>LOGIN To</>}
                 />
                 <div
-                  onClick={() => MainStore.changePage("/")}
+                  onClick={() => UserStore.changePage("/")}
                   className="cursor-pointer"
                 >
                   <Image
@@ -91,7 +91,7 @@ const LoginForm = () => {
                   <ErrorMessage
                     name="email"
                     component="div"
-                      className="text-themeYellow text-xs absolute left-2 bottom-[-15px]"
+                    className="text-themeYellow text-xs absolute left-2 bottom-[-15px]"
                   />
                 </div>
                 <div className="relative mb-6">
@@ -151,7 +151,7 @@ const LoginForm = () => {
                     <FontAwesomeIcon
                       icon={faFacebookF}
                       color="white"
-                       className="h-3 w-3 mr-2"
+                      className="h-3 w-3 mr-2"
                     />
                     Continue with Facebook
                   </Button>
@@ -161,7 +161,7 @@ const LoginForm = () => {
                     <FontAwesomeIcon
                       icon={faGoogle}
                       color="white"
-                        className="h-3 w-3 mr-2"
+                      className="h-3 w-3 mr-2"
                     />
                     Continue with Google
                   </Button>

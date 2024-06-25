@@ -17,6 +17,7 @@ import { observer } from "mobx-react";
 import MainStoreContext from "@/store/Mainstore";
 import { menuData } from "../../utills/constants"; // Adjust the path to where your menuData is located
 import dynamic from "next/dynamic";
+import UserStoreContext from "@/store/UserStore";
 
 const HeaderComponent = () => {
   const router = usePathname();
@@ -27,7 +28,8 @@ const HeaderComponent = () => {
     null,
   );
   const MainStore = useContext(MainStoreContext);
-  const { isLoggedin, logout } = MainStore;
+  const UserStore = useContext(UserStoreContext);
+  const { isLoggedin, logout } = UserStore;
   useEffect(() => {
     const updateCartCount = () => {
       const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
@@ -64,7 +66,6 @@ const HeaderComponent = () => {
     }, 1000);
     setDropdownTimeout(timeout as NodeJS.Timeout);
   };
-
   return (
     <>
       <Div
