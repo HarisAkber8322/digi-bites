@@ -1,33 +1,34 @@
-"use client";
 import React, { useContext, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Text from "@/components/UI/Text";
-import MainStoreContext from "@/store/Mainstore";
-import { faFacebookF, faGoogle } from "@fortawesome/free-brands-svg-icons";
-import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { observer } from "mobx-react";
 import Link from "next/link";
 import { Button } from "react-bootstrap";
 import Div from "@/components/UI/Div";
 import Image from "next/image";
+import UserStoreContext, { User } from "@/store/UserStore";
+import { faFacebook, faGoogle } from "@fortawesome/free-brands-svg-icons";
 
 const SignUpForm = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const MainStore = useContext(MainStoreContext);
+  const userStore = useContext(UserStoreContext); // Use UserStoreContext
 
-  const initialValues = {
-    firstName: "",
-    lastName: "",
+  const initialValues: User = {
+    fname: "",
+    lname: "",
     email: "",
     password: "",
-    confirmPassword: "",
+    contact_no: "",
+    type: "customer",
+    social_links: [{ link: "", name: "" }],
   };
 
   const validationSchema = Yup.object().shape({
-    firstName: Yup.string().required("First name is required"),
-    lastName: Yup.string().required("Last name is required"),
+    fname: Yup.string().required("First name is required"),
+    lname: Yup.string().required("Last name is required"),
     email: Yup.string()
       .email("Invalid email address")
       .required("Email is required"),
@@ -39,14 +40,9 @@ const SignUpForm = () => {
       .required("Confirm Password is required"),
   });
 
-  const handleSubmit = async (values: typeof initialValues) => {
-    let user = {
-      firstName: values.firstName,
-      lastName: values.lastName,
-      email: values.email,
-      password: values.password,
-    };
-    MainStore.handleSignUp(user);
+  const handleSubmit = async (values: User) => {
+    let result = await userStore.handleSignUp(values);
+    console.log(result, "result"); 
   };
 
   const togglePasswordVisibility = () => {
@@ -70,7 +66,7 @@ const SignUpForm = () => {
                   content={<>Register To</>}
                 />
                 <div
-                  onClick={() => MainStore.changePage("/")}
+                  onClick={() => userStore.changePage("/")}
                   className="cursor-pointer"
                 >
                   <Image
@@ -84,40 +80,40 @@ const SignUpForm = () => {
                 <div className="grid grid-cols-2 gap-2">
                   <div className="relative mb-4">
                     <label
-                      htmlFor="firstName"
+                      htmlFor="fname"
                       className="block text-sm font-medium text-gray-700"
                     >
                       <Text themeDivClasses="" content={<>First Name:</>} />
                     </label>
                     <Field
                       type="text"
-                      id="firstName"
-                      name="firstName"
+                      id="fname"
+                      name="fname"
                       placeholder="Enter your first name"
                       className="mt-1 block w-full px-3 py-2 border border-lightGray rounded-md shadow-sm focus:outline-none focus:themeOrange focus:border-themeOrange sm:text-sm"
                     />
                     <ErrorMessage
-                      name="firstName"
+                      name="fname"
                       component="div"
                       className="text-themeYellow text-xs absolute left-2 bottom-[-15px]"
                     />
                   </div>
                   <div className="relative mb-4">
                     <label
-                      htmlFor="lastName"
+                      htmlFor="lname"
                       className="block text-sm font-medium text-gray-700"
                     >
                       <Text themeDivClasses="" content={<>Last Name:</>} />
                     </label>
                     <Field
                       type="text"
-                      id="lastName"
-                      name="lastName"
+                      id="lname"
+                      name="lname"
                       placeholder="Enter your last name"
                       className="mt-1 block w-full px-3 py-2 border border-lightGray rounded-md shadow-sm focus:outline-none focus:themeOrange focus:border-themeOrange sm:text-sm"
                     />
                     <ErrorMessage
-                      name="lastName"
+                      name="lname"
                       component="div"
                       className="text-themeYellow text-xs absolute left-2 bottom-[-15px]"
                     />
@@ -228,7 +224,7 @@ const SignUpForm = () => {
                 <div className="mt-6 flex justify-center">
                   <Button className="w-full py-2 px-4 mb-2 flex justify-center items-center bg-blue-600  rounded-md shadow-sm text-sm font-medium text-gray-700 text-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     <FontAwesomeIcon
-                      icon={faFacebookF}
+                      icon={faFacebook}
                       color="white"
                       className="h-3 w-3 mr-2"
                     />
@@ -245,7 +241,6 @@ const SignUpForm = () => {
                     Continue with Google
                   </Button>
                 </div>
-                {/* </div> */}
               </>
             }
           />

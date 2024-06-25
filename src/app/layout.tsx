@@ -3,6 +3,7 @@ import "../styles/global.css";
 import { Poppins } from "next/font/google";
 import AppLayout from "@/components/AppLayout";
 import { MainProvider } from "@/store/Mainstore"; // Import MainProvider
+import { UserProvider } from "@/store/UserStore";
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700", "300", "900"], // specify weights you need
@@ -57,8 +58,10 @@ const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             `}</style>
       </head>
       <body>
-        <MainProvider> {/* Wrap the application in MainProvider */}
-          <AppLayout>{children}</AppLayout>
+        <MainProvider>
+          <UserProvider>
+            <AppLayout>{children}</AppLayout>
+          </UserProvider>
         </MainProvider>
       </body>
     </html>
