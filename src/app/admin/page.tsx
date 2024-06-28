@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import BusinessAnalytics from "../../components/AdminComponents/AdminOthersComp/BusinessAnalytics"; // Adjust according to your project structure
 import OrderStatistics from "@/components/AdminComponents/AdminOthersComp/OrderStatistics";
 import OrderStatusChart from "@/components/AdminComponents/AdminOthersComp/OrderStatusChart";
+import EarningStatistics from "@/components/AdminComponents/AdminOthersComp/EarningStatistics";
 
 const Dashboard: React.FC = () => {
   return (
@@ -34,10 +35,11 @@ const Dashboard: React.FC = () => {
               }
             />
             <BusinessAnalytics />
-            <div className="grid grid-cols-3 gap-5 w-full overflow-hidden">
+            <div className="grid grid-cols-3 w-full overflow-hidden">
 
             <OrderStatistics/>
             <OrderStatusChart/>
+            <EarningStatistics/>
             </div>
             
           </>
