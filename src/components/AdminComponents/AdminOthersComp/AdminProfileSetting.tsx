@@ -1,278 +1,247 @@
-// import React from "react";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faUser, faEnvelope, faLock, faHouse, faGears, faGear } from "@fortawesome/free-solid-svg-icons";
-// import Div from "@/components/UI/Div";
-// import Text from "@/components/UI/Text";
-// import Link from "next/link";
-
-// const AdminProfileSetting: React.FC = () => {
-//   const handleSaveProfileChanges = () => {
-//     // Handle saving profile changes
-//   };
-
-//   const handleChangePassword = () => {
-//     // Handle changing password
-//   };
-
-//   return (
-//     <>
-//       <Div
-//         themeDivClasses=" rounded-md"
-//         content=
-//         {<>
-//     <Div
-//         themeDivClasses="flex justify-between p-6 items-center border-b border-ExtraLightGray"
-//         content=
-//         {<>
-//             <Text themeDivClasses="font-semibold flex items-center gap-2 text-2xl" content={<><FontAwesomeIcon icon={faGear} /> Settings</>}
-//              />
-//             <Link href={"/admin"}><button className="bg-yellow-400 flex gap-2 rounded-md items-baseline text-md font-semibold text-white p-3 pr-6 pl-6"> <FontAwesomeIcon icon={faHouse}/> DashBoard </button></Link>
-//         </>}
-//       />
-
-//         </>}
-//       />
-//     </>
-//   );
-// };
-
-// export default AdminProfileSetting;
 import React, { useState } from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faEnvelope, faLock, faHouse, faGear, faCamera, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import Div from "@/components/UI/Div";
-import Text from "@/components/UI/Text";
+import { faUser, faEnvelope, faLock, faHouse, faEye, faEyeSlash, faInfoCircle, faGear, faPen, faPenClip } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
+import { Image } from "react-bootstrap";
+import Text from "@/components/UI/Text";
+import Div from "@/components/UI/Div";
 
 const AdminProfileSetting: React.FC = () => {
-  const [profilePhoto, setProfilePhoto] = useState<File | null>(null);
-  const [coverPhoto, setCoverPhoto] = useState<File | null>(null);
-  const [basicInfo, setBasicInfo] = useState({
-    firstName: '',
-    lastName: '',
-    phone: '',
-    email: ''
-  });
-  const [password, setPassword] = useState({
-    currentPassword: '',
-    newPassword: '',
-    confirmNewPassword: ''
-  });
+  const [image, setImage] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState({
     currentPassword: false,
     newPassword: false,
     confirmNewPassword: false
   });
+  const [activeTab, setActiveTab] = useState('profile'); // Initialize activeTab to 'profile'
 
-  const handleSaveProfileChanges = () => {
-    // Handle saving profile changes
-    console.log("Profile changes saved");
-  };
+  const formik = useFormik({
+    initialValues: {
+      firstName: '',
+      lastName: '',
+      phone: '',
+      email: '',
+      currentPassword: '',
+      newPassword: '',
+      confirmNewPassword: ''
+    },
+    validationSchema: Yup.object({
+      firstName: Yup.string().required('First name is required'),
+      lastName: Yup.string().required('Last name is required'),
+      phone: Yup.string().required('Phone is required'),
+      email: Yup.string().email('Invalid email address').required('Email is required'),
+      currentPassword: Yup.string().required('Current password is required'),
+      newPassword: Yup.string().required('New password is required'),
+      confirmNewPassword: Yup.string()
+        .oneOf([Yup.ref('newPassword')], 'Passwords must match')
+        .required('Confirm new password is required')
+    }),
+    onSubmit: values => {
+      console.log(values);
+    }
+  });
 
-  const handleChangePassword = () => {
-    // Handle changing password
-    console.log("Password changed");
-  };
-
-  const handleProfilePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setProfilePhoto(e.target.files[0]);
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setImage(file);
+      setPreview(URL.createObjectURL(file));
     }
   };
 
-  const handleCoverPhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setCoverPhoto(e.target.files[0]);
-    }
-  };
-
-  const handleBasicInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setBasicInfo(prevInfo => ({ ...prevInfo, [name]: value }));
-  };
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setPassword(prevPassword => ({ ...prevPassword, [name]: value }));
-  };
-
-  const togglePasswordVisibility = (field: string) => {
+  const togglePasswordVisibility = (field: 'currentPassword' | 'newPassword' | 'confirmNewPassword') => {
     setShowPassword(prevShowPassword => ({ ...prevShowPassword, [field]: !prevShowPassword[field] }));
   };
 
   return (
-    <>
-      <Div themeDivClasses="rounded-md" content={
-        <>
-          <Div
-            themeDivClasses="flex justify-between p-6 items-center border-b border-ExtraLightGray"
-            content={
-              <>
-                <Text themeDivClasses="font-semibold flex items-center gap-2 text-2xl" content={<><FontAwesomeIcon icon={faGear} /> Settings</>} />
-                <Link href={"/admin"}>
-                  <button className="bg-yellow-400 flex gap-2 rounded-md items-baseline text-md font-semibold text-white p-3 pr-6 pl-6">
-                    <FontAwesomeIcon icon={faHouse} /> DashBoard
-                  </button>
-                </Link>
-              </>
-            }
-          />
+    <Div themeDivClasses="p-6 rounded-lg shadow " content={<>
+    
+    <div className="flex justify-between items-center border-b  border-ExtraLightGray p-6">
+       
+       <Text themeDivClasses=" font-semibold flex items-center gap-2 text-2xl " content={<><span><FontAwesomeIcon icon={faGear} />Settings</span></>} />
+    
+     <Link href="/admin">
+       <button className="bg-yellow-400 flex gap-2 rounded-md items-baseline text-md font-semibold text-white p-3 pr-6 pl-6">
+         <FontAwesomeIcon icon={faHouse} /> Dashboard
+       </button>
+     </Link>
+   </div>
 
-          <Div themeDivClasses="p-6" content={
-            <>
-              <Div themeDivClasses="mb-4" content={
-                <>
-                  <Text themeDivClasses="font-semibold text-lg" content="Edit Profile and Cover Photo" />
-                  <Div themeDivClasses="flex items-center gap-4 mt-4" content={
-                    <>
-                      <label className="cursor-pointer flex flex-col items-center">
-                        {profilePhoto ? (
-                          <img
-                            src={URL.createObjectURL(profilePhoto)}
-                            alt="Profile"
-                            className="rounded-full w-24 h-24 object-cover"
-                          />
-                        ) : (
-                          <FontAwesomeIcon icon={faUser} className="text-5xl" />
-                        )}
-                        <input type="file" className="hidden" onChange={handleProfilePhotoChange} />
-                        <Text themeDivClasses="text-sm mt-2" content="Change Profile Photo" />
-                      </label>
-                      <label className="cursor-pointer flex flex-col items-center">
-                        <FontAwesomeIcon icon={faCamera} className="text-2xl" />
-                        <input type="file" className="hidden" onChange={handleCoverPhotoChange} />
-                        <Text themeDivClasses="text-sm mt-2" content="Change Cover Photo" />
-                      </label>
-                    </>
-                  }
-                  />
-                </>
-              }
-              />
+   <div className="flex mt-6 gap-10">
+     <div className="w-1/4">
+       <nav className="flex flex-col gap-2 shadow-lg rounded p-3">
+         <button
+           onClick={() => setActiveTab('profile')}
+           className={`flex items-center gap-2 pl-7 ease-in-out duration-200 hover:bg-themeYellow p-2 hover:text-white ${activeTab === 'profile' ? 'bg-themeYellow  text-white ' : ''}`}
+         >
+           <FontAwesomeIcon icon={faUser} /> Change Profile
+         </button>
+         <button
+           onClick={() => setActiveTab('basic')}
+           className={`flex items-center gap-2 pl-7 ease-in-out duration-200 hover:bg-themeYellow p-2 hover:text-white ${activeTab === 'basic' ? 'bg-themeYellow  text-white ' : ''}`}
+         >
+           <FontAwesomeIcon icon={faInfoCircle} /> Basic Information
+         </button>
+         <button
+           onClick={() => setActiveTab('password')}
+           className={`flex items-center gap-2 pl-7 ease-in-out duration-200 hover:bg-themeYellow p-2 hover:text-white ${activeTab === 'password' ? 'bg-themeYellow text-white ' : ''}`}
+         >
+           <FontAwesomeIcon icon={faLock} /> Password
+         </button>
+       </nav>
+     </div>
 
-              <Div themeDivClasses="mb-8" content={
-                <>
-                  <Text themeDivClasses="font-semibold text-lg" content="Basic Information" />
-                  <form className="mt-4 space-y-4">
-                    <div className="flex flex-col">
-                      <label className="font-semibold">First Name</label>
-                      <input
-                        type="text"
-                        name="firstName"
-                        value={basicInfo.firstName}
-                        onChange={handleBasicInfoChange}
-                        className="border border-gray-300 rounded-md p-2"
-                      />
-                    </div>
-                    <div className="flex flex-col">
-                      <label className="font-semibold">Last Name</label>
-                      <input
-                        type="text"
-                        name="lastName"
-                        value={basicInfo.lastName}
-                        onChange={handleBasicInfoChange}
-                        className="border border-gray-300 rounded-md p-2"
-                      />
-                    </div>
-                    <div className="flex flex-col">
-                      <label className="font-semibold">Phone</label>
-                      <input
-                        type="text"
-                        name="phone"
-                        value={basicInfo.phone}
-                        onChange={handleBasicInfoChange}
-                        className="border border-gray-300 rounded-md p-2"
-                      />
-                    </div>
-                    <div className="flex flex-col">
-                      <label className="font-semibold">Email</label>
-                      <input
-                        type="email"
-                        name="email"
-                        value={basicInfo.email}
-                        onChange={handleBasicInfoChange}
-                        className="border border-gray-300 rounded-md p-2"
-                      />
-                    </div>
-                    <button
-                      type="button"
-                      onClick={handleSaveProfileChanges}
-                      className="bg-blue-500 text-white rounded-md p-2 mt-4"
-                    >
-                      Save Changes
-                    </button>
-                  </form>
-                </>
-              }
-              />
+     <div className="w-3/4 shadow-lg rounded p-4">
+       {activeTab === 'profile' && (
+         <div>
+           <h3 className="font-semibold text-lg mb-4">Edit Profile Photo</h3>
+           <div className="flex justify-center mb-7 bg-ExtraLightGray pt-10 rounded ">
+             <div className="relative top-7 ">
+               <label>
+                 <Image
+                   src={preview || '/images/admin.png'}
+                   alt="Profile"
+                   className="w-32 h-32 rounded-full object-cover hover:cursor-pointer border-2 border-white duration-200 hover:border-red-500"
+                 />
+         
+                 <input
+                   type="file"
+                   onChange={handleImageUpload}
+                   className="hidden"
+                   accept="image/*"
+                 />
+               </label>
+             </div>
+           </div>
+         </div>
+       )}
 
-              <Div themeDivClasses="mb-8" content={
-                <>
-                  <Text themeDivClasses="font-semibold text-lg" content="Change Password" />
-                  <form className="mt-4 space-y-4">
-                    <div className="flex flex-col relative">
-                      <label className="font-semibold">Current Password</label>
-                      <input
-                        type={showPassword.currentPassword ? "text" : "password"}
-                        name="currentPassword"
-                        value={password.currentPassword}
-                        onChange={handlePasswordChange}
-                        className="border border-gray-300 rounded-md p-2"
-                      />
-                      <FontAwesomeIcon
-                        icon={showPassword.currentPassword ? faEyeSlash : faEye}
-                        className="absolute right-3 top-10 cursor-pointer"
-                        onClick={() => togglePasswordVisibility("currentPassword")}
-                      />
-                    </div>
-                    <div className="flex flex-col relative">
-                      <label className="font-semibold">New Password</label>
-                      <input
-                        type={showPassword.newPassword ? "text" : "password"}
-                        name="newPassword"
-                        value={password.newPassword}
-                        onChange={handlePasswordChange}
-                        className="border border-gray-300 rounded-md p-2"
-                      />
-                      <FontAwesomeIcon
-                        icon={showPassword.newPassword ? faEyeSlash : faEye}
-                        className="absolute right-3 top-10 cursor-pointer"
-                        onClick={() => togglePasswordVisibility("newPassword")}
-                      />
-                    </div>
-                    <div className="flex flex-col relative">
-                      <label className="font-semibold">Confirm New Password</label>
-                      <input
-                        type={showPassword.confirmNewPassword ? "text" : "password"}
-                        name="confirmNewPassword"
-                        value={password.confirmNewPassword}
-                        onChange={handlePasswordChange}
-                        className="border border-gray-300 rounded-md p-2"
-                      />
-                      <FontAwesomeIcon
-                        icon={showPassword.confirmNewPassword ? faEyeSlash : faEye}
-                        className="absolute right-3 top-10 cursor-pointer"
-                        onClick={() => togglePasswordVisibility("confirmNewPassword")}
-                      />
-                    </div>
-                    <button
-                      type="button"
-                      onClick={handleChangePassword}
-                      className="bg-red-500 text-white rounded-md p-2 mt-4"
-                    >
-                      Change Password
-                    </button>
-                  </form>
-                </>
-              }
-              />
-            </>
-          }
-          />
-        </>
-      }
-      />
-    </>
+       {activeTab === 'basic' && (
+         <div>
+           <h3 className="font-semibold text-lg mb-4">Basic Information</h3>
+           <form onSubmit={formik.handleSubmit} className="space-y-4">
+             <div className="flex flex-col">
+               <label className="font-semibold">First Name</label>
+               <input
+                 type="text"
+                 name="firstName"
+                 value={formik.values.firstName}
+                 onChange={formik.handleChange}
+                 className="border border-gray-300 rounded-md p-2"
+               />
+               {formik.errors.firstName && <div className="text-red-500">{formik.errors.firstName}</div>}
+             </div>
+             <div className="flex flex-col">
+               <label className="font-semibold">Last Name</label>
+               <input
+                 type="text"
+                 name="lastName"
+                 value={formik.values.lastName}
+                 onChange={formik.handleChange}
+                 className="border border-gray-300 rounded-md p-2"
+               />
+               {formik.errors.lastName && <div className="text-red-500">{formik.errors.lastName}</div>}
+             </div>
+             <div className="flex flex-col">
+               <label className="font-semibold">Phone</label>
+               <input
+                 type="text"
+                 name="phone"
+                 value={formik.values.phone}
+                 onChange={formik.handleChange}
+                 className="border border-gray-300 rounded-md p-2"
+               />
+               {formik.errors.phone && <div className="text-red-500">{formik.errors.phone}</div>}
+             </div>
+             <div className="flex flex-col">
+               <label className="font-semibold">Email</label>
+               <input
+                 type="email"
+                 name="email"
+                 value={formik.values.email}
+                 onChange={formik.handleChange}
+                 className="border border-gray-300 rounded-md p-2"
+               />
+               {formik.errors.email && <div className="text-red-500">{formik.errors.email}</div>}
+             </div>
+             <button
+               type="submit"
+               className="bg-blue-500 text-white rounded-md p-2 mt-4"
+             >
+               Save Changes
+             </button>
+           </form>
+         </div>
+       )}
+
+       {activeTab === 'password' && (
+         <div>
+           <h3 className="font-semibold text-lg mb-4">Change Password</h3>
+           <form onSubmit={formik.handleSubmit} className="space-y-4">
+             <div className="flex flex-col relative">
+               <label className="font-semibold">Current Password</label>
+               <input
+                 type={showPassword.currentPassword ? "text" : "password"}
+                 name="currentPassword"
+                 value={formik.values.currentPassword}
+                 onChange={formik.handleChange}
+                 className="border border-gray-300 rounded-md p-2"
+               />
+               <FontAwesomeIcon
+                 icon={showPassword.currentPassword ? faEyeSlash : faEye}
+                 className="absolute right-3 top-10 cursor-pointer"
+                 onClick={() => togglePasswordVisibility("currentPassword")}
+               />
+               {formik.errors.currentPassword && <div className="text-red-500">{formik.errors.currentPassword}</div>}
+             </div>
+             <div className="flex flex-col relative">
+               <label className="font-semibold">New Password</label>
+               <input
+                 type={showPassword.newPassword ? "text" : "password"}
+                 name="newPassword"
+                 value={formik.values.newPassword}
+                 onChange={formik.handleChange}
+                 className="border border-gray-300 rounded-md p-2"
+               />
+               <FontAwesomeIcon
+                 icon={showPassword.newPassword ? faEyeSlash : faEye}
+                 className="absolute right-3 top-10 cursor-pointer"
+                 onClick={() => togglePasswordVisibility("newPassword")}
+               />
+               {formik.errors.newPassword && <div className="text-red-500">{formik.errors.newPassword}</div>}
+             </div>
+             <div className="flex flex-col relative">
+               <label className="font-semibold">Confirm New Password</label>
+               <input
+                 type={showPassword.confirmNewPassword ? "text" : "password"}
+                 name="confirmNewPassword"
+                 value={formik.values.confirmNewPassword}
+                 onChange={formik.handleChange}
+                 className="border border-gray-300 rounded-md p-2"
+               />
+               <FontAwesomeIcon
+                 icon={showPassword.confirmNewPassword ? faEyeSlash : faEye}
+                 className="absolute right-3 top-10 cursor-pointer"
+                 onClick={() => togglePasswordVisibility("confirmNewPassword")}
+               />
+               {formik.errors.confirmNewPassword && <div className="text-red-500">{formik.errors.confirmNewPassword}</div>}
+             </div>
+             <button
+               type="submit"
+               className="bg-blue-500 text-white rounded-md p-2 mt-4"
+             >
+               Change Password
+             </button>
+           </form>
+         </div>
+       )}
+     </div>
+   </div>
+    </>}
+    />
   );
 };
 
