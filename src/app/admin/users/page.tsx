@@ -30,17 +30,18 @@ const User: React.FC = () => {
       id: index, // Use sequential index as the ID
       ...user,
       // Flatten social links for display
-      social_links: user.social_links.map(link => `${link.name}: ${link.link}`).join(", "),
+      social_links: user.social_links ? user.social_links.map(link => `${link.name}: ${link.link}`).join(", "):"",
     };
   });
   return (
     <div>
-      <Text themeDivClasses="text-3xl font-bold block mb-5" content="Users" />
+      <Text themeDivClasses="text-3xl  font-bold block mb-5" content="Users" />
       <Div
         themeDivClasses={"flex flex-col !bg-transparent"}
         content={
           <>
-            <DataGridComponent rows={rows} columns={columns} pageSize={5} pagination={true} />
+          <div className="overflow-x-auto w-full">          <DataGridComponent  rows={rows} columns={columns} pageSize={5} pagination={true} /></div>
+  
             {/* <div className="flex flex-col gap-5">
               <Div
                 themeDivClasses="p-4 rounded-md shadow-sm gap-4 grid grid-cols-5 mb-5"
