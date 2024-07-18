@@ -4,7 +4,7 @@ import SettingsPageComponent from "@/components/AdminComponents/AdminOthersComp/
 const SettingsPage = () => {
   return (
     <Div
-      themeDivClasses="grid h-[100vh] items-center !bg-transparent"
+      themeDivClasses="grid h-[100vh] !bg-transparent"
       darkColor="bg-papperBlack"
       content={
         <>
