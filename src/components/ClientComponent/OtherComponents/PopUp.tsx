@@ -2,13 +2,19 @@ import React, { useState, useContext } from "react";
 import Div from "../../UI/Div";
 import Text from "../../UI/Text";
 import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FaClock } from "react-icons/fa";
+import { faClose } from "@fortawesome/free-solid-svg-icons";
+
 interface AddOn {
-  name: string;
+  selected: boolean;
+  quantity: number;
   price: number;
 }
 
 interface FunOption {
-  name: string;
+  selected: boolean;
+  quantity: number;
   price: number;
 }
 
@@ -16,28 +22,24 @@ interface MenuItem {
   name: string;
   image: string;
   price: number;
+  quantity: number;
   description: string;
-  link: string;
-  addOns: AddOn[];
-  funOptions: FunOption[];
+  addOns: { [key: string]: AddOn };
+  funOptions: { [key: string]: FunOption };
 }
 
 interface PopProps {
-  selectedMenuItem: MenuItem | null;
+  selectedMenuItem: MenuItem;
   quantity: number;
-  addOns: {
-    [key: string]: { selected: boolean; quantity: number; price: number };
-  };
-  funOptions: {
-    [key: string]: { selected: boolean; quantity: number; price: number };
-  };
+  addOns: { [key: string]: AddOn };
+  funOptions: { [key: string]: FunOption };
   handleCloseModal: () => void;
   handleAddOnChange: (name: string) => void;
   handleFunOptionChange: (name: string) => void;
   handleQuantityChange: (
     name: string,
     value: number,
-    type: "addOn" | "funOption",
+    type: "addOn" | "funOption"
   ) => void;
   setQuantity: (quantity: number) => void;
   calculateTotal: () => number;
@@ -55,187 +57,180 @@ const Pop: React.FC<PopProps> = ({
   setQuantity,
   calculateTotal,
 }) => {
-  if (!selectedMenuItem) return null;
-
   return (
-    <Div
-      themeDivClasses="fixed inset-0 z-[999999999] flex items-center justify-center bg-black bg-opacity-50"
-      content={
-        <Div
-          themeDivClasses="p-6 relative w-[50%] mt-10 mb-10 h-[80%] overflow-y-auto shadow shadow-white "
-          content={
-            <>
-              <button
-                onClick={handleCloseModal}
-                className="absolute font-bold text-lg top-4 right-4 text-gray-500 hover:text-gray-800"
-              >
-                <Text themeDivClasses=" " content={" X "} />
-              </button>
-              <div className="flex gap-4">
-                <Image
-                  className="rounded-md"
-                  src={selectedMenuItem.image}
-                  width={200}
-                  height={200}
-                  alt={selectedMenuItem.name}
-                />
-                <div className="flex flex-col">
-                  <Text
-                    themeDivClasses="text-xl font-semibold mb-4"
-                    content={selectedMenuItem.name}
-                  />
-                  <Text
-                    themeDivClasses="mt-2 font-semibold text-lg"
-                    content={`$${selectedMenuItem.price}`}
-                  />
-                  <Text
-                    themeDivClasses="mt-2"
-                    content={selectedMenuItem.description}
-                  />
-                  <div className="mt-4 flex">
-                    <Text themeDivClasses="block mr-2 " content={" Quantity"} />
-                    <div className="flex justify-between">
-                      <input
-                        type="text"
-                        value={quantity}
-                        readOnly
-                        // className={classNames(
-                        //   "w-12 p-2 text-center bg-transparent",
-                        //   themeStor.themeMode === "light"
-                        //     ? "text-black"
-                        //     : "text-white"
-                        // )}
-                      />
-                      <div className="flex">
-                        <button
-                          className="px-3 py-1 bg-gray-200 rounded-l"
-                          onClick={() =>
-                            setQuantity(quantity - 1 >= 1 ? quantity - 1 : 1)
-                          }
-                        >
-                          <Text themeDivClasses=" " content={"-"} />
-                        </button>
-                        <button
-                          className="px-3 py-1 bg-gray-200 rounded-r"
-                          onClick={() => setQuantity(quantity + 1)}
-                        >
-                          <Text themeDivClasses=" " content={"+"} />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center " onClick={handleCloseModal}>
+      <Div
+        themeDivClasses=" p-6 rounded-lg shadow-lg max-w-lg w-full"
+        content={
+          <>
+            <button
+              className="  px-4 w-full flex justify-end"
+              onClick={handleCloseModal}
+            >
+             <Text themeDivClasses="" content={<><FontAwesomeIcon icon={faClose}/></>}/> 
+            </button>
+            <div className="flex">
+              <Image
+                className="rounded-md"
+                src={selectedMenuItem.image}
+                width={80}
+                height={60}
+                alt={selectedMenuItem.name}
+              />
+              <div className="ml-3">
                 <Text
-                  themeDivClasses="text-lg font-semibold mb-4"
-                  content="Extras"
+                  themeDivClasses="text-lg font-semibold"
+                  content={selectedMenuItem.name}
                 />
-                {selectedMenuItem.funOptions.map((funOption, index) => (
-                  <div key={index} className="mb-4">
+                <Text
+                  themeDivClasses="text-sm"
+                  content={selectedMenuItem.description}
+                />
+              </div>
+            </div>
+            <div className="my-4">
+              <Text
+                themeDivClasses="font-bold text-xl mb-2"
+                content="Quantity"
+              />
+              <div className="flex items-center">
+                <button
+                  className="px-3 py-1 bg-gray-200 rounded-l"
+                  onClick={() =>
+                    setQuantity(quantity - 1 >= 1 ? quantity - 1 : 1)
+                  }
+                >
+                  -
+                </button>
+                <Text themeDivClasses="mx-3" content={`${quantity}`} />
+                <button
+                  className="px-3 py-1 bg-gray-200 rounded-r"
+                  onClick={() => setQuantity(quantity + 1)}
+                >
+                  +
+                </button>
+              </div>
+            </div>
+            <div className="my-4">
+              <Text
+                themeDivClasses="font-bold text-xl mb-2"
+                content="Add-Ons"
+              />
+              {addOns &&
+                Object.keys(addOns).map((key) => (
+                  <div key={key} className="flex items-center mb-2">
                     <input
                       type="checkbox"
-                      checked={funOptions[funOption.name]?.selected || false}
-                      onChange={() => handleFunOptionChange(funOption.name)}
-                      name={funOption.name}
-                      className="mr-2"
+                      checked={addOns[key].selected}
+                      onChange={() => handleAddOnChange(key)}
                     />
-                    <Text
-                      themeDivClasses=""
-                      content={`${funOption.name} (+$${funOption.price})`}
-                    />
-                  </div>
-                ))}
-              </div>
-              <div className="mt-4">
-                <Text
-                  themeDivClasses="text-lg font-semibold mb-2"
-                  content="Add-Ons"
-                />
-                {selectedMenuItem.addOns.map((addOn, index) => (
-                  <div key={index} className="mb-4">
-                    <button
-                      onClick={() => handleAddOnChange(addOn.name)}
-                      className={`mr-2 px-3 py-1 rounded ${
-                        addOns[addOn.name]?.selected
-                          ? "bg-blue-500 text-white"
-                          : "bg-gray-200"
-                      }`}
-                    >
-                      <Text
-                        themeDivClasses=""
-                        content={`${addOn.name} (+$${addOn.price})`}
-                      />
-                    </button>
-                    {addOns[addOn.name]?.selected && (
-                      <div className="mt-2 flex items-center">
-                        <Text themeDivClasses="mr-2" content={"Quantity"} />
-                        <input
-                          type="text"
-                          value={addOns[addOn.name]?.quantity || 1}
-                          onChange={(e) =>
+                    <Text themeDivClasses="ml-2" content={key} />
+                    {addOns[key].selected && (
+                      <div className="flex items-center ml-2">
+                        <button
+                          className="px-2 py-1 bg-gray-200 rounded-l"
+                          onClick={() =>
                             handleQuantityChange(
-                              addOn.name,
-                              parseInt(e.target.value),
-                              "addOn",
+                              key,
+                              addOns[key].quantity - 1 >= 1
+                                ? addOns[key].quantity - 1
+                                : 1,
+                              "addOn"
                             )
                           }
-                          min={1}
-                          //   className={classNames(
-                          //     "w-12 p-2 text-center bg-transparent",
-                          //     themeStore.themeMode === "light"
-                          //       ? "text-black"
-                          //       : "text-white"
-                          //   )}
+                        >
+                          -
+                        </button>
+                        <Text
+                          themeDivClasses="mx-2"
+                          content={`${addOns[key].quantity}`}
                         />
-                        <div className="flex ml-2">
-                          <button
-                            className="px-3 py-1 bg-gray-200 rounded-l"
-                            onClick={() =>
-                              handleQuantityChange(
-                                addOn.name,
-                                addOns[addOn.name]?.quantity - 1 >= 1
-                                  ? addOns[addOn.name]?.quantity - 1
-                                  : 1,
-                                "addOn",
-                              )
-                            }
-                          >
-                            <Text themeDivClasses=" " content={"-"} />
-                          </button>
-                          <button
-                            className="px-3 py-1 bg-gray-200 rounded-r"
-                            onClick={() =>
-                              handleQuantityChange(
-                                addOn.name,
-                                addOns[addOn.name]?.quantity + 1,
-                                "addOn",
-                              )
-                            }
-                          >
-                            <Text themeDivClasses=" " content={"+"} />
-                          </button>
-                        </div>
+                        <button
+                          className="px-2 py-1 bg-gray-200 rounded-r"
+                          onClick={() =>
+                            handleQuantityChange(
+                              key,
+                              addOns[key].quantity + 1,
+                              "addOn"
+                            )
+                          }
+                        >
+                          +
+                        </button>
                       </div>
                     )}
+                    <Text
+                      themeDivClasses="ml-auto"
+                      content={`$${addOns[key].price}`}
+                    />
                   </div>
                 ))}
-              </div>
+            </div>
+            <div className="my-4">
               <Text
-                themeDivClasses="mt-4 font-bold text-lg"
+                themeDivClasses="font-bold text-xl mb-2"
+                content="Fun Options"
+              />
+              {funOptions &&
+                Object.keys(funOptions).map((key) => (
+                  <div key={key} className="flex items-center mb-2">
+                    <input
+                      type="checkbox"
+                      checked={funOptions[key].selected}
+                      onChange={() => handleFunOptionChange(key)}
+                    />
+                    <Text themeDivClasses="ml-2" content={key} />
+                    {funOptions[key].selected && (
+                      <div className="flex items-center ml-2">
+                        <button
+                          className="px-2 py-1 bg-gray-200 rounded-l"
+                          onClick={() =>
+                            handleQuantityChange(
+                              key,
+                              funOptions[key].quantity - 1 >= 1
+                                ? funOptions[key].quantity - 1
+                                : 1,
+                              "funOption"
+                            )
+                          }
+                        >
+                          -
+                        </button>
+                        <Text
+                          themeDivClasses="mx-2"
+                          content={`${funOptions[key].quantity}`}
+                        />
+                        <button
+                          className="px-2 py-1 bg-gray-200 rounded-r"
+                          onClick={() =>
+                            handleQuantityChange(
+                              key,
+                              funOptions[key].quantity + 1,
+                              "funOption"
+                            )
+                          }
+                        >
+                          +
+                        </button>
+                      </div>
+                    )}
+                    <Text
+                      themeDivClasses="ml-auto"
+                      content={`$${funOptions[key].price}`}
+                    />
+                  </div>
+                ))}
+            </div>
+            <div className="my-4">
+              <Text
+                themeDivClasses="font-bold text-xl mb-2"
                 content={`Total: $${calculateTotal().toFixed(2)}`}
               />
-              <button
-                onClick={handleCloseModal}
-                className="mt-4 w-full bg-blue-500 text-white p-2 rounded"
-              >
-                Add to Cart
-              </button>
-            </>
-          }
-        />
-      }
-    />
+            </div>
+          </>
+        }
+      />
+    </div>
   );
 };
 

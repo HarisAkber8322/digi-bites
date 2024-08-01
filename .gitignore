@@ -6,13 +6,12 @@
 .pnp.js
 # node_modules
 .next
-.env
 # testing
 /coverage
 
 # next.js
 /.next/
-/out/
+/out
 
 # production
 /build
