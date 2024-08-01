@@ -3,6 +3,7 @@ import { makeAutoObservable } from "mobx";
 import axios from "axios";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { resolve } from "path";
 
 interface Users {
   fname: string;
@@ -15,12 +16,17 @@ interface Users {
 }
 
 interface Orders {
-  name: string;
-  email: string;
-  password: string;
-  contact_no: string;
-  type: string;
-  social_links: [{ name: string; link: string }];
+  items: [
+    {
+      name: string,
+      price: number,
+      quantity: number,
+      funOption?: any,
+      addOns?: any
+    }
+  ],
+  total: number;
+  status: string;
 }
 
 class AppStore {
@@ -54,7 +60,8 @@ class AppStore {
   async loadOrders() {
     try {
       const response = await axios.get("http://localhost:3001/api/orders");
-      this.userList = response.data.users;
+      console.log(response)
+      this.orderList = response.data.orders;
     } catch (error) {
       console.error("Error loading orders:", error);
     }
@@ -67,7 +74,7 @@ class AppStore {
     }
   };
   handleSignUp = async (user: { email: string; password: string }) => {
-    
+
   };
   setCartCount(value: number) {
     this.cartCount = value;

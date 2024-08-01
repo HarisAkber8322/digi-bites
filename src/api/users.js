@@ -30,18 +30,6 @@ async function getUsers(req, res) {
   }
 }
 
-async function getOrders(req, res) {
-  try {
-    const db = await connectToDatabase();
-    const ordersCollection = db.collection("orders");
-    const orders = await ordersCollection.find().toArray();
-    res.status(200).json(orders);
-  } catch (error) {
-    console.error("Error fetching users:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-}
-
 async function createUser(req, res) {
   try {
     const db = await connectToDatabase();
