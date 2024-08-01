@@ -221,6 +221,39 @@ app.prepare().then(() => {
     }
   });
 
+
+//Products
+server.get("/api/products", async (req, res) => {
+  const page = parseInt(req.query.page, 10) || 1;
+  const searchQuery = req.query.q || "";
+  const sortOrder = req.query.sort || "asc";
+
+  try {
+    const db = await connectToDatabase();
+    const productsCollection = db.collection("products");
+
+    const totalCount = await productsCollection.countDocuments();
+    const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+
+    const skip = (page - 1) * PAGE_SIZE;
+
+    const products = await productsCollection
+      .find({ fname: { $regex: new RegExp(searchQuery, "i") } }) // Case-insensitive search
+      .sort({ fname: sortOrder === "asc" ? 1 : -1 })
+      .skip(skip)
+      .limit(PAGE_SIZE)
+      .toArray();
+
+    res.status(200).json({ products, totalCount, totalPages });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
+
+
   server.all("*", (req, res) => {
     return handle(req, res);
   });

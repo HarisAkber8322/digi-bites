@@ -14,6 +14,15 @@ interface Users {
   social_links: [{ name: string; link: string }];
 }
 
+interface Orders {
+  name: string;
+  email: string;
+  password: string;
+  contact_no: string;
+  type: string;
+  social_links: [{ name: string; link: string }];
+}
+
 class AppStore {
   constructor() {
     makeAutoObservable(this);
@@ -28,6 +37,7 @@ class AppStore {
   cartCount = 0;
   isLoggedin = false;
   router: any;
+  orderList: Orders[] = [];
 
   setIsLoggedIn = (value: boolean) => {
     this.isLoggedin = value ? value : false;
@@ -41,7 +51,14 @@ class AppStore {
       console.error("Error loading users:", error);
     }
   }
-
+  async loadOrders() {
+    try {
+      const response = await axios.get("http://localhost:3001/api/orders");
+      this.userList = response.data.users;
+    } catch (error) {
+      console.error("Error loading orders:", error);
+    }
+  }
   handleLogin = async (user: { email: string; password: string }) => {
     console.log(user);
     if (user.email === "admin@digibites.com" && user.password === "tacos") {

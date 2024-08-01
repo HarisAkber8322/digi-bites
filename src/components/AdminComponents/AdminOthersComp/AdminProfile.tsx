@@ -36,7 +36,7 @@ const AdminProfile: React.FC = () => {
         </div>
         <Image
           className="h-10 w-10 rounded-full"
-          src="./images/admin.png" // Replace with actual profile photo path
+          src="/images/admin.png" // Replace with actual profile photo path
           alt="Admin Profile Photo"
         />
       </div>
