@@ -1,14 +1,19 @@
-// pages/burger.tsx
 "use client";
 import Div from "@/components/UI/Div";
 import Text from "@/components/UI/Text";
-import React, { useState } from "react";
-import BusinessAnalytics from "../../components/AdminComponents/AdminOthersComp/BusinessAnalytics"; // Adjust according to your project structure
+import React from "react";
+import BusinessAnalytics from "../../components/AdminComponents/AdminOthersComp/BusinessAnalytics";
 import OrderStatistics from "@/components/AdminComponents/AdminOthersComp/OrderStatistics";
 import OrderStatusChart from "@/components/AdminComponents/AdminOthersComp/OrderStatusChart";
 import EarningStatistics from "@/components/AdminComponents/AdminOthersComp/EarningStatistics";
+import { menuData } from "@/utills/constants";
+import TopRatedItems from "@/components/AdminComponents/AdminOthersComp/TopRatedItems";
+import TopCustomers from "@/components/AdminComponents/AdminOthersComp/TopCustomers";
+import TopSellingProducts from "@/components/AdminComponents/AdminOthersComp/TopSellingProducts";
 
 const Dashboard: React.FC = () => {
+  const items = menuData.flatMap(category => category.items);
+
   return (
     <div>
       <Div
@@ -24,11 +29,11 @@ const Dashboard: React.FC = () => {
               content={
                 <>
                   <Text
-                    themeDivClasses="text-3xl font-bold block "
+                    themeDivClasses="text-3xl font-bold block"
                     content="Welcome, Admin."
                   />
                   <Text
-                    themeDivClasses="text-medium font-semibold text-themeYellow "
+                    themeDivClasses="text-medium font-semibold text-themeYellow"
                     content="Monitor your business analytics and statistics"
                   />
                 </>
@@ -36,12 +41,15 @@ const Dashboard: React.FC = () => {
             />
             <BusinessAnalytics />
             <div className="grid grid-cols-3 w-full overflow-hidden">
-
-            <OrderStatistics/>
-            <OrderStatusChart/>
-            <EarningStatistics/>
+              <OrderStatistics />
+              <OrderStatusChart />
+              <EarningStatistics />
             </div>
-            
+            <div className="grid grid-cols-3 space-x-4 w-full overflow-hidden">
+              <TopRatedItems items={items} />
+              <TopCustomers items={items} />
+              <TopSellingProducts items={items} />
+            </div>
           </>
         }
       />

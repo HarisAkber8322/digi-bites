@@ -228,6 +228,15 @@ export const cardList = [
 //     ],
 //   },
 // ];
+export interface MenuItem {
+  name: string;
+  price: number;
+  image: string;
+  description: string;
+  link: string;
+  review?: string; // Optional field
+  rating: number;
+}
 export const menuData = [
   {
     category: "Burger",
@@ -240,7 +249,7 @@ export const menuData = [
         description: "Juicy beef patty with melted cheese in a soft bun.",
         link: "#",
         review: "Delicious and cheesy! Highly recommended.",
-        rating: 4.5,
+        rating: 0,
       },
       {
         name: "Zinger Burger",

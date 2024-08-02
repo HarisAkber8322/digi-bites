@@ -3,7 +3,6 @@ import { makeAutoObservable } from "mobx";
 import axios from "axios";
 import React from "react";
 import { useRouter } from "next/navigation";
-import { resolve } from "path";
 
 interface Users {
   fname: string;
@@ -29,10 +28,18 @@ interface Orders {
   status: string;
 }
 
+interface Product {
+  name: string;
+  price: number;
+  image: string;
+  rating: number;
+}
+
 class AppStore {
   constructor() {
     makeAutoObservable(this);
     this.loadUsers();
+    this.loadProducts();
   }
 
   user = {
@@ -44,6 +51,7 @@ class AppStore {
   isLoggedin = false;
   router: any;
   orderList: Orders[] = [];
+  products: Product[] = [];
 
   setIsLoggedIn = (value: boolean) => {
     this.isLoggedin = value ? value : false;
@@ -57,25 +65,36 @@ class AppStore {
       console.error("Error loading users:", error);
     }
   }
+
   async loadOrders() {
     try {
       const response = await axios.get("http://localhost:3001/api/orders");
-      console.log(response)
       this.orderList = response.data.orders;
     } catch (error) {
       console.error("Error loading orders:", error);
     }
   }
+
+  async loadProducts() {
+    try {
+      const response = await axios.get("http://localhost:3001/api/products");
+      this.products = response.data.products;
+    } catch (error) {
+      console.error("Error loading products:", error);
+    }
+  }
+
   handleLogin = async (user: { email: string; password: string }) => {
-    console.log(user);
     if (user.email === "admin@digibites.com" && user.password === "tacos") {
       this.setIsLoggedIn(true);
       this.changePage("/");
     }
   };
-  handleSignUp = async (user: { email: string; password: string }) => {
 
+  handleSignUp = async (user: { email: string; password: string }) => {
+    // Add your sign-up logic here
   };
+
   setCartCount(value: number) {
     this.cartCount = value;
   }
