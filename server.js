@@ -66,50 +66,50 @@ app.prepare().then(() => {
     }
   });
 
-  server.post("/api/users", async (req, res) => {
-    try {
-      const { name, fname, role, phoneNumber } = req.body;
+  // server.post("/api/users", async (req, res) => {
+  //   try {
+  //     const { name, fname, role, phoneNumber } = req.body;
 
-      if (!name || !fname || !role || !phoneNumber) {
-        return res.status(400).json({ error: "All fields are required" });
-      }
+  //     if (!name || !fname || !role || !phoneNumber) {
+  //       return res.status(400).json({ error: "All fields are required" });
+  //     }
 
-      const db = await connectToDatabase();
-      const usersCollection = db.collection("users");
+  //     const db = await connectToDatabase();
+  //     const usersCollection = db.collection("users");
 
-      const newUser = {
-        name,
-        fname,
-        role,
-        phoneNumber,
-      };
+  //     const newUser = {
+  //       name,
+  //       fname,
+  //       role,
+  //       phoneNumber,
+  //     };
 
-      const result = await usersCollection.insertOne(newUser);
+  //     const result = await usersCollection.insertOne(newUser);
 
-      if (result && result.acknowledged) {
-        const insertedId = result.insertedId.toString();
-        res.status(201).json({
-          message: "User added successfully",
-          user: { ...newUser, _id: insertedId },
-        });
-      } else {
-        console.error(
-          "Error adding user: Insert operation did not return the expected result",
-          result
-        );
-        res.status(500).json({ error: "Internal server error" });
-      }
-    } catch (error) {
-      console.error("Error adding user:", error);
-      if (error.code === 11000) {
-        return res
-          .status(400)
-          .json({ error: "User with the same data already exists" });
-      }
+  //     if (result && result.acknowledged) {
+  //       const insertedId = result.insertedId.toString();
+  //       res.status(201).json({
+  //         message: "User added successfully",
+  //         user: { ...newUser, _id: insertedId },
+  //       });
+  //     } else {
+  //       console.error(
+  //         "Error adding user: Insert operation did not return the expected result",
+  //         result
+  //       );
+  //       res.status(500).json({ error: "Internal server error" });
+  //     }
+  //   } catch (error) {
+  //     console.error("Error adding user:", error);
+  //     if (error.code === 11000) {
+  //       return res
+  //         .status(400)
+  //         .json({ error: "User with the same data already exists" });
+  //     }
 
-      res.status(500).json({ error: "Internal server error" });
-    }
-  });
+  //     res.status(500).json({ error: "Internal server error" });
+  //   }
+  // });
 
   server.delete("/api/users/:id", async (req, res) => {
     try {
@@ -220,6 +220,62 @@ app.prepare().then(() => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
+
+
+//Products
+server.get("/api/products", async (req, res) => {
+  const page = parseInt(req.query.page, 10) || 1;
+  const searchQuery = req.query.q || "";
+  const sortOrder = req.query.sort || "asc";
+
+  try {
+    const db = await connectToDatabase();
+    const productsCollection = db.collection("products");
+
+    const totalCount = await productsCollection.countDocuments();
+    const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+
+    const skip = (page - 1) * PAGE_SIZE;
+
+    const products = await productsCollection
+      .find({ fname: { $regex: new RegExp(searchQuery, "i") } }) // Case-insensitive search
+      .sort({ fname: sortOrder === "asc" ? 1 : -1 })
+      .skip(skip)
+      .limit(PAGE_SIZE)
+      .toArray();
+
+    res.status(200).json({ products, totalCount, totalPages });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
+server.get("/api/orders", async (req, res) => {
+  const page = parseInt(req.query.page, 10) || 1;
+  const searchQuery = req.query.q || "";
+  const sortOrder = req.query.sort || "asc";
+
+  try {
+    const db = await connectToDatabase();
+    const ordersCollection = db.collection("orders");
+
+    const totalCount = await ordersCollection.countDocuments();
+    const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+
+    const skip = (page - 1) * PAGE_SIZE;
+
+    const orders = await ordersCollection
+      .skip(skip)
+      .limit(PAGE_SIZE)
+      .toArray();
+    res.status(200).json({ orders, totalCount, totalPages });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
   server.all("*", (req, res) => {
     return handle(req, res);

@@ -3,6 +3,7 @@ import { makeAutoObservable } from "mobx";
 import axios from "axios";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { resolve } from "path";
 
 interface Users {
   fname: string;
@@ -12,6 +13,20 @@ interface Users {
   contact_no: string;
   type: string;
   social_links: [{ name: string; link: string }];
+}
+
+interface Orders {
+  items: [
+    {
+      name: string,
+      price: number,
+      quantity: number,
+      funOption?: any,
+      addOns?: any
+    }
+  ],
+  total: number;
+  status: string;
 }
 
 class AppStore {
@@ -28,6 +43,7 @@ class AppStore {
   cartCount = 0;
   isLoggedin = false;
   router: any;
+  orderList: Orders[] = [];
 
   setIsLoggedIn = (value: boolean) => {
     this.isLoggedin = value ? value : false;
@@ -41,7 +57,15 @@ class AppStore {
       console.error("Error loading users:", error);
     }
   }
-
+  async loadOrders() {
+    try {
+      const response = await axios.get("http://localhost:3001/api/orders");
+      console.log(response)
+      this.orderList = response.data.orders;
+    } catch (error) {
+      console.error("Error loading orders:", error);
+    }
+  }
   handleLogin = async (user: { email: string; password: string }) => {
     console.log(user);
     if (user.email === "admin@digibites.com" && user.password === "tacos") {
@@ -50,7 +74,7 @@ class AppStore {
     }
   };
   handleSignUp = async (user: { email: string; password: string }) => {
-    
+
   };
   setCartCount(value: number) {
     this.cartCount = value;
