@@ -25,7 +25,7 @@ const smallDivData = [
 const BusinessAnalytics = () => {
   return (
     <Div
-      themeDivClasses="h-[325px] rounded-xl shadow-lg p-6 overflow-hidden"
+      themeDivClasses="h-[325px] rounded-xl shadow-md p-6 overflow-hidden"
       darkColor="bg-pepperBlack "
       content={
         <>

@@ -30,7 +30,8 @@ const TopRatedItems: React.FC<TopRatedItemsProps> = ({ items }) => {
 
   return (
     <Div
-      themeDivClasses="relative p-2 rounded-xl my-6"
+      themeDivClasses="relative  rounded-xl shadow-md mr-6"
+      darkColor="bg-pepperBlack"
       content={
         <>
           <Text
@@ -39,42 +40,53 @@ const TopRatedItems: React.FC<TopRatedItemsProps> = ({ items }) => {
             darkColor="text-white"
             content={
               <>
-              <div className=" w-full flex flex-row justify-between items-center px-2 py-2 ">
-                <div>Top Rated Products </div>
-                <button
-                  className=" text-themeYellow text-sm font-bold"
-                  onClick={() => setShowAll(!showAll)}
-                >
-                  {showAll ? "Show Less" : "View All"}
-                </button>
+                <div className=" w-full flex flex-row justify-between items-center p-2 border-b-[1px] !border-zinc-100">
+                  <div>Top Rated Products </div>
+                  <button
+                    className=" text-themeYellow text-sm font-bold"
+                    onClick={() => setShowAll(!showAll)}
+                  >
+                    {showAll ? "Show Less" : "View All"}
+                  </button>
                 </div>
-                <div className="flex flex-col space-y-2 ">
+            
+                <div className="flex flex-col space-y-[10px] p-4">
                   {topRatedItems.map((item) => (
-                    <div
-                     className="flex flex-row items-center w-full rounded bg-ExtraLightGray shadow-lg h-[50px] "
-                      
-                     key={item.name}
-                     
-                    >
-                      <div className="h-full ">
-                        <Image
-                          src={item.image}
-                          alt={item.name}
-                          width={60}
-                          height={100}
-                    className="object-cover !h-full"
-                        />
-                      </div>
-                      <div className="items-center px-4 flex flex-row justify-between w-full">
-                        <h3 className="text-sm font-normal">{item.name}</h3>
-                        <div className="font-light text-xs">
-                          <StarRating
-                            rating={item.rating ?? 0} // Use default value if undefined
-                            onRatingChange={() => {}}
-                          />
-                        </div>
-                      </div>
-                    </div>
+                    <Div
+                      themeDivClasses=" rounded-lg"
+                      lightColor="bg-ExtraLightGray"
+                      darkColor="bg-black"
+                      content={
+                        <>
+                          <div
+                            className="flex flex-row items-center w-full rounded-lg shadow h-[50px] "
+                            key={item.name}
+                          >
+                            <div className="h-full p-2">
+                              <Image
+                                src={item.image}
+                                alt={item.name}
+                                width={60}
+                                height={90}
+                                className="object-cover !h-full rounded "
+                              />
+                            </div>
+
+                            <div className="items-center px-4 flex flex-row justify-between w-full">
+                              <h3 className="text-xs font-medium">
+                                {item.name}
+                              </h3>
+                              <div className="font-light text-[10px]">
+                                <StarRating
+                                  rating={item.rating ?? 0} // Use default value if undefined
+                                  onRatingChange={() => {}}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      }
+                    />
                   ))}
                 </div>
               </>

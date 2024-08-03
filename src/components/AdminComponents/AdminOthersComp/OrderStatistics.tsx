@@ -90,7 +90,7 @@ const OrderStatistics: React.FC = () => {
 
   return (
     <Div
-      themeDivClasses="col-span-2 h-[415px]  rounded-xl shadow-xl p-6 mr-6 mt-6 relative "
+      themeDivClasses="col-span-2 h-[415px]  rounded-xl shadow-md p-6 mr-6 mt-6 relative "
       darkColor="bg-pepperBlack"
       content={
         <>

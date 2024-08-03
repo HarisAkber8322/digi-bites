@@ -43,9 +43,12 @@ const Dashboard: React.FC = () => {
             <div className="grid grid-cols-3 w-full overflow-hidden">
               <OrderStatistics />
               <OrderStatusChart />
-              <EarningStatistics />
+             
             </div>
-            <div className="grid grid-cols-3 space-x-4 w-full overflow-hidden">
+            <div className="grid grid-cols-3 w-full overflow-hidden">
+            <EarningStatistics  />
+            </div>
+            <div className="grid grid-cols-3 w-full overflow-hidden pb-6">
               <TopRatedItems items={items} />
               <TopCustomers items={items} />
               <TopSellingProducts items={items} />

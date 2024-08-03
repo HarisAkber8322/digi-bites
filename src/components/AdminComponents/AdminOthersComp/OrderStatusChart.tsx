@@ -77,7 +77,7 @@ const OrderStatusChart: React.FC = () => {
 
   return (
     <Div
-      themeDivClasses="h-[415px] col-span-1 flex flex-col justify-center items-center rounded-xl shadow-xl my-6 relative"
+      themeDivClasses="h-[415px] col-span-1 flex flex-col justify-center items-center rounded-xl shadow-md my-6 relative"
       darkColor="bg-pepperBlack"
       content={
         <>

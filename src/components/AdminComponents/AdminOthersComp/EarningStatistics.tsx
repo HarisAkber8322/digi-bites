@@ -90,7 +90,7 @@ const OrderStatistics: React.FC = () => {
 
   return (
     <Div
-      themeDivClasses="col-span-2 h-[415px] rounded-xl shadow-xl p-6 mr-6  relative "
+      themeDivClasses="col-span-2 h-[415px] rounded-xl shadow-md p-6 mr-6 mb-6  relative "
       darkColor="bg-pepperBlack"
       content={
         <>
@@ -127,7 +127,7 @@ const OrderStatistics: React.FC = () => {
           </div>
 
           {/* Graph Display */}
-          <div className="mt-8">
+          <div className="mt-8 w-full">
             <Line data={getGraphData(selectedPeriod)} options={getGraphOptions(selectedPeriod)} />
           </div>
         </>
