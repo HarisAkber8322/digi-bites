@@ -146,69 +146,76 @@ export const menuData = [
     image: "/images/burger.jpg",
     items: [
       {
-        name: "Cheese burger",
-        price: 90,
+        name: "Cheese Burger",
+        price: 100,
         image: "/images/b1.jpg",
         description: "Juicy beef patty with melted cheese in a soft bun.",
         link: "#",
-        review: "Delicious and cheesy! Highly recommended.",
+        review: "Deliciously cheesy!",
         rating: 0,
       },
       {
         name: "Zinger Burger",
-        price: 90,
+        price: 95,
         image: "/images/b2.jpg",
-        description: "Juicy beef patty with melted cheese in a soft bun.",
+        description: "Crispy chicken with a spicy kick.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Spicy and crispy.",
+        rating: 0,
       },
       {
         name: "Chicken Burger",
         price: 90,
         image: "/images/b4.jpg",
-        description: "Juicy beef patty with melted cheese in a soft bun.",
+        description: "Tender chicken patty with fresh toppings.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Tender and tasty.",
+        rating: 0,
       },
       {
-        name: "Paty Burger",
-        price: 90,
+        name: "Patty Burger",
+        price: 85,
         image: "/images/b3.jpg",
-        description: "Juicy beef patty with melted cheese in a soft bun.",
+        description: "Beef patty with classic toppings.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Classic and satisfying.",
+        rating: 0,
       },
       {
         name: "Grill Burger",
-        price: 90,
+        price: 110,
         image: "/images/b5.jpg",
-        description: "Juicy beef patty with melted cheese in a soft bun.",
+        description: "Grilled beef patty with smoky flavor.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Smoky and grilled.",
+        rating: 0,
       },
       {
         name: "Mity Burger",
-        price: 90,
+        price: 105,
         image: "/images/b6.jpg",
-        description: "Juicy beef patty with melted cheese in a soft bun.",
+        description: "Hearty burger with extra cheese.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Cheesy and hearty.",
+        rating: 0,
       },
       {
         name: "Grill Burger",
-        price: 90,
+        price: 115,
         image: "/images/b7.jpg",
-        description: "Juicy beef patty with melted cheese in a soft bun.",
+        description: "Grilled with premium ingredients.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Premium grilled taste.",
+        rating: 0,
       },
       {
         name: "Mity Burger",
-        price: 90,
+        price: 120,
         image: "/images/b8.jpg",
-        description: "Juicy beef patty with melted cheese in a soft bun.",
+        description: "Big and flavorful burger.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Flavorful and big.",
+        rating: 0,
       },
     ],
   },
@@ -218,67 +225,75 @@ export const menuData = [
     items: [
       {
         name: "Chicken Biryani",
-        price: 100,
+        price: 120,
         image: "/images/br1.jpg",
         description: "Aromatic rice dish with tender chicken pieces.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Spiced and tender.",
+        rating: 0,
       },
       {
         name: "Mutton Biryani",
-        price: 100,
+        price: 130,
         image: "/images/br3.jpg",
-        description: "Aromatic rice dish with tender chicken pieces.",
+        description: "Rich and flavorful mutton biryani.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Rich and flavorful.",
+        rating: 0,
       },
       {
-        name: "Karachi Biryani",
-        price: 100,
+        name: "Bombay Biryani",
+        price: 140,
         image: "/images/br4.jpg",
-        description: "Aromatic rice dish with tender chicken pieces.",
+        description: "Spicy and aromatic rice dish.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Spicy and aromatic.",
+        rating: 0,
       },
       {
-        name: "Chicken Biryani",
-        price: 100,
+        name: "Fish Biryani",
+        price: 125,
         image: "/images/br5.jpg",
-        description: "Aromatic rice dish with tender chicken pieces.",
+        description: "Delicious biryani with tender fish pieces.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Tender and flavorful.",
+        rating: 0,
       },
       {
-        name: "Mutton Biryani",
-        price: 100,
+        name: "Nali Biryani",
+        price: 135,
         image: "/images/br6.jpg",
-        description: "Aromatic rice dish with tender chicken pieces.",
+        description: "Hearty biryani with succulent nali pieces.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Hearty and succulent.",
+        rating: 0,
       },
       {
-        name: "Karachi Biryani",
-        price: 100,
+        name: "Hyderabadi Biryani",
+        price: 140,
         image: "/images/br7.jpg",
-        description: "Aromatic rice dish with tender chicken pieces.",
+        description: "Traditional biryani with spices and herbs.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Traditional and spicy.",
+        rating: 0,
       },
       {
-        name: "Mutton Biryani",
-        price: 100,
+        name: "Lahori Biryani",
+        price: 130,
         image: "/images/br8.jpg",
-        description: "Aromatic rice dish with tender chicken pieces.",
+        description: "Rich biryani with unique Lahori spices.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Rich and unique.",
+        rating: 0,
       },
       {
-        name: "Karachi Biryani",
-        price: 100,
+        name: "Matka Biryani",
+        price: 150,
         image: "/images/br9.jpg",
-        description: "Aromatic rice dish with tender chicken pieces.",
+        description: "Biryani cooked in a traditional matka.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Traditional and rich.",
+        rating: 0,
       },
     ],
   },
@@ -288,75 +303,84 @@ export const menuData = [
     items: [
       {
         name: "Margherita Pizza",
-        price: 200,
+        price: 220,
         image: "/images/p1.jpg",
         description: "Classic Margherita with fresh mozzarella and basil.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Classic and fresh.",
+        rating: 0,
       },
       {
-        name: "Margherita Pizza",
-        price: 200,
+        name: "Pepperoni Pizza",
+        price: 250,
         image: "/images/p2.jpg",
-        description: "Classic Margherita with fresh mozzarella and basil.",
+        description: "Spicy pepperoni with mozzarella cheese.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Spicy and cheesy.",
+        rating: 0,
       },
       {
-        name: "Margherita Pizza",
-        price: 200,
+        name: "BBQ Chicken Pizza",
+        price: 270,
         image: "/images/p3.jpg",
-        description: "Classic Margherita with fresh mozzarella and basil.",
+        description: "Grilled chicken with BBQ sauce and onions.",
         link: "#",
-        rating: 0, // Default rating
+        review: "BBQ and grilled.",
+        rating: 0,
       },
       {
-        name: "Margherita Pizza",
-        price: 200,
+        name: "Veggie Pizza",
+        price: 230,
         image: "/images/p4.jpg",
-        description: "Classic Margherita with fresh mozzarella and basil.",
+        description: "Loaded with bell peppers, olives, and mushrooms.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Veggie loaded.",
+        rating: 0,
       },
       {
-        name: "Margherita Pizza",
-        price: 200,
+        name: "Hawaiian Pizza",
+        price: 240,
         image: "/images/p5.jpg",
-        description: "Classic Margherita with fresh mozzarella and basil.",
+        description: "Ham and pineapple on a cheesy base.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Sweet and savory.",
+        rating: 0,
       },
       {
-        name: "Margherita Pizza",
-        price: 200,
+        name: "Buffalo Chicken Pizza",
+        price: 260,
         image: "/images/p6.jpg",
-        description: "Classic Margherita with fresh mozzarella and basil.",
+        description: "Buffalo chicken with blue cheese dressing.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Buffalo and cheesy.",
+        rating: 0,
       },
       {
-        name: "Margherita Pizza",
-        price: 200,
+        name: "Four Cheese Pizza",
+        price: 280,
         image: "/images/p7.jpg",
-        description: "Classic Margherita with fresh mozzarella and basil.",
+        description: "Blend of mozzarella, cheddar, parmesan, and blue cheese.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Four cheese delight.",
+        rating: 0,
       },
       {
-        name: "Margherita Pizza",
-        price: 200,
+        name: "Meat Lovers Pizza",
+        price: 320,
         image: "/images/p8.jpg",
-        description: "Classic Margherita with fresh mozzarella and basil.",
+        description: "Pepperoni, sausage, ham, and bacon.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Meaty and hearty.",
+        rating: 0,
       },
       {
-        name: "Margherita Pizza",
-        price: 200,
+        name: "Supreme Pizza",
+        price: 300,
         image: "/images/p9.jpg",
-        description: "Classic Margherita with fresh mozzarella and basil.",
+        description: "Combination of meat, veggies, and cheese.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Supreme and flavorful.",
+        rating: 0,
       },
     ],
   },
@@ -366,75 +390,84 @@ export const menuData = [
     items: [
       {
         name: "Club Sandwich",
-        price: 80,
+        price: 90,
         image: "/images/sa1.jpg",
         description: "Triple-layered sandwich with ham, cheese, and veggies.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Layered and filling.",
+        rating: 0,
       },
       {
-        name: "Club Sandwich",
-        price: 80,
+        name: "Turkey Sandwich",
+        price: 85,
         image: "/images/sa2.jpg",
-        description: "Triple-layered sandwich with ham, cheese, and veggies.",
+        description: "Turkey breast with lettuce and tomato.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Turkey and fresh.",
+        rating: 0,
       },
       {
-        name: "Club Sandwich",
+        name: "BLT Sandwich",
         price: 80,
         image: "/images/sa3.jpg",
-        description: "Triple-layered sandwich with ham, cheese, and veggies.",
+        description: "Bacon, lettuce, and tomato with mayo.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Bacon and crispy.",
+        rating: 0,
       },
       {
-        name: "Club Sandwich",
-        price: 80,
+        name: "Cheese Sandwich",
+        price: 75,
         image: "/images/sa4.jpg",
-        description: "Triple-layered sandwich with ham, cheese, and veggies.",
+        description: "Classic ham and cheese on whole wheat.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Classic and simple.",
+        rating: 0,
       },
       {
-        name: "Club Sandwich",
-        price: 80,
+        name: "Chicken Salad Sandwich",
+        price: 90,
         image: "/images/sa5.jpg",
-        description: "Triple-layered sandwich with ham, cheese, and veggies.",
+        description: "Chicken salad with celery and grapes.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Salad and creamy.",
+        rating: 0,
       },
       {
-        name: "Club Sandwich",
-        price: 80,
+        name: "Tuna Sandwich",
+        price: 85,
         image: "/images/sa6.jpg",
-        description: "Triple-layered sandwich with ham, cheese, and veggies.",
+        description: "Tuna salad with lettuce and tomato.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Tuna and fresh.",
+        rating: 0,
       },
       {
-        name: "Club Sandwich",
+        name: "Veggie Sandwich",
         price: 80,
         image: "/images/sa7.jpg",
-        description: "Triple-layered sandwich with ham, cheese, and veggies.",
+        description: "Cucumber, tomato, and avocado on multigrain.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Veggie and light.",
+        rating: 0,
       },
       {
-        name: "Club Sandwich",
-        price: 80,
+        name: "Egg Salad Sandwich",
+        price: 85,
         image: "/images/sa8.jpg",
-        description: "Triple-layered sandwich with ham, cheese, and veggies.",
+        description: "Creamy egg salad with a hint of mustard.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Creamy and tangy.",
+        rating: 0,
       },
       {
-        name: "Club Sandwich",
-        price: 80,
+        name: "Roast Beef Sandwich",
+        price: 100,
         image: "/images/sa9.jpg",
-        description: "Triple-layered sandwich with ham, cheese, and veggies.",
+        description: "Roast beef with horseradish sauce.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Beefy and rich.",
+        rating: 0,
       },
     ],
   },
@@ -444,82 +477,88 @@ export const menuData = [
     items: [
       {
         name: "Lemonade",
-        price: 50,
+        price: 55,
         image: "/images/d1.jpg",
         description: "Refreshing lemonade with a hint of mint.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Minty and refreshing.",
+        rating: 0,
       },
       {
-        name: "Lemonade",
+        name: "Iced Tea",
         price: 50,
         image: "/images/d2.jpg",
-        description: "Refreshing lemonade with a hint of mint.",
+        description: "Chilled iced tea with lemon.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Cool and zesty.",
+        rating: 0,
       },
       {
-        name: "Lemonade",
-        price: 50,
+        name: "Cola",
+        price: 45,
         image: "/images/d3.jpg",
-        description: "Refreshing lemonade with a hint of mint.",
+        description: "Classic cola with a fizzy kick.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Fizzy and classic.",
+        rating: 0,
       },
       {
-        name: "Lemonade",
-        price: 50,
+        name: "Orange Juice",
+        price: 60,
         image: "/images/d4.jpg",
-        description: "Refreshing lemonade with a hint of mint.",
+        description: "Freshly squeezed orange juice.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Fresh and tangy.",
+        rating: 0,
       },
       {
-        name: "Lemonade",
-        price: 50,
+        name: "Milkshake",
+        price: 65,
         image: "/images/d5.jpg",
-        description: "Refreshing lemonade with a hint of mint.",
+        description: "Creamy milkshake in vanilla, chocolate, or strawberry.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Creamy and rich.",
+        rating: 0,
       },
       {
-        name: "Lemonade",
-        price: 50,
+        name: "Smoothie",
+        price: 75,
         image: "/images/d6.jpg",
-        description: "Refreshing lemonade with a hint of mint.",
+        description: "Blended fruit smoothie with yogurt.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Fruity and smooth.",
+        rating: 0,
       },
       {
-        name: "Lemonade",
-        price: 50,
+        name: "Hot Chocolate",
+        price: 55,
         image: "/images/d7.jpg",
-        description: "Refreshing lemonade with a hint of mint.",
+        description: "Rich hot chocolate with whipped cream.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Rich and creamy.",
+        rating: 0,
       },
       {
-        name: "Lemonade",
-        price: 50,
+        name: "Cappuccino",
+        price: 65,
         image: "/images/d8.jpg",
-        description: "Refreshing lemonade with a hint of mint.",
+        description: "Espresso with steamed milk and foam.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Espresso and frothy.",
+        rating: 0,
       },
       {
-        name: "Lemonade",
-        price: 50,
+        name: "Latte",
+        price: 70,
         image: "/images/d9.jpg",
-        description: "Refreshing lemonade with a hint of mint.",
+        description: "Smooth espresso with steamed milk.",
         link: "#",
-        rating: 0, // Default rating
+        review: "Smooth and creamy.",
+        rating: 0,
       },
     ],
   },
 ];
-
-
-
 
 import {
   faAddressBook,
@@ -542,7 +581,12 @@ import {
   faSquare,
   faStickyNote,
 } from "@fortawesome/free-regular-svg-icons";
-import { faShield, faHome, faUser, faFolderTree } from "@fortawesome/free-solid-svg-icons";
+import {
+  faShield,
+  faHome,
+  faUser,
+  faFolderTree,
+} from "@fortawesome/free-solid-svg-icons";
 
 export const CardData = [
   {
@@ -641,10 +685,7 @@ export const CardData = [
 export const sidebarItems = [
   {
     category: "Orders Management",
-    items: [
-     
-      { title: "Orders", link: "/admin/orders", icon: faFolderTree },
-    ],
+    items: [{ title: "Orders", link: "/admin/orders", icon: faFolderTree }],
   },
   // Add more categories and items as needed
 ];
@@ -653,4 +694,3 @@ export const uncategorizedItems = [
   { title: "Dashboard", link: "/admin", icon: faHome },
   { title: "Users", link: "/admin/users", icon: faUser },
 ];
-

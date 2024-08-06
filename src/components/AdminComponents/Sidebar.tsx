@@ -1,7 +1,12 @@
 import React from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faUser, faFolderTree } from "@fortawesome/free-solid-svg-icons"; // Import icons
+import {
+  faHome,
+  faUser,
+  faFolderTree,
+  faEllipsisH, // Import the ellipsis icon
+} from "@fortawesome/free-solid-svg-icons"; // Import icons
 import { sidebarItems, uncategorizedItems } from "@/utills/constants";
 import Div from "../UI/Div";
 import Text from "../UI/Text";
@@ -64,24 +69,20 @@ const SideBarComponent: React.FC<SideBarProps> = (props) => {
               <React.Fragment key={catIndex}>
                 {category.items.length > 0 && (
                   <>
-                    <li
-                      className={classNames([
-                        "pl-[6px]  px-2 duration-500 ease-in-out",
-                        props.toggle ? "hidden" : "block",
-                      ])}
-                    >
+                    <li className={classNames([])}>
                       <Text
-                        themeDivClasses={classNames([
-                          " duration-500 ease-in-out text-amber-400 font-normal text-sm",
-                          props.toggle ? "text-[0px] opacity-0" : "text-base",
-                        ])}
-                        content={category.category}
+                        themeDivClasses=
+                          "pl-[6px]  px-2 duration-300 ease-in-out"
+                        
+                        content={props.toggle ? (
+                          category.category
+                        ) : (
+                          <FontAwesomeIcon icon={faEllipsisH} />
+                        )}
                       />
                     </li>
                     {category.items.map((item, index) => (
-                      <li
-                        key={index}
-                      >
+                      <li key={index}>
                         <Link
                           className={classNames([
                             "ease-in-out duration-300 text-base font-semibold py-2 px-5 flex gap-3 items-center",
@@ -94,17 +95,23 @@ const SideBarComponent: React.FC<SideBarProps> = (props) => {
                           <Text
                             themeDivClasses="group-hover:text-white"
                             lightColor={
-                              router === item.link ? "text-white" : "text-themeYellow"
+                              router === item.link
+                                ? "text-white"
+                                : "text-themeYellow"
                             }
                             content={<FontAwesomeIcon icon={item.icon} />}
                           />
                           <Text
                             themeDivClasses={classNames([
                               "duration-300 ease-in-out group-hover:text-white",
-                              props.toggle ? "text-[0px] opacity-0" : "text-base",
+                              props.toggle
+                                ? "text-[0px] opacity-0"
+                                : "text-base",
                             ])}
                             lightColor={
-                              router === item.link ? "text-white" : "text-themeYellow"
+                              router === item.link
+                                ? "text-white"
+                                : "text-themeYellow"
                             }
                             content={item.title}
                           />
