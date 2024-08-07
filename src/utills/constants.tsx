@@ -586,7 +586,11 @@ import {
   faHome,
   faUser,
   faFolderTree,
+  faDiamond,
+  faDotCircle,
+  faCircle
 } from "@fortawesome/free-solid-svg-icons";
+
 
 export const CardData = [
   {
@@ -681,11 +685,41 @@ export const CardData = [
   },
   // Add more cards as needed
 ];
+interface SidebarCategory {
+  category: string;
+  items: SidebarItem[];
+}
+interface SidebarSubItem {
+  title: string;
+  link: string;
+  icon: any;
+}
 
-export const sidebarItems = [
+interface SidebarItem {
+  title: string;
+  link: string;
+  icon: any;
+  subItems?: SidebarSubItem[];
+}
+
+export const sidebarItems: SidebarCategory[] = [
   {
     category: "Orders Management",
     items: [{ title: "Orders", link: "/admin/orders", icon: faFolderTree }],
+  },
+  {
+    category: "Product Management",
+    items: [
+      {
+        title: "Product Setup",
+        link: "#",
+        icon: faDiamond,
+        subItems: [
+          { title: "Product Reviews", link: "/admin/allratedproducts", icon: faCircle},
+          { title: "Manage Products", link: "/admin/products", icon: faCircle },
+        ],
+      },
+    ],
   },
   // Add more categories and items as needed
 ];
