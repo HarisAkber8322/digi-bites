@@ -1,31 +1,59 @@
-// Products
-{
-  "_id": { "$oid": "60bd460e5d0ad73e74a58303" },
-  "name": "",
-  "price": 1,
-  "description": "",
-  "category": "",
-  "image": "",
-  "stock": 4,
-  "favorites": [
-    {
-      "user_id": { "$oid": "60bd460e5d0ad73e74a58303" },
-      "favorite": true
+[
+  {
+    "_id": { "$oid": "60bd460e5d0ad73e74a58303" },
+    "name": "",
+    "price": 1,
+    "description": "",
+    "category": "",
+    "image": "",
+    "stock": 4,
+    "ratings": [
+      {
+        "user_id": { "$oid": "667b4237b88b6ccb61aa1f14" },
+        "rating": 4
+      },
+      {
+        "user_id": { "$oid": "66b4f53296b40f2ca250789b" },
+        "rating": 3
+      }
+    ],
+    "reviews": [
+      {
+        "user_id": { "$oid": "60bd460e5d0ad73e74a58303" },
+        "rating": 5,
+        "review": "Perfect snack!"
+      }
+    ],
+    "average_rating": 5,
+    "ratings_count": 5,
+    "created_at": "Date",
+    "updated_at": "Date"
+  },
+  {
+    "_id": {
+      "$oid": "64b2b9a0f2b3c79b4d6e8b01"
     },
-    {
-      "user_id": { "$oid": "60bd460e5d0ad73e74a58303" },
-      "favorite": true
+    "name": "Cheese Burger",
+    "price": 100,
+    "description": "Juicy beef patty with melted cheese in a soft bun.",
+    "category": "Burger",
+    "image": "/images/b1.jpg",
+    "stock": 50,
+    "ratings": [
+      {
+        "user_id": { "$oid": "667b4237b88b6ccb61aa1f14" },
+        "rating": 4
+      },
+      {
+        "user_id": { "$oid": "66b4f53296b40f2ca250789b" },
+        "rating": 3
+      }
+    ],
+    "created_at": {
+      "$date": "2024-08-08T12:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2024-08-08T12:00:00.000Z"
     }
-  ],
-  "reviews": [
-    {
-      "user_id": { "$oid": "60bd460e5d0ad73e74a58303" },
-      "rating": 5,
-      "review": "Perfect snack!"
-    }
-  ],
-  "average_rating": 5,
-  "ratings_count": 5,
-  "created_at": "Date",
-  "updated_at": "Date"
-}
+  }
+]

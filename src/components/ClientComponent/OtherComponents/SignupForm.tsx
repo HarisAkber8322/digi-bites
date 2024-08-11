@@ -17,7 +17,7 @@ const SignUpForm = () => {
   const userStore = useContext(UserStoreContext); // Use UserStoreContext
 
   const initialValues: User = {
-     _id: "",
+    id: "",
     fname: "",
     lname: "",
     email: "",
@@ -25,6 +25,7 @@ const SignUpForm = () => {
     contact_no: "",
     type: "customer",
     social_links: [{ link: "", name: "" }],
+    favoriteProductsIds: []
   };
 
   const validationSchema = Yup.object().shape({
@@ -39,11 +40,13 @@ const SignUpForm = () => {
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password"), undefined], "Passwords must match")
       .required("Confirm Password is required"),
+    favoriteProductsIds: Yup.array().of(Yup.string())
   });
 
   const handleSubmit = async (values: User) => {
+    console.log(values)
     let result = await userStore.handleSignUp(values);
-    console.log(result, "result"); 
+    console.log(result, "result");
   };
 
   const togglePasswordVisibility = () => {
@@ -120,21 +123,40 @@ const SignUpForm = () => {
                     />
                   </div>
                 </div>
-                <div className="relative mb-4">
-                  <label htmlFor="email" className="block text-sm font-medium">
-                    <Text themeDivClasses="" content={<> Email:</>} />
-                  </label>
-                  <Field
-                    type="email"
-                    id="email"
-                    name="email" placeholder="Enter your email"
-                    className="mt-1 block w-full px-3 py-2 border border-lightGray rounded-md shadow-sm focus:outline-none focus:themeOrange focus:border-themeOrange sm:text-sm"
-                  />
-                  <ErrorMessage
-                    name="email"
-                    component="div"
-                    className="text-themeYellow text-xs absolute left-2 bottom-[-15px]"
-                  />
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="relative mb-4">
+                    <label htmlFor="email" className="block text-sm font-medium">
+                      <Text themeDivClasses="" content={<> Email:</>} />
+                    </label>
+                    <Field
+                      type="email"
+                      id="email"
+                      name="email" placeholder="Enter your email"
+                      className="mt-1 block w-full px-3 py-2 border border-lightGray rounded-md shadow-sm focus:outline-none focus:themeOrange focus:border-themeOrange sm:text-sm"
+                    />
+                    <ErrorMessage
+                      name="email"
+                      component="div"
+                      className="text-themeYellow text-xs absolute left-2 bottom-[-15px]"
+                    />
+                  </div>
+                  <div className="relative mb-4">
+                    <label htmlFor="contact_no" className="block text-sm font-medium text-gray-700">
+                      <Text themeDivClasses="" content={<>Contact Number:</>} />
+                    </label>
+                    <Field
+                      type="text"
+                      id="contact_no"
+                      name="contact_no"
+                      placeholder="Enter your contact number"
+                      className="mt-1 block w-full px-3 py-2 border border-lightGray rounded-md shadow-sm focus:outline-none focus:themeOrange focus:border-themeOrange sm:text-sm"
+                    />
+                    <ErrorMessage
+                      name="contact_no"
+                      component="div"
+                      className="text-themeYellow text-xs absolute left-2 bottom-[-15px]"
+                    />
+                  </div>
                 </div>
                 <div className="relative mb-4">
                   <label
@@ -206,6 +228,8 @@ const SignUpForm = () => {
                     className="text-themeYellow text-xs absolute left-2 bottom-[-15px]"
                   />
                 </div>
+                {/* Hidden field for favoriteProductsIds */}
+                <Field type="hidden" name="favoriteProductsIds" />
                 <button
                   type="submit"
                   disabled={isSubmitting}

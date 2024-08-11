@@ -168,13 +168,62 @@ app.prepare().then(() => {
     }
   });
 
+  // server.post("/api/auth/signup", async (req, res) => {
+  //   const { fname, lname, email, password } = req.body;
+
+  //   try {
+  //     const db = await connectToDatabase();
+  //     const usersCollection = db.collection("users");
+
+  //     const existingUser = await usersCollection.findOne({ email });
+  //     if (existingUser) {
+  //       return res
+  //         .status(400)
+  //         .json({ error: "User with this email already exists" });
+  //     }
+
+  //     const hashedPassword = await bcrypt.hash(password, 10);
+
+  //     const newUser = {
+  //       fname,
+  //       lname,
+  //       email,
+  //       password: hashedPassword,
+  //     };
+
+  //     const result = await usersCollection.insertOne(newUser);
+
+  //     if (result.acknowledged) {
+  //       // Return user data or success message without JWT
+  //       res.status(201).json({
+  //         message: "User created successfully",
+  //         user: { id: result.insertedId, fname, lname, email },
+  //       });
+  //     } else {
+  //       res.status(500).json({ error: "Internal server error" });
+  //     }
+  //   } catch (error) {
+  //     console.error("Error signing up:", error);
+  //     res.status(500).json({ error: "Internal server error" });
+  //   }
+  // });
+
   server.post("/api/auth/signup", async (req, res) => {
-    const { fname, lname, email, password } = req.body;
+    const {
+      fname = "",
+      lname = "",
+      email = "",
+      password = "",
+      contact_no = "",
+      type = "customer",
+      favoriteProductsIds = [],
+    } = req.body;
 
     try {
       const db = await connectToDatabase();
       const usersCollection = db.collection("users");
 
+      // Check if the user already exists
       const existingUser = await usersCollection.findOne({ email });
       if (existingUser) {
         return res
@@ -182,15 +231,21 @@ app.prepare().then(() => {
           .json({ error: "User with this email already exists" });
       }
 
+      // Hash the password
       const hashedPassword = await bcrypt.hash(password, 10);
 
+      // Create a new user object with all the properties
       const newUser = {
         fname,
         lname,
         email,
         password: hashedPassword,
+        contact_no,
+        type,
+        favoriteProductsIds,
       };
 
+      // Insert the new user into the database
       const result = await usersCollection.insertOne(newUser);
 
       if (result.acknowledged) {
@@ -480,9 +535,9 @@ app.prepare().then(() => {
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
-
+      const favoriteproductIds = user.favoriteproductIds || [];
       // Check if the product ID is already in the favorites
-      const isFavorite = user.favoriteproductIds.includes(productId);
+      const isFavorite = favoriteproductIds.includes(productId);
 
       if (isFavorite) {
         // Remove the product ID from favorites
