@@ -36,6 +36,7 @@ class UserStore {
     this.loadUsers();
     this.checkLoginState();
     this.setUser(this.user);
+    this.fetchFavoriteProducts(this.user?.id)
   }
 
   setIsLoggedIn(value: boolean) {
@@ -120,15 +121,17 @@ class UserStore {
     this.favoriteProductIds = favoriteProductIds;
   }
   fetchFavoriteProducts = async (userId: string | undefined) => {
-    try {
-      const response = await axios.get(`http://localhost:3001/api/users/${userId}/favorites`);
-      if (response.status === 200) {
-        const favProductIds: string[] = response.data; // Assuming response.data is an array of IDs
-        this.setFavoriteProductIds(new Set(favProductIds));
+    if (this.isLoggedin == true) {
+      try {
+        const response = await axios.get(`http://localhost:3001/api/users/${userId}/favorites`);
+        if (response.status === 200) {
+          const favProductIds: string[] = response.data; // Assuming response.data is an array of IDs
+          this.setFavoriteProductIds(new Set(favProductIds));
+        }
+      } catch (error) {
+        console.error("Error fetching favorite products:", error);
+        this.setFavoriteProductIds(new Set());
       }
-    } catch (error) {
-      console.error("Error fetching favorite products:", error);
-      this.setFavoriteProductIds(new Set());
     }
   }
   async toggleFavorite(productId: string, userId: string | undefined) {
@@ -136,7 +139,7 @@ class UserStore {
 
     try {
       // Send request to add/remove favorite product ID in the user’s favoriteproductIds array
-      await axios.post(`http://localhost:3001/api/users/${userId}/favorites`, { productId });
+      await axios.post(`http://localhost:3001/api/users/${userId}/favoritestoggle`, { productId });
 
       // Update local favorite product IDs
       if (this.favoriteProductIds.has(productId)) {

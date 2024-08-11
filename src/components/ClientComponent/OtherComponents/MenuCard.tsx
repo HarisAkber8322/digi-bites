@@ -32,7 +32,7 @@ const MenuCard: React.FC<MenuCardProps> = ({
 
   useEffect(() => {
     // Fetch user favorite status when component mounts
-    if (UserStore.isLoggedin) {
+    if (UserStore.isLoggedin == true) {
       UserStore.fetchFavoriteProducts(UserStore.user?.id); // Ensure the favorite products are fetched and updated
     }
   }, [UserStore.isLoggedin]);
@@ -52,6 +52,7 @@ const MenuCard: React.FC<MenuCardProps> = ({
   };
 
   const handleFavoriteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    console.log(menuItem._id, UserStore.user?.id)
     e.stopPropagation();
     UserStore.toggleFavorite(menuItem._id, UserStore.user?.id); // Toggle favorite using the store method
   };

@@ -13,10 +13,10 @@ const FavoritePage: React.FC = () => {
   const [favorites, setFavorites] = useState<Product[]>([]);
 
   useEffect(() => {
-    if (UserStore.isLoggedin) {
+    if (UserStore.isLoggedin == true) {
       UserStore.fetchFavoriteProducts(UserStore.user?.id);
     }
-  }, [UserStore.isLoggedin, UserStore.user?.id]);
+  }, [UserStore.isLoggedin, UserStore.user?.id, UserStore.favoriteProductIds]);
 
   useEffect(() => {
     const fetchFavorites = async () => {

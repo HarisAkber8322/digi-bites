@@ -462,48 +462,48 @@ app.prepare().then(() => {
     }
   });
 
-  // server.post("/api/users/:id/favorites", async (req, res) => {
-  //   const userId = req.params.id;
-  //   const { productId } = req.body;
+  server.post("/api/users/:id/favoritestoggle", async (req, res) => {
+    const userId = req.params.id;
+    const { productId } = req.body;
 
-  //   if (!productId) {
-  //     return res.status(400).json({ message: "Product ID is required" });
-  //   }
+    if (!productId) {
+      return res.status(400).json({ message: "Product ID is required" });
+    }
 
-  //   try {
-  //     const db = await connectToDatabase();
-  //     const usersCollection = db.collection("users");
+    try {
+      const db = await connectToDatabase();
+      const usersCollection = db.collection("users");
 
-  //     // Find the user
-  //     const user = await usersCollection.findOne({ _id: new ObjectId(userId) });
+      // Find the user
+      const user = await usersCollection.findOne({ _id: new ObjectId(userId) });
 
-  //     if (!user) {
-  //       return res.status(404).json({ message: "User not found" });
-  //     }
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
 
-  //     // Check if the product ID is already in the favorites
-  //     const isFavorite = user.favoriteproductIds.includes(productId);
+      // Check if the product ID is already in the favorites
+      const isFavorite = user.favoriteproductIds.includes(productId);
 
-  //     if (isFavorite) {
-  //       // Remove the product ID from favorites
-  //       await usersCollection.updateOne(
-  //         { _id: new ObjectId(userId) },
-  //         { $pull: { favoriteproductIds: productId } }
-  //       );
-  //     } else {
-  //       // Add the product ID to favorites
-  //       await usersCollection.updateOne(
-  //         { _id: new ObjectId(userId) },
-  //         { $addToSet: { favoriteproductIds: productId } }
-  //       );
-  //     }
+      if (isFavorite) {
+        // Remove the product ID from favorites
+        await usersCollection.updateOne(
+          { _id: new ObjectId(userId) },
+          { $pull: { favoriteproductIds: productId } }
+        );
+      } else {
+        // Add the product ID to favorites
+        await usersCollection.updateOne(
+          { _id: new ObjectId(userId) },
+          { $addToSet: { favoriteproductIds: productId } }
+        );
+      }
 
-  //     return res.status(200).json({ message: "Favorite status updated" });
-  //   } catch (error) {
-  //     console.error("Error toggling favorite:", error);
-  //     return res.status(500).json({ message: "Internal server error" });
-  //   }
-  // });
+      return res.status(200).json({ message: "Favorite status updated" });
+    } catch (error) {
+      console.error("Error toggling favorite:", error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  });
 
   server.get("/api/users/:id/favorites", async (req, res) => {
     const userId = req.params.id;
