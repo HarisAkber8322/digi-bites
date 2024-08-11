@@ -17,6 +17,7 @@ const SignUpForm = () => {
   const userStore = useContext(UserStoreContext); // Use UserStoreContext
 
   const initialValues: User = {
+     _id: "",
     fname: "",
     lname: "",
     email: "",
@@ -221,7 +222,7 @@ const SignUpForm = () => {
                   </Link>
                 </div>
                 {/* <div className="grid grid-cols-2 gap-4"> */}
-                <div className="mt-6 flex justify-center">
+                {/* <div className="mt-6 flex justify-center">
                   <Button className="w-full py-2 px-4 mb-2 flex justify-center items-center bg-blue-600  rounded-md shadow-sm text-sm font-medium text-gray-700 text-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     <FontAwesomeIcon
                       icon={faFacebook}
@@ -240,7 +241,7 @@ const SignUpForm = () => {
                     />
                     Continue with Google
                   </Button>
-                </div>
+                </div> */}
               </>
             }
           />

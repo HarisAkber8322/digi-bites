@@ -66,51 +66,6 @@ app.prepare().then(() => {
     }
   });
 
-  // server.post("/api/users", async (req, res) => {
-  //   try {
-  //     const { name, fname, role, phoneNumber } = req.body;
-
-  //     if (!name || !fname || !role || !phoneNumber) {
-  //       return res.status(400).json({ error: "All fields are required" });
-  //     }
-
-  //     const db = await connectToDatabase();
-  //     const usersCollection = db.collection("users");
-
-  //     const newUser = {
-  //       name,
-  //       fname,
-  //       role,
-  //       phoneNumber,
-  //     };
-
-  //     const result = await usersCollection.insertOne(newUser);
-
-  //     if (result && result.acknowledged) {
-  //       const insertedId = result.insertedId.toString();
-  //       res.status(201).json({
-  //         message: "User added successfully",
-  //         user: { ...newUser, _id: insertedId },
-  //       });
-  //     } else {
-  //       console.error(
-  //         "Error adding user: Insert operation did not return the expected result",
-  //         result
-  //       );
-  //       res.status(500).json({ error: "Internal server error" });
-  //     }
-  //   } catch (error) {
-  //     console.error("Error adding user:", error);
-  //     if (error.code === 11000) {
-  //       return res
-  //         .status(400)
-  //         .json({ error: "User with the same data already exists" });
-  //     }
-
-  //     res.status(500).json({ error: "Internal server error" });
-  //   }
-  // });
-
   server.delete("/api/users/:id", async (req, res) => {
     try {
       const db = await connectToDatabase();
@@ -158,6 +113,30 @@ app.prepare().then(() => {
     }
   });
 
+  server.get("/api/auth/loggedinUser", async (req, res) => {
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) return res.status(401).json({ error: "No token provided" });
+
+    try {
+      const decoded = jwt.verify(token, process.env.SECRET_KEY);
+      const db = await connectToDatabase();
+      const usersCollection = db.collection("users");
+      const user = await usersCollection.findOne({
+        _id: new ObjectId(decoded.id),
+      });
+      // const user = await usersCollection.findOne({ _id: decoded.id });
+
+      if (user) {
+        res.status(200).json({ user: { id: user._id, email: user.email } });
+      } else {
+        res.status(404).json({ error: "User not found" });
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
   server.post("/api/auth/login", async (req, res) => {
     const { email, password } = req.body;
 
@@ -175,9 +154,14 @@ app.prepare().then(() => {
         return res.status(401).json({ error: "Invalid email or password" });
       }
 
-      const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY, { expiresIn: "1h" });
+      const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY, {
+        expiresIn: "1h",
+      });
 
-      res.status(200).json({ token });
+      res.status(200).json({
+        token: token, // Include token in response
+        user: { id: user._id, email: user.email },
+      });
     } catch (error) {
       console.error("Error logging in:", error);
       res.status(500).json({ error: "Internal server error" });
@@ -193,7 +177,9 @@ app.prepare().then(() => {
 
       const existingUser = await usersCollection.findOne({ email });
       if (existingUser) {
-        return res.status(400).json({ error: "User with this email already exists" });
+        return res
+          .status(400)
+          .json({ error: "User with this email already exists" });
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);
@@ -202,16 +188,17 @@ app.prepare().then(() => {
         fname,
         lname,
         email,
-        password: hashedPassword
+        password: hashedPassword,
       };
 
       const result = await usersCollection.insertOne(newUser);
 
       if (result.acknowledged) {
-        const token = jwt.sign({ id: result.insertedId }, process.env.SECRET_KEY, {
-          expiresIn: "1h",
+        // Return user data or success message without JWT
+        res.status(201).json({
+          message: "User created successfully",
+          user: { id: result.insertedId, fname, lname, email },
         });
-        res.status(201).json({ token });
       } else {
         res.status(500).json({ error: "Internal server error" });
       }
@@ -221,61 +208,324 @@ app.prepare().then(() => {
     }
   });
 
+  //Products
+  server.post("/api/products/:id/favorite", async (req, res) => {
+    const { userId } = req.body; // Assuming userId is passed in the request body
+    const productId = req.params.id;
 
-//Products
-server.get("/api/products", async (req, res) => {
-  const page = parseInt(req.query.page, 10) || 1;
-  const searchQuery = req.query.q || "";
-  const sortOrder = req.query.sort || "asc";
+    try {
+      const db = await connectToDatabase();
+      const usersCollection = db.collection("users");
 
-  try {
-    const db = await connectToDatabase();
-    const productsCollection = db.collection("products");
+      const user = await usersCollection.findOne({ _id: new ObjectId(userId) });
 
-    const totalCount = await productsCollection.countDocuments();
-    const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
 
-    const skip = (page - 1) * PAGE_SIZE;
+      const isFavorite = user.favoriteproductIds.includes(productId);
 
-    const products = await productsCollection
-      .find({ fname: { $regex: new RegExp(searchQuery, "i") } }) // Case-insensitive search
-      .sort({ fname: sortOrder === "asc" ? 1 : -1 })
-      .skip(skip)
-      .limit(PAGE_SIZE)
-      .toArray();
+      let updatedFavorites;
+      if (isFavorite) {
+        // Remove the product ID from the array
+        updatedFavorites = user.favoriteproductIds.filter(
+          (id) => id !== productId
+        );
+      } else {
+        // Add the product ID to the array
+        updatedFavorites = [...user.favoriteproductIds, productId];
+      }
 
-    res.status(200).json({ products, totalCount, totalPages });
-  } catch (error) {
-    console.error("Error:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
+      await usersCollection.updateOne(
+        { _id: new ObjectId(userId) },
+        { $set: { favoriteproductIds: updatedFavorites } }
+      );
 
+      return res.status(200).json({
+        message: "Favorite status updated successfully",
+        favoriteproductIds: updatedFavorites,
+      });
+    } catch (error) {
+      console.error("Error updating favorite status:", error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  });
 
-server.get("/api/orders", async (req, res) => {
-  const page = parseInt(req.query.page, 10) || 1;
-  const searchQuery = req.query.q || "";
-  const sortOrder = req.query.sort || "asc";
+  server.get("/api/products", async (req, res) => {
+    const searchQuery = req.query.q || "";
+    const sortOrder = req.query.sort || "asc";
 
-  try {
-    const db = await connectToDatabase();
-    const ordersCollection = db.collection("orders");
+    try {
+      const db = await connectToDatabase();
+      const productsCollection = db.collection("products");
+      const totalCount = await productsCollection.countDocuments();
+      const products = await productsCollection
+        .find({
+          $or: [
+            { name: { $regex: new RegExp(searchQuery, "i") } },
+            { category: { $regex: new RegExp(searchQuery, "i") } },
+          ],
+        })
+        .sort({ name: sortOrder === "asc" ? 1 : -1 })
+        .toArray();
 
-    const totalCount = await ordersCollection.countDocuments();
-    const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+      res.status(200).json({ products, totalCount });
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
 
-    const skip = (page - 1) * PAGE_SIZE;
+  server.get("/api/products/:id", async (req, res) => {
+    const { id } = req.params;
 
-    const orders = await ordersCollection
-      .skip(skip)
-      .limit(PAGE_SIZE)
-      .toArray();
-    res.status(200).json({ orders, totalCount, totalPages });
-  } catch (error) {
-    console.error("Error:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
+    try {
+      const db = await connectToDatabase(); // Function to connect to your database
+      const productsCollection = db.collection("products");
+
+      // Find the product by ID
+      const product = await productsCollection.findOne({
+        _id: new ObjectId(id),
+      });
+      if (!product) {
+        return res.status(404).json({ error: "Product not found" });
+      }
+
+      // Return the product data
+      res.status(200).json(product);
+    } catch (error) {
+      console.error("Error fetching product:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  server.post("/api/products/:id/favorite", async (req, res) => {
+    const userId = req.body.userId; // Assuming userId is passed in the request body
+    const productId = req.params.id;
+
+    try {
+      const user = await User.findById(userId);
+
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Check if the product is already in the favorites array
+      const isFavorite = user.favoriteproductIds.includes(productId);
+
+      if (isFavorite) {
+        // Remove the product ID from the array
+        user.favoriteproductIds = user.favoriteproductIds.filter(
+          (id) => id !== productId
+        );
+      } else {
+        // Add the product ID to the array
+        user.favoriteproductIds.push(productId);
+      }
+
+      // Save the user document
+      await user.save();
+
+      return res.status(200).json({
+        message: "Favorite status updated successfully",
+        favoriteproductIds: user.favoriteproductIds,
+      });
+    } catch (error) {
+      console.error("Error updating favorite status:", error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  server.post("/api/products/:id/reviews", async (req, res) => {
+    const { id } = req.params;
+    const { user_id, rating, review } = req.body;
+
+    try {
+      const db = await connectToDatabase();
+      const productsCollection = db.collection("products");
+
+      const product = await productsCollection.findOne({
+        _id: new ObjectId(id),
+      });
+      if (!product) {
+        return res.status(404).json({ error: "Product not found" });
+      }
+
+      // Add review
+      const newReview = { user_id, rating, review };
+      await productsCollection.updateOne(
+        { _id: new ObjectId(id) },
+        { $push: { reviews: newReview } }
+      );
+
+      // Update average rating and rating count
+      const totalRatings =
+        product.reviews.reduce((sum, r) => sum + r.rating, 0) + rating;
+      const averageRating = (
+        totalRatings /
+        (product.reviews.length + 1)
+      ).toFixed(2);
+
+      await productsCollection.updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $set: {
+            average_rating: averageRating,
+            ratings_count: product.reviews.length + 1,
+          },
+        }
+      );
+
+      res.status(201).json(newReview);
+    } catch (error) {
+      console.error("Error adding review:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  server.put("/api/products/:id/ratings", async (req, res) => {
+    const { id } = req.params;
+    const { user_id, rating } = req.body;
+
+    try {
+      const db = await connectToDatabase();
+      const productsCollection = db.collection("products");
+
+      const product = await productsCollection.findOne({
+        _id: new ObjectId(id),
+      });
+      if (!product) {
+        return res.status(404).json({ error: "Product not found" });
+      }
+
+      const existingRating = product.reviews.find((r) => r.user_id === user_id);
+      if (existingRating) {
+        // Update existing rating
+        await productsCollection.updateOne(
+          { _id: new ObjectId(id), "reviews.user_id": user_id },
+          { $set: { "reviews.$.rating": rating } }
+        );
+      } else {
+        // Add new rating
+        await productsCollection.updateOne(
+          { _id: new ObjectId(id) },
+          { $push: { reviews: { user_id, rating, review: "" } } }
+        );
+      }
+
+      // Recalculate average rating
+      const totalRatings = product.reviews.reduce(
+        (sum, r) => sum + r.rating,
+        0
+      );
+      const averageRating = (totalRatings / product.reviews.length).toFixed(2);
+
+      await productsCollection.updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $set: {
+            average_rating: averageRating,
+          },
+        }
+      );
+
+      res.status(200).json({ message: "Rating updated successfully" });
+    } catch (error) {
+      console.error("Error updating rating:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  //Orders
+  server.get("/api/orders", async (req, res) => {
+    const page = parseInt(req.query.page, 10) || 1;
+    const searchQuery = req.query.q || "";
+    const sortOrder = req.query.sort || "asc";
+
+    try {
+      const db = await connectToDatabase();
+      const ordersCollection = db.collection("orders");
+
+      const totalCount = await ordersCollection.countDocuments();
+      const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+
+      const skip = (page - 1) * PAGE_SIZE;
+
+      const orders = await ordersCollection
+        .skip(skip)
+        .limit(PAGE_SIZE)
+        .toArray();
+      res.status(200).json({ orders, totalCount, totalPages });
+    } catch (error) {
+      console.error("Error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  // server.post("/api/users/:id/favorites", async (req, res) => {
+  //   const userId = req.params.id;
+  //   const { productId } = req.body;
+
+  //   if (!productId) {
+  //     return res.status(400).json({ message: "Product ID is required" });
+  //   }
+
+  //   try {
+  //     const db = await connectToDatabase();
+  //     const usersCollection = db.collection("users");
+
+  //     // Find the user
+  //     const user = await usersCollection.findOne({ _id: new ObjectId(userId) });
+
+  //     if (!user) {
+  //       return res.status(404).json({ message: "User not found" });
+  //     }
+
+  //     // Check if the product ID is already in the favorites
+  //     const isFavorite = user.favoriteproductIds.includes(productId);
+
+  //     if (isFavorite) {
+  //       // Remove the product ID from favorites
+  //       await usersCollection.updateOne(
+  //         { _id: new ObjectId(userId) },
+  //         { $pull: { favoriteproductIds: productId } }
+  //       );
+  //     } else {
+  //       // Add the product ID to favorites
+  //       await usersCollection.updateOne(
+  //         { _id: new ObjectId(userId) },
+  //         { $addToSet: { favoriteproductIds: productId } }
+  //       );
+  //     }
+
+  //     return res.status(200).json({ message: "Favorite status updated" });
+  //   } catch (error) {
+  //     console.error("Error toggling favorite:", error);
+  //     return res.status(500).json({ message: "Internal server error" });
+  //   }
+  // });
+
+  server.get("/api/users/:id/favorites", async (req, res) => {
+    const userId = req.params.id;
+
+    try {
+      const db = await connectToDatabase();
+      const usersCollection = db.collection("users");
+
+      // Find the user
+      const user = await usersCollection.findOne({ _id: new ObjectId(userId) });
+
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Return the array of product IDs from user's favoriteproductIds
+      return res.status(200).json(user.favoriteproductIds);
+    } catch (error) {
+      console.error("Error fetching favorite product IDs:", error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  });
 
   server.all("*", (req, res) => {
     return handle(req, res);

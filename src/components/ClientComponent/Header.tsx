@@ -6,6 +6,7 @@ import {
   faBars,
   faUser,
   faCartShopping,
+  faPowerOff,
 } from "@fortawesome/free-solid-svg-icons";
 import ToggleThemeComponent from "../ToggleThemeButton";
 import { Image } from "react-bootstrap";
@@ -121,17 +122,19 @@ const HeaderComponent = () => {
                         </li>
                       }
                     />
-                    <li className="md:transition-all md:duration-500 md:ease-in-out">
-                      <Link
-                        href="/favorite"
-                        className={router === "/favorite" ? "active" : ""}
-                      >
-                        <Text
-                          themeDivClasses="md:text-md md:font-semibold"
-                          content={"Favorites"}
-                        />
-                      </Link>
-                    </li>
+                    {UserStore.isLoggedin &&
+                      <li className="md:transition-all md:duration-500 md:ease-in-out">
+                        <Link
+                          href="/favorite"
+                          className={router === "/favorite" ? "active" : ""}
+                        >
+                          <Text
+                            themeDivClasses="md:text-md md:font-semibold"
+                            content={"Favorites"}
+                          />
+                        </Link>
+                      </li>
+                    }
                     <li className="md:transition-all md:duration-500 md:ease-in-out">
                       <Link
                         href="/suggestions"
@@ -188,44 +191,41 @@ const HeaderComponent = () => {
                     </Link>
                   ) : (
                     <div className="grid grid-cols-2 gap-4" >
-                    
-                     <Link
-                     href={"/login"}
-                     className="w-full py-2 px-4  border-transparent rounded-md shadow-sm text-center text-sm font-medium !border !border-themeYellow bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                   >
-                     <Text
-                       content={" login"}
-                       themeDivClasses="border-thr"
-                       lightColor="text-themeYellow"
-                       darkColor="text-white"
-                     />
-                   </Link>
-                   <Link
-                      href={"/signup"}
-                      className="w-full py-2 px-4 border border-transparent rounded-md text-center shadow-sm text-sm font-medium text-white bg-themeYellow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                      <Text
-                        content={"Sign up"}
-                        themeDivClasses=""
-                        lightColor="text-white "
-                        darkColor="text-white "
 
-                      />
-                    </Link>
+                      <Link
+                        href={"/login"}
+                        className="w-full py-2 px-4  border-transparent rounded-md shadow-sm text-center text-sm font-medium !border !border-themeYellow bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      >
+                        <Text
+                          content={" login"}
+                          themeDivClasses="border-thr"
+                          lightColor="text-themeYellow"
+                          darkColor="text-white"
+                        />
+                      </Link>
+                      <Link
+                        href={"/signup"}
+                        className="w-full py-2 px-4 border border-transparent rounded-md text-center shadow-sm text-sm font-medium text-white bg-themeYellow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      >
+                        <Text
+                          content={"Sign up"}
+                          themeDivClasses=""
+                          lightColor="text-white "
+                          darkColor="text-white "
+
+                        />
+                      </Link>
                     </div>
-                    
+
                   )}
-                  {/* {isLoggedin &&
-                    <button
-                      onClick={() => {
-                        logout(false);
-                        // routerTwo.push("/login");
-                      }}
-                      className="w-full  py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-themeYellow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                      Logout
-                    </button>
-                  } */}
+                  {isLoggedin &&
+
+                    <FontAwesomeIcon onClick={() => {
+                      UserStore.logout();
+                    }}
+                      className="text-themeYellow cursor-pointer"
+                      icon={faPowerOff} />
+                  }
                 </div>
               </div>
             </div>

@@ -102,7 +102,9 @@ class AppStore {
   logout(value: boolean) {
     this.setIsLoggedIn(value);
   }
-
+  handleForgotPassword(email: string) {
+    console.log(email)
+  }
   changePage = (uri: string) => {
     this.router?.push(uri);
     console.log("Router:", this.router);

@@ -11,6 +11,22 @@ const withPWA = withPWAInit({
   workboxOptions: {
     disableDevLogs: true,
   },
+  register: true, // Register the service worker
+  skipWaiting: true, // Skip waiting for the old service worker to be replaced
+  runtimeCaching: [
+    {
+      urlPattern: /^https:\/\/.*\.(jpg|jpeg|png|gif|svg)$/,
+      handler: "CacheFirst",
+      options: {
+        cacheName: "images-cache",
+        expiration: {
+          maxEntries: 100,
+          maxAgeSeconds: 7 * 24 * 60 * 60, // 7 days
+        },
+      },
+    },
+    // You can add more caching rules here
+  ],
 });
 
 const nextConfig = {

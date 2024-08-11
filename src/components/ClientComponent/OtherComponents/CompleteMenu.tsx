@@ -1,73 +1,59 @@
-// Menu.tsx
-
-import React, { useState } from "react";
+"use client";
+import React, { useContext, useEffect } from "react";
 import Link from "next/link";
-import Div from "../../UI/Div"; // Adjust according to your project structure
-import MenuCard from "./MenuCard"; // Adjust according to your project structure
-import { menuData } from "@/utills/constants"; // Adjust according to your project structure
-import Text from "@/components/UI/Text"; // Adjust according to your project structure
-import { FaArrowRight } from "react-icons/fa"; // Import the arrow icon from react-icons library
+import MenuCard from "./MenuCard";
+import ProductStoreContext, { Product } from "@/store/ProductStore";
+import Text from "@/components/UI/Text";
+import { FaArrowRight } from "react-icons/fa";
+import UserStoreContext from "@/store/UserStore";
+import { observer } from "mobx-react";
 
-interface MenuProps {
-  handleCardClick: (menuItem: any) => void;
-}
+const Menu: React.FC = () => {
+  const ProductStore = useContext(ProductStoreContext);
+  const UserStore = useContext(UserStoreContext);
 
-const Menu: React.FC<MenuProps> = ({ handleCardClick }) => {
-  const [favorites, setFavorites] = useState<any[]>(() => {
-    const savedFavorites = localStorage.getItem("favorites");
-    return savedFavorites ? JSON.parse(savedFavorites) : [];
-  });
+  useEffect(() => {
+    ProductStore.fetchProducts(); // Fetch products when component mounts
+  }, [ProductStore]);
 
-  const handleFavoriteToggle = (menuItem: any) => {
-    setFavorites((prevFavorites) => {
-      const isFavorite = prevFavorites.some(
-        (item) => item.name === menuItem.name
-      );
-      const updatedFavorites = isFavorite
-        ? prevFavorites.filter((item) => item.name !== menuItem.name)
-        : [...prevFavorites, menuItem];
-
-      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-      return updatedFavorites;
-    });
+  const handleCardClick = (menuItem: Product) => {
+    // Handle card click if needed
   };
 
+  const categories = Array.from(
+    new Set(ProductStore.products.map((product) => product.category))
+  );
+
   return (
-    <div className="">
-      {menuData.map((categoryData, categoryIndex) => (
-        <div key={categoryIndex} className="mb-[28px]">
+    <div>
+      {categories.map((category) => (
+        <div key={category} className="mb-[28px]">
           <Text
             content={
               <>
-                <h2 className="text-2xl font-bold align-middle">
-                  {categoryData.category}
-                </h2>
-                {categoryData.items.length > 6 && (
-                  <div className="flex justify-end ">
-                    <Link href={`/category/${categoryData.category}`}>
-                      <div className="flex items-center bg-themeYellow text-white py-2 px-2 rounded">
-                        <FaArrowRight className="mr-1" /> {/* Arrow icon */}
-                        {/* <span>View More</span> */}
-                      </div>
-                    </Link>
-                  </div>
-                )}
+                <h2 className="text-2xl font-bold align-middle">{category}</h2>
+                <div className="flex justify-end">
+                  <Link href={`/category/${category.toLowerCase()}`}>
+                    <div className="flex items-center bg-themeYellow text-white py-2 px-2 rounded">
+                      <FaArrowRight className="mr-1" /> {/* Arrow icon */}
+                      <span>View More</span>
+                    </div>
+                  </Link>
+                </div>
               </>
             }
             themeDivClasses="flex flex-rows justify-between"
           />
           <div className="grid grid-cols-6 gap-4 my-[28px]">
-            {categoryData.items.slice(0, 6).map((menuItem, itemIndex) => (
-              <MenuCard
-                key={itemIndex}
-                menuItem={menuItem}
-                handleCardClick={handleCardClick}
-                isFavorite={favorites.some(
-                  (item) => item.name === menuItem.name
-                )}
-                onFavoriteToggle={handleFavoriteToggle}
-              />
-            ))}
+            {ProductStore.products
+              .filter((menuItem) => menuItem.category === category)
+              .map((menuItem, itemIndex) => (
+                <MenuCard
+                  key={itemIndex}
+                  menuItem={menuItem}
+                  handleCardClick={handleCardClick}
+                />
+              ))}
           </div>
         </div>
       ))}
@@ -75,4 +61,4 @@ const Menu: React.FC<MenuProps> = ({ handleCardClick }) => {
   );
 };
 
-export default Menu;
+export default observer(Menu);

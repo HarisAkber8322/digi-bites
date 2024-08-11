@@ -5,47 +5,42 @@ import { observer } from "mobx-react";
 import Div from "../../UI/Div";
 import Text from "../../UI/Text";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import MainStoreContext from "@/store/Mainstore";
+import ProductStoreContext, { Product } from "@/store/ProductStore";
+import UserStoreContext from "@/store/UserStore";
 import StarRating from "./StarRating";
 
-interface MenuItem {
-  name: string;
-  price: number;
-  image: string;
-  description: string;
-  link: string;
-  rating?: number; // Rating value from 0 to 5
-}
-
 interface MenuCardProps {
-  menuItem: MenuItem;
-  handleCardClick: (menuItem: MenuItem) => void;
-  isFavorite: boolean;
-  onFavoriteToggle: (menuItem: MenuItem) => void;
+  menuItem: Product;
+  handleCardClick: (menuItem: Product) => void;
 }
 
 const MenuCard: React.FC<MenuCardProps> = ({
   menuItem,
   handleCardClick,
-  isFavorite,
-  onFavoriteToggle,
 }) => {
-  const MainStore = useContext(MainStoreContext);
+  const ProductStore = useContext(ProductStoreContext);
+  const UserStore = useContext(UserStoreContext);
   const [userRating, setUserRating] = useState<number>(0);
 
   useEffect(() => {
     // Retrieve the rating from localStorage when component mounts
-    const savedRating = localStorage.getItem(`rating-${menuItem.name}`);
+    const savedRating = localStorage.getItem(`rating-${menuItem._id}`);
     if (savedRating) {
       setUserRating(Number(savedRating));
     }
-  }, [menuItem.name]);
+  }, [menuItem._id]);
 
-  const addToCart = (item: MenuItem) => {
-    MainStore.setCartCount(MainStore.cartCount + 1);
+  useEffect(() => {
+    // Fetch user favorite status when component mounts
+    if (UserStore.isLoggedin) {
+      UserStore.fetchFavoriteProducts(UserStore.user?.id); // Ensure the favorite products are fetched and updated
+    }
+  }, [UserStore.isLoggedin]);
+
+  const addToCart = (item: Product) => {
     const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
     const existingItem = cartItems.find(
-      (cartItem: MenuItem) => cartItem.name === item.name
+      (cartItem: Product) => cartItem._id === item._id
     );
     if (existingItem) {
       existingItem.quantity += 1;
@@ -58,16 +53,17 @@ const MenuCard: React.FC<MenuCardProps> = ({
 
   const handleFavoriteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    onFavoriteToggle(menuItem);
+    UserStore.toggleFavorite(menuItem._id, UserStore.user?.id); // Toggle favorite using the store method
   };
 
   const handleRatingChange = (newRating: number) => {
     setUserRating(newRating);
-    // Save the new rating to local storage
-    localStorage.setItem(`rating-${menuItem.name}`, newRating.toString());
-    // Update the rating in your data store or backend here
-    // For example, you might want to send a request to your server
-    // to update the rating for this menuItem.
+    localStorage.setItem(`rating-${menuItem._id}`, newRating.toString());
+    ProductStore.addReview(menuItem._id, {
+      user_id: UserStore.user?.id,
+      rating: newRating,
+      review: "", // Add a review text if needed
+    });
   };
 
   return (
@@ -84,16 +80,18 @@ const MenuCard: React.FC<MenuCardProps> = ({
                 height={250}
                 alt={menuItem.name}
               />
-              <button
-                className="absolute top-2 right-2 text-2xl"
-                onClick={handleFavoriteClick}
-              >
-                {isFavorite ? (
-                  <AiFillHeart className="text-red-500" />
-                ) : (
-                  <AiOutlineHeart className="text-themeYellow" />
-                )}
-              </button>
+              {UserStore.isLoggedin && (
+                <button
+                  className="absolute top-2 right-2 text-2xl"
+                  onClick={handleFavoriteClick}
+                >
+                  {UserStore.favoriteProductIds.has(menuItem._id) ? (
+                    <AiFillHeart className="text-red-500" />
+                  ) : (
+                    <AiOutlineHeart className="text-themeYellow" />
+                  )}
+                </button>
+              )}
             </div>
             <div className="flex flex-col items-center justify-center">
               <Text
@@ -107,9 +105,11 @@ const MenuCard: React.FC<MenuCardProps> = ({
                 themeDivClasses="text-medium font-semibold"
                 content={`$${menuItem.price}`}
               />
-              <div className="mb-1">
-                <StarRating rating={userRating} onRatingChange={handleRatingChange} />
-              </div>
+              {UserStore.isLoggedin && (
+                <div className="mb-1">
+                  <StarRating rating={userRating} onRatingChange={handleRatingChange} />
+                </div>
+              )}
             </div>
             <div className="flex w-full justify-center">
               <button

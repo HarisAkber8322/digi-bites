@@ -7,9 +7,6 @@ import CompleteMenu from "@/components/ClientComponent/OtherComponents/CompleteM
 import CategorySlider from "@/components/ClientComponent/OtherComponents/CategorySlider";
 
 const App = () => {
-  const handleCardClick = (menuItem: any) => {
-    console.log("Card clicked:", menuItem);
-  };
   return (
     <>
       <div className="mt-[28px] w-full md:w-[1180px] m-auto">
@@ -27,7 +24,7 @@ const App = () => {
         <CardGrid />
       </div>
       <div className="w-full md:w-[1180px] m-auto py-[28px]">
-        <CompleteMenu handleCardClick={handleCardClick} />
+        <CompleteMenu />
       </div>
     </>
   );

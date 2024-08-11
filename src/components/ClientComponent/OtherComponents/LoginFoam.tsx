@@ -17,8 +17,8 @@ const LoginForm = () => {
   const { isLoggedin, handleLogin } = UserStore;
   const [showPassword, setShowPassword] = useState(false);
   const initialValues = {
-    email: UserStore.user.email,
-    password: UserStore.user.password,
+    email: UserStore.user?.email,
+    password: UserStore.user?.password,
   };
 
   const validationSchema = Yup.object().shape({
@@ -27,11 +27,11 @@ const LoginForm = () => {
   });
 
   const handleSubmit = async (
-    values: { email: string; password: string },
+    user: { email: string; password: string },
     { setSubmitting }: any
   ) => {
     try {
-      await handleLogin(values);
+      await handleLogin(user);
       if (UserStore.isLoggedin) {
         console.log("Login successful");
       } else {
@@ -146,7 +146,7 @@ const LoginForm = () => {
                     Sign Up
                   </Link>
                 </div>
-                <div className="mt-6 flex justify-center">
+                {/* <div className="mt-6 flex justify-center">
                   <Button className="w-full py-2 px-4 mb-2 flex justify-center items-center bg-blue-600  rounded-md shadow-sm text-sm font-medium text-gray-700 text-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     <FontAwesomeIcon
                       icon={faFacebookF}
@@ -165,7 +165,7 @@ const LoginForm = () => {
                     />
                     Continue with Google
                   </Button>
-                </div>
+                </div> */}
               </>
             }
           />

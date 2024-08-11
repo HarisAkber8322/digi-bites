@@ -1,53 +1,68 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import Div from "../../components/UI/Div"; // Adjust according to your project structure
-import MenuCard from "../../components/ClientComponent/OtherComponents/MenuCard"; // Adjust according to your project structure
-import Text from "@/components/UI/Text"; // Adjust according to your project structure
+import React, { useContext, useEffect, useState } from "react";
+import Div from "../../components/UI/Div";
+import MenuCard from "../../components/ClientComponent/OtherComponents/MenuCard";
+import Text from "@/components/UI/Text";
+import ProductStoreContext, { Product } from "@/store/ProductStore";
+import UserStoreContext from "@/store/UserStore";
+import { observer } from "mobx-react";
 
 const FavoritePage: React.FC = () => {
-  const [favorites, setFavorites] = useState<any[]>(() => {
-    // Retrieve favorites from local storage or initialize as empty
-    const savedFavorites = localStorage.getItem("favorites");
-    return savedFavorites ? JSON.parse(savedFavorites) : [];
-  });
+  const ProductStore = useContext(ProductStoreContext);
+  const UserStore = useContext(UserStoreContext);
+  const [favorites, setFavorites] = useState<Product[]>([]);
 
-  const handleFavoriteToggle = (menuItem: any) => {
-    setFavorites((prevFavorites) => {
-      const isFavorite = prevFavorites.some(
-        (item) => item.name === menuItem.name,
-      );
-      const updatedFavorites = isFavorite
-        ? prevFavorites.filter((item) => item.name !== menuItem.name)
-        : [...prevFavorites, menuItem];
+  useEffect(() => {
+    if (UserStore.isLoggedin) {
+      UserStore.fetchFavoriteProducts(UserStore.user?.id);
+    }
+  }, [UserStore.isLoggedin, UserStore.user?.id]);
 
-      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-      return updatedFavorites;
-    });
-  };
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      if (UserStore.isLoggedin) {
+        const favoriteProductIdsArray = Array.from(UserStore.favoriteProductIds);
+
+        // Fetch products by ID
+        const favoriteProducts = await Promise.all(
+          favoriteProductIdsArray.map(async (favProductId: string) => {
+            const product = await ProductStore.fetchProductById(favProductId);
+            return product;
+          })
+        );
+
+        // Filter out any null values and update state
+        const validProducts = favoriteProducts.filter((product): product is Product => product !== null);
+        setFavorites(validProducts);
+      }
+    };
+
+    fetchFavorites();
+  }, [UserStore.favoriteProductIds, UserStore.isLoggedin, ProductStore]);
 
   return (
     <Div
       lightColor="bgGrey"
       darkColor="pepperBlack:"
-      themeDivClasses={"m-auto w-[1180px]"}
+      themeDivClasses="m-auto w-[1180px]"
       content={
         <div className="mt-7">
           <Text
-            content={
-              <h2 className="text-2xl font-bold mb-4">Favorite Items</h2>
-            }
+            content={<h2 className="text-2xl font-bold mb-4">Favorite Items</h2>}
             themeDivClasses=""
           />
           <div className="grid grid-cols-5 gap-4">
-            {favorites.map((menuItem, index) => (
-              <MenuCard
-                key={index}
-                menuItem={menuItem}
-                handleCardClick={() => {}}
-                isFavorite={true}
-                onFavoriteToggle={handleFavoriteToggle}
-              />
-            ))}
+            {favorites.length > 0 ? (
+              favorites.map((menuItem) => (
+                <MenuCard
+                  key={menuItem._id}
+                  menuItem={menuItem}
+                  handleCardClick={() => { }}
+                />
+              ))
+            ) : (
+              <p>No favorite products found.</p>
+            )}
           </div>
         </div>
       }
@@ -55,4 +70,4 @@ const FavoritePage: React.FC = () => {
   );
 };
 
-export default FavoritePage;
+export default observer(FavoritePage);

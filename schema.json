@@ -1,0 +1,31 @@
+// Products
+{
+  "_id": { "$oid": "60bd460e5d0ad73e74a58303" },
+  "name": "",
+  "price": 1,
+  "description": "",
+  "category": "",
+  "image": "",
+  "stock": 4,
+  "favorites": [
+    {
+      "user_id": { "$oid": "60bd460e5d0ad73e74a58303" },
+      "favorite": true
+    },
+    {
+      "user_id": { "$oid": "60bd460e5d0ad73e74a58303" },
+      "favorite": true
+    }
+  ],
+  "reviews": [
+    {
+      "user_id": { "$oid": "60bd460e5d0ad73e74a58303" },
+      "rating": 5,
+      "review": "Perfect snack!"
+    }
+  ],
+  "average_rating": 5,
+  "ratings_count": 5,
+  "created_at": "Date",
+  "updated_at": "Date"
+}
