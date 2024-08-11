@@ -17,10 +17,10 @@ const LoginForm = () => {
   const { isLoggedin, handleLogin } = UserStore;
   const [showPassword, setShowPassword] = useState(false);
   const initialValues = {
-    email: UserStore.user?.email,
-    password: UserStore.user?.password,
+    email: UserStore.user?.email || "",
+    password: UserStore.user?.password || "",
   };
-
+  
   const validationSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email address").required("Required"),
     password: Yup.string().required("Required"),
