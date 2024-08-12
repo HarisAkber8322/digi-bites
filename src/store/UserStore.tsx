@@ -53,6 +53,18 @@ class UserStore {
       console.error("Error loading users:", error);
     }
   }
+
+  async getUserById(id: string | undefined) {
+    try {
+      const response = await axios.get(`http://localhost:3001/api/users/${id}`);
+      if (response.status === 200) {
+        return response.data
+      }
+    } catch (error) {
+      console.error("Error fetching User By id:", error);
+    }
+  }
+
   handleLogin = async (user: { email: string; password: string }) => {
     try {
       const response = await axios.post("http://localhost:3001/api/auth/login", user);

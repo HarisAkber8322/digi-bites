@@ -1,39 +1,67 @@
-"use client";
+// components/TopRatedItems.tsx
 
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
-import StarRating from "../../ClientComponent/OtherComponents/StarRating";
-import { MenuItem } from "../../../utills/constants";
 import Div from "../../UI/Div";
 import Text from "../../UI/Text";
+import ProductStoreContext from "@/store/ProductStore";
+import { Product } from "@/store/ProductStore"; // Adjust the import path as needed
+import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStarHalfAlt,  faStar as faSolidStar  } from "@fortawesome/free-solid-svg-icons";
+import { faStar as faRegularStar } from "@fortawesome/free-regular-svg-icons";
 
 interface TopRatedItemsProps {
-  items: MenuItem[];
+  showAll: boolean;
 }
 
-const TopRatedItems: React.FC<TopRatedItemsProps> = ({ items }) => {
-  const [topRatedItems, setTopRatedItems] = useState<MenuItem[]>([]);
-  const [showAll, setShowAll] = useState(false);
+const TopRatedItems: React.FC<TopRatedItemsProps> = ({ showAll }) => {
+  const ProductStore = useContext(ProductStoreContext);
+  const [topRatedItems, setTopRatedItems] = useState<Product[]>([]);
 
   useEffect(() => {
-    // Retrieve ratings from local storage
-    const itemsWithRatings = items.map((item) => {
-      const storedRating = Number(localStorage.getItem(`rating-${item.name}`)) || 0;
-      console.log(`Item: ${item.name}, Stored Rating: ${storedRating}`); // Debugging line
-      return {
-        ...item,
-        rating: storedRating || item.rating || 0,
-      };
-    });
+    const fetchProducts = async () => {
+      await ProductStore.fetchProducts(); // Fetch products
+      const itemsWithRatings = ProductStore.products.map((item) => {
+        // Calculate the average rating
+        const totalRating = item.ratings.reduce((acc, rating) => acc + rating.rating, 0);
+        const averageRating = item.ratings.length > 0 ? totalRating / item.ratings.length : 0;
 
-    // Sort items by rating in descending order
-    const sortedItems = itemsWithRatings
-      .sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0))
-      .slice(0, showAll ? undefined : 6); // Display top 8 or all items
+        return {
+          ...item,
+          average_rating: averageRating,
+          ratings_count: item.ratings.length,
+        };
+      });
 
-    setTopRatedItems(sortedItems);
-  }, [items, showAll]);
+      // Sort items by rating in descending order
+      const sortedItems = itemsWithRatings
+        .sort((a, b) => (b.average_rating ?? 0) - (a.average_rating ?? 0))
+        .slice(0, showAll ? undefined : 6); // Display top 6 or all items
+
+      setTopRatedItems(sortedItems);
+    };
+
+    fetchProducts();
+  }, [ProductStore, showAll]);
+
+  const renderStars = (rating: number) => {
+    const fullStars = Math.floor(rating);
+    const halfStar = rating % 1 >= 0.5;
+    const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+
+    return (
+      <div className="flex items-center text-[10px]">
+        {[...Array(fullStars)].map((_, index) => (
+          <FontAwesomeIcon icon={faSolidStar}  key={index} className="text-themeYellow"  />
+        ))}
+        {halfStar && <FontAwesomeIcon icon={faStarHalfAlt} className="text-themeYellow " />} {/* No half-star icon */}
+        {[...Array(emptyStars)].map((_, index) => (
+          <FontAwesomeIcon icon={faRegularStar}  key={index} className="text-themeYellow"  />
+        ))}
+      </div>
+    );
+  };
 
   return (
     <Div
@@ -61,7 +89,7 @@ const TopRatedItems: React.FC<TopRatedItemsProps> = ({ items }) => {
                   {topRatedItems.length > 0 ? (
                     topRatedItems.map((item) => (
                       <Div
-                        key={item.name}
+                        key={item._id}
                         themeDivClasses="rounded-lg"
                         lightColor="bg-ExtraLightGray"
                         darkColor="bg-black"
@@ -82,11 +110,11 @@ const TopRatedItems: React.FC<TopRatedItemsProps> = ({ items }) => {
                                 <h3 className="text-xs font-medium">
                                   {item.name}
                                 </h3>
-                                <div className="font-light text-[10px]">
-                                  <StarRating
-                                    rating={item.rating ?? 0}
-                                    onRatingChange={() => {}}
-                                  />
+                                <div className="flex items-center">
+                                  {renderStars(item.average_rating ?? 0)}
+                                  <span className="text-xs font-light ml-2">
+                                    ({item.ratings_count})
+                                  </span>
                                 </div>
                               </div>
                             </div>

@@ -570,7 +570,9 @@ import {
   faFolderTree,
   faDiamond,
   faDotCircle,
-  faCircle
+  faCircle,
+  faPlusCircle,
+  faStarHalfAlt
 } from "@fortawesome/free-solid-svg-icons";
 
 
@@ -692,15 +694,9 @@ export const sidebarItems: SidebarCategory[] = [
   {
     category: "Product Management",
     items: [
-      {
-        title: "Product Setup",
-        link: "#",
-        icon: faDiamond,
-        subItems: [
-          { title: "Product Reviews", link: "/admin/allratedproducts", icon: faCircle},
-          { title: "Manage Products", link: "/admin/products", icon: faCircle },
-        ],
-      },
+      { title: "Products Listing", link: "/admin/products", icon: faCircle },
+      { title: "Products Add", link: "/admin/product-add", icon: faPlusCircle },
+      { title: "Product Reviews", link: "/admin/product-reviews", icon: faStarHalfAlt},
     ],
   },
   // Add more categories and items as needed

@@ -2,16 +2,13 @@
 import { makeAutoObservable } from "mobx";
 import axios from "axios";
 import React from "react";
+import { useRouter } from "next/router";
 
-export interface Review {
+export interface Ratings {
     user_id: string | undefined;
     rating: number;
-    review: string;
 }
-export interface Favorite {
-    user_id: string | undefined;
-    favorite: boolean;
-}
+
 export interface Product {
     _id: string;
     name: string;
@@ -20,11 +17,14 @@ export interface Product {
     category: string;
     image: string;
     stock: number;
-    reviews: Review[];
-    average_rating: number;
-    ratings_count: number;
-    created_at: Date;
-    updated_at: Date;
+    ratings: Array<{
+        user_id: string;
+        rating: number;
+    }>;
+    created_at: string; // or Date if you prefer
+    updated_at: string; // or Date if you prefer
+    average_rating?: number; // Optional field, as it might be computed
+    ratings_count?: number;
 }
 
 class ProductStore {
@@ -34,10 +34,10 @@ class ProductStore {
     currentPage: number = 1;
     loading: boolean = false;
     error: string | null = null;
+    router: ReturnType<typeof useRouter> | null = null;
     constructor() {
         makeAutoObservable(this);
         this.fetchProducts();
-        // this.fetchUserFavorites();
     }
 
     async fetchProducts(page: number = 1, query: string = "", sortOrder: "asc" | "desc" = "asc") {
@@ -49,8 +49,8 @@ class ProductStore {
                 params: {
                     page,
                     q: query,
-                    sort: sortOrder
-                }
+                    sort: sortOrder,
+                },
             });
 
             this.products = response.data.products;
@@ -73,12 +73,22 @@ class ProductStore {
             const response = await axios.get(`http://localhost:3001/api/products/${productId}`);
             const product = response.data as Product;
 
-            const index = this.products.findIndex(p => p._id === productId);
+            // Calculate average rating if not included in the response
+            if (product.ratings.length > 0) {
+                const totalRating = product.ratings.reduce((acc, rating) => acc + rating.rating, 0);
+                product.average_rating = totalRating / product.ratings.length;
+            } else {
+                product.average_rating = 0;
+            }
+
+            // Update the product list
+            const index = this.products.findIndex((p) => p._id === productId);
             if (index > -1) {
                 this.products[index] = product;
             } else {
                 this.products.push(product);
             }
+
             return product;
         } catch (err) {
             console.error("Error fetching product:", err);
@@ -88,44 +98,45 @@ class ProductStore {
             this.loading = false;
         }
     }
-
-    async addReview(productId: string, review: Review) {
+    async addProduct(product: Omit<Product, "_id">) {
         this.loading = true;
         this.error = null;
-        try {
-            const response = await axios.post(`http://localhost:3001/api/products/${productId}/reviews`, review);
 
-            const index = this.products.findIndex(p => p._id === productId);
-            if (index > -1) {
-                this.products[index].reviews.push(response.data);
-                this.updateProductRating(productId);
+        // Check for duplicates
+        if (this.isProductDuplicate(product.name)) {
+            this.error = "Product with this name already exists.";
+            this.loading = false;
+            return;
+        }
+
+        try {
+            const response = await axios.post("http://localhost:3001/api/products", product);
+
+            const newProduct = response.data as Product;
+            // Add the new product to the store
+            this.products.push(newProduct);
+
+            if (response.status === 201) {
+                this.changePage('/admin/products');
             }
         } catch (err) {
-            console.error("Error adding review:", err);
-            this.error = "Failed to add review";
+            console.error("Error adding product:", err);
+            this.error = "Failed to add product";
         } finally {
             this.loading = false;
         }
     }
 
-    private updateProductRating(productId: string) {
-        const product = this.products.find(p => p._id === productId);
-        if (product) {
-            const totalRatings = product.reviews.reduce((sum, review) => sum + review.rating, 0);
-            const averageRating = product.reviews.length > 0 ? totalRatings / product.reviews.length : 0;
+    isProductDuplicate(name: string): boolean {
+        return this.products.some(product => product.name.toLowerCase() === name.toLowerCase());
+    }
 
-            product.average_rating = averageRating;
-            product.ratings_count = product.reviews.length;
-
-            axios.put(`http://localhost:3001/api/products/${productId}`, {
-                average_rating: averageRating,
-                ratings_count: product.reviews.length
-            }).catch(err => {
-                console.error("Error updating product rating:", err);
-            });
-        }
+    changePage(url: string) {
+        // Implement page redirection logic here, e.g., using `window.location` or a routing library
+        window.location.href = url;
     }
 }
+
 
 const productStore = new ProductStore();
 const ProductStoreContext = React.createContext(productStore);
@@ -140,3 +151,4 @@ const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ children }) 
 
 export default ProductStoreContext;
 export { ProductProvider };
+

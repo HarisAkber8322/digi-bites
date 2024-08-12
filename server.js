@@ -331,23 +331,55 @@ app.prepare().then(() => {
     }
   });
 
+  const { ObjectId } = require("mongodb");
+
   server.get("/api/products/:id", async (req, res) => {
     const { id } = req.params;
 
     try {
-      const db = await connectToDatabase(); // Function to connect to your database
+      const db = await connectToDatabase();
       const productsCollection = db.collection("products");
+      const usersCollection = db.collection("users");
 
-      // Find the product by ID
+      // Fetch the product by ID
       const product = await productsCollection.findOne({
         _id: new ObjectId(id),
       });
+
       if (!product) {
         return res.status(404).json({ error: "Product not found" });
       }
 
-      // Return the product data
-      res.status(200).json(product);
+      // Fetch user details for each rating
+      const ratingsWithUserDetails = await Promise.all(
+        product.ratings.map(async (rating) => {
+          try {
+            const userId = rating.user_id; // Assuming user_id is a plain ObjectId
+
+            // Check if userId is a valid ObjectId
+            if (!ObjectId.isValid(userId)) {
+              return { ...rating, user_id: "Invalid User ID" };
+            }
+
+            const user = await usersCollection.findOne({
+              _id: new ObjectId(userId),
+            });
+
+            return {
+              ...rating,
+              user_id: user ? `${user.fname} ${user.lname}` : "Unknown User",
+            };
+          } catch (userError) {
+            console.error(
+              `Error fetching user for rating ${rating._id}:`,
+              userError
+            );
+            return { ...rating, user_id: "Unknown User" };
+          }
+        })
+      );
+
+      res.status(200).json({ ...product, ratings: ratingsWithUserDetails });
     } catch (error) {
       console.error("Error fetching product:", error);
       res.status(500).json({ error: "Internal server error" });
@@ -390,103 +422,42 @@ app.prepare().then(() => {
       return res.status(500).json({ message: "Internal server error" });
     }
   });
-
-  server.post("/api/products/:id/reviews", async (req, res) => {
-    const { id } = req.params;
-    const { user_id, rating, review } = req.body;
-
-    try {
-      const db = await connectToDatabase();
-      const productsCollection = db.collection("products");
-
-      const product = await productsCollection.findOne({
-        _id: new ObjectId(id),
-      });
-      if (!product) {
-        return res.status(404).json({ error: "Product not found" });
-      }
-
-      // Add review
-      const newReview = { user_id, rating, review };
-      await productsCollection.updateOne(
-        { _id: new ObjectId(id) },
-        { $push: { reviews: newReview } }
-      );
-
-      // Update average rating and rating count
-      const totalRatings =
-        product.reviews.reduce((sum, r) => sum + r.rating, 0) + rating;
-      const averageRating = (
-        totalRatings /
-        (product.reviews.length + 1)
-      ).toFixed(2);
-
-      await productsCollection.updateOne(
-        { _id: new ObjectId(id) },
-        {
-          $set: {
-            average_rating: averageRating,
-            ratings_count: product.reviews.length + 1,
-          },
-        }
-      );
-
-      res.status(201).json(newReview);
-    } catch (error) {
-      console.error("Error adding review:", error);
-      res.status(500).json({ error: "Internal server error" });
-    }
-  });
-
-  server.put("/api/products/:id/ratings", async (req, res) => {
-    const { id } = req.params;
-    const { user_id, rating } = req.body;
+  server.post("/api/products", async (req, res) => {
+    const {
+      name,
+      price,
+      description,
+      category,
+      image,
+      stock,
+      ratings = [],
+      created_at,
+      updated_at,
+    } = req.body;
 
     try {
       const db = await connectToDatabase();
       const productsCollection = db.collection("products");
 
-      const product = await productsCollection.findOne({
-        _id: new ObjectId(id),
-      });
-      if (!product) {
-        return res.status(404).json({ error: "Product not found" });
-      }
+      // Create a new product object
+      const newProduct = {
+        name,
+        price,
+        description,
+        category,
+        image,
+        stock,
+        ratings,
+        created_at: created_at || new Date(),
+        updated_at: updated_at || new Date(),
+      };
 
-      const existingRating = product.reviews.find((r) => r.user_id === user_id);
-      if (existingRating) {
-        // Update existing rating
-        await productsCollection.updateOne(
-          { _id: new ObjectId(id), "reviews.user_id": user_id },
-          { $set: { "reviews.$.rating": rating } }
-        );
-      } else {
-        // Add new rating
-        await productsCollection.updateOne(
-          { _id: new ObjectId(id) },
-          { $push: { reviews: { user_id, rating, review: "" } } }
-        );
-      }
+      // Insert the new product into the collection
+      const result = await productsCollection.insertOne(newProduct);
 
-      // Recalculate average rating
-      const totalRatings = product.reviews.reduce(
-        (sum, r) => sum + r.rating,
-        0
-      );
-      const averageRating = (totalRatings / product.reviews.length).toFixed(2);
-
-      await productsCollection.updateOne(
-        { _id: new ObjectId(id) },
-        {
-          $set: {
-            average_rating: averageRating,
-          },
-        }
-      );
-
-      res.status(200).json({ message: "Rating updated successfully" });
+      res.status(201).json({ _id: result.insertedId, ...newProduct });
     } catch (error) {
-      console.error("Error updating rating:", error);
+      console.error("Error adding product:", error);
       res.status(500).json({ error: "Internal server error" });
     }
   });
@@ -579,6 +550,27 @@ app.prepare().then(() => {
     } catch (error) {
       console.error("Error fetching favorite product IDs:", error);
       return res.status(500).json({ message: "Internal server error" });
+    }
+  });
+  server.get("/api/products/:id", async (req, res) => {
+    try {
+      const product = await Product.findById(req.params.id);
+      if (!product) {
+        return res.status(404).json({ message: "Product not found" });
+      }
+
+      // Calculate average rating
+      const averageRating =
+        product.ratings.reduce((acc, rating) => acc + rating.rating, 0) /
+          product.ratings.length || 0;
+
+      // Respond with product details and average rating
+      res.json({
+        ...product.toObject(),
+        average_rating: averageRating,
+      });
+    } catch (err) {
+      res.status(500).json({ message: "Server error" });
     }
   });
 
