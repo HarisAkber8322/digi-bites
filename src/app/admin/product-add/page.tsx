@@ -45,30 +45,30 @@ const AddProductPage: React.FC = () => {
         return;
       }
 
-      try {
-        await ProductStore.addProduct({
-          ...values,
-          ratings: [],
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        });
-        // Reset the form or redirect to another page
-        formik.resetForm();
-      } catch (err) {
-        console.error("Failed to add product", err);
-      }
-    },
-  });
-  const [image, setImage] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setImage(file);
-      setPreview(URL.createObjectURL(file));
-    }
-  };
-
+            try {
+                await ProductStore.addProduct({
+                    ...values,
+                    ratings: [],
+                    created_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString(),
+                    recommended: false
+                });
+                // Reset the form or redirect to another page
+                formik.resetForm();
+            } catch (err) {
+                console.error("Failed to add product", err);
+            }
+        }
+    });
+    const [image, setImage] = useState<File | null>(null);
+    const [preview, setPreview] = useState<string | null>(null);
+    const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+          setImage(file);
+          setPreview(URL.createObjectURL(file));
+        }
+      };
   return (
     <div className="container mx-auto p-6">
       <Text

@@ -1,5 +1,5 @@
 "use client";
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import axios from "axios";
 import React from "react";
 import { useRouter } from "next/router";
@@ -25,9 +25,14 @@ export interface Product {
     updated_at: string; // or Date if you prefer
     average_rating?: number; // Optional field, as it might be computed
     ratings_count?: number;
+    recommended: false
 }
 
 class ProductStore {
+    favorites: any;
+    toggleFavorite(product: Product) {
+      throw new Error("Method not implemented.");
+    }
     products: Product[] = [];
     totalCount: number = 0;
     totalPages: number = 0;
@@ -35,6 +40,7 @@ class ProductStore {
     loading: boolean = false;
     error: string | null = null;
     router: ReturnType<typeof useRouter> | null = null;
+    product: any;
     constructor() {
         makeAutoObservable(this);
         this.fetchProducts();
@@ -135,6 +141,56 @@ class ProductStore {
         // Implement page redirection logic here, e.g., using `window.location` or a routing library
         window.location.href = url;
     }
+    async deleteProduct(productId: string) {
+        try {
+            const response = await axios.delete(`http://localhost:3001/api/products/${productId}`);
+
+            if (response.status === 200) {
+                // Directly update the observable state
+                this.products = this.products.filter(product => product._id !== productId);
+                console.log("Product deleted successfully");
+            } else {
+                console.error("Failed to delete product");
+            }
+        } catch (err) {
+            console.error("Error deleting product:", err);
+        }
+    }
+    async toggleRecommended(productId: string) {
+        try {
+            const response = await axios.patch(`http://localhost:3001/api/products/${productId}/recommended`);
+            if (response.status === 200) {
+                const updatedProduct = response.data.product;
+                console.log("Updated Product from Server:", updatedProduct); // Debug log
+                runInAction(() => {
+                    this.products = this.products.map(product =>
+                        product._id === productId ? updatedProduct : product
+                    );
+                });
+                console.log("Product recommendation status updated successfully");
+            } else {
+                console.error("Failed to update product recommendation status");
+            }
+        } catch (err) {
+            console.error("Error updating product recommendation status:", err);
+        }
+    }
+    async fetchProductBySlug(slug: string) {
+        try {
+            const response = await axios.get(`/api/products/slug/${slug}`);
+            runInAction(() => {
+                this.product = response.data;
+            });
+        } catch (error) {
+            console.error("Error fetching product by slug:", error);
+            runInAction(() => {
+                this.product = null;
+            });
+        }
+    }
+
+
+
 }
 
 

@@ -694,7 +694,7 @@ export const sidebarItems: SidebarCategory[] = [
   {
     category: "Product Management",
     items: [
-      { title: "Products Listing", link: "/admin/products", icon: faCircle },
+      { title: "Products Listing", link: "/admin/product-listing", icon: faCircle },
       { title: "Products Add", link: "/admin/product-add", icon: faPlusCircle },
       { title: "Product Reviews", link: "/admin/product-reviews", icon: faStarHalfAlt},
     ],
