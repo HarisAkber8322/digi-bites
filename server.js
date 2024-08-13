@@ -385,7 +385,6 @@ app.prepare().then(() => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
-
   server.post("/api/products/:id/favorite", async (req, res) => {
     const userId = req.body.userId; // Assuming userId is passed in the request body
     const productId = req.params.id;
@@ -450,6 +449,7 @@ app.prepare().then(() => {
         ratings,
         created_at: created_at || new Date(),
         updated_at: updated_at || new Date(),
+        recommended: false,
       };
 
       // Insert the new product into the collection
@@ -458,6 +458,97 @@ app.prepare().then(() => {
       res.status(201).json({ _id: result.insertedId, ...newProduct });
     } catch (error) {
       console.error("Error adding product:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+  server.delete("/api/products/:id", async (req, res) => {
+    const { id } = req.params;
+
+    try {
+      const db = await connectToDatabase();
+      const productsCollection = db.collection("products");
+
+      // Validate the ID format
+      if (!ObjectId.isValid(id)) {
+        return res.status(400).json({ error: "Invalid Product ID" });
+      }
+
+      // Attempt to delete the product by ID
+      const result = await productsCollection.deleteOne({
+        _id: new ObjectId(id),
+      });
+
+      if (result.deletedCount === 0) {
+        // No product found with the given ID
+        return res.status(404).json({ error: "Product not found" });
+      }
+
+      // Successfully deleted
+      res.status(200).json({ message: "Product deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting product:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+  server.patch("/api/products/:id/recommended", async (req, res) => {
+    const { id } = req.params;
+
+    try {
+      const db = await connectToDatabase();
+      const productsCollection = db.collection("products");
+
+      // Fetch the product by ID
+      const product = await productsCollection.findOne({
+        _id: new ObjectId(id),
+      });
+
+      if (!product) {
+        return res.status(404).json({ error: "Product not found" });
+      }
+
+      // Toggle the recommended status
+      const updatedProduct = await productsCollection.findOneAndUpdate(
+        { _id: new ObjectId(id) },
+        {
+          $set: {
+            recommended: !product.recommended,
+            updated_at: new Date(), // Update the timestamp
+          },
+        },
+        { returnOriginal: false } // Return the updated document
+      );
+
+      res
+        .status(200)
+        .json({
+          message: "Product recommendation status updated",
+          product: updatedProduct.value,
+        });
+    } catch (error) {
+      console.error("Error updating product recommendation status:", error);
+      res.status(500).json({
+        message: "Error updating product recommendation status",
+        error: error.message,
+      });
+    }
+  });
+  server.get("/api/products/slug/:slug", async (req, res) => {
+    const { slug } = req.params;
+
+    try {
+      const db = await connectToDatabase();
+      const productsCollection = db.collection("products");
+
+      // Fetch the product by slug
+      const product = await productsCollection.findOne({ slug: slug });
+
+      if (!product) {
+        return res.status(404).json({ error: "Product not found" });
+      }
+
+      res.status(200).json(product);
+    } catch (error) {
+      console.error("Error fetching product by slug:", error);
       res.status(500).json({ error: "Internal server error" });
     }
   });

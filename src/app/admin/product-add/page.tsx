@@ -41,7 +41,8 @@ const AddProductPage: React.FC = () => {
                     ...values,
                     ratings: [],
                     created_at: new Date().toISOString(),
-                    updated_at: new Date().toISOString()
+                    updated_at: new Date().toISOString(),
+                    recommended: false
                 });
                 // Reset the form or redirect to another page
                 formik.resetForm();
