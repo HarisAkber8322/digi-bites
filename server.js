@@ -322,7 +322,6 @@ app.prepare().then(() => {
       return res.status(500).json({ message: "Internal server error" });
     }
   });
-
   server.get("/api/products", async (req, res) => {
     const searchQuery = req.query.q || "";
     const sortOrder = req.query.sort || "asc";
@@ -427,7 +426,6 @@ app.prepare().then(() => {
         ratings,
         created_at: created_at || new Date(),
         updated_at: updated_at || new Date(),
-        recommended: false,
       };
 
       // Insert the new product into the collection
