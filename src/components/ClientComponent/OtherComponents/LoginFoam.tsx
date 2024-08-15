@@ -8,19 +8,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { observer } from "mobx-react";
 import Link from "next/link";
 import { Button } from "react-bootstrap";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import Div from "@/components/UI/Div";
+import ProductStoreContext from "@/store/ProductStore";
 
 const LoginForm = () => {
   const UserStore = useContext(UserStoreContext);
+  const ProductStore = useContext(ProductStoreContext);
   const { isLoggedin, handleLogin } = UserStore;
   const [showPassword, setShowPassword] = useState(false);
   const initialValues = {
     email: UserStore.user?.email || "",
     password: UserStore.user?.password || "",
   };
-  
+
   const validationSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email address").required("Required"),
     password: Yup.string().required("Required"),
@@ -47,6 +49,10 @@ const LoginForm = () => {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
+  useEffect(() => {
+
+  }, [ProductStore])
 
   return (
     <Formik

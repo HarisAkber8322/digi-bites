@@ -12,9 +12,10 @@ const Menu: React.FC = () => {
   const ProductStore = useContext(ProductStoreContext);
   const UserStore = useContext(UserStoreContext);
 
-  useEffect(() => {
+  useEffect( () => {
     ProductStore.fetchProducts(); // Fetch products when component mounts
-  }, [ProductStore]);
+    UserStore.fetchFavoriteProducts(UserStore.user?.id)
+  }, [ProductStore, UserStore]);
 
   const handleCardClick = (menuItem: Product) => {
     // Handle card click if needed
@@ -33,11 +34,11 @@ const Menu: React.FC = () => {
               <>
                 <h2 className="text-2xl font-bold">{category}</h2>
                 <div className="flex justify-end">
-                  <Link className="flex items-center bg-themeYellow text-white p-2 rounded-lg"  href={`/category/${category.toLowerCase()}`}>
-                    
-                      <FaArrowRight className="" /> {/* Arrow icon */}
-                      
-                    
+                  <Link className="flex items-center bg-themeYellow text-white p-2 rounded-lg" href={`/category/${category.toLowerCase()}`}>
+
+                    <FaArrowRight className="" /> {/* Arrow icon */}
+
+
                   </Link>
                 </div>
               </>
