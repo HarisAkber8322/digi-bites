@@ -93,7 +93,7 @@ const AddProductPage: React.FC = () => {
                     <div className="flex justify-center">
                       <label>
                         <Image
-                          src={preview || "/images/admin.png"}
+                          src={preview || "/images/selectPhoto.jpg"}
                           alt="Profile"
                           className="w-60 h-60 rounded object-cover hover:cursor-pointer border-2 border-white duration-200 hover:border-red-500"
                         />
