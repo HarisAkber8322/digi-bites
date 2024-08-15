@@ -19,7 +19,7 @@ const RatedProductsPage: React.FC = () => {
     };
     useEffect(() => {
         ProductStore.fetchProducts();
-    }, [ProductStore.products])
+    }, [ProductStore])
     return (
         <Div
             themeDivClasses="pb-20"

@@ -4,7 +4,7 @@ import Slider from "@/components/ClientComponent/OtherComponents/slider";
 import { observer } from "mobx-react";
 import dynamic from "next/dynamic";
 import CompleteMenu from "@/components/ClientComponent/OtherComponents/CompleteMenu";
-import CategorySlider from "@/components/ClientComponent/OtherComponents/CategorySlider";
+// import CategorySlider from "@/components/ClientComponent/OtherComponents/CategorySlider";
 
 const App = () => {
   return (
@@ -12,9 +12,9 @@ const App = () => {
       <div className="mt-[28px] w-full md:w-[1180px] m-auto">
         <Slider />
       </div>
-      <div className="w-full md:w-[1180px] m-auto">
+   {/* /   <div className="w-full md:w-[1180px] m-auto">
         <CategorySlider />
-      </div>
+      </div> */}
       {/* 
           <div>
             <SetMenuComponent/>

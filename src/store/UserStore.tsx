@@ -33,7 +33,7 @@ class UserStore {
 
   constructor() {
     makeAutoObservable(this);
-    this.loadUsers();
+    // this.loadUsers();
     this.checkLoginState();
     this.setUser(this.user);
     this.fetchFavoriteProducts(this.user?.id)
@@ -45,14 +45,14 @@ class UserStore {
   setUser(user: User | null) {
     this.user = user;
   }
-  async loadUsers() {
-    try {
-      const response = await axios.get("http://localhost:3001/api/users");
-      this.userList = response.data.users;
-    } catch (error) {
-      console.error("Error loading users:", error);
-    }
-  }
+  // async loadUsers() {
+  //   try {
+  //     const response = await axios.get("http://localhost:3001/api/users");
+  //     this.userList = response.data.users;
+  //   } catch (error) {
+  //     console.error("Error loading users:", error);
+  //   }
+  // }
 
   async getUserById(id: string | undefined) {
     try {

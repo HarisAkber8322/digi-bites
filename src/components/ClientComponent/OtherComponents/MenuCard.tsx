@@ -115,7 +115,7 @@ const MenuCard: React.FC<MenuCardProps> = ({ menuItem, handleCardClick }) => {
               darkColor="text-themeYellow"
               lightColor="text-themeYellow"
               themeDivClasses="text-medium font-semibold"
-              content={`$${menuItem.price}`}
+              content={`Rs ${menuItem.price}`}
             />
             <div className="flex items-center mb-1">
               {renderStars(averageRating)}

@@ -14,20 +14,6 @@ interface Users {
   social_links: [{ name: string; link: string }];
 }
 
-interface Orders {
-  items: [
-    {
-      name: string,
-      price: number,
-      quantity: number,
-      funOption?: any,
-      addOns?: any
-    }
-  ],
-  total: number;
-  status: string;
-}
-
 interface Product {
   name: string;
   price: number;
@@ -50,7 +36,7 @@ class AppStore {
   cartCount = 0;
   isLoggedin = false;
   router: any;
-  orderList: Orders[] = [];
+ 
   products: Product[] = [];
 
   setIsLoggedIn = (value: boolean) => {
@@ -66,14 +52,7 @@ class AppStore {
     }
   }
 
-  async loadOrders() {
-    try {
-      const response = await axios.get("http://localhost:3001/api/orders");
-      this.orderList = response.data.orders;
-    } catch (error) {
-      console.error("Error loading orders:", error);
-    }
-  }
+ 
 
   async loadProducts() {
     try {

@@ -44,14 +44,14 @@ const FavoritePage: React.FC = () => {
     <Div
       lightColor="bgGrey"
       darkColor="pepperBlack:"
-      themeDivClasses="m-auto w-[1180px]"
+      themeDivClasses="m-auto w-[1180px] "
       content={
         <div className="mt-7">
           <Text
             content={<h2 className="text-2xl font-bold mb-4">Favorite Items</h2>}
             themeDivClasses=""
           />
-          <div className="grid grid-cols-5 gap-4">
+          <div className="grid grid-cols-5 gap-4 pb-54">
             {favorites.length > 0 ? (
               favorites.map((menuItem) => (
                 <MenuCard

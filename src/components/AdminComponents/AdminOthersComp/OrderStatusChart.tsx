@@ -22,37 +22,37 @@ const OrderStatusChart: React.FC = () => {
   const [totalOrders, setTotalOrders] = useState(0);
 
   useEffect(() => {
-    const fetchOrders = async () => {
-      await mainStore.loadOrders();
-      const orders = mainStore.orderList;
+    // const fetchOrders = async () => {
+    //   await mainStore.loadOrders();
+    //   const orders = mainStore.orderList;
 
-      // Process the orders to get the status distribution
-      const statusCounts = orders.reduce((acc, order) => {
-        acc[order.status] = (acc[order.status] || 0) + 1;
-        return acc;
-      }, {} as Record<string, number>);
+    //   // Process the orders to get the status distribution
+    //   const statusCounts = orders.reduce((acc, order) => {
+    //     acc[order.status] = (acc[order.status] || 0) + 1;
+    //     return acc;
+    //   }, {} as Record<string, number>);
 
-      // Prepare the data for the chart
-      const labels = Object.keys(statusCounts);
-      const data = Object.values(statusCounts);
-      const colors = ['#FF6384', '#FFCE56', '#36A2EB', '#FF0000', '#FF00FF', '#000000'];
-      const hoverColors = ['#FF6384', '#FFCE56', '#36A2EB', '#FF0000', '#FF00FF', '#000000'];
+    //   // Prepare the data for the chart
+    //   const labels = Object.keys(statusCounts);
+    //   const data = Object.values(statusCounts);
+    //   const colors = ['#FF6384', '#FFCE56', '#36A2EB', '#FF0000', '#FF00FF', '#000000'];
+    //   const hoverColors = ['#FF6384', '#FFCE56', '#36A2EB', '#FF0000', '#FF00FF', '#000000'];
 
-      setStatusData({
-        labels,
-        datasets: [
-          {
-            data,
-            backgroundColor: colors,
-            hoverBackgroundColor: hoverColors,
-          },
-        ],
-      });
+    //   setStatusData({
+    //     labels,
+    //     datasets: [
+    //       {
+    //         data,
+    //         backgroundColor: colors,
+    //         hoverBackgroundColor: hoverColors,
+    //       },
+    //     ],
+    //   });
 
-      setTotalOrders(orders.length);
-    };
+    //   setTotalOrders(orders.length);
+    // };
 
-    fetchOrders();
+    // fetchOrders();
   }, [mainStore]);
 
   const getPieOptions: () => ChartOptions<'pie'> = () => ({
@@ -81,21 +81,20 @@ const OrderStatusChart: React.FC = () => {
       darkColor="bg-pepperBlack"
       content={
         <>
-          {/* Upper Corner Text */}
-          <Text
-            themeDivClasses="text-lg p-4 w-full flex flex-row items-center font-medium mb-2 gap-2 border-b shadow border-ExtraLightGray"
-            content="Order Status Statistics"
-          />
+          {/* <div>
+            <Text
+              themeDivClasses="text-lg p-4 w-full flex flex-row items-center font-medium mb-2 gap-2 border-b shadow border-ExtraLightGray"
+              content="Order Status Statistics"
+            />
 
-          {/* Pie Chart Display */}
-          <div className="h-[330px] w-[330px] pl-4 pr-4">
-            <Pie data={statusData} options={getPieOptions()} />
-          </div>
+            <div className="h-[330px] w-[330px] pl-4 pr-4">
+              <Pie data={statusData} options={getPieOptions()} />
+            </div>
 
-          {/* Total Orders Display */}
-          <div className="absolute bottom-4 left-4 text-center pl-4 pr-4">
-            <Text themeDivClasses="text-2xl font-bold" content={`${totalOrders} Orders`} />
-          </div>
+            <div className="absolute bottom-4 left-4 text-center pl-4 pr-4">
+              <Text themeDivClasses="text-2xl font-bold" content={`${totalOrders} Orders`} />
+            </div>
+          </div> */}
         </>
       }
     />

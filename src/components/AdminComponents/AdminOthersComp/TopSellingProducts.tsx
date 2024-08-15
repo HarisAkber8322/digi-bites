@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import StarRating from "../../ClientComponent/OtherComponents/StarRating";
+
 import { MenuItem } from "../../../utills/constants"; // Adjust the import path
 import Div from "../../UI/Div";
 import Text from "../../UI/Text";
@@ -76,14 +76,10 @@ const TopRatedItems: React.FC<TopRatedItemsProps> = ({ items }) => {
                               <h3 className="text-xs font-medium">
                                 {item.name}
                               </h3>
-                              <div className="font-light text-[10px]">
-                                <StarRating
-                                  rating={item.rating ?? 0} // Use default value if undefined
-                                  onRatingChange={() => {}}
-                                />
+                             
                               </div>
                             </div>
-                          </div>
+                         
                         </>
                       }
                     />

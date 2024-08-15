@@ -1,62 +1,64 @@
-// pages/burger.tsx
+// pages/burgers.tsx
 "use client";
-import React, { useState } from "react";
-import Div from "@/components/UI/Div"; // Adjust according to your project structure
-import Text from "@/components/UI/Text"; // Adjust according to your project structure
-import MenuCard from "@/components/ClientComponent/OtherComponents/MenuCard"; // Adjust according to your project structure
-import { menuData } from "@/utills/constants"; // Adjust according to your project structure
+import React, { useContext, useEffect } from "react";
+import Link from "next/link";
+import MenuCard from "../../../components/ClientComponent/OtherComponents/MenuCard";
+import ProductStoreContext, { Product } from "@/store/ProductStore";
+import Text from "@/components/UI/Text";
+import { FaArrowLeft } from "react-icons/fa";
+import { observer } from "mobx-react";
+import Div from "@/components/UI/Div";
 
-const BurgerPage: React.FC = () => {
-  const categoryData = menuData.find(
-    (cat) => cat.category.toLowerCase() === "pizza",
-  );
-  const [favorites, setFavorites] = useState<any[]>(() => {
-    const savedFavorites = localStorage.getItem("favorites");
-    return savedFavorites ? JSON.parse(savedFavorites) : [];
-  });
+const BurgersPage: React.FC = () => {
+  const ProductStore = useContext(ProductStoreContext);
 
-  const handleFavoriteToggle = (menuItem: any) => {
-    setFavorites((prevFavorites) => {
-      const isFavorite = prevFavorites.some(
-        (item) => item.name === menuItem.name,
-      );
-      const updatedFavorites = isFavorite
-        ? prevFavorites.filter((item) => item.name !== menuItem.name)
-        : [...prevFavorites, menuItem];
+  useEffect(() => {
+    ProductStore.fetchProducts(); // Fetch products when component mounts
+  }, [ProductStore]);
 
-      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-      return updatedFavorites;
-    });
+  const handleCardClick = (menuItem: Product) => {
+    // Handle card click if needed
   };
+
+  const burgers = ProductStore.products.filter(
+    (product) => product.category.toLowerCase() === "pizza"
+  );
 
   return (
     <Div
-      lightColor="bg-bgGrey"
-      darkColor="pepperBlack"
-      themeDivClasses={"w-[1180px] m-auto"}
+      lightColor="bgGrey"
+      darkColor="pepperBlack:"
+      themeDivClasses="m-auto w-[1180px] flex flex-col mt-7"
       content={
-        <div className="mt-7">
-          <Text
-            content={<h2 className="text-2xl font-bold mb-4">Pizza</h2>}
-            themeDivClasses=""
-          />
-          <div className="grid grid-cols-6 gap-4">
-            {categoryData?.items.map((menuItem, itemIndex) => (
-              <MenuCard
-                key={itemIndex}
-                menuItem={menuItem}
-                handleCardClick={() => {}}
-                isFavorite={favorites.some(
-                  (item) => item.name === menuItem.name,
-                )}
-                onFavoriteToggle={handleFavoriteToggle}
-              />
-            ))}
+        <>
+          <div className="flex justify-between items-center mb-8 ">
+            <Text
+              content={<h2 className="text-2xl font-bold mb-4 ">Pizza</h2>}
+              themeDivClasses={""}
+            />
+            <Link className="flex items-center justify-center text-white bg-themeYellow p-2 rounded-lg" href="/">
+              <FaArrowLeft className="" /> {/* Arrow icon */}
+             
+            </Link>
           </div>
-        </div>
+          <div className="grid grid-cols-5 gap-4 pb-52">
+            {burgers.length > 0 ? (
+              burgers.map((menuItem, itemIndex) => (
+                <MenuCard
+                  key={itemIndex}
+                  menuItem={menuItem}
+                  handleCardClick={handleCardClick}
+                />
+              ))
+            ) : (
+              <p>No pizza available at the moment.</p>
+            )}
+          </div>
+          
+        </>
       }
     />
   );
 };
 
-export default BurgerPage;
+export default observer(BurgersPage);

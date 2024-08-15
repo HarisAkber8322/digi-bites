@@ -6,7 +6,6 @@ const { ObjectId } = require("mongodb");
 const { connectToDatabase } = require("./src/db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
@@ -45,7 +44,6 @@ app.prepare().then(() => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
-
   server.get("/api/users/:id", async (req, res) => {
     try {
       const db = await connectToDatabase();
@@ -65,7 +63,6 @@ app.prepare().then(() => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
-
   server.delete("/api/users/:id", async (req, res) => {
     try {
       const db = await connectToDatabase();
@@ -85,7 +82,6 @@ app.prepare().then(() => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
-
   server.put("/api/users/:id", async (req, res) => {
     try {
       const db = await connectToDatabase();
@@ -112,7 +108,70 @@ app.prepare().then(() => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
+  server.post("/api/users/:id/favoritestoggle", async (req, res) => {
+    const userId = req.params.id;
+    const { productId } = req.body;
 
+    if (!productId) {
+      return res.status(400).json({ message: "Product ID is required" });
+    }
+
+    try {
+      const db = await connectToDatabase();
+      const usersCollection = db.collection("users");
+
+      // Find the user
+      const user = await usersCollection.findOne({ _id: new ObjectId(userId) });
+
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      const favoriteproductIds = user.favoriteproductIds || [];
+      // Check if the product ID is already in the favorites
+      const isFavorite = favoriteproductIds.includes(productId);
+
+      if (isFavorite) {
+        // Remove the product ID from favorites
+        await usersCollection.updateOne(
+          { _id: new ObjectId(userId) },
+          { $pull: { favoriteproductIds: productId } }
+        );
+      } else {
+        // Add the product ID to favorites
+        await usersCollection.updateOne(
+          { _id: new ObjectId(userId) },
+          { $addToSet: { favoriteproductIds: productId } }
+        );
+      }
+
+      return res.status(200).json({ message: "Favorite status updated" });
+    } catch (error) {
+      console.error("Error toggling favorite:", error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  });
+  server.get("/api/users/:id/favorites", async (req, res) => {
+    const userId = req.params.id;
+
+    try {
+      const db = await connectToDatabase();
+      const usersCollection = db.collection("users");
+
+      // Find the user
+      const user = await usersCollection.findOne({ _id: new ObjectId(userId) });
+
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Return the array of product IDs from user's favoriteproductIds
+      return res.status(200).json(user.favoriteproductIds);
+    } catch (error) {
+      console.error("Error fetching favorite product IDs:", error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  });
+  //Auth
   server.get("/api/auth/loggedinUser", async (req, res) => {
     const token = req.headers.authorization?.split(" ")[1];
     if (!token) return res.status(401).json({ error: "No token provided" });
@@ -136,7 +195,6 @@ app.prepare().then(() => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
-
   server.post("/api/auth/login", async (req, res) => {
     const { email, password } = req.body;
 
@@ -167,47 +225,6 @@ app.prepare().then(() => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
-
-  // server.post("/api/auth/signup", async (req, res) => {
-  //   const { fname, lname, email, password } = req.body;
-
-  //   try {
-  //     const db = await connectToDatabase();
-  //     const usersCollection = db.collection("users");
-
-  //     const existingUser = await usersCollection.findOne({ email });
-  //     if (existingUser) {
-  //       return res
-  //         .status(400)
-  //         .json({ error: "User with this email already exists" });
-  //     }
-
-  //     const hashedPassword = await bcrypt.hash(password, 10);
-
-  //     const newUser = {
-  //       fname,
-  //       lname,
-  //       email,
-  //       password: hashedPassword,
-  //     };
-
-  //     const result = await usersCollection.insertOne(newUser);
-
-  //     if (result.acknowledged) {
-  //       // Return user data or success message without JWT
-  //       res.status(201).json({
-  //         message: "User created successfully",
-  //         user: { id: result.insertedId, fname, lname, email },
-  //       });
-  //     } else {
-  //       res.status(500).json({ error: "Internal server error" });
-  //     }
-  //   } catch (error) {
-  //     console.error("Error signing up:", error);
-  //     res.status(500).json({ error: "Internal server error" });
-  //   }
-  // });
-
   server.post("/api/auth/signup", async (req, res) => {
     const {
       fname = "",
@@ -330,9 +347,6 @@ app.prepare().then(() => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
-
-  const { ObjectId } = require("mongodb");
-
   server.get("/api/products/:id", async (req, res) => {
     const { id } = req.params;
 
@@ -383,42 +397,6 @@ app.prepare().then(() => {
     } catch (error) {
       console.error("Error fetching product:", error);
       res.status(500).json({ error: "Internal server error" });
-    }
-  });
-  server.post("/api/products/:id/favorite", async (req, res) => {
-    const userId = req.body.userId; // Assuming userId is passed in the request body
-    const productId = req.params.id;
-
-    try {
-      const user = await User.findById(userId);
-
-      if (!user) {
-        return res.status(404).json({ message: "User not found" });
-      }
-
-      // Check if the product is already in the favorites array
-      const isFavorite = user.favoriteproductIds.includes(productId);
-
-      if (isFavorite) {
-        // Remove the product ID from the array
-        user.favoriteproductIds = user.favoriteproductIds.filter(
-          (id) => id !== productId
-        );
-      } else {
-        // Add the product ID to the array
-        user.favoriteproductIds.push(productId);
-      }
-
-      // Save the user document
-      await user.save();
-
-      return res.status(200).json({
-        message: "Favorite status updated successfully",
-        favoriteproductIds: user.favoriteproductIds,
-      });
-    } catch (error) {
-      console.error("Error updating favorite status:", error);
-      return res.status(500).json({ message: "Internal server error" });
     }
   });
   server.post("/api/products", async (req, res) => {
@@ -518,12 +496,10 @@ app.prepare().then(() => {
         { returnOriginal: false } // Return the updated document
       );
 
-      res
-        .status(200)
-        .json({
-          message: "Product recommendation status updated",
-          product: updatedProduct.value,
-        });
+      res.status(200).json({
+        message: "Product recommendation status updated",
+        product: updatedProduct.value,
+      });
     } catch (error) {
       console.error("Error updating product recommendation status:", error);
       res.status(500).json({
@@ -538,15 +514,47 @@ app.prepare().then(() => {
     try {
       const db = await connectToDatabase();
       const productsCollection = db.collection("products");
+      const usersCollection = db.collection("users");
 
       // Fetch the product by slug
-      const product = await productsCollection.findOne({ slug: slug });
+      const product = await productsCollection.findOne({
+        slug: slug.toLowerCase(),
+      });
 
       if (!product) {
         return res.status(404).json({ error: "Product not found" });
       }
 
-      res.status(200).json(product);
+      // Fetch user details for each rating
+      const ratingsWithUserDetails = await Promise.all(
+        product.ratings.map(async (rating) => {
+          try {
+            const userId = rating.user_id; // Assuming user_id is a plain ObjectId
+
+            // Check if userId is a valid ObjectId
+            if (!ObjectId.isValid(userId)) {
+              return { ...rating, user_id: "Invalid User ID" };
+            }
+
+            const user = await usersCollection.findOne({
+              _id: new ObjectId(userId),
+            });
+
+            return {
+              ...rating,
+              user_id: user ? `${user.fname} ${user.lname}` : "Unknown User",
+            };
+          } catch (userError) {
+            console.error(
+              `Error fetching user for rating ${rating._id}:`,
+              userError
+            );
+            return { ...rating, user_id: "Unknown User" };
+          }
+        })
+      );
+
+      res.status(200).json({ ...product, ratings: ratingsWithUserDetails });
     } catch (error) {
       console.error("Error fetching product by slug:", error);
       res.status(500).json({ error: "Internal server error" });
@@ -569,6 +577,7 @@ app.prepare().then(() => {
       const skip = (page - 1) * PAGE_SIZE;
 
       const orders = await ordersCollection
+        .find()
         .skip(skip)
         .limit(PAGE_SIZE)
         .toArray();
@@ -578,90 +587,25 @@ app.prepare().then(() => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
-
-  server.post("/api/users/:id/favoritestoggle", async (req, res) => {
-    const userId = req.params.id;
-    const { productId } = req.body;
-
-    if (!productId) {
-      return res.status(400).json({ message: "Product ID is required" });
-    }
+  server.get("/api/orders/:id", async (req, res) => {
+    const { id } = req.params;
 
     try {
       const db = await connectToDatabase();
-      const usersCollection = db.collection("users");
+      const ordersCollection = db.collection("orders");
 
-      // Find the user
-      const user = await usersCollection.findOne({ _id: new ObjectId(userId) });
-
-      if (!user) {
-        return res.status(404).json({ message: "User not found" });
-      }
-      const favoriteproductIds = user.favoriteproductIds || [];
-      // Check if the product ID is already in the favorites
-      const isFavorite = favoriteproductIds.includes(productId);
-
-      if (isFavorite) {
-        // Remove the product ID from favorites
-        await usersCollection.updateOne(
-          { _id: new ObjectId(userId) },
-          { $pull: { favoriteproductIds: productId } }
-        );
-      } else {
-        // Add the product ID to favorites
-        await usersCollection.updateOne(
-          { _id: new ObjectId(userId) },
-          { $addToSet: { favoriteproductIds: productId } }
-        );
-      }
-
-      return res.status(200).json({ message: "Favorite status updated" });
-    } catch (error) {
-      console.error("Error toggling favorite:", error);
-      return res.status(500).json({ message: "Internal server error" });
-    }
-  });
-
-  server.get("/api/users/:id/favorites", async (req, res) => {
-    const userId = req.params.id;
-
-    try {
-      const db = await connectToDatabase();
-      const usersCollection = db.collection("users");
-
-      // Find the user
-      const user = await usersCollection.findOne({ _id: new ObjectId(userId) });
-
-      if (!user) {
-        return res.status(404).json({ message: "User not found" });
-      }
-
-      // Return the array of product IDs from user's favoriteproductIds
-      return res.status(200).json(user.favoriteproductIds);
-    } catch (error) {
-      console.error("Error fetching favorite product IDs:", error);
-      return res.status(500).json({ message: "Internal server error" });
-    }
-  });
-  server.get("/api/products/:id", async (req, res) => {
-    try {
-      const product = await Product.findById(req.params.id);
-      if (!product) {
-        return res.status(404).json({ message: "Product not found" });
-      }
-
-      // Calculate average rating
-      const averageRating =
-        product.ratings.reduce((acc, rating) => acc + rating.rating, 0) /
-          product.ratings.length || 0;
-
-      // Respond with product details and average rating
-      res.json({
-        ...product.toObject(),
-        average_rating: averageRating,
+      const order = await ordersCollection.findOne({
+        _id: new mongoose.Types.ObjectId(id),
       });
-    } catch (err) {
-      res.status(500).json({ message: "Server error" });
+
+      if (!order) {
+        return res.status(404).json({ error: "Order not found" });
+      }
+
+      res.status(200).json(order);
+    } catch (error) {
+      console.error("Error:", error);
+      res.status(500).json({ error: "Internal server error" });
     }
   });
 

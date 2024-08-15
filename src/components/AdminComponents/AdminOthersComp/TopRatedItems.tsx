@@ -78,7 +78,7 @@ const TopRatedItems: React.FC<TopRatedItemsProps> = ({ showAll }) => {
                 <div className="w-full flex flex-row justify-between items-center p-2 border-b-[1px] !border-zinc-100">
                   <div>Top Rated Products</div>
                   <Link
-                    href="/admin/allratedproducts" // Use Link for navigation
+                    href="/admin/product-reviews" // Use Link for navigation
                     className="text-blue-500 hover:text-themeYellow text-xs font-semibold"
                   >
                     {showAll ? "Show Less" : "View All"}

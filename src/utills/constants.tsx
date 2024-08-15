@@ -120,7 +120,7 @@ export const cardList = [
     price: 200,
     image: "/images/c2.png", // Adjust path according to your project structure
     description: "Delicious zinger burger with crispy chicken patty.",
-    link: "#",
+    link: "/suggestions",
   },
   {
     name: "Favourites",
@@ -706,3 +706,13 @@ export const uncategorizedItems = [
   { title: "Dashboard", link: "/admin", icon: faHome },
   { title: "Users", link: "/admin/users", icon: faUser },
 ];
+// utils/slugify.js
+export const generateSlug = (str: string) => {
+  return str
+    .toLowerCase()               // Convert to lowercase
+    .replace(/\s+/g, '-')        // Replace spaces with hyphens
+    .replace(/[^\w\-]+/g, '')    // Remove all non-word characters
+    .replace(/\-\-+/g, '-')      // Replace multiple hyphens with a single hyphen
+    .replace(/^-+/, '')          // Trim hyphens from the start of the string
+    .replace(/-+$/, '');         // Trim hyphens from the end of the string
+};

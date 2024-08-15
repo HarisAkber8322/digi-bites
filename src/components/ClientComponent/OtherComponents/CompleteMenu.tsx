@@ -25,28 +25,29 @@ const Menu: React.FC = () => {
   );
 
   return (
-    <div>
+    <div className="pb-52">
       {categories.map((category) => (
         <div key={category} className="mb-[28px]">
           <Text
             content={
               <>
-                <h2 className="text-2xl font-bold align-middle">{category}</h2>
+                <h2 className="text-2xl font-bold">{category}</h2>
                 <div className="flex justify-end">
-                  <Link href={`/category/${category.toLowerCase()}`}>
-                    <div className="flex items-center bg-themeYellow text-white py-2 px-2 rounded">
-                      <FaArrowRight className="mr-1" /> {/* Arrow icon */}
-                      <span>View More</span>
-                    </div>
+                  <Link className="flex items-center bg-themeYellow text-white p-2 rounded-lg"  href={`/category/${category.toLowerCase()}`}>
+                    
+                      <FaArrowRight className="" /> {/* Arrow icon */}
+                      
+                    
                   </Link>
                 </div>
               </>
             }
-            themeDivClasses="flex flex-rows justify-between"
+            themeDivClasses="flex justify-between items-center"
           />
           <div className="grid grid-cols-6 gap-4 my-[28px]">
             {ProductStore.products
               .filter((menuItem) => menuItem.category === category)
+              .slice(0, 6) // Show only the first 6 products per category
               .map((menuItem, itemIndex) => (
                 <MenuCard
                   key={itemIndex}
