@@ -1,3 +1,4 @@
+// CartStore.ts
 "use client";
 import { makeAutoObservable } from "mobx";
 import React from "react";
@@ -18,7 +19,7 @@ class CartStore {
   }
 
   addItemToCart(item: CartItem) {
-    const existingItem = this.cartItems.find((cartItem) => cartItem.productId === item.productId);
+    const existingItem = this.cartItems.find(cartItem => cartItem.productId === item.productId);
     if (existingItem) {
       existingItem.quantity += item.quantity;
     } else {
@@ -28,7 +29,7 @@ class CartStore {
   }
 
   removeItemFromCart(productId: string) {
-    this.cartItems = this.cartItems.filter((item) => item.productId !== productId);
+    this.cartItems = this.cartItems.filter(item => item.productId !== productId);
     this.calculateTotal();
   }
 
@@ -54,4 +55,4 @@ const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
 };
 
 export default CartStoreContext;
-export  { CartProvider };
+export { CartProvider };

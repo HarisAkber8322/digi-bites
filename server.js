@@ -606,6 +606,82 @@ app.prepare().then(() => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
+  server.post("/api/orders", async (req, res) => {
+    const order = req.body;
+  
+    try {
+      const db = await connectToDatabase();
+      const ordersCollection = db.collection("orders");
+  
+      const result = await ordersCollection.insertOne(order);
+      res.status(201).json(result.ops[0]); // Return the newly created order
+    } catch (error) {
+      console.error("Error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+  server.get("/api/orders/userInfo/:userId", async (req, res) => {
+    const { userId } = req.params;
+    const page = parseInt(req.query.page, 10) || 1;
+  
+    try {
+      const db = await connectToDatabase();
+      const ordersCollection = db.collection("orders");
+  
+      const totalCount = await ordersCollection.countDocuments({
+        "userInfo.userId": userId,
+      });
+      const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+  
+      const skip = (page - 1) * PAGE_SIZE;
+  
+      const orders = await ordersCollection
+        .find({ "userInfo.userId": userId })
+        .skip(skip)
+        .limit(PAGE_SIZE)
+        .toArray();
+  
+      res.status(200).json({ orders, totalCount, totalPages });
+    } catch (error) {
+      console.error("Error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+  server.put("/api/orders/update-status", async (req, res) => {
+    try {
+      const db = await connectToDatabase();
+      const ordersCollection = db.collection("orders");
+  
+      // Define status progression
+      const statusProgression = {
+        "pending": "confirmed",
+        "confirmed": "processing",
+        "processing": "readyforpickup",
+        "readyforpickup": "completed"
+      };
+  
+      // Find all orders that need status updates
+      const orders = await ordersCollection.find({}).toArray();
+  
+      const updatePromises = orders.map(order => {
+        const nextStatus = statusProgression[order.status];
+        if (nextStatus) {
+          return ordersCollection.updateOne(
+            { _id: order._id },
+            { $set: { status: nextStatus } }
+          );
+        }
+        return Promise.resolve(); // No update needed
+      });
+  
+      await Promise.all(updatePromises);
+  
+      res.status(200).json({ message: "Order statuses updated successfully" });
+    } catch (error) {
+      console.error("Error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
 
   server.all("*", (req, res) => {
     return handle(req, res);

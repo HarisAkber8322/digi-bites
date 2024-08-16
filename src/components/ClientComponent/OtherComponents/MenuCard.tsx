@@ -33,7 +33,7 @@ const MenuCard: React.FC<MenuCardProps> = ({ menuItem, handleCardClick }) => {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      // Here, you might need to adapt based on whether you use ID or slug
+      // Fetch product details if necessary; using ID or slug
       const fetchedProduct = await ProductStore.fetchProductById(menuItem._id);
       setProduct(fetchedProduct);
     };
@@ -42,14 +42,22 @@ const MenuCard: React.FC<MenuCardProps> = ({ menuItem, handleCardClick }) => {
   }, [menuItem._id, ProductStore]);
 
   const addToCart = (item: Product) => {
+    // Retrieve cart items from local storage
     const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
     const existingItem = cartItems.find((cartItem: Product) => cartItem._id === item._id);
+
     if (existingItem) {
+      // Update quantity of existing item
       existingItem.quantity += 1;
     } else {
+      // Add new item to cart
       cartItems.push({ ...item, quantity: 1 });
     }
+
+    // Update local storage with new cart items
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
+
+    // Optional: update the application state or notify the user
     handleCardClick(item);
   };
 

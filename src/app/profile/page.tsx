@@ -8,6 +8,7 @@ import Div from "@/components/UI/Div";
 import Text from "@/components/UI/Text";
 import dynamic from "next/dynamic";
 import { CardData } from "@/utills/constants"; // Adjust the path as needed
+import Link from "next/link"; // Import Link for routing
 
 const Profile = () => {
   return (
@@ -37,26 +38,55 @@ const Profile = () => {
           </div>
           <div className="mt-16 px-0 p-8">
             <div className="grid grid-cols-2 sm:grid-cols-6 md:grid-cols-6 gap-5">
-              {CardData.map((card) => (
-                <Div
-                  key={card.id}
-                  lightColor="bg-ExtraLightGray"
-                  darkColor="bg-pepperBlack"
-                  themeDivClasses="w-[172px] h-[172px] flex flex-col items-center justify-center p-0 m-0 rounded-[30px] shadow-md transition duration-300 hover:bg-ExtraLightGray hover:bg-opacity-20"
-                  content={
-                    <>
-                      <Text
-                        themeDivClasses="text-6xl font-light"
-                        content={<FontAwesomeIcon icon={card.icon} />}
-                      />
-                      <Text
-                        themeDivClasses="mt-2 text-lg"
-                        content={card.name}
-                      />
-                    </>
-                  }
-                />
-              ))}
+              {CardData.map((card) => {
+                const { id, icon, name, link } = card;
+
+                if (!link) {
+                  // Handle missing link case
+                  return (
+                    <Div
+                      key={id}
+                      lightColor="bg-ExtraLightGray"
+                      darkColor="bg-pepperBlack"
+                      themeDivClasses="w-[172px] h-[172px] flex flex-col items-center justify-center p-0 m-0 rounded-[30px] shadow-md transition duration-300 hover:bg-ExtraLightGray hover:bg-opacity-20 cursor-not-allowed"
+                      content={
+                        <>
+                          <Text
+                            themeDivClasses="text-6xl font-light"
+                            content={<FontAwesomeIcon icon={icon} />}
+                          />
+                          <Text
+                            themeDivClasses="mt-2 text-lg"
+                            content={name}
+                          />
+                        </>
+                      }
+                    />
+                  );
+                }
+
+                return (
+                  <Link key={id} href={link}>
+                    <Div
+                      lightColor="bg-ExtraLightGray"
+                      darkColor="bg-pepperBlack"
+                      themeDivClasses="w-[172px] h-[172px] flex flex-col items-center justify-center p-0 m-0 rounded-[30px] shadow-md transition duration-300 hover:bg-ExtraLightGray hover:bg-opacity-20 cursor-pointer"
+                      content={
+                        <>
+                          <Text
+                            themeDivClasses="text-6xl font-light"
+                            content={<FontAwesomeIcon icon={icon} />}
+                          />
+                          <Text
+                            themeDivClasses="mt-2 text-lg"
+                            content={name}
+                          />
+                        </>
+                      }
+                    />
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </>

@@ -61,7 +61,7 @@ const RatedProductsPage: React.FC = () => {
                                                     <span>{product.name}</span>
                                                 </td>
                                                 <td className="px-4 py-2 text-center whitespace-nowrap text-sx font-medium text-gray-900 dark:text-gray-100 w-[80px]">
-                                                    {product.price ? `$${product.price}` : 'N/A'}
+                                                    {product.price ? `Rs ${product.price}` : 'N/A'}
                                                 </td>
                                                 <td className="px-4 py-2 text-center whitespace-nowrap text-sx font-medium text-gray-900 dark:text-gray-100 w-[80px]">
                                                     {product.stock ?? 'N/A'}
