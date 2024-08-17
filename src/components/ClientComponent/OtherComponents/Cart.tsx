@@ -1,214 +1,98 @@
-"use client";
-import React, { useState, useEffect, useContext } from "react";
-import Div from "../../UI/Div";
-import Text from "../../UI/Text";
-import Image from "next/image";
-import MainStoreContext from "@/store/Mainstore";
+import React, { useContext, useEffect, useState } from "react";
 import { observer } from "mobx-react";
-import { Button } from "react-bootstrap";
+import { Button, ListGroup, ListGroupItem, Form } from "react-bootstrap";
+import CartStoreContext from "@/store/CartStore";
+import OrderStoreContext from "@/store/OrderStore";
+import UserStoreContext from "@/store/UserStore";
+import ProductStoreContext from "@/store/ProductStore";
+import { AddOn } from "@/store/OrderStore"; // Import AddOn type
 
-interface AddOn {
-  name: string;
-  price: number;
-  value: boolean;
-}
+const Cart: React.FC = () => {
+  const orderStore = useContext(OrderStoreContext);
+  const userStore = useContext(UserStoreContext);
+  const productStore = useContext(ProductStoreContext);
+  const cartStore = useContext(CartStoreContext);
 
-interface CartItem {
-  productId: string;
-  quantity: number;
-}
+  const [orderNote, setOrderNote] = useState<string>("");
 
-interface UserInfo {
-  userId: string;
-  orderNote: string;
-}
-
-interface CartSchema {
-  products: CartItem[];
-  addOns: AddOn[];
-  totalAmount: number;
-  userInfo: UserInfo;
-  createdAt: string;
-  updatedAt: string;
-}
-
-const Cart = () => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [selectedAddOns, setSelectedAddOns] = useState<AddOn[]>([]);
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
-  const [totalAmount, setTotalAmount] = useState<number>(0);
-
-  const MainStore = useContext(MainStoreContext);
+  if (!orderStore || !userStore || !productStore || !cartStore) {
+    return <div>Loading...</div>;
+  }
 
   useEffect(() => {
+    cartStore.cartItems.forEach(async (item) => {
+      await productStore.fetchProductById(item.productId);
+    });
+  }, [cartStore.cartItems, productStore]);
+
+  const handlePlaceOrder = async () => {
+    if (!userStore.isLoggedin || !userStore.user) {
+      console.error("User is not logged in");
+      return;
+    }
+
+    const userId = userStore.user.id;
+    const paymentMethod = "credit_card"; // Example payment method
+
     try {
-      const itemsString = localStorage.getItem("cartItems");
-      
-      if (itemsString) {
-        const items: CartSchema = JSON.parse(itemsString);
-
-        setCartItems(items.products || []);
-        setSelectedAddOns(items.addOns || []);
-        setUserInfo(items.userInfo || null);
-        setTotalAmount(items.totalAmount || 0);
-      } else {
-        console.error("No cart items found in local storage.");
-      }
+      await orderStore.placeOrder(userId, paymentMethod, orderNote, cartStore.totalPrice);
+      // Optionally clear the cart or redirect the user here
     } catch (error) {
-      console.error("Error parsing cart items from local storage:", error);
+      console.error("Failed to place order:", error);
     }
-  }, []);
-
-  const removeFromCart = (productId: string) => {
-    const updatedCartItems = cartItems.filter(
-      (item) => item.productId !== productId
-    );
-    
-    MainStore.setCartCount(MainStore.cartCount - 1);
-    
-    const updatedTotalAmount = updatedCartItems.reduce((total, item) => {
-      // You might need to recalculate the total amount based on new cart items
-      return total; // Placeholder, recalculate as needed
-    }, 0);
-    
-    localStorage.setItem(
-      "cartItems",
-      JSON.stringify({
-        products: updatedCartItems,
-        addOns: selectedAddOns,
-        totalAmount: updatedTotalAmount,
-        userInfo,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-      })
-    );
-    
-    setCartItems(updatedCartItems);
-    setTotalAmount(updatedTotalAmount);
-  };
-
-  const calculateTotal = () => {
-    let total = totalAmount;
-
-    if (selectedAddOns) {
-      selectedAddOns.forEach((addOn) => {
-        if (addOn.value) {
-          total += addOn.price;
-        }
-      });
-    }
-
-    return total;
   };
 
   return (
-    <>
-      <Div
-        themeDivClasses="w-full md:w-[1180px] m-auto mt-5 pb-10"
-        darkColor="lightBlack"
-        lightColor="transparent"
-        content={
-          <>
-            <Text themeDivClasses="font-bold text-2xl mt-4 mb-5" content={"Cart"} />
-            {cartItems.length === 0 ? (
-              <Text themeDivClasses="text-lg" content="Your cart is empty." />
-            ) : (
-              <div className="flex gap-x-6 mt-5">
-                <div className="gap-4 flex flex-col w-[60%]">
-                  {cartItems.map((item, index) => (
-                    <Div
-                      key={index}
-                      themeDivClasses="flex shadow-xl rounded-lg items-center justify-between p-4 h-[100px]"
-                      darkColor="bg-black"
-                      content={
-                        <>
-                          <div
-                            className="flex cursor-pointer w-full "
-                            // Optionally add functionality for viewing details
-                          >
-                            <Image
-                              className="rounded-md"
-                              src="/path-to-image" // Use actual image path
-                              width={80}
-                              height={60}
-                              alt="Product Image"
-                            />
-                            <div className="ml-3">
-                              <Text
-                                themeDivClasses="text-lg font-semibold"
-                                content={`Product ${item.productId}`}
-                              />
-                              <div className="flex justify-between">
-                                <Text
-                                  themeDivClasses="text-xs pt-2"
-                                  content={`Quantity: ${item.quantity}`}
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <button
-                            className="text-red-500"
-                            onClick={() => removeFromCart(item.productId)}
-                          >
-                            Remove
-                          </button>
-                        </>
-                      }
-                    />
+    <div>
+      <h2>Shopping Cart</h2>
+      <ListGroup>
+        {cartStore.cartItems.map((item) => {
+          const product = productStore.products.find(p => p._id === item.productId);
+
+          if (!product) {
+            return (
+              <ListGroupItem key={item.productId} className="d-flex justify-content-between align-items-center">
+                <div>Loading product details...</div>
+              </ListGroupItem>
+            );
+          }
+
+          return (
+            <ListGroupItem key={item.productId} className="d-flex justify-content-between align-items-center">
+              <div>
+                <img src={product.image} alt={product.name} className="w-10 h-10 object-cover rounded me-2" />
+                <strong>{product.name}</strong> x {item.quantity}
+                <div>
+                  {item.addOns.map((addOn: AddOn) => (
+                    addOn.value && <span key={addOn.name}>{addOn.name} </span>
                   ))}
                 </div>
-                <div className="w-[40%]">
-                  <Div themeDivClasses=" shadow-xl rounded-lg  px-3  pb-6 pt-3" content={<>
-                    <Text
-                      themeDivClasses="items-center  mb-4 border-b-2 pb-3   border-ExtraLightGray  flex justify-center"
-                      content={
-                        <>
-                          <span className="font-bold flex items-center text-2xl">Total Cost</span>
-                        </>
-                      }
-                    />
-                    <Text
-                      themeDivClasses="items-center p-1  flex justify-between"
-                      content={
-                        <>
-                          <span className="font-semibold text-base">Item Price</span>{" "}
-                          <span className="text-base">{totalAmount} rs</span>
-                        </>
-                      }
-                    />
-                    <Text
-                      themeDivClasses="items-center p-1  flex justify-between"
-                      content={
-                        <>
-                          <span className="font-semibold text-base">Addons</span>{" "}
-                          <span className="text-base">
-                            {selectedAddOns.filter(addOn => addOn.value).reduce((sum, addOn) => sum + addOn.price, 0)} rs
-                          </span>
-                        </>
-                      }
-                    />
-                    <Text
-                      themeDivClasses="items-center p-1 pt-4 border-t-2 mt-5  border-ExtraLightGray  flex justify-between"
-                      content={
-                        <>
-                          <span className="font-semibold text-lg">Total:</span>{" "}
-                          <span className="text-lg font-semibold">{calculateTotal().toFixed(2)} rs</span>
-                        </>
-                      }
-                    />
-                    <div className="flex justify-center pr-4 pl-4">
-                      <Button href="/checkout" className="text-white bg-themeYellow w-full font-bold text-lg p-2 flex  mt-4 align-middle justify-center rounded-md">
-                        Proceed to Checkout
-                      </Button>
-                    </div>
-                  </>} />
-                </div>
               </div>
-            )}
-          </>
-        }
-      />
-    </>
+              <div>${(product.price * item.quantity + item.addOns.filter((a: AddOn) => a.value).reduce((sum: number, addOn: { price: number }) => sum + addOn.price, 0)).toFixed(2)}</div>
+              <Button variant="danger" onClick={() => cartStore.removeItemFromCart(item.productId)}>Remove</Button>
+            </ListGroupItem>
+          );
+        })}
+      </ListGroup>
+      <div className="mt-3">
+        <strong>Total: ${cartStore.totalPrice.toFixed(2)}</strong>
+      </div>
+      <div className="mt-3">
+        <Form.Group controlId="orderNote">
+          <Form.Label>Order Note</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={3}
+            value={orderNote}
+            onChange={(e) => setOrderNote(e.target.value)}
+            placeholder="Enter any special instructions here"
+          />
+        </Form.Group>
+      </div>
+      <Button variant="primary" onClick={handlePlaceOrder} className="mt-3">
+        Place Order
+      </Button>
+    </div>
   );
 };
 

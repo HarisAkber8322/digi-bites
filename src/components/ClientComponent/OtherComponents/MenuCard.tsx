@@ -6,11 +6,27 @@ import Text from "../../UI/Text";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import ProductStoreContext from "@/store/ProductStore";
 import UserStoreContext from "@/store/UserStore";
+import CartStoreContext from "@/store/CartStore";
 import { Product } from "@/store/ProductStore"; // Adjust the import path as needed
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStarHalfAlt, faStar as faSolidStar } from "@fortawesome/free-solid-svg-icons";
 import { faStar as faRegularStar } from "@fortawesome/free-regular-svg-icons";
 import Link from "next/link";
+import { AddOn } from "@/store/OrderStore";
+
+// Define CartItem type if not already defined
+interface CartItem {
+  productId: string;
+  quantity: number;
+  addOns: AddOn[];
+}
+interface CartItem {
+  
+  productId: string;
+  name: string;
+  price: number;
+  quantity: number;
+}
 
 interface MenuCardProps {
   menuItem: Product;
@@ -29,11 +45,11 @@ const generateSlug = (str: string) => {
 const MenuCard: React.FC<MenuCardProps> = ({ menuItem, handleCardClick }) => {
   const ProductStore = useContext(ProductStoreContext);
   const UserStore = useContext(UserStoreContext);
+  const CartStore = useContext(CartStoreContext);
   const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
-      // Fetch product details if necessary; using ID or slug
       const fetchedProduct = await ProductStore.fetchProductById(menuItem._id);
       setProduct(fetchedProduct);
     };
@@ -42,23 +58,16 @@ const MenuCard: React.FC<MenuCardProps> = ({ menuItem, handleCardClick }) => {
   }, [menuItem._id, ProductStore]);
 
   const addToCart = (item: Product) => {
-    // Retrieve cart items from local storage
-    const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
-    const existingItem = cartItems.find((cartItem: Product) => cartItem._id === item._id);
+    const cartItem: CartItem = {
+      productId: item._id,
+      quantity: 1, // Adjust quantity as needed
+      addOns: [],
+      name: "",
+      price: 0
+    };
 
-    if (existingItem) {
-      // Update quantity of existing item
-      existingItem.quantity += 1;
-    } else {
-      // Add new item to cart
-      cartItems.push({ ...item, quantity: 1 });
-    }
-
-    // Update local storage with new cart items
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-
-    // Optional: update the application state or notify the user
-    handleCardClick(item);
+    CartStore.addItemToCart(cartItem); // Use CartStore to add item
+    handleCardClick(item); // Optional: trigger any additional behavior
   };
 
   const handleFavoriteClick = (e: React.MouseEvent<HTMLButtonElement>) => {

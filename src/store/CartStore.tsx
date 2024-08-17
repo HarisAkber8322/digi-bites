@@ -1,9 +1,10 @@
-// CartStore.ts
-"use client";
-import { makeAutoObservable } from "mobx";
-import React from "react";
+import axios from 'axios';
+import { makeAutoObservable } from 'mobx';
+import React from 'react';
+import { AddOn } from './OrderStore';
 
 export interface CartItem {
+  addOns: AddOn[];
   productId: string;
   name: string;
   price: number;
@@ -12,7 +13,9 @@ export interface CartItem {
 
 class CartStore {
   cartItems: CartItem[] = [];
-  total = 0;
+  totalPrice: number = 0;
+  userId: any;
+  addOns: any;
 
   constructor() {
     makeAutoObservable(this);
@@ -33,15 +36,38 @@ class CartStore {
     this.calculateTotal();
   }
 
+  updateAddOns(productId: string, addOns: AddOn[]) {
+    const item = this.cartItems.find(cartItem => cartItem.productId === productId);
+    if (item) {
+      item.addOns = addOns;
+      this.calculateTotal();
+    }
+  }
+
   calculateTotal() {
-    this.total = this.cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    this.totalPrice = this.cartItems.reduce((sum, item) => {
+      const addOnsTotal = item.addOns.filter(addOn => addOn.value).reduce((sum, addOn) => sum + addOn.price, 0);
+      return sum + (item.price * item.quantity) + addOnsTotal;
+    }, 0);
   }
 
   clearCart() {
     this.cartItems = [];
-    this.total = 0;
+    this.totalPrice = 0;
+  }
+
+  async placeOrder(orderStore: any, paymentMethod: string, orderNote: string) {
+    try {
+      const order = await orderStore.placeOrder(this.userId!, paymentMethod, orderNote, this.totalPrice);
+      if (order) {
+        this.clearCart();
+      }
+    } catch (error) {
+      console.error("Failed to place order:", error);
+    }
   }
 }
+
 
 export const cartStore = new CartStore();
 const CartStoreContext = React.createContext(cartStore);

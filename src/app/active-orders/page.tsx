@@ -8,7 +8,7 @@ import Div from "@/components/UI/Div";
 import Text from "@/components/UI/Text";
 import { FaHashtag, FaRegClock } from "react-icons/fa"; // Importing a clock icon
 
-const OrdersPage: React.FC = () => {
+const OrdersPage: React.FC = observer(() => {
   const orderStore = useContext(OrderStoreContext);
   const userStore = useContext(UserStoreContext);
   const productStore = useContext(ProductStoreContext);
@@ -224,6 +224,6 @@ const OrdersPage: React.FC = () => {
       }
     />
   );
-};
+});
 
-export default observer(OrdersPage);
+export default OrdersPage;

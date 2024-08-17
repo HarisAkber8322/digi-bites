@@ -44,33 +44,6 @@ class OrderStore {
     makeAutoObservable(this);
   }
 
-  async placeOrder(userInfo: UserInfo) {
-    const order = {
-      userId: userInfo.userId,
-      status: 'pending', // Default status
-      paymentMethod: 'COD', // Default payment method or can be provided
-      products: cartStore.cartItems.map(item => ({
-        productId: item.productId,
-        quantity: item.quantity,
-        addOns: [], // Add any selected add-ons here
-      })),
-      totalAmount: cartStore.total,
-      userInfo,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      addOns: [] // Add any selected add-ons here
-    };
-
-    try {
-      const response = await axios.post("http://localhost:3001/api/orders", order);
-      if (response.status === 201) {
-        cartStore.clearCart(); // Clear the cart after successful order placement
-        console.log("Order placed successfully");
-      }
-    } catch (error) {
-      console.error("Error placing order:", error);
-    }
-  }
 
   async loadOrders() {
     try {
@@ -111,6 +84,46 @@ class OrderStore {
       console.error("Failed to update order statuses:", error);
     }
   }
+  async placeOrder(userId: string | undefined, paymentMethod: string, orderNote: string, totalAmount: number) {
+    try {
+      console.log("Placing order for user ID:", userId); // Debugging line
+      if (!userId) throw new Error("User ID is required");
+  
+      const products = this.cartStore.cartItems.map((item) => ({
+        productId: item.productId,
+        quantity: item.quantity,
+       
+      }));
+  
+      const totalAmount = this.cartStore.totalPrice;
+  
+      const userInfo = {
+        userId, // Use the provided userId
+        orderNote,
+      };
+  
+      const orderData = {
+        status: "pending", // Default status
+        paymentMethod,
+        products,
+        totalAmount,
+        userInfo,
+        addOns: this.cartStore.addOns,
+      };
+  
+      const response = await axios.post("http://localhost:3001/api/orders", orderData);
+  
+      if (response.status === 201) {
+        this.orderList.push(response.data);
+        this.cartStore.clearCart(); // Clear the cart after placing the order
+        return response.data;
+      }
+    } catch (error) {
+      console.error("Error placing order:", error);
+    }
+  }
+  
+  
 }
 
 

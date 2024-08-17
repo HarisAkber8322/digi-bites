@@ -607,41 +607,53 @@ app.prepare().then(() => {
     }
   });
   server.post("/api/orders", async (req, res) => {
-    const order = req.body;
+    const {
+      status = "pending",
+      paymentMethod,
+      products,
+      addOns = [],
+      totalAmount,
+      userInfo,
+      createdAt,
+      updatedAt,
+    } = req.body;
   
     try {
       const db = await connectToDatabase();
       const ordersCollection = db.collection("orders");
   
-      const result = await ordersCollection.insertOne(order);
-      res.status(201).json(result.ops[0]); // Return the newly created order
+      // Create a new order object
+      const newOrder = {
+        status,
+        paymentMethod,
+        products,
+        addOns,
+        totalAmount,
+        userInfo,
+        createdAt: createdAt || new Date(),
+        updatedAt: updatedAt || new Date(),
+      };
+  
+      // Insert the new order into the collection
+      const result = await ordersCollection.insertOne(newOrder);
+  
+      res.status(201).json({ _id: result.insertedId, ...newOrder });
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error placing order:", error);
       res.status(500).json({ error: "Internal server error" });
     }
   });
   server.get("/api/orders/userInfo/:userId", async (req, res) => {
     const { userId } = req.params;
-    const page = parseInt(req.query.page, 10) || 1;
-  
     try {
       const db = await connectToDatabase();
       const ordersCollection = db.collection("orders");
   
-      const totalCount = await ordersCollection.countDocuments({
-        "userInfo.userId": userId,
-      });
-      const totalPages = Math.ceil(totalCount / PAGE_SIZE);
-  
-      const skip = (page - 1) * PAGE_SIZE;
-  
       const orders = await ordersCollection
         .find({ "userInfo.userId": userId })
-        .skip(skip)
-        .limit(PAGE_SIZE)
         .toArray();
   
-      res.status(200).json({ orders, totalCount, totalPages });
+      res.status(200).json({ orders });
     } catch (error) {
       console.error("Error:", error);
       res.status(500).json({ error: "Internal server error" });
