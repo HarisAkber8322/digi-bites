@@ -66,6 +66,14 @@ class CartStore {
       console.error("Failed to place order:", error);
     }
   }
+  
+  updateQuantity(productId: string, delta: number) {
+    const item = this.cartItems.find(item => item.productId === productId);
+    if (item) {
+      item.quantity = Math.max(1, item.quantity + delta); // Ensure quantity is at least 1
+      this.calculateTotal(); // Recalculate total price
+    }
+  }
 }
 
 
