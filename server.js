@@ -13,10 +13,10 @@ const PAGE_SIZE = 5;
 
 app.prepare().then(() => {
   const server = express();
-
   server.use(cors());
   server.use(express.json());
 
+  //User
   server.get("/api/users", async (req, res) => {
     const page = parseInt(req.query.page, 10) || 1;
     const searchQuery = req.query.q || "";
@@ -213,7 +213,7 @@ app.prepare().then(() => {
       }
 
       const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY, {
-        expiresIn: "1h",
+        expiresIn: "5h",
       });
 
       res.status(200).json({
@@ -350,6 +350,9 @@ app.prepare().then(() => {
     const { id } = req.params;
 
     try {
+      if (!ObjectId.isValid(id)) {
+        return res.status(400).json({ error: "Invalid product ID format" });
+      }
       const db = await connectToDatabase();
       const productsCollection = db.collection("products");
       const usersCollection = db.collection("users");
@@ -561,10 +564,6 @@ app.prepare().then(() => {
 
   //Orders
   server.get("/api/orders", async (req, res) => {
-    const page = parseInt(req.query.page, 10) || 1;
-    const searchQuery = req.query.q || "";
-    const sortOrder = req.query.sort || "asc";
-
     try {
       const db = await connectToDatabase();
       const ordersCollection = db.collection("orders");
@@ -572,13 +571,7 @@ app.prepare().then(() => {
       const totalCount = await ordersCollection.countDocuments();
       const totalPages = Math.ceil(totalCount / PAGE_SIZE);
 
-      const skip = (page - 1) * PAGE_SIZE;
-
-      const orders = await ordersCollection
-        .find()
-        .skip(skip)
-        .limit(PAGE_SIZE)
-        .toArray();
+      const orders = await ordersCollection.find().toArray();
       res.status(200).json({ orders, totalCount, totalPages });
     } catch (error) {
       console.error("Error:", error);
@@ -617,11 +610,11 @@ app.prepare().then(() => {
       createdAt,
       updatedAt,
     } = req.body;
-  
+
     try {
       const db = await connectToDatabase();
       const ordersCollection = db.collection("orders");
-  
+
       // Create a new order object
       const newOrder = {
         status,
@@ -633,10 +626,10 @@ app.prepare().then(() => {
         createdAt: createdAt || new Date(),
         updatedAt: updatedAt || new Date(),
       };
-  
+
       // Insert the new order into the collection
       const result = await ordersCollection.insertOne(newOrder);
-  
+
       res.status(201).json({ _id: result.insertedId, ...newOrder });
     } catch (error) {
       console.error("Error placing order:", error);
@@ -648,47 +641,260 @@ app.prepare().then(() => {
     try {
       const db = await connectToDatabase();
       const ordersCollection = db.collection("orders");
-  
+
       const orders = await ordersCollection
         .find({ "userInfo.userId": userId })
         .toArray();
-  
+
       res.status(200).json({ orders });
     } catch (error) {
       console.error("Error:", error);
       res.status(500).json({ error: "Internal server error" });
     }
   });
-  server.put("/api/orders/update-status", async (req, res) => {
+  server.get("/api/orders/status-counts", async (req, res) => {
     try {
       const db = await connectToDatabase();
       const ordersCollection = db.collection("orders");
-  
-      // Define status progression
-      const statusProgression = {
-        "pending": "confirmed",
-        "confirmed": "processing",
-        "processing": "readyforpickup",
-        "readyforpickup": "completed"
-      };
-  
-      // Find all orders that need status updates
-      const orders = await ordersCollection.find({}).toArray();
-  
-      const updatePromises = orders.map(order => {
-        const nextStatus = statusProgression[order.status];
-        if (nextStatus) {
-          return ordersCollection.updateOne(
-            { _id: order._id },
-            { $set: { status: nextStatus } }
-          );
-        }
-        return Promise.resolve(); // No update needed
+
+      const statusCounts = await ordersCollection
+        .aggregate([
+          {
+            $group: {
+              _id: "$status",
+              count: { $sum: 1 },
+            },
+          },
+          {
+            $sort: { _id: 1 }, // Optional: sort by status
+          },
+        ])
+        .toArray();
+
+      res.status(200).json(statusCounts);
+    } catch (error) {
+      console.error("Error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+  const statusProgression = {
+    Pending: "Confirmed",
+    Confirmed: "Processing",
+    Processing: "Readyforpickup",
+    Readyforpickup: "Picked",
+    Picked: "Returned",
+    Returned: "Discard",
+  };
+  // API endpoint to update the status of a specific order by ID
+  server.put("/api/orders/:orderId/update-status", async (req, res) => {
+    const { orderId } = req.params;
+
+    try {
+      const db = await connectToDatabase();
+      const ordersCollection = db.collection("orders");
+
+      // Find the order by ID
+      const order = await ordersCollection.findOne({
+        _id: new ObjectId(orderId),
       });
-  
-      await Promise.all(updatePromises);
-  
-      res.status(200).json({ message: "Order statuses updated successfully" });
+
+      if (!order) {
+        return res.status(404).json({ error: "Order not found" });
+      }
+
+      // Determine the next status in the progression
+      const nextStatus = statusProgression[order.status];
+
+      if (!nextStatus) {
+        return res
+          .status(400)
+          .json({ error: "Order is already completed or in an invalid state" });
+      }
+
+      // Update the order status
+      await ordersCollection.updateOne(
+        { _id: new ObjectId(orderId) },
+        { $set: { status: nextStatus, updatedAt: new Date() } }
+      );
+
+      res
+        .status(200)
+        .json({ message: "Order status updated successfully", nextStatus });
+    } catch (error) {
+      console.error("Error updating order status:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  //Cart
+  server.get("/api/cart", async (req, res) => {
+    try {
+      const db = await connectToDatabase();
+      const cartCollection = db.collection("cart");
+
+      const totalCount = await cartCollection.countDocuments();
+      const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+
+      const cart = await cartCollection.find().toArray();
+      // Send only the first cart item if available
+      const firstCartItem = cart.length > 0 ? cart[0] : null;
+
+      res.status(200).json({ firstCartItem, totalCount, totalPages });
+    } catch (error) {
+      console.error("Error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+  server.post("/api/cart/:userId/add", async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const { product_id, quantity } = req.body;
+
+      // Validate userId and product_id
+      if (typeof userId !== "string" || typeof product_id !== "string") {
+        return res.status(400).json({ error: "Invalid userId or product_id" });
+      }
+
+      const db = await connectToDatabase();
+      const cartCollection = db.collection("cart");
+
+      // Find existing cart or create a new one
+      let cart = await cartCollection.findOne({ user_id: userId });
+      if (!cart) {
+        cart = {
+          user_id: userId,
+          items: [],
+          total: 0,
+          created_at: new Date(),
+          updated_at: new Date(),
+        };
+      }
+
+      // Update cart items
+      const itemIndex = cart.items.findIndex(
+        (item) => item.product_id === product_id
+      );
+
+      if (itemIndex > -1) {
+        cart.items[itemIndex].quantity = quantity;
+      } else {
+        cart.items.push({ product_id, quantity });
+      }
+
+      // Calculate total
+      cart.total = cart.items.reduce((total, item) => {
+        return total + (item.price || 0) * (item.quantity || 0);
+      }, 0);
+
+      cart.updated_at = new Date();
+
+      // Save cart
+      await cartCollection.updateOne(
+        { user_id: userId },
+        {
+          $set: {
+            items: cart.items,
+            total: cart.total,
+            updated_at: cart.updated_at,
+          },
+        },
+        { upsert: true }
+      );
+
+      res.status(200).json({ cart });
+    } catch (error) {
+      console.error("Error updating cart:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+  server.post("/api/cart/:userId/update-quantity", async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const { productId, quantity } = req.body;
+      const db = await connectToDatabase();
+      const cartCollection = db.collection("cart");
+
+      const cart = await cartCollection.findOne({ user_id: userId });
+      if (!cart) {
+        return res.status(404).json({ error: "Cart not found" });
+      }
+
+      const item = cart.items.find(
+        (item) => item.product_id.toString() === productId
+      );
+      if (item) {
+        item.quantity = quantity;
+      }
+
+      // Calculate total
+      cart.total = cart.items.reduce((total, item) => {
+        return total + item.price * item.quantity; 
+      }, 0);
+      cart.updated_at = new Date();
+
+      await cartCollection.updateOne(
+        { user_id: userId },
+        {
+          $set: {
+            items: cart.items,
+            total: cart.total,
+            updated_at: cart.updated_at,
+          },
+        }
+      );
+
+      res.status(200).json({ cart });
+    } catch (error) {
+      console.error("Error updating quantity:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+  server.delete("/api/cart/:userId", async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const db = await connectToDatabase();
+      const cartCollection = db.collection("cart");
+
+      await cartCollection.deleteOne({ user_id: userId });
+
+      res.status(200).json({ message: "Cart cleared" });
+    } catch (error) {
+      console.error("Error clearing cart:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+  server.post("/api/cart/:userId/remove", async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const { productId } = req.body;
+
+      const db = await connectToDatabase();
+      const cartCollection = db.collection("cart");
+
+      // Remove the item from the user's cart
+      const result = await cartCollection.updateOne(
+        { user_id: userId },
+        { $pull: { items: { product_id: productId } } }
+      );
+
+      if (result.modifiedCount > 0) {
+        // Fetch the updated cart
+        const cart = await cartCollection.findOne({ user_id: userId });
+
+        if (cart) {
+          // Calculate the total count
+          const totalCount = cart.items.length;
+
+          // Respond with the updated cart and total count
+          res.status(200).json({ cart, totalCount });
+        } else {
+          res.status(404).json({ error: "Cart not found" });
+        }
+      } else {
+        res
+          .status(404)
+          .json({ error: "Item not found in cart or cart does not exist" });
+      }
     } catch (error) {
       console.error("Error:", error);
       res.status(500).json({ error: "Internal server error" });
@@ -698,7 +904,6 @@ app.prepare().then(() => {
   server.all("*", (req, res) => {
     return handle(req, res);
   });
-
   const PORT = process.env.PORT || 3001;
   server.listen(PORT, (err) => {
     if (err) throw err;

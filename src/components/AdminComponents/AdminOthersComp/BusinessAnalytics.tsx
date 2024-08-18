@@ -1,9 +1,12 @@
 // components/BusinessAnalytics.js
-import React from "react";
+"use client";
+import React, { useEffect, useContext } from "react";
 import Div from "../../UI/Div";
 import Text from "../../UI/Text";
 import { observer } from "mobx-react";
 import { Image } from "react-bootstrap";
+import OrderStoreContext from "@/store/OrderStore";
+
 
 const businessData = [
   { name: "Pending", imageUrl: "/images/Icons/icons8-pending-96.png" },
@@ -23,10 +26,21 @@ const smallDivData = [
 ];
 
 const BusinessAnalytics = () => {
+  const orderStore = useContext(OrderStoreContext); // Access OrderStore from context
+
+  useEffect(() => {
+    orderStore.loadOrders();
+    const fetchStatusCounts = async () => {
+      // await orderStore.fetchStatusCounts(); // Fetch status counts when the component mounts
+    };
+
+    fetchStatusCounts();
+  }, [orderStore]);
+console.log(orderStore)
   return (
     <Div
       themeDivClasses="h-[325px] rounded-xl shadow-md p-6 overflow-hidden"
-      darkColor="bg-pepperBlack "
+      darkColor="bg-pepperBlack"
       content={
         <>
           {/* Upper Corner Text */}
@@ -62,6 +76,12 @@ const BusinessAnalytics = () => {
                         alt={data.name}
                         className="h-8 w-8"
                       />
+                    </div>
+                    <div className="absolute bottom-2 left-2">
+                      {/* <Text
+                        themeDivClasses="text-lg font-bold"
+                        content={`${orderStore.statusCounts[data.name] || 0}`}
+                      /> */}
                     </div>
                   </>
                 }

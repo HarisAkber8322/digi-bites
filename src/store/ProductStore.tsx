@@ -10,6 +10,7 @@ export interface Ratings {
 }
 
 export interface Product {
+    imageUrl: string;
     _id: string;
     name: string;
     price: number;
@@ -194,7 +195,7 @@ class ProductStore {
 }
 
 
-const productStore = new ProductStore();
+export const productStore = new ProductStore();
 const ProductStoreContext = React.createContext(productStore);
 
 const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {

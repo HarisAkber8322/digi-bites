@@ -11,11 +11,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStarHalfAlt,  faStar as faSolidStar  } from "@fortawesome/free-solid-svg-icons";
 import { faStar as faRegularStar } from "@fortawesome/free-regular-svg-icons";
 
-interface TopRatedItemsProps {
-  showAll: boolean;
-}
 
-const TopRatedItems: React.FC<TopRatedItemsProps> = ({ showAll }) => {
+
+const TopRatedItems = () => {
   const ProductStore = useContext(ProductStoreContext);
   const [topRatedItems, setTopRatedItems] = useState<Product[]>([]);
 
@@ -37,13 +35,13 @@ const TopRatedItems: React.FC<TopRatedItemsProps> = ({ showAll }) => {
       // Sort items by rating in descending order
       const sortedItems = itemsWithRatings
         .sort((a, b) => (b.average_rating ?? 0) - (a.average_rating ?? 0))
-        .slice(0, showAll ? undefined : 6); // Display top 6 or all items
+        .slice(0, 6); // Display top 6 or all items
 
       setTopRatedItems(sortedItems);
     };
 
     fetchProducts();
-  }, [ProductStore, showAll]);
+  }, [ProductStore]);
 
   const renderStars = (rating: number) => {
     const fullStars = Math.floor(rating);
@@ -81,7 +79,7 @@ const TopRatedItems: React.FC<TopRatedItemsProps> = ({ showAll }) => {
                     href="/admin/product-reviews" // Use Link for navigation
                     className="text-blue-500 hover:text-themeYellow text-xs font-semibold"
                   >
-                    {showAll ? "Show Less" : "View All"}
+                    {"View All"}
                   </Link>
                 </div>
 

@@ -15,10 +15,9 @@ import { usePathname } from "next/navigation";
 import Div from "../UI/Div";
 import Text from "../UI/Text";
 import { observer } from "mobx-react";
-import MainStoreContext from "@/store/Mainstore";
 import { menuData } from "../../utills/constants"; // Adjust the path to where your menuData is located
-import dynamic from "next/dynamic";
 import UserStoreContext from "@/store/UserStore";
+import CartStoreContext from "@/store/CartStore";
 
 const HeaderComponent = () => {
   const router = usePathname();
@@ -28,27 +27,14 @@ const HeaderComponent = () => {
   const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(
     null,
   );
-  const MainStore = useContext(MainStoreContext);
+  const CartStore = useContext(CartStoreContext);
   const UserStore = useContext(UserStoreContext);
-  const { isLoggedin, logout } = UserStore;
+  const { isLoggedin } = UserStore;
+
   useEffect(() => {
-    const updateCartCount = () => {
-      const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
-      const totalCount = cartItems.reduce(
-        (acc: number, item: any) => acc + item.quantity,
-        0,
-      );
-      MainStore.setCartCount(totalCount);
-    };
-
-    window.addEventListener("storage", updateCartCount);
-    updateCartCount();
-
-    return () => {
-      window.removeEventListener("storage", updateCartCount);
-    };
-  }, [MainStore]);
-
+    // CartStore.loadCart();
+  }, [CartStore.cartItems, CartStore.cart]);
+  
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -165,21 +151,23 @@ const HeaderComponent = () => {
                   {/* <SearchInput onSearch={handleSearch} /> */}
                 </div>
                 <div className="md:text-lg md:flex md:items-center md:gap-5">
-                  <Link href="/cart" className="cursor-pointer">
-                    <Text
-                      content={
-                        <>
-                          <FontAwesomeIcon icon={faCartShopping} />
-                          {MainStore.cartCount > 0 && (
-                            <span className="bg-red-500 text-white text-xs rounded-full px-2 py-1 ml-1 relative bottom-4">
-                              {MainStore.cartCount}
-                            </span>
-                          )}
-                        </>
-                      }
-                      themeDivClasses="text-themeYellow"
-                    />
-                  </Link>
+                  {isLoggedin && (
+                    <Link href="/cart" className="cursor-pointer">
+                      <Text
+                        content={
+                          <>
+                            <FontAwesomeIcon icon={faCartShopping} />
+                            {CartStore.cartItems.length > 0 && (
+                              <span className="bg-red-500 text-white text-xs rounded-full px-2 py-1 ml-1 relative bottom-4">
+                                {CartStore.cartItems.length}
+                              </span>
+                            )}
+                          </>
+                        }
+                        themeDivClasses="text-themeYellow"
+                      />
+                    </Link>)
+                  }
 
                   <ToggleThemeComponent />
                   {isLoggedin ? (

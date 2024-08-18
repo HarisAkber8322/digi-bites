@@ -1,15 +1,10 @@
 // OrderStore.ts
 "use client";
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import axios from "axios";
 import React from "react";
-import { cartStore } from "./CartStore"; // Import the cartStore instance
+import { AddOn, CartItem, cartStore } from "./CartStore"; // Import the cartStore instance
 
-export interface AddOn {
-  name: string;
-  price: number;
-  value: boolean;
-}
 
 export interface Product {
   productId: string;
@@ -34,16 +29,15 @@ export interface Orders {
   addOns: AddOn[];
 }
 
-// Define CartStore type
-type CartStoreType = typeof cartStore;
 
 class OrderStore {
   orderList: Orders[] = [];
   userOrders: any;
-  constructor(private cartStore: CartStoreType) { // Use the CartStoreType here
+  statusCounts: any;
+
+  constructor() {
     makeAutoObservable(this);
   }
-
 
   async loadOrders() {
     try {
@@ -64,7 +58,8 @@ class OrderStore {
       console.error("Error fetching order by ID:", error);
     }
   }
-    async getOrdersByUserId(userId: string) {
+
+  async getOrdersByUserId(userId: string) {
     try {
       const response = await axios.get(`http://localhost:3001/api/orders/userInfo/${userId}`);
       if (response.status === 200) {
@@ -73,8 +68,9 @@ class OrderStore {
     } catch (error) {
       console.error("Error fetching orders by user ID:", error);
     }
-  } 
-  async triggerStatusUpdate(orderId?: string) {
+  }
+
+  async triggerStatusUpdate() {
     try {
       const response = await axios.put('http://localhost:3001/api/orders/update-status');
       if (response.status === 200) {
@@ -84,51 +80,86 @@ class OrderStore {
       console.error("Failed to update order statuses:", error);
     }
   }
-  async placeOrder(userId: string | undefined, paymentMethod: string, orderNote: string, totalAmount: number) {
+
+  // Example of updateStatus function in OrderStore
+  async updateStatus(orderId: string) {
+    try {
+      // Update the status on the server
+      const response = await axios.put(`http://localhost:3001/api/orders/${orderId}/update-status`);
+      const updatedOrder = response.data;
+
+      // Update the order in the local store
+      const index = this.orderList.findIndex(order => order._id === orderId);
+      if (index !== -1) {
+        this.orderList[index] = updatedOrder; // Replace with the updated order
+      }
+    } catch (error) {
+      console.error("Failed to update status:", error);
+    }
+  }
+  // async fetchStatusCounts() {
+  //     try {
+  //       // Fetch status counts from the server
+  //       const response = await axios.get('http://localhost:3001/api/orders/status-counts');
+  //       const statusCounts = response.data;
+
+  //       // Update the status counts in the local store
+  //       runInAction(() => {
+  //         this.statusCounts = statusCounts.reduce((acc: { [key: string]: number }, item: { _id: string, count: number }) => {
+  //           acc[item._id] = item.count;
+  //           return acc;
+  //         }, {});
+  //       });
+  //     } catch (error) {
+  //       console.error("Failed to fetch status counts:", error);
+  //     }
+  //   }
+
+
+
+  async placeOrder(cartItems: CartItem[], userId: string | undefined, paymentMethod: string, orderNote: string, totalPrice: number) {
     try {
       console.log("Placing order for user ID:", userId); // Debugging line
       if (!userId) throw new Error("User ID is required");
-  
-      const products = this.cartStore.cartItems.map((item) => ({
-        productId: item.productId,
+
+      const products = cartItems.map((item) => ({
+        productId: item.product_id,
         quantity: item.quantity,
-       
+        // addOns: item.addOns, // Ensure add-ons are included in the order
       }));
-  
-      const totalAmount = this.cartStore.totalPrice;
-  
+
+      const totalAmount = totalPrice;
+
       const userInfo = {
         userId, // Use the provided userId
         orderNote,
       };
-  
+
       const orderData = {
         status: "pending", // Default status
         paymentMethod,
         products,
         totalAmount,
         userInfo,
-        addOns: this.cartStore.addOns,
       };
-  
+
       const response = await axios.post("http://localhost:3001/api/orders", orderData);
-  
+
       if (response.status === 201) {
         this.orderList.push(response.data);
-        this.cartStore.clearCart(); // Clear the cart after placing the order
+        // this.cartStore.clearCart(); // Clear the cart after placing the order
         return response.data;
       }
     } catch (error) {
       console.error("Error placing order:", error);
     }
   }
-  
-  
 }
 
 
-const orderStore = new OrderStore(cartStore); // Use the cartStore instance
+export const orderStore = new OrderStore();
 const OrderStoreContext = React.createContext(orderStore);
+
 
 const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (

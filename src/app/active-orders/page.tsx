@@ -6,7 +6,7 @@ import UserStoreContext from "@/store/UserStore";
 import ProductStoreContext from "@/store/ProductStore";
 import Div from "@/components/UI/Div";
 import Text from "@/components/UI/Text";
-import { FaHashtag, FaRegClock } from "react-icons/fa"; // Importing a clock icon
+import { FaHashtag } from "react-icons/fa";
 
 const OrdersPage: React.FC = observer(() => {
   const orderStore = useContext(OrderStoreContext);
@@ -19,7 +19,7 @@ const OrdersPage: React.FC = observer(() => {
 
   useEffect(() => {
     if (userStore.user?.id) {
-      orderStore.loadOrders(); // Fetch orders initially
+      orderStore.loadOrders();
     }
   }, [orderStore, userStore.user?.id]);
 
@@ -54,11 +54,6 @@ const OrdersPage: React.FC = observer(() => {
       fetchProductDetails();
     }
   }, [orderStore.orderList, userStore, productStore]);
-
-  // Function to handle status update
-  const handleStatusUpdate = async (orderId: string) => {
-    await orderStore.triggerStatusUpdate(orderId);
-  };
 
   return (
     <Div
@@ -106,9 +101,6 @@ const OrdersPage: React.FC = observer(() => {
                       <th className="px-6 py-3 text-center text-xs font-semibold text-gray-500">
                         Total Amount (Rs)
                       </th>
-                      <th className="px-6 py-3 text-center text-xs font-semibold text-gray-500">
-                        Last Update
-                      </th>
                     </tr>
                   </thead>
                   <tbody className="bg-white dark:bg-gray-900">
@@ -123,7 +115,6 @@ const OrdersPage: React.FC = observer(() => {
                               key={`${order._id}-${productIndex}`}
                               className="hover:bg-gray-100 dark:hover:bg-gray-700 border-b border-b-lightGray h-[20px]"
                             >
-                              {/* For the first product, display SL and Status columns */}
                               {productIndex === 0 && (
                                 <>
                                   <td
@@ -159,7 +150,6 @@ const OrdersPage: React.FC = observer(() => {
                                 <FaHashtag className="ml-1" />
                                 <span className="ml-1">{product.quantity}</span>
                               </td>
-                              {/* For the first product, display Add-Ons, Payment Method, and Total Amount columns */}
                               {productIndex === 0 && (
                                 <>
                                   <td
@@ -191,23 +181,6 @@ const OrdersPage: React.FC = observer(() => {
                                     className="px-4 py-2 text-center whitespace-nowrap text-sx font-medium text-gray-900 dark:text-gray-100"
                                   >
                                     Rs. {order.totalAmount.toFixed(2)}
-                                  </td>
-                                  <td
-                                    rowSpan={order.products.length}
-                                    className="px-4 py-2 text-center whitespace-nowrap text-sx font-medium text-gray-900 dark:text-gray-100"
-                                  >
-                                    <div className="flex items-center justify-center gap-2">
-                                      <FaRegClock />
-                                      <span>
-                                        {order.updatedAt ? new Date(order.updatedAt).toLocaleString() : "Not Updated"}
-                                      </span>
-                                      <button
-                                        onClick={() => handleStatusUpdate(order._id)}
-                                        className="ml-4 px-3 py-1 bg-blue-500 text-white rounded"
-                                      >
-                                        Update Status
-                                      </button>
-                                    </div>
                                   </td>
                                 </>
                               )}

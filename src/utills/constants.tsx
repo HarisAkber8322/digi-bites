@@ -582,7 +582,7 @@ export const CardData = [
     icon: faClipboard, // Replace with your desired icon
     name: "My Order",
     link: "/active-orders",
-    
+
   },
   {
     id: 2,
@@ -698,7 +698,7 @@ export const sidebarItems: SidebarCategory[] = [
     items: [
       { title: "Products Listing", link: "/admin/product-listing", icon: faCircle },
       { title: "Products Add", link: "/admin/product-add", icon: faPlusCircle },
-      { title: "Product Reviews", link: "/admin/product-reviews", icon: faStarHalfAlt},
+      { title: "Product Reviews", link: "/admin/product-reviews", icon: faStarHalfAlt },
     ],
   },
   // Add more categories and items as needed
@@ -718,3 +718,32 @@ export const generateSlug = (str: string) => {
     .replace(/^-+/, '')          // Trim hyphens from the start of the string
     .replace(/-+$/, '');         // Trim hyphens from the end of the string
 };
+
+
+const addOns = [
+  {
+    "name": "fries",
+    "price": 1.5,
+    "value": true
+  },
+  {
+    "name": "extraToppings",
+    "price": 0.75,
+    "value": false
+  },
+  {
+    "name": "extraCheese",
+    "price": 1,
+    "value": true
+  },
+  {
+    "name": "ketchup",
+    "price": 0.25,
+    "value": true
+  },
+  {
+    "name": "raita",
+    "price": 0.5,
+    "value": false
+  }
+];

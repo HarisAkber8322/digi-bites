@@ -30,6 +30,7 @@ class UserStore {
   isLoggedin = false;
   router: ReturnType<typeof useRouter> | null = null;
   favoriteProductIds: Set<string> = new Set();
+  currentUser: any;
 
   constructor() {
     makeAutoObservable(this);
@@ -169,7 +170,7 @@ class UserStore {
   }
 }
 
-const userStore = new UserStore();
+export const userStore = new UserStore();
 const UserStoreContext = React.createContext(userStore);
 
 const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
