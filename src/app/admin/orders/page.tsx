@@ -116,9 +116,7 @@ const OrdersPage: React.FC = () => {
                       <th className="px-6 py-3 text-center text-xs font-semibold text-gray-500">
                         Product Name
                       </th>
-                      <th className="px-6 py-3 text-center text-xs font-semibold text-gray-500">
-                        Add-Ons
-                      </th>
+             
                       <th className="px-6 py-3 text-center text-xs font-semibold text-gray-500">
                         Payment Method
                       </th>
@@ -150,17 +148,7 @@ const OrdersPage: React.FC = () => {
                             </p>
                           ))}
                         </td>
-                        <td className="px-4 py-2 text-center whitespace-nowrap text-sx font-medium text-gray-900 dark:text-gray-100">
-                          <ul>
-                            {order.addOns
-                              .filter((addOn) => addOn.value) // Filter out add-ons with value: true
-                              .map((addOn, addOnIndex) => (
-                                <li key={addOnIndex} className="mb-2">
-                                  {addOn.name} - Rs.{addOn.price.toFixed(2)}
-                                </li>
-                              ))}
-                          </ul>
-                        </td>
+              
                         <td className="px-4 py-2 text-center whitespace-nowrap text-sx font-medium text-gray-900 dark:text-gray-100">
                           {order.paymentMethod}
                         </td>

@@ -652,40 +652,13 @@ app.prepare().then(() => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
-  server.get("/api/orders/status-counts", async (req, res) => {
-    try {
-      const db = await connectToDatabase();
-      const ordersCollection = db.collection("orders");
-
-      const statusCounts = await ordersCollection
-        .aggregate([
-          {
-            $group: {
-              _id: "$status",
-              count: { $sum: 1 },
-            },
-          },
-          {
-            $sort: { _id: 1 }, // Optional: sort by status
-          },
-        ])
-        .toArray();
-
-      res.status(200).json(statusCounts);
-    } catch (error) {
-      console.error("Error:", error);
-      res.status(500).json({ error: "Internal server error" });
-    }
-  });
   const statusProgression = {
     Pending: "Confirmed",
     Confirmed: "Processing",
     Processing: "Readyforpickup",
-    Readyforpickup: "Picked",
-    Picked: "Returned",
-    Returned: "Discard",
+    Readyforpickup: "Completed",
+    Completed: "", // No next status
   };
-  // API endpoint to update the status of a specific order by ID
   server.put("/api/orders/:orderId/update-status", async (req, res) => {
     const { orderId } = req.params;
 
@@ -702,7 +675,7 @@ app.prepare().then(() => {
         return res.status(404).json({ error: "Order not found" });
       }
 
-      // Determine the next status in the progression
+      // Determine the next status
       const nextStatus = statusProgression[order.status];
 
       if (!nextStatus) {
@@ -828,7 +801,7 @@ app.prepare().then(() => {
 
       // Calculate total
       cart.total = cart.items.reduce((total, item) => {
-        return total + item.price * item.quantity; 
+        return total + item.price * item.quantity;
       }, 0);
       cart.updated_at = new Date();
 

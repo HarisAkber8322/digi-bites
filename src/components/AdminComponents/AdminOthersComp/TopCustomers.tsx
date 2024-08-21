@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Image from "next/image";import { MenuItem } from "../../../utills/constants"; // Adjust the import path
+import Image from "next/image"; import { MenuItem } from "../../../utills/constants"; // Adjust the import path
 import Div from "../../UI/Div";
 import Text from "../../UI/Text";
 interface TopRatedItemsProps {
@@ -47,18 +47,19 @@ const TopRatedItems: React.FC<TopRatedItemsProps> = ({ items }) => {
                     {showAll ? "Show Less" : "View All"}
                   </button>
                 </div>
-            
+
                 <div className="flex flex-col space-y-[10px] p-4">
-                  {topRatedItems.map((item) => (
+                  {topRatedItems.map((item, index) => (
                     <Div
                       themeDivClasses=" rounded-lg"
                       lightColor="bg-ExtraLightGray"
                       darkColor="bg-black"
+                      key={index}
                       content={
                         <>
                           <div
                             className="flex flex-row items-center w-full rounded-lg shadow h-[50px] "
-                            key={item.name}
+                            key={index}
                           >
                             <div className="h-full p-2">
                               <Image
@@ -74,7 +75,7 @@ const TopRatedItems: React.FC<TopRatedItemsProps> = ({ items }) => {
                               <h3 className="text-xs font-medium">
                                 {item.name}
                               </h3>
-                       
+
                             </div>
                           </div>
                         </>

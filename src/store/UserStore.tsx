@@ -46,10 +46,13 @@ class UserStore {
   setUser(user: User | null) {
     this.user = user;
   }
+  setUsers(userList: User[]) {
+    this.userList = userList;
+  }
   // async loadUsers() {
   //   try {
   //     const response = await axios.get("http://localhost:3001/api/users");
-  //     this.userList = response.data.users;
+  //     this.setUsers(response.data.users);
   //   } catch (error) {
   //     console.error("Error loading users:", error);
   //   }

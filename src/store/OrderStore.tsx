@@ -3,8 +3,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import axios from "axios";
 import React from "react";
-import { AddOn, CartItem, cartStore } from "./CartStore"; // Import the cartStore instance
-
+import { AddOn, CartItem } from "./CartStore"; // Import the cartStore instance
 
 export interface Product {
   productId: string;
@@ -29,14 +28,22 @@ export interface Orders {
   addOns: AddOn[];
 }
 
-
 class OrderStore {
   orderList: Orders[] = [];
   userOrders: any;
   statusCounts: any;
+  statusProgression: Record<string, string> = {
+    Pending: "Confirmed",
+    Confirmed: "Processing",
+    Processing: "Readyforpickup",
+    Readyforpickup: "Completed",
+    Completed: "", // No next status
+  };
 
   constructor() {
     makeAutoObservable(this);
+    this.loadOrders();
+    this.startStatusUpdateInterval();
   }
 
   async loadOrders() {
@@ -70,73 +77,26 @@ class OrderStore {
     }
   }
 
-  async triggerStatusUpdate() {
-    try {
-      const response = await axios.put('http://localhost:3001/api/orders/update-status');
-      if (response.status === 200) {
-        await this.loadOrders(); // Refresh the orders list after update
-      }
-    } catch (error) {
-      console.error("Failed to update order statuses:", error);
-    }
-  }
-
-  // Example of updateStatus function in OrderStore
-  async updateStatus(orderId: string) {
-    try {
-      // Update the status on the server
-      const response = await axios.put(`http://localhost:3001/api/orders/${orderId}/update-status`);
-      const updatedOrder = response.data;
-
-      // Update the order in the local store
-      const index = this.orderList.findIndex(order => order._id === orderId);
-      if (index !== -1) {
-        this.orderList[index] = updatedOrder; // Replace with the updated order
-      }
-    } catch (error) {
-      console.error("Failed to update status:", error);
-    }
-  }
-  // async fetchStatusCounts() {
-  //     try {
-  //       // Fetch status counts from the server
-  //       const response = await axios.get('http://localhost:3001/api/orders/status-counts');
-  //       const statusCounts = response.data;
-
-  //       // Update the status counts in the local store
-  //       runInAction(() => {
-  //         this.statusCounts = statusCounts.reduce((acc: { [key: string]: number }, item: { _id: string, count: number }) => {
-  //           acc[item._id] = item.count;
-  //           return acc;
-  //         }, {});
-  //       });
-  //     } catch (error) {
-  //       console.error("Failed to fetch status counts:", error);
-  //     }
-  //   }
-
 
 
   async placeOrder(cartItems: CartItem[], userId: string | undefined, paymentMethod: string, orderNote: string, totalPrice: number) {
     try {
-      console.log("Placing order for user ID:", userId); // Debugging line
       if (!userId) throw new Error("User ID is required");
 
       const products = cartItems.map((item) => ({
         productId: item.product_id,
         quantity: item.quantity,
-        // addOns: item.addOns, // Ensure add-ons are included in the order
       }));
 
       const totalAmount = totalPrice;
 
       const userInfo = {
-        userId, // Use the provided userId
+        userId,
         orderNote,
       };
 
       const orderData = {
-        status: "pending", // Default status
+        status: "Pending",
         paymentMethod,
         products,
         totalAmount,
@@ -147,19 +107,41 @@ class OrderStore {
 
       if (response.status === 201) {
         this.orderList.push(response.data);
-        // this.cartStore.clearCart(); // Clear the cart after placing the order
         return response.data;
       }
     } catch (error) {
       console.error("Error placing order:", error);
     }
   }
-}
+  async updateStatus(orderId: string) {
+    try {
+      const response = await axios.put(`http://localhost:3001/api/orders/${orderId}/update-status`);
+      const updatedOrder = response.data;
 
+      const index = this.orderList.findIndex(order => order._id === orderId);
+      if (index !== -1) {
+        this.orderList[index] = updatedOrder; // Replace with the updated order
+      }
+    } catch (error) {
+      console.error("Failed to update status:", error);
+    }
+  }
+  startStatusUpdateInterval() {
+    setInterval(() => {
+      this.orderList.forEach(order => {
+        setTimeout(() => {
+          const nextStatus = this.statusProgression[order.status];
+          if (nextStatus) {
+            this.updateStatus(order._id);
+          }
+        }, 1 * 60 * 1000);
+      });
+    }, 5 * 60 * 1000); // 5 minutes in milliseconds
+  }
+}
 
 export const orderStore = new OrderStore();
 const OrderStoreContext = React.createContext(orderStore);
-
 
 const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
