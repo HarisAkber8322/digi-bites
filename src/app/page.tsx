@@ -9,7 +9,7 @@ import CompleteMenu from "@/components/ClientComponent/OtherComponents/CompleteM
 const App = () => {
   return (
     <>
-      <div className="mt-[28px] w-full md:w-[1180px] m-auto">
+      <div className="mt-[28px] w-full md:w-[1180px] m-auto xs:w-[250px]">
         <Slider />
       </div>
    {/* /   <div className="w-full md:w-[1180px] m-auto">

@@ -45,7 +45,7 @@ const Menu: React.FC = () => {
             }
             themeDivClasses="flex justify-between items-center"
           />
-          <div className="grid grid-cols-6 gap-4 my-[28px]">
+          <div className="grid grid-cols-6 xs:flex xs:flex-col gap-4 my-[28px]">
             {ProductStore.products
               .filter((menuItem) => menuItem.category === category)
               .slice(0, 6) // Show only the first 6 products per category
