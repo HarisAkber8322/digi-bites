@@ -1,5 +1,3 @@
-
-
 "use client";
 import React, { useState, useEffect, useContext } from "react";
 import Div from "../../UI/Div";
@@ -20,7 +18,6 @@ const Checkout = () => {
   const handleDeliveryTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDeliveryType(e.target.value);
   };
-
 
   return (
     <>
@@ -113,21 +110,21 @@ const Checkout = () => {
                     themeDivClasses="mb-6 p-6 rounded-lg shadow-md"
                     content={
                       <>
-                           <div className="flex justify-between border-b-2 border-ExtraLightGray pb-2 mb-4 ">
-                              <Text
-                                themeDivClasses="font-semibold text-lg mb-2"
-                                content={"Payment Method"}
-                              />
-                              <span className="text-themeYellow  font-bold ">
-                                Change
-                              </span>
-                            </div>
-                            <div className="flex ">
-                              <span className="text-red-500  gap-1 flex items-center">
-                                <FontAwesomeIcon icon={faCirclePlus} />
-                                Add Payment Method
-                              </span>
-                            </div>
+                        <div className="flex justify-between border-b-2 border-ExtraLightGray pb-2 mb-4 ">
+                          <Text
+                            themeDivClasses="font-semibold text-lg mb-2"
+                            content={"Payment Method"}
+                          />
+                          <span className="text-themeYellow  font-bold ">
+                            Change
+                          </span>
+                        </div>
+                        <div className="flex ">
+                          <span className="text-red-500  gap-1 flex items-center">
+                            <FontAwesomeIcon icon={faCirclePlus} />
+                            Add Payment Method
+                          </span>
+                        </div>
                       </>
                     }
                   />

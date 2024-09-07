@@ -9,15 +9,18 @@ import OrderStoreContext from "@/store/OrderStore";
 const statusData = [
   { name: "Pending", imageUrl: "/images/Icons/icons8-pending-96.png" },
   { name: "Confirmed", imageUrl: "/images/Icons/icons8-confirmed-96.png" },
-  { name: "Processing", imageUrl: "/images/Icons/icons8-submit-progress-96.png" },
-  { name: "Readyforpickup", imageUrl: "/images/Icons/icons8-waiter-96.png" }
+  {
+    name: "Processing",
+    imageUrl: "/images/Icons/icons8-submit-progress-96.png",
+  },
+  { name: "Readyforpickup", imageUrl: "/images/Icons/icons8-waiter-96.png" },
 ];
 
 const smallDivData = [
   { name: "Picked", imageUrl: "/images/Icons/icons8-done-96.png" },
   { name: "Canceled", imageUrl: "/images/Icons/icons8-clear-search-96.png" },
   { name: "Returned", imageUrl: "/images/Icons/icons8-homework-96.png" },
-  { name: "Discard", imageUrl: "/images/Icons/icons8-fail-96.png" }
+  { name: "Discard", imageUrl: "/images/Icons/icons8-fail-96.png" },
 ];
 
 const BusinessAnalytics = () => {
@@ -92,7 +95,12 @@ const BusinessAnalytics = () => {
                   <>
                     <Text
                       themeDivClasses="pl-4 text-medium font-medium"
-                      content={<div>{data.name} <br></br>{statusCounts[data.name] || 0}</div>}
+                      content={
+                        <div>
+                          {data.name} <br></br>
+                          {statusCounts[data.name] || 0}
+                        </div>
+                      }
                     />
                     <div className="absolute top-2 right-2">
                       <Image
@@ -106,7 +114,7 @@ const BusinessAnalytics = () => {
               />
             ))}
             {smallDivData.map((data, index) => (
-              < Div
+              <Div
                 key={index}
                 themeDivClasses="h-[65px] rounded-xl p-4 flex items-center"
                 lightColor="bg-bgGrey"
@@ -121,7 +129,12 @@ const BusinessAnalytics = () => {
                     </div>
                     <Text
                       themeDivClasses="pl-2 block w-full font-medium text-gray"
-                      content={<div className="flex justify-between items-center w-full"><span>{data.name}</span><span> {statusCounts[data.name] || 0}</span></div>}
+                      content={
+                        <div className="flex justify-between items-center w-full">
+                          <span>{data.name}</span>
+                          <span> {statusCounts[data.name] || 0}</span>
+                        </div>
+                      }
                     />
                   </>
                 }

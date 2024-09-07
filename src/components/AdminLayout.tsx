@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import HeaderComponent from "@/components/AdminComponents/Header";
 import SideBarComponent from "@/components/AdminComponents/Sidebar";
 import { useState } from "react";
@@ -7,11 +7,25 @@ import { observer } from "mobx-react";
 import dynamic from "next/dynamic";
 import classNames from "classnames";
 import Div from "@/components/UI/Div";
+import { useRouter } from "next/navigation";
+import { adminStore } from "@/store/AdminStore";
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const [toggle, setToggle] = useState(false);
   const HandleToggle = () => {
     setToggle(toggle ? false : true);
   };
+  const router = useRouter();
+
+  useEffect(() => {
+    // If admin is not logged in, redirect to the login page
+    if (!adminStore.isAdminLoggedIn) {
+      router.push("/admin/auth");
+    }
+  }, [adminStore.isAdminLoggedIn, router]);
+
+  if (!adminStore.isAdminLoggedIn) {
+    return null; // Prevent page content from rendering during redirect
+  }
   return (
     <>
       <HeaderComponent

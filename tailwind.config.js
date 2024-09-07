@@ -14,12 +14,12 @@ const config = {
       },
       colors: {
         transparent: "#00000000",
-      // gray
+        // gray
         bgGrey: "#f1f1f1",
         ExtraLightGray: "#eeeeee",
         lightGray: "#dddddd",
         gray: "#aaaaaa",
-      // black
+        // black
         pepperBlack: "#303030",
         dullblack: "#333333",
         lightBlack: "#111111",

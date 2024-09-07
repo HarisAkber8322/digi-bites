@@ -39,7 +39,7 @@ interface PopProps {
   handleQuantityChange: (
     name: string,
     value: number,
-    type: "addOn" | "funOption"
+    type: "addOn" | "funOption",
   ) => void;
   setQuantity: (quantity: number) => void;
   calculateTotal: () => number;
@@ -58,7 +58,10 @@ const Pop: React.FC<PopProps> = ({
   calculateTotal,
 }) => {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center " onClick={handleCloseModal}>
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center "
+      onClick={handleCloseModal}
+    >
       <Div
         themeDivClasses=" p-6 rounded-lg shadow-lg max-w-lg w-full"
         content={
@@ -67,7 +70,14 @@ const Pop: React.FC<PopProps> = ({
               className="  px-4 w-full flex justify-end"
               onClick={handleCloseModal}
             >
-             <Text themeDivClasses="" content={<><FontAwesomeIcon icon={faClose}/></>}/> 
+              <Text
+                themeDivClasses=""
+                content={
+                  <>
+                    <FontAwesomeIcon icon={faClose} />
+                  </>
+                }
+              />
             </button>
             <div className="flex">
               <Image
@@ -135,7 +145,7 @@ const Pop: React.FC<PopProps> = ({
                               addOns[key].quantity - 1 >= 1
                                 ? addOns[key].quantity - 1
                                 : 1,
-                              "addOn"
+                              "addOn",
                             )
                           }
                         >
@@ -151,7 +161,7 @@ const Pop: React.FC<PopProps> = ({
                             handleQuantityChange(
                               key,
                               addOns[key].quantity + 1,
-                              "addOn"
+                              "addOn",
                             )
                           }
                         >
@@ -190,7 +200,7 @@ const Pop: React.FC<PopProps> = ({
                               funOptions[key].quantity - 1 >= 1
                                 ? funOptions[key].quantity - 1
                                 : 1,
-                              "funOption"
+                              "funOption",
                             )
                           }
                         >
@@ -206,7 +216,7 @@ const Pop: React.FC<PopProps> = ({
                             handleQuantityChange(
                               key,
                               funOptions[key].quantity + 1,
-                              "funOption"
+                              "funOption",
                             )
                           }
                         >

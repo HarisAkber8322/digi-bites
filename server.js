@@ -6,15 +6,53 @@ const { ObjectId } = require("mongodb");
 const { connectToDatabase } = require("./src/db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const nodemailer = require("nodemailer");
+const sgMail = require("@sendgrid/mail"); // SendGrid for email sending
+require("dotenv").config(); // Load environment variables
+
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
 const PAGE_SIZE = 5;
 
+// Set up SendGrid API key
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+// Send email function using SendGrid
+const sendEmail = async (to, subject, text, html) => {
+  const msg = {
+    to, // recipient email address
+    from: process.env.VERIFIED_EMAIL, // Your verified sender email from SendGrid
+    subject,
+    text,
+    html,
+  };
+  try {
+    await sgMail.send(msg);
+    console.log("Email sent");
+  } catch (error) {
+    console.error(error);
+    if (error.response) {
+      console.error(error.response.body);
+    }
+  }
+};
 app.prepare().then(() => {
   const server = express();
   server.use(cors());
   server.use(express.json());
+
+  server.post("/send-email", async (req, res) => {
+    const { to, subject, text, html } = req.body;
+
+    try {
+      await sendEmail(to, subject, text, html);
+      res.status(200).send("Email sent successfully");
+    } catch (error) {
+      console.error("Error sending email:", error);
+      res.status(500).send("Failed to send email");
+    }
+  });
 
   //User
   server.get("/api/users", async (req, res) => {
@@ -171,7 +209,7 @@ app.prepare().then(() => {
       return res.status(500).json({ message: "Internal server error" });
     }
   });
-  //Auth
+  //User Auth
   server.get("/api/auth/loggedinUser", async (req, res) => {
     const token = req.headers.authorization?.split(" ")[1];
     if (!token) return res.status(401).json({ error: "No token provided" });
@@ -279,60 +317,199 @@ app.prepare().then(() => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
-// admin Auth
-server.get("/api/auth/loggedinAdmin", async (req, res) => {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) return res.status(401).json({ error: "No token provided" });
 
-  try {
-    const decoded = jwt.verify(token, process.env.SECRET_KEY);
-    const db = await connectToDatabase();
-    const adminCollection = db.collection("admin");
-    const admin = await adminCollection.findOne({
-      _id: new ObjectId(decoded.id),
-    });
+  // admin Auth
+  server.get("/api/auth/admin/loggedinAdmin", async (req, res) => {
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) return res.status(401).json({ error: "No token provided" });
 
-    if (admin) {
-      res.status(200).json({ admin: { id: admin._id, email: admin.email } });
+    try {
+      const decoded = jwt.verify(token, process.env.SECRET_KEY);
+      const db = await connectToDatabase();
+      const adminCollection = db.collection("admin");
+      const admin = await adminCollection.findOne({
+        _id: new ObjectId(decoded.id),
+      });
+
+      if (admin) {
+        res.status(200).json({ admin: { id: admin._id, email: admin.email } });
+      } else {
+        res.status(404).json({ error: "User not found" });
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+  server.post("/api/auth/admin/login", async (req, res) => {
+    console.log("Signup request received:", req.body);
+    const { email, password } = req.body;
+
+    try {
+      const db = await connectToDatabase();
+      const adminCollection = db.collection("admin");
+      const admin = await adminCollection.findOne({ email });
+
+      if (!admin) {
+        return res.status(401).json({ error: "Invalid email or password" });
+      }
+
+      const passwordMatch = await bcrypt.compare(password, admin.password); // Fix here
+
+      if (!passwordMatch) {
+        return res.status(401).json({ error: "Invalid email or password" });
+      }
+
+      const token = jwt.sign({ id: admin._id }, process.env.SECRET_KEY, {
+        expiresIn: "5h",
+      });
+
+      res.status(200).json({
+        token: token, // Include token in response
+        admin: { id: admin._id, email: admin.email },
+      });
+    } catch (error) {
+      console.error("Error logging in:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+  server.post("/api/auth/admin/signup", async (req, res) => {
+    console.log("Signup request received:", req.body);
+    const {
+      username = "",
+      email = "",
+      password = "",
+      role = "admin",
+    } = req.body;
+
+    try {
+      const db = await connectToDatabase();
+      const usersCollection = db.collection("admin");
+
+      // Check if the user already exists
+      const existingUser = await usersCollection.findOne({ email });
+      if (existingUser) {
+        return res
+          .status(400)
+          .json({ error: "User with this email already exists" });
+      }
+
+      // Hash the password
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      // Create a new user object with all the properties
+      const newUser = {
+        username,
+        email,
+        password: hashedPassword,
+        role,
+      };
+
+      // Insert the new user into the database
+      const result = await usersCollection.insertOne(newUser);
+
+      if (result.acknowledged) {
+        // Return user data or success message without JWT
+        res.status(201).json({
+          message: "Admin created successfully",
+          admin: { id: result.insertedId, username, email },
+        });
+      } else {
+        res.status(500).json({ error: "Internal server error" });
+      }
+    } catch (error) {
+      console.error("Error signing up:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+  const transporter = nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+  transporter.verify(function (error, success) {
+    if (error) {
+      console.log("Error connecting to Gmail:", error);
     } else {
-      res.status(404).json({ error: "User not found" });
+      console.log("Server is ready to send email", success);
     }
-  } catch (error) {
-    console.error("Error fetching user data:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
+  });
+  server.post("/api/auth/admin/forgot-password", async (req, res) => {
+    const { email } = req.body;
+    console.log("Received forgot password request for:", email);
 
-server.post("/api/auth/adminLogin", async (req, res) => {
-  const { email, password } = req.body;
+    try {
+      const db = await connectToDatabase();
+      const adminCollection = db.collection("admin");
+      const admin = await adminCollection.findOne({ email });
 
-  try {
-    const db = await connectToDatabase();
-    const adminCollection = db.collection("admin");
-    const admin = await adminCollection.findOne({ email });
+      if (!admin) {
+        return res.status(404).json({ error: "Email not found" });
+      }
 
-    if (!admin) {
-      return res.status(401).json({ error: "Invalid email or password" });
+      const otp = generateOTP();
+      console.log("Generated OTP:", otp);
+
+      const otpToken = jwt.sign(
+        { otp, id: admin._id },
+        process.env.SECRET_KEY,
+        { expiresIn: "10m" }
+      );
+      console.log("Generated OTP token");
+
+      // Send OTP to the admin's email
+      await transporter.sendMail({
+        to: email,
+        subject: "Your OTP for Password Reset",
+        text: `Your OTP is: ${otp}`,
+      });
+
+      res.status(200).json({ message: "OTP sent to email", otpToken });
+    } catch (error) {
+      console.error("Error in forgot-password:", error);
+      res.status(500).json({ error: "Internal server error" });
     }
+  });
+  const generateOTP = () =>
+    Math.floor(100000 + Math.random() * 900000).toString();
+  server.post("/api/auth/admin/verify-otp", async (req, res) => {
+    const { otpToken, otp } = req.body;
 
-    const passwordMatch = await bcrypt.compare(password, admin.passwordHash);
-    if (!passwordMatch) {
-      return res.status(401).json({ error: "Invalid email or password" });
+    try {
+      const decoded = jwt.verify(otpToken, process.env.SECRET_KEY);
+
+      if (decoded.otp !== otp) {
+        return res.status(400).json({ error: "Invalid OTP" });
+      }
+
+      res.status(200).json({ message: "OTP verified successfully" });
+    } catch (error) {
+      console.error("Error in verify-otp:", error);
+      res.status(500).json({ error: "Internal server error" });
     }
+  });
+  server.post("/api/auth/admin/reset-password", async (req, res) => {
+    const { otpToken, newPassword } = req.body;
 
-    const token = jwt.sign({ id: admin._id }, process.env.SECRET_KEY, {
-      expiresIn: "5h",
-    });
+    try {
+      const decoded = jwt.verify(otpToken, process.env.SECRET_KEY);
+      const db = await connectToDatabase();
+      const adminCollection = db.collection("admin");
 
-    res.status(200).json({
-      token: token, // Include token in response
-      admin: { id: admin._id, email: admin.email },
-    });
-  } catch (error) {
-    console.error("Error logging in:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      await adminCollection.updateOne(
+        { _id: new ObjectId(decoded.id) },
+        { $set: { password: hashedPassword } }
+      );
+
+      res.status(200).json({ message: "Password reset successfully" });
+    } catch (error) {
+      console.error("Error in reset-password:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
 
   //Products
   server.post("/api/products/:id/favorite", async (req, res) => {
@@ -456,39 +633,24 @@ server.post("/api/auth/adminLogin", async (req, res) => {
     }
   });
   server.post("/api/products", async (req, res) => {
-    const {
-      name,
-      price,
-      description,
-      category,
-      image,
-      stock,
-      ratings = [],
-      created_at,
-      updated_at,
-    } = req.body;
+    const { name, price, description, category, image, stock } = req.body;
 
     try {
       const db = await connectToDatabase();
-      const productsCollection = db.collection("products");
-
-      // Create a new product object
-      const newProduct = {
+      const product = {
         name,
         price,
         description,
         category,
         image,
         stock,
-        ratings,
-        created_at: created_at || new Date(),
-        updated_at: updated_at || new Date(),
+        created_at: new Date(),
+        updated_at: new Date(),
+        ratings: [],
       };
+      await db.collection("products").insertOne(product);
 
-      // Insert the new product into the collection
-      const result = await productsCollection.insertOne(newProduct);
-
-      res.status(201).json({ _id: result.insertedId, ...newProduct });
+      res.status(201).json(product);
     } catch (error) {
       console.error("Error adding product:", error);
       res.status(500).json({ error: "Internal server error" });

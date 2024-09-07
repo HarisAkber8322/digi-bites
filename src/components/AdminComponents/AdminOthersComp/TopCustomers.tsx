@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Image from "next/image"; import { MenuItem } from "../../../utills/constants"; // Adjust the import path
+import Image from "next/image";
+import { MenuItem } from "../../../utills/constants"; // Adjust the import path
 import Div from "../../UI/Div";
 import Text from "../../UI/Text";
 interface TopRatedItemsProps {
@@ -75,7 +76,6 @@ const TopRatedItems: React.FC<TopRatedItemsProps> = ({ items }) => {
                               <h3 className="text-xs font-medium">
                                 {item.name}
                               </h3>
-
                             </div>
                           </div>
                         </>

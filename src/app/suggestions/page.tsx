@@ -16,7 +16,7 @@ const RecommendedProductsPage: React.FC = () => {
     const fetchRecommendedProducts = async () => {
       await ProductStore.fetchProducts(); // Ensure this fetches all products and updates the store
       const recommended = ProductStore.products.filter(
-        (product) => product.recommended
+        (product) => product.recommended,
       );
       setRecommendedProducts(recommended);
     };

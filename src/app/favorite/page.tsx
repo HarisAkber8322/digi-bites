@@ -21,18 +21,22 @@ const FavoritePage: React.FC = () => {
   useEffect(() => {
     const fetchFavorites = async () => {
       if (UserStore.isLoggedin) {
-        const favoriteProductIdsArray = Array.from(UserStore.favoriteProductIds);
+        const favoriteProductIdsArray = Array.from(
+          UserStore.favoriteProductIds,
+        );
 
         // Fetch products by ID
         const favoriteProducts = await Promise.all(
           favoriteProductIdsArray.map(async (favProductId: string) => {
             const product = await ProductStore.fetchProductById(favProductId);
             return product;
-          })
+          }),
         );
 
         // Filter out any null values and update state
-        const validProducts = favoriteProducts.filter((product): product is Product => product !== null);
+        const validProducts = favoriteProducts.filter(
+          (product): product is Product => product !== null,
+        );
         setFavorites(validProducts);
       }
     };
@@ -48,7 +52,9 @@ const FavoritePage: React.FC = () => {
       content={
         <div className="mt-7">
           <Text
-            content={<h2 className="text-2xl font-bold mb-4">Favorite Items</h2>}
+            content={
+              <h2 className="text-2xl font-bold mb-4">Favorite Items</h2>
+            }
             themeDivClasses=""
           />
           <div className="grid grid-cols-5 gap-4 pb-54">
@@ -57,7 +63,7 @@ const FavoritePage: React.FC = () => {
                 <MenuCard
                   key={menuItem._id}
                   menuItem={menuItem}
-                  handleCardClick={() => { }}
+                  handleCardClick={() => {}}
                 />
               ))
             ) : (

@@ -57,7 +57,9 @@ class OrderStore {
 
   async getOrderById(orderId: string) {
     try {
-      const response = await axios.get(`http://localhost:3001/api/orders/${orderId}`);
+      const response = await axios.get(
+        `http://localhost:3001/api/orders/${orderId}`,
+      );
       if (response.status === 200) {
         return response.data; // Returns the specific order
       }
@@ -68,7 +70,9 @@ class OrderStore {
 
   async getOrdersByUserId(userId: string) {
     try {
-      const response = await axios.get(`http://localhost:3001/api/orders/userInfo/${userId}`);
+      const response = await axios.get(
+        `http://localhost:3001/api/orders/userInfo/${userId}`,
+      );
       if (response.status === 200) {
         this.userOrders = response.data.orders; // Store user-specific orders
       }
@@ -77,9 +81,13 @@ class OrderStore {
     }
   }
 
-
-
-  async placeOrder(cartItems: CartItem[], userId: string | undefined, paymentMethod: string, orderNote: string, totalPrice: number) {
+  async placeOrder(
+    cartItems: CartItem[],
+    userId: string | undefined,
+    paymentMethod: string,
+    orderNote: string,
+    totalPrice: number,
+  ) {
     try {
       if (!userId) throw new Error("User ID is required");
 
@@ -103,7 +111,10 @@ class OrderStore {
         userInfo,
       };
 
-      const response = await axios.post("http://localhost:3001/api/orders", orderData);
+      const response = await axios.post(
+        "http://localhost:3001/api/orders",
+        orderData,
+      );
 
       if (response.status === 201) {
         this.orderList.push(response.data);
@@ -115,10 +126,12 @@ class OrderStore {
   }
   async updateStatus(orderId: string) {
     try {
-      const response = await axios.put(`http://localhost:3001/api/orders/${orderId}/update-status`);
+      const response = await axios.put(
+        `http://localhost:3001/api/orders/${orderId}/update-status`,
+      );
       const updatedOrder = response.data;
 
-      const index = this.orderList.findIndex(order => order._id === orderId);
+      const index = this.orderList.findIndex((order) => order._id === orderId);
       if (index !== -1) {
         this.orderList[index] = updatedOrder; // Replace with the updated order
       }
@@ -127,23 +140,31 @@ class OrderStore {
     }
   }
   startStatusUpdateInterval() {
-    setInterval(() => {
-      this.orderList.forEach(order => {
-        setTimeout(() => {
-          const nextStatus = this.statusProgression[order.status];
-          if (nextStatus) {
-            this.updateStatus(order._id);
-          }
-        }, 1 * 60 * 1000);
-      });
-    }, 5 * 60 * 1000); // 5 minutes in milliseconds
+    setInterval(
+      () => {
+        this.orderList.forEach((order) => {
+          setTimeout(
+            () => {
+              const nextStatus = this.statusProgression[order.status];
+              if (nextStatus) {
+                this.updateStatus(order._id);
+              }
+            },
+            1 * 60 * 1000,
+          );
+        });
+      },
+      5 * 60 * 1000,
+    ); // 5 minutes in milliseconds
   }
 }
 
 export const orderStore = new OrderStore();
 const OrderStoreContext = React.createContext(orderStore);
 
-const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const OrderProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   return (
     <OrderStoreContext.Provider value={orderStore}>
       {children}

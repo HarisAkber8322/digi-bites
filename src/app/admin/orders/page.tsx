@@ -14,7 +14,7 @@ const OrdersPage: React.FC = () => {
 
   const [userNames, setUserNames] = useState<{ [key: string]: string }>({});
   const [productNames, setProductNames] = useState<{ [key: string]: string }>(
-    {}
+    {},
   );
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const OrdersPage: React.FC = () => {
   useEffect(() => {
     const fetchUserNames = async () => {
       const userIds = orderStore.orderList.flatMap(
-        (order) => order.userInfo.userId
+        (order) => order.userInfo.userId,
       );
 
       const uniqueUserIds = Array.from(new Set(userIds));
@@ -42,7 +42,7 @@ const OrdersPage: React.FC = () => {
           map[user.id] = user.name;
           return map;
         },
-        {} as { [key: string]: string }
+        {} as { [key: string]: string },
       );
 
       setUserNames(userNamesMap);
@@ -50,7 +50,7 @@ const OrdersPage: React.FC = () => {
 
     const fetchProductNames = async () => {
       const productIds = orderStore.orderList.flatMap((order) =>
-        order.products.map((product) => product.productId)
+        order.products.map((product) => product.productId),
       );
 
       const uniqueProductIds = Array.from(new Set(productIds));
@@ -65,7 +65,7 @@ const OrdersPage: React.FC = () => {
           map[product.id] = product.name;
           return map;
         },
-        {} as { [key: string]: string }
+        {} as { [key: string]: string },
       );
 
       setProductNames(productNamesMap);
@@ -116,7 +116,7 @@ const OrdersPage: React.FC = () => {
                       <th className="px-6 py-3 text-center text-xs font-semibold text-gray-500">
                         Product Name
                       </th>
-             
+
                       <th className="px-6 py-3 text-center text-xs font-semibold text-gray-500">
                         Payment Method
                       </th>
@@ -148,7 +148,7 @@ const OrdersPage: React.FC = () => {
                             </p>
                           ))}
                         </td>
-              
+
                         <td className="px-4 py-2 text-center whitespace-nowrap text-sx font-medium text-gray-900 dark:text-gray-100">
                           {order.paymentMethod}
                         </td>

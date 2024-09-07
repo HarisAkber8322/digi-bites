@@ -40,13 +40,15 @@ async function createUser(req, res) {
     const db = await connectToDatabase();
     const usersCollection = db.collection("users");
     const newUser = req.body;
-    
+
     if (!newUser || !newUser.email || !newUser.password) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
     const result = await usersCollection.insertOne(newUser);
-    res.status(201).json({ message: "User created successfully", user: result.ops[0] });
+    res
+      .status(201)
+      .json({ message: "User created successfully", user: result.ops[0] });
   } catch (error) {
     console.error("Error creating user:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -64,7 +66,10 @@ async function updateUser(req, res) {
       return res.status(400).json({ error: "Missing ID or update data" });
     }
 
-    const result = await usersCollection.updateOne({ _id: id }, { $set: updates });
+    const result = await usersCollection.updateOne(
+      { _id: id },
+      { $set: updates },
+    );
     if (result.matchedCount === 0) {
       return res.status(404).json({ error: "User not found" });
     }

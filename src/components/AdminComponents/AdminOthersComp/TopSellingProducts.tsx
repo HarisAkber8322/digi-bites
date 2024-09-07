@@ -77,10 +77,8 @@ const TopRatedItems: React.FC<TopRatedItemsProps> = ({ items }) => {
                               <h3 className="text-xs font-medium">
                                 {item.name}
                               </h3>
-
                             </div>
                           </div>
-
                         </>
                       }
                     />

@@ -1,7 +1,7 @@
-import axios from 'axios';
-import { makeAutoObservable } from 'mobx';
-import React from 'react';
-import { productStore } from './ProductStore';
+import axios from "axios";
+import { makeAutoObservable } from "mobx";
+import React from "react";
+import { productStore } from "./ProductStore";
 
 export interface Cart {
   items: CartItem[];
@@ -30,10 +30,10 @@ class CartStore {
   cart: Cart = {
     items: [],
     total: 0,
-    created_at: '',
-    updated_at: '',
-    user_id: '',
-    _id: '',
+    created_at: "",
+    updated_at: "",
+    user_id: "",
+    _id: "",
   };
 
   constructor() {
@@ -41,7 +41,7 @@ class CartStore {
     this.loadCart();
   }
   setCartItems(items: CartItem[]) {
-    console.log(items)
+    console.log(items);
     this.cartItems = items;
   }
   // Load cart from the server
@@ -55,10 +55,13 @@ class CartStore {
       if (cart) {
         this.cart = cart;
 
-        this.setCartItems(cart.items)
+        this.setCartItems(cart.items);
         this.calculateTotal();
       } else {
-        console.error("Cart is null or has an unexpected structure:", response.data);
+        console.error(
+          "Cart is null or has an unexpected structure:",
+          response.data,
+        );
       }
     } catch (error) {
       console.error("Error loading cart:", error);
@@ -71,15 +74,21 @@ class CartStore {
       if (!item.product_id || !userId) return;
       console.log(item, userId);
 
-      const response = await axios.post(`http://localhost:3001/api/cart/${userId}/add`, item);
+      const response = await axios.post(
+        `http://localhost:3001/api/cart/${userId}/add`,
+        item,
+      );
       if (response.status === 200) {
         const cart = response.data.cart;
         if (cart) {
           this.cart = cart;
-          this.setCartItems(cart.items)
+          this.setCartItems(cart.items);
           this.calculateTotal();
         } else {
-          console.error("Cart is null or has an unexpected structure:", response.data);
+          console.error(
+            "Cart is null or has an unexpected structure:",
+            response.data,
+          );
         }
       }
     } catch (error) {
@@ -87,28 +96,40 @@ class CartStore {
     }
   };
 
-
   // Remove item from the cart
   // Remove item from the cart
-  removeItemFromCart = async (productId: string, userId: string | undefined) => {
+  removeItemFromCart = async (
+    productId: string,
+    userId: string | undefined,
+  ) => {
     if (!userId) {
       console.error("User ID is undefined. Cannot remove item from cart.");
       return;
     }
 
     try {
-      const response = await axios.post(`http://localhost:3001/api/cart/${userId}/remove`, { productId });
+      const response = await axios.post(
+        `http://localhost:3001/api/cart/${userId}/remove`,
+        { productId },
+      );
       if (response.status === 200) {
         const cart = response.data.cart;
         if (cart) {
           this.cart = cart;
-          this.setCartItems(cart.items)
+          this.setCartItems(cart.items);
           this.calculateTotal();
         } else {
-          console.error("Cart is null or has an unexpected structure:", response.data);
+          console.error(
+            "Cart is null or has an unexpected structure:",
+            response.data,
+          );
         }
       } else {
-        console.error("Failed to remove item from cart:", response.status, response.data);
+        console.error(
+          "Failed to remove item from cart:",
+          response.status,
+          response.data,
+        );
       }
     } catch (error) {
       console.error("Error removing item from cart:", error);
@@ -118,9 +139,11 @@ class CartStore {
   // Clear all items in the cart
   clearCart = async (userId: string | undefined) => {
     try {
-      const response = await axios.delete(`http://localhost:3001/api/cart/${userId}`);
+      const response = await axios.delete(
+        `http://localhost:3001/api/cart/${userId}`,
+      );
       if (response.status === 200) {
-        this.setCartItems([])
+        this.setCartItems([]);
         this.totalPrice = 0;
       }
     } catch (error) {
@@ -128,17 +151,27 @@ class CartStore {
     }
   };
 
-  updateAddOns = async (productId: string, addOns: AddOn[], userId: string | undefined) => {
+  updateAddOns = async (
+    productId: string,
+    addOns: AddOn[],
+    userId: string | undefined,
+  ) => {
     try {
-      const response = await axios.post(`http://localhost:3001/api/cart/${userId}/update-addons`, { productId, addOns });
+      const response = await axios.post(
+        `http://localhost:3001/api/cart/${userId}/update-addons`,
+        { productId, addOns },
+      );
       if (response.status === 200) {
         const cart = response.data.cart;
         if (cart) {
           this.cart = cart;
-          this.setCartItems(cart.items)
+          this.setCartItems(cart.items);
           this.calculateTotal();
         } else {
-          console.error("Cart is null or has an unexpected structure:", response.data);
+          console.error(
+            "Cart is null or has an unexpected structure:",
+            response.data,
+          );
         }
       }
     } catch (error) {
@@ -165,7 +198,7 @@ class CartStore {
         //   .reduce((sum, addOn) => sum + addOn.price, 0);
 
         // Calculate total for this item
-        const itemTotal = (productPrice * quantity) //+  addOnsTotal|0;
+        const itemTotal = productPrice * quantity; //+  addOnsTotal|0;
         total += itemTotal;
       }
     }
@@ -174,9 +207,19 @@ class CartStore {
   };
 
   // Place an order using the order store
-  placeOrder = async (orderStore: any, paymentMethod: string, orderNote: string, userId: string | undefined) => {
+  placeOrder = async (
+    orderStore: any,
+    paymentMethod: string,
+    orderNote: string,
+    userId: string | undefined,
+  ) => {
     try {
-      const order = await orderStore.placeOrder(userId!, paymentMethod, orderNote, this.totalPrice);
+      const order = await orderStore.placeOrder(
+        userId!,
+        paymentMethod,
+        orderNote,
+        this.totalPrice,
+      );
       if (order) {
         await this.clearCart(userId); // Clear cart after placing order
       }
@@ -186,21 +229,31 @@ class CartStore {
   };
 
   // Update quantity of a specific item in the cart
-  updateQuantity = async (productId: string, delta: number, userId: string | undefined) => {
-    const item = this.cartItems.find(item => item.product_id === productId);
+  updateQuantity = async (
+    productId: string,
+    delta: number,
+    userId: string | undefined,
+  ) => {
+    const item = this.cartItems.find((item) => item.product_id === productId);
     if (item) {
       item.quantity = Math.max(1, item.quantity + delta); // Ensure quantity is at least 1
       this.calculateTotal(); // Recalculate total price
       try {
-        const response = await axios.post(`http://localhost:3001/api/cart/${userId}/update-quantity`, { productId, quantity: item.quantity });
+        const response = await axios.post(
+          `http://localhost:3001/api/cart/${userId}/update-quantity`,
+          { productId, quantity: item.quantity },
+        );
         if (response.status === 200) {
           const cart = response.data.cart;
           if (cart) {
             this.cart = cart;
-            this.setCartItems(cart.items)
+            this.setCartItems(cart.items);
             this.calculateTotal();
           } else {
-            console.error("Cart is null or has an unexpected structure:", response.data);
+            console.error(
+              "Cart is null or has an unexpected structure:",
+              response.data,
+            );
           }
         }
       } catch (error) {
@@ -214,7 +267,9 @@ class CartStore {
 export const cartStore = new CartStore();
 const CartStoreContext = React.createContext(cartStore);
 
-const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const CartProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   return (
     <CartStoreContext.Provider value={cartStore}>
       {children}

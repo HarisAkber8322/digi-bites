@@ -28,7 +28,7 @@ const LoginForm = () => {
 
   const handleSubmit = async (
     user: { email: string; password: string },
-    { setSubmitting }: any
+    { setSubmitting }: any,
   ) => {
     try {
       await handleLogin(user);
@@ -48,9 +48,7 @@ const LoginForm = () => {
     setShowPassword(!showPassword);
   };
 
-  useEffect(() => {
-
-  }, [ProductStore])
+  useEffect(() => {}, [ProductStore]);
 
   return (
     <Formik

@@ -572,9 +572,8 @@ import {
   faDotCircle,
   faCircle,
   faPlusCircle,
-  faStarHalfAlt
+  faStarHalfAlt,
 } from "@fortawesome/free-solid-svg-icons";
-
 
 export const CardData = [
   {
@@ -582,7 +581,6 @@ export const CardData = [
     icon: faClipboard, // Replace with your desired icon
     name: "My Order",
     link: "/active-orders",
-
   },
   {
     id: 2,
@@ -696,9 +694,17 @@ export const sidebarItems: SidebarCategory[] = [
   {
     category: "Product Management",
     items: [
-      { title: "Products Listing", link: "/admin/product-listing", icon: faCircle },
+      {
+        title: "Products Listing",
+        link: "/admin/product-listing",
+        icon: faCircle,
+      },
       { title: "Products Add", link: "/admin/product-add", icon: faPlusCircle },
-      { title: "Product Reviews", link: "/admin/product-reviews", icon: faStarHalfAlt },
+      {
+        title: "Product Reviews",
+        link: "/admin/product-reviews",
+        icon: faStarHalfAlt,
+      },
     ],
   },
   // Add more categories and items as needed
@@ -711,39 +717,38 @@ export const uncategorizedItems = [
 // utils/slugify.js
 export const generateSlug = (str: string) => {
   return str
-    .toLowerCase()               // Convert to lowercase
-    .replace(/\s+/g, '-')        // Replace spaces with hyphens
-    .replace(/[^\w\-]+/g, '')    // Remove all non-word characters
-    .replace(/\-\-+/g, '-')      // Replace multiple hyphens with a single hyphen
-    .replace(/^-+/, '')          // Trim hyphens from the start of the string
-    .replace(/-+$/, '');         // Trim hyphens from the end of the string
+    .toLowerCase() // Convert to lowercase
+    .replace(/\s+/g, "-") // Replace spaces with hyphens
+    .replace(/[^\w\-]+/g, "") // Remove all non-word characters
+    .replace(/\-\-+/g, "-") // Replace multiple hyphens with a single hyphen
+    .replace(/^-+/, "") // Trim hyphens from the start of the string
+    .replace(/-+$/, ""); // Trim hyphens from the end of the string
 };
-
 
 const addOns = [
   {
-    "name": "fries",
-    "price": 1.5,
-    "value": true
+    name: "fries",
+    price: 1.5,
+    value: true,
   },
   {
-    "name": "extraToppings",
-    "price": 0.75,
-    "value": false
+    name: "extraToppings",
+    price: 0.75,
+    value: false,
   },
   {
-    "name": "extraCheese",
-    "price": 1,
-    "value": true
+    name: "extraCheese",
+    price: 1,
+    value: true,
   },
   {
-    "name": "ketchup",
-    "price": 0.25,
-    "value": true
+    name: "ketchup",
+    price: 0.25,
+    value: true,
   },
   {
-    "name": "raita",
-    "price": 0.5,
-    "value": false
-  }
+    name: "raita",
+    price: 0.5,
+    value: false,
+  },
 ];

@@ -12,7 +12,7 @@ import TopCustomers from "@/components/AdminComponents/AdminOthersComp/TopCustom
 import TopSellingProducts from "@/components/AdminComponents/AdminOthersComp/TopSellingProducts";
 
 const Dashboard: React.FC = () => {
-  const items = menuData.flatMap(category => category.items);
+  const items = menuData.flatMap((category) => category.items);
 
   return (
     <div>
@@ -43,10 +43,9 @@ const Dashboard: React.FC = () => {
             <div className="grid grid-cols-3 w-full overflow-hidden">
               <OrderStatistics />
               <OrderStatusChart />
-             
             </div>
             <div className="grid grid-cols-3 w-full overflow-hidden">
-            <EarningStatistics  />
+              <EarningStatistics />
             </div>
             <div className="grid grid-cols-3 w-full overflow-hidden pb-6">
               <TopRatedItems />

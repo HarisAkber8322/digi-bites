@@ -66,7 +66,7 @@ const AdminProfileSetting: React.FC = () => {
   };
 
   const togglePasswordVisibility = (
-    field: "currentPassword" | "newPassword" | "confirmNewPassword"
+    field: "currentPassword" | "newPassword" | "confirmNewPassword",
   ) => {
     setShowPassword((prevShowPassword) => ({
       ...prevShowPassword,

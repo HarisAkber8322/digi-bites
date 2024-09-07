@@ -21,7 +21,7 @@ const BurgersPage: React.FC = () => {
   };
 
   const burgers = ProductStore.products.filter(
-    (product) => product.category.toLowerCase() === "pizza"
+    (product) => product.category.toLowerCase() === "pizza",
   );
 
   return (
@@ -36,9 +36,11 @@ const BurgersPage: React.FC = () => {
               content={<h2 className="text-2xl font-bold mb-4 ">Pizza</h2>}
               themeDivClasses={""}
             />
-            <Link className="flex items-center justify-center text-white bg-themeYellow p-2 rounded-lg" href="/">
+            <Link
+              className="flex items-center justify-center text-white bg-themeYellow p-2 rounded-lg"
+              href="/"
+            >
               <FaArrowLeft className="" /> {/* Arrow icon */}
-             
             </Link>
           </div>
           <div className="grid grid-cols-5 gap-4 pb-52">
@@ -54,7 +56,6 @@ const BurgersPage: React.FC = () => {
               <p>No pizza available at the moment.</p>
             )}
           </div>
-          
         </>
       }
     />

@@ -29,5 +29,5 @@ const ClientLayout = ({ children }: { children: React.ReactNode }) => {
 };
 
 export default observer(
-  dynamic(() => Promise.resolve(ClientLayout), { ssr: false })
+  dynamic(() => Promise.resolve(ClientLayout), { ssr: false }),
 );

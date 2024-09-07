@@ -22,8 +22,7 @@ const Card = ({ menuItem }: { menuItem: MenuItem }) => (
     <div
       className="md:w-[350px] md:h-[350px] xs:w-60 xs:h-60 bg-cover bg-center "
       style={{ backgroundImage: `url(${menuItem.image})` }}
-    >
-    </div>
+    ></div>
   </Link>
 );
 
