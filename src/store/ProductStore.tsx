@@ -144,7 +144,6 @@ class ProductStore {
     }
   }
 
-
   changePage(url: string) {
     // Implement page redirection logic here, e.g., using `window.location` or a routing library
     window.location.href = url;

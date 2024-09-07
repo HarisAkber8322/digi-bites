@@ -67,7 +67,7 @@ const AddProductComponent = () => {
         ratings: [], // Empty array for ratings
         recommended: false,
         average_rating: 0,
-        ratings_count: 0
+        ratings_count: 0,
       });
       resetForm();
     } catch (error) {
@@ -102,7 +102,11 @@ const AddProductComponent = () => {
                   name="name"
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-themeYellow focus:border-themeYellow sm:text-sm"
                 />
-                <ErrorMessage name="name" component="p" className="text-red-500 text-sm" />
+                <ErrorMessage
+                  name="name"
+                  component="p"
+                  className="text-red-500 text-sm"
+                />
               </div>
 
               {/* Price */}
@@ -119,7 +123,11 @@ const AddProductComponent = () => {
                   name="price"
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-themeYellow focus:border-themeYellow sm:text-sm"
                 />
-                <ErrorMessage name="price" component="p" className="text-red-500 text-sm" />
+                <ErrorMessage
+                  name="price"
+                  component="p"
+                  className="text-red-500 text-sm"
+                />
               </div>
 
               {/* Description */}
@@ -136,7 +144,11 @@ const AddProductComponent = () => {
                   name="description"
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-themeYellow focus:border-themeYellow sm:text-sm"
                 />
-                <ErrorMessage name="description" component="p" className="text-red-500 text-sm" />
+                <ErrorMessage
+                  name="description"
+                  component="p"
+                  className="text-red-500 text-sm"
+                />
               </div>
 
               {/* Category */}
@@ -160,7 +172,11 @@ const AddProductComponent = () => {
                   <option value="Biryani">Biryani</option>
                   <option value="Drinks">Drinks</option>
                 </Field>
-                <ErrorMessage name="category" component="p" className="text-red-500 text-sm" />
+                <ErrorMessage
+                  name="category"
+                  component="p"
+                  className="text-red-500 text-sm"
+                />
               </div>
 
               {/* Image URL */}
@@ -177,7 +193,11 @@ const AddProductComponent = () => {
                   name="image"
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-themeYellow focus:border-themeYellow sm:text-sm"
                 />
-                <ErrorMessage name="image" component="p" className="text-red-500 text-sm" />
+                <ErrorMessage
+                  name="image"
+                  component="p"
+                  className="text-red-500 text-sm"
+                />
               </div>
 
               {/* Stock */}
@@ -194,7 +214,11 @@ const AddProductComponent = () => {
                   name="stock"
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-themeYellow focus:border-themeYellow sm:text-sm"
                 />
-                <ErrorMessage name="stock" component="p" className="text-red-500 text-sm" />
+                <ErrorMessage
+                  name="stock"
+                  component="p"
+                  className="text-red-500 text-sm"
+                />
               </div>
 
               {/* Add-ons */}
@@ -211,7 +235,11 @@ const AddProductComponent = () => {
                   name="addons"
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-themeYellow focus:border-themeYellow sm:text-sm"
                 />
-                <ErrorMessage name="addons" component="p" className="text-red-500 text-sm" />
+                <ErrorMessage
+                  name="addons"
+                  component="p"
+                  className="text-red-500 text-sm"
+                />
               </div>
 
               {/* Submit and Reset Buttons */}

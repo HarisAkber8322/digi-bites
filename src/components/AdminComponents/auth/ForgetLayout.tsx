@@ -28,7 +28,10 @@ const ForgetLayout: React.FC = () => {
   };
 
   const handlePasswordReset = async (newPassword: string) => {
-    const isResetSuccessful = await adminStore.resetPassword(otpToken, newPassword); // Reset password
+    const isResetSuccessful = await adminStore.resetPassword(
+      otpToken,
+      newPassword,
+    ); // Reset password
     if (isResetSuccessful) {
       // You can redirect to the login page after password reset
       adminStore.changePage("/admin/auth");
@@ -41,7 +44,9 @@ const ForgetLayout: React.FC = () => {
         <ForgetPasswordComponent onSubmit={handleEmailSubmit} />
       )}
       {step === "otp" && <VerifyOtpComponent onSubmit={handleOtpSubmit} />}
-      {step === "reset" && <ResetPasswordComponent onSubmit={handlePasswordReset} />}
+      {step === "reset" && (
+        <ResetPasswordComponent onSubmit={handlePasswordReset} />
+      )}
     </div>
   );
 };

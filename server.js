@@ -132,7 +132,7 @@ app.prepare().then(() => {
 
       const result = await usersCollection.updateOne(
         { _id: userId },
-        { $set: updateData }
+        { $set: updateData },
       );
 
       if (result.matchedCount === 0) {
@@ -172,13 +172,13 @@ app.prepare().then(() => {
         // Remove the product ID from favorites
         await usersCollection.updateOne(
           { _id: new ObjectId(userId) },
-          { $pull: { favoriteproductIds: productId } }
+          { $pull: { favoriteproductIds: productId } },
         );
       } else {
         // Add the product ID to favorites
         await usersCollection.updateOne(
           { _id: new ObjectId(userId) },
-          { $addToSet: { favoriteproductIds: productId } }
+          { $addToSet: { favoriteproductIds: productId } },
         );
       }
 
@@ -455,7 +455,7 @@ app.prepare().then(() => {
       const otpToken = jwt.sign(
         { otp, id: admin._id },
         process.env.SECRET_KEY,
-        { expiresIn: "10m" }
+        { expiresIn: "10m" },
       );
       console.log("Generated OTP token");
 
@@ -501,7 +501,7 @@ app.prepare().then(() => {
       const hashedPassword = await bcrypt.hash(newPassword, 10);
       await adminCollection.updateOne(
         { _id: new ObjectId(decoded.id) },
-        { $set: { password: hashedPassword } }
+        { $set: { password: hashedPassword } },
       );
 
       res.status(200).json({ message: "Password reset successfully" });
@@ -532,7 +532,7 @@ app.prepare().then(() => {
       if (isFavorite) {
         // Remove the product ID from the array
         updatedFavorites = user.favoriteproductIds.filter(
-          (id) => id !== productId
+          (id) => id !== productId,
         );
       } else {
         // Add the product ID to the array
@@ -541,7 +541,7 @@ app.prepare().then(() => {
 
       await usersCollection.updateOne(
         { _id: new ObjectId(userId) },
-        { $set: { favoriteproductIds: updatedFavorites } }
+        { $set: { favoriteproductIds: updatedFavorites } },
       );
 
       return res.status(200).json({
@@ -619,11 +619,11 @@ app.prepare().then(() => {
           } catch (userError) {
             console.error(
               `Error fetching user for rating ${rating._id}:`,
-              userError
+              userError,
             );
             return { ...rating, user_id: "Unknown User" };
           }
-        })
+        }),
       );
 
       res.status(200).json({ ...product, ratings: ratingsWithUserDetails });
@@ -710,7 +710,7 @@ app.prepare().then(() => {
             updated_at: new Date(), // Update the timestamp
           },
         },
-        { returnOriginal: false } // Return the updated document
+        { returnOriginal: false }, // Return the updated document
       );
 
       res.status(200).json({
@@ -764,11 +764,11 @@ app.prepare().then(() => {
           } catch (userError) {
             console.error(
               `Error fetching user for rating ${rating._id}:`,
-              userError
+              userError,
             );
             return { ...rating, user_id: "Unknown User" };
           }
-        })
+        }),
       );
 
       res.status(200).json({ ...product, ratings: ratingsWithUserDetails });
@@ -903,7 +903,7 @@ app.prepare().then(() => {
       // Update the order status
       await ordersCollection.updateOne(
         { _id: new ObjectId(orderId) },
-        { $set: { status: nextStatus, updatedAt: new Date() } }
+        { $set: { status: nextStatus, updatedAt: new Date() } },
       );
 
       res
@@ -961,7 +961,7 @@ app.prepare().then(() => {
 
       // Update cart items
       const itemIndex = cart.items.findIndex(
-        (item) => item.product_id === product_id
+        (item) => item.product_id === product_id,
       );
 
       if (itemIndex > -1) {
@@ -987,7 +987,7 @@ app.prepare().then(() => {
             updated_at: cart.updated_at,
           },
         },
-        { upsert: true }
+        { upsert: true },
       );
 
       res.status(200).json({ cart });
@@ -1009,7 +1009,7 @@ app.prepare().then(() => {
       }
 
       const item = cart.items.find(
-        (item) => item.product_id.toString() === productId
+        (item) => item.product_id.toString() === productId,
       );
       if (item) {
         item.quantity = quantity;
@@ -1029,7 +1029,7 @@ app.prepare().then(() => {
             total: cart.total,
             updated_at: cart.updated_at,
           },
-        }
+        },
       );
 
       res.status(200).json({ cart });
@@ -1063,7 +1063,7 @@ app.prepare().then(() => {
       // Remove the item from the user's cart
       const result = await cartCollection.updateOne(
         { user_id: userId },
-        { $pull: { items: { product_id: productId } } }
+        { $pull: { items: { product_id: productId } } },
       );
 
       if (result.modifiedCount > 0) {

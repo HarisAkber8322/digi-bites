@@ -31,7 +31,7 @@ class AdminStore {
       if (response.status === 200) {
         const { token, admin } = response.data;
         Cookies.set("token", token, { expires: 7 });
-        this.changePage('/admin');
+        this.changePage("/admin");
         this.setIsAdminLoggedIn(true);
         this.setAdmin(admin);
         return true;
@@ -103,7 +103,7 @@ class AdminStore {
     this.admin = null;
     this.setIsAdminLoggedIn(false);
     this.changePage("/admin/auth");
-  }  
+  }
 
   // Utility methods
   setIsAdminLoggedIn(value: boolean) {
