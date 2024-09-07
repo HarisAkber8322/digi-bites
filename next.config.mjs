@@ -37,6 +37,9 @@ const nextConfig = {
     };
     return config;
   },
+  images: {
+    domains: ["plus.unsplash.com"], // Add the domain here
+  },
 };
 
 export default withPWA(nextConfig);
