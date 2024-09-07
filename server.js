@@ -279,6 +279,60 @@ app.prepare().then(() => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
+// admin Auth
+server.get("/api/auth/loggedinAdmin", async (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) return res.status(401).json({ error: "No token provided" });
+
+  try {
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    const db = await connectToDatabase();
+    const adminCollection = db.collection("admin");
+    const admin = await adminCollection.findOne({
+      _id: new ObjectId(decoded.id),
+    });
+
+    if (admin) {
+      res.status(200).json({ admin: { id: admin._id, email: admin.email } });
+    } else {
+      res.status(404).json({ error: "User not found" });
+    }
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+server.post("/api/auth/adminLogin", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const db = await connectToDatabase();
+    const adminCollection = db.collection("admin");
+    const admin = await adminCollection.findOne({ email });
+
+    if (!admin) {
+      return res.status(401).json({ error: "Invalid email or password" });
+    }
+
+    const passwordMatch = await bcrypt.compare(password, admin.passwordHash);
+    if (!passwordMatch) {
+      return res.status(401).json({ error: "Invalid email or password" });
+    }
+
+    const token = jwt.sign({ id: admin._id }, process.env.SECRET_KEY, {
+      expiresIn: "5h",
+    });
+
+    res.status(200).json({
+      token: token, // Include token in response
+      admin: { id: admin._id, email: admin.email },
+    });
+  } catch (error) {
+    console.error("Error logging in:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
   //Products
   server.post("/api/products/:id/favorite", async (req, res) => {

@@ -6,20 +6,30 @@ import { usePathname, useRouter } from "next/navigation";
 import AdminLayout from "@/components/AdminLayout";
 import ClientLayout from "@/components/ClientLayout";
 import ClientLoginLayout from "./ClientComponent/ClientLoginLayout";
-
+import AdminLoginLayout from "./AdminComponents/AdminLoginLayout";
 const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const pathname = usePathname();
   const isAdminRoute = pathname.startsWith("/admin");
   return (
+    // <>
+    //   {isAdminRoute ? (<AdminLayout>{children}</AdminLayout> ) : pathname === "/login" ||  pathname === "/signup" ? 
+    //   (  <ClientLoginLayout>{children}</ClientLoginLayout>) : ( <ClientLayout>{children}</ClientLayout>)}
+    // </>
+
     <>
-      {isAdminRoute ? (
-        <AdminLayout>{children}</AdminLayout>
-      ) : pathname === "/login" ||  pathname === "/signup" ? (
-        <ClientLoginLayout>{children}</ClientLoginLayout>
-      ) : (
-        <ClientLayout>{children}</ClientLayout>
-      )}
-    </>
+  {isAdminRoute ? (
+    pathname === "/admin/login" ? (
+      <AdminLoginLayout>{children}</AdminLoginLayout>
+    ) : (
+      <AdminLayout>{children}</AdminLayout>
+    )
+  ) : pathname === "/login" || pathname === "/signup" ? (
+    <ClientLoginLayout>{children}</ClientLoginLayout>
+  ) : (
+    <ClientLayout>{children}</ClientLayout>
+  )}
+</>
+
   );
 };
 
