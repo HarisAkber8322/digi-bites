@@ -89,7 +89,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({
                   {/* <SearchInput onSearch={handleSearch} /> */}
                 </div>
                 <div className="md:text-lg md:flex md:items-center md:gap-8">
-                  <AdminProfileComponent/>
+                  <AdminProfileComponent />
                   <ToggleThemeComponent />
                 </div>
               </div>

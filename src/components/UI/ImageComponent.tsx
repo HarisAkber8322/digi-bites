@@ -4,7 +4,7 @@ import Image from "next/image";
 const ImageComponent = (props: {
   src: string | StaticImport;
   alt: string;
-  width:  number | `${number}` | undefined;
+  width: number | `${number}` | undefined;
   height: number | `${number}` | undefined;
   className: string;
 }) => (

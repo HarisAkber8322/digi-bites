@@ -6,16 +6,15 @@ export default async function handler(req, res) {
     return res.status(405).end(); // Method Not Allowed
   }
 
-  const { fname, lname, email, password, contact_no, type, social_links } =
-    req.body;
+  const { username, email, password, role } = req.body;
 
-  if (!fname || !lname || !email || !password) {
+  if (!username || !email || !password || !role) {
     return res.status(400).json({ error: "All fields are required" });
   }
 
   try {
     const db = await connectToDatabase();
-    const usersCollection = db.collection("users");
+    const usersCollection = db.collection("admin");
 
     const existingUser = await usersCollection.findOne({ email });
     if (existingUser) {
@@ -27,16 +26,13 @@ export default async function handler(req, res) {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     await usersCollection.insertOne({
-      fname,
-      lname,
+      username,
       email,
       password: hashedPassword,
-      contact_no: contact_no || "",
-      type: type || "user",
-      social_links: social_links || [],
+      role: role || "admin",
     });
 
-    res.status(201).json({ message: "User created successfully" });
+    res.status(201).json({ message: "Admin created successfully" });
   } catch (error) {
     console.error("Error signing up:", error);
     res.status(500).json({ error: "Internal server error" });

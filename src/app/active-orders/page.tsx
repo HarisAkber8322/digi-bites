@@ -29,7 +29,7 @@ const OrdersPage: React.FC = observer(() => {
         const productIds = orderStore.orderList
           .filter((order) => order.userInfo.userId === userStore.user?.id)
           .flatMap((order) =>
-            order.products.map((product) => product.productId)
+            order.products.map((product) => product.productId),
           );
         const uniqueProductIds = Array.from(new Set(productIds));
 
@@ -106,7 +106,7 @@ const OrdersPage: React.FC = observer(() => {
                   <tbody className="bg-white dark:bg-gray-900">
                     {orderStore.orderList
                       .filter(
-                        (order) => order.userInfo.userId === userStore.user?.id
+                        (order) => order.userInfo.userId === userStore.user?.id,
                       )
                       .map((order, index) => (
                         <React.Fragment key={order._id}>
@@ -160,10 +160,7 @@ const OrdersPage: React.FC = observer(() => {
                                       {order.addOns
                                         .filter((addOn) => addOn.value)
                                         .map((addOn, addOnIndex) => (
-                                          <li
-                                            key={addOnIndex}
-                                            className="mb-2"
-                                          >
+                                          <li key={addOnIndex} className="mb-2">
                                             {addOn.name} - Rs.
                                             {addOn.price.toFixed(2)}
                                           </li>

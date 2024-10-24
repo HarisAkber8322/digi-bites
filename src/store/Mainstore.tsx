@@ -36,7 +36,7 @@ class AppStore {
   cartCount = 0;
   isLoggedin = false;
   router: any;
- 
+
   products: Product[] = [];
 
   setIsLoggedIn = (value: boolean) => {
@@ -51,8 +51,6 @@ class AppStore {
       console.error("Error loading users:", error);
     }
   }
-
- 
 
   async loadProducts() {
     try {
@@ -82,7 +80,7 @@ class AppStore {
     this.setIsLoggedIn(value);
   }
   handleForgotPassword(email: string) {
-    console.log(email)
+    console.log(email);
   }
   changePage = (uri: string) => {
     this.router?.push(uri);

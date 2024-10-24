@@ -5,7 +5,7 @@ import CheckoutComponent from "@/components/ClientComponent/OtherComponents/Chec
 const CheckoutPage = () => {
   return (
     <>
-    <CheckoutComponent/>
+      <CheckoutComponent />
     </>
   );
 };

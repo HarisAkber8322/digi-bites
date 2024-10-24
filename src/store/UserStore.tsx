@@ -37,7 +37,7 @@ class UserStore {
     // this.loadUsers();
     this.checkLoginState();
     this.setUser(this.user);
-    this.fetchFavoriteProducts(this.user?.id)
+    this.fetchFavoriteProducts(this.user?.id);
   }
 
   setIsLoggedIn(value: boolean) {
@@ -62,7 +62,7 @@ class UserStore {
     try {
       const response = await axios.get(`http://localhost:3001/api/users/${id}`);
       if (response.status === 200) {
-        return response.data
+        return response.data;
       }
     } catch (error) {
       console.error("Error fetching User By id:", error);
@@ -71,7 +71,10 @@ class UserStore {
 
   handleLogin = async (user: { email: string; password: string }) => {
     try {
-      const response = await axios.post("http://localhost:3001/api/auth/login", user);
+      const response = await axios.post(
+        "http://localhost:3001/api/auth/login",
+        user,
+      );
       if (response.status === 200) {
         const { token, user } = response.data;
         Cookies.set("token", token, { expires: 7 });
@@ -90,9 +93,12 @@ class UserStore {
       const token = Cookies.get("token");
       if (token) {
         try {
-          const response = await axios.get("http://localhost:3001/api/auth/loggedinUser", {
-            headers: { Authorization: `Bearer ${token}` },
-          });
+          const response = await axios.get(
+            "http://localhost:3001/api/auth/loggedinUser",
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            },
+          );
           if (response.status === 200) {
             this.setIsLoggedIn(true);
             this.setUser(response.data.user);
@@ -109,11 +115,14 @@ class UserStore {
       this.setIsLoggedIn(false);
     }
     // console.log(this.user)
-  }
+  };
 
   async handleSignUp(user: User) {
     try {
-      const response = await axios.post("http://localhost:3001/api/auth/signup", user);
+      const response = await axios.post(
+        "http://localhost:3001/api/auth/signup",
+        user,
+      );
       if (response.status === 201) {
         this.setIsLoggedIn(true);
         this.changePage("/login");
@@ -139,7 +148,9 @@ class UserStore {
   fetchFavoriteProducts = async (userId: string | undefined) => {
     if (this.isLoggedin == true) {
       try {
-        const response = await axios.get(`http://localhost:3001/api/users/${userId}/favorites`);
+        const response = await axios.get(
+          `http://localhost:3001/api/users/${userId}/favorites`,
+        );
         if (response.status === 200) {
           const favProductIds: string[] = response.data; // Assuming response.data is an array of IDs
           this.setFavoriteProductIds(new Set(favProductIds));
@@ -149,13 +160,16 @@ class UserStore {
         this.setFavoriteProductIds(new Set());
       }
     }
-  }
+  };
   async toggleFavorite(productId: string, userId: string | undefined) {
     if (!userId) return;
 
     try {
       // Send request to add/remove favorite product ID in the user’s favoriteproductIds array
-      await axios.post(`http://localhost:3001/api/users/${userId}/favoritestoggle`, { productId });
+      await axios.post(
+        `http://localhost:3001/api/users/${userId}/favoritestoggle`,
+        { productId },
+      );
 
       // Update local favorite product IDs
       if (this.favoriteProductIds.has(productId)) {
@@ -176,7 +190,9 @@ class UserStore {
 export const userStore = new UserStore();
 const UserStoreContext = React.createContext(userStore);
 
-const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const UserProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const router = useRouter();
   React.useEffect(() => {
     userStore.router = router; // Initialize router after component mounts

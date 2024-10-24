@@ -8,10 +8,11 @@ import ProductStoreContext from "@/store/ProductStore";
 import { Product } from "@/store/ProductStore"; // Adjust the import path as needed
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStarHalfAlt,  faStar as faSolidStar  } from "@fortawesome/free-solid-svg-icons";
+import {
+  faStarHalfAlt,
+  faStar as faSolidStar,
+} from "@fortawesome/free-solid-svg-icons";
 import { faStar as faRegularStar } from "@fortawesome/free-regular-svg-icons";
-
-
 
 const TopRatedItems = () => {
   const ProductStore = useContext(ProductStoreContext);
@@ -22,8 +23,12 @@ const TopRatedItems = () => {
       await ProductStore.fetchProducts(); // Fetch products
       const itemsWithRatings = ProductStore.products.map((item) => {
         // Calculate the average rating
-        const totalRating = item.ratings.reduce((acc, rating) => acc + rating.rating, 0);
-        const averageRating = item.ratings.length > 0 ? totalRating / item.ratings.length : 0;
+        const totalRating = item.ratings.reduce(
+          (acc, rating) => acc + rating.rating,
+          0,
+        );
+        const averageRating =
+          item.ratings.length > 0 ? totalRating / item.ratings.length : 0;
 
         return {
           ...item,
@@ -51,11 +56,22 @@ const TopRatedItems = () => {
     return (
       <div className="flex items-center text-[10px]">
         {[...Array(fullStars)].map((_, index) => (
-          <FontAwesomeIcon icon={faSolidStar}  key={index} className="text-themeYellow"  />
+          <FontAwesomeIcon
+            icon={faSolidStar}
+            key={index}
+            className="text-themeYellow"
+          />
         ))}
-        {halfStar && <FontAwesomeIcon icon={faStarHalfAlt} className="text-themeYellow " />} {/* No half-star icon */}
+        {halfStar && (
+          <FontAwesomeIcon icon={faStarHalfAlt} className="text-themeYellow " />
+        )}{" "}
+        {/* No half-star icon */}
         {[...Array(emptyStars)].map((_, index) => (
-          <FontAwesomeIcon icon={faRegularStar}  key={index} className="text-themeYellow"  />
+          <FontAwesomeIcon
+            icon={faRegularStar}
+            key={index}
+            className="text-themeYellow"
+          />
         ))}
       </div>
     );

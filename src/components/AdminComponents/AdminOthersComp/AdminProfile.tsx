@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSignOutAlt,
@@ -11,6 +11,7 @@ import classNames from "classnames";
 import Div from "../../UI/Div";
 import Text from "../../UI/Text";
 import Link from "next/link";
+import AdminStoreContext from "@/store/AdminStore";
 
 const AdminProfile: React.FC = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -19,10 +20,7 @@ const AdminProfile: React.FC = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
-  const handleLogout = () => {
-    // Add your logout logic here
-    console.log("Logout");
-  };
+  const AdminStore = useContext(AdminStoreContext);
 
   return (
     <div className="relative inline-block text-left">
@@ -49,7 +47,7 @@ const AdminProfile: React.FC = () => {
               "transform opacity-0 scale-95": !dropdownOpen,
               "transform opacity-100 scale-100": dropdownOpen,
             },
-            "transition ease-out duration-100"
+            "transition ease-out duration-100",
           )}
         >
           <div className="py-1">
@@ -76,7 +74,7 @@ const AdminProfile: React.FC = () => {
             </Link>
 
             <div
-              onClick={handleLogout}
+              onClick={() => AdminStore.logout()}
               className="px-4 py-3 text-sm text-gray-700 flex items-center cursor-pointer hover:bg-gray-100 "
             >
               <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />

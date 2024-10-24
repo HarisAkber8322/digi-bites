@@ -30,7 +30,7 @@ const Slider: React.FC<SliderProps> = ({ interval = 3000 }) => {
 
   const handlePrev = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1,
     );
   };
 
@@ -56,7 +56,7 @@ const Slider: React.FC<SliderProps> = ({ interval = 3000 }) => {
               {
                 "opacity-0": index !== currentIndex,
                 "opacity-100": index === currentIndex,
-              }
+              },
             )}
             style={{
               backgroundImage: `url(${image})`,

@@ -55,10 +55,7 @@ const Profile = () => {
                             themeDivClasses="text-6xl font-light"
                             content={<FontAwesomeIcon icon={icon} />}
                           />
-                          <Text
-                            themeDivClasses="mt-2 text-lg"
-                            content={name}
-                          />
+                          <Text themeDivClasses="mt-2 text-lg" content={name} />
                         </>
                       }
                     />
@@ -77,10 +74,7 @@ const Profile = () => {
                             themeDivClasses="text-6xl font-light"
                             content={<FontAwesomeIcon icon={icon} />}
                           />
-                          <Text
-                            themeDivClasses="mt-2 text-lg"
-                            content={name}
-                          />
+                          <Text themeDivClasses="mt-2 text-lg" content={name} />
                         </>
                       }
                     />

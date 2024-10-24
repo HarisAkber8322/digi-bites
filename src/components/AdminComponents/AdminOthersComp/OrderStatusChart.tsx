@@ -1,15 +1,15 @@
 "use client";
-import React, { useEffect, useState, useContext } from 'react';
-import { Pie } from 'react-chartjs-2';
-import { observer } from 'mobx-react';
-import MainStoreContext from '@/store/Mainstore';
-import { ChartData, ChartOptions, TooltipItem } from 'chart.js';
-import Div from '@/components/UI/Div';
-import Text from '@/components/UI/Text';
+import React, { useEffect, useState, useContext } from "react";
+import { Pie } from "react-chartjs-2";
+import { observer } from "mobx-react";
+import MainStoreContext from "@/store/Mainstore";
+import { ChartData, ChartOptions, TooltipItem } from "chart.js";
+import Div from "@/components/UI/Div";
+import Text from "@/components/UI/Text";
 
 const OrderStatusChart: React.FC = () => {
   const mainStore = useContext(MainStoreContext);
-  const [statusData, setStatusData] = useState<ChartData<'pie'>>({
+  const [statusData, setStatusData] = useState<ChartData<"pie">>({
     labels: [],
     datasets: [
       {
@@ -25,19 +25,16 @@ const OrderStatusChart: React.FC = () => {
     // const fetchOrders = async () => {
     //   await mainStore.loadOrders();
     //   const orders = mainStore.orderList;
-
     //   // Process the orders to get the status distribution
     //   const statusCounts = orders.reduce((acc, order) => {
     //     acc[order.status] = (acc[order.status] || 0) + 1;
     //     return acc;
     //   }, {} as Record<string, number>);
-
     //   // Prepare the data for the chart
     //   const labels = Object.keys(statusCounts);
     //   const data = Object.values(statusCounts);
     //   const colors = ['#FF6384', '#FFCE56', '#36A2EB', '#FF0000', '#FF00FF', '#000000'];
     //   const hoverColors = ['#FF6384', '#FFCE56', '#36A2EB', '#FF0000', '#FF00FF', '#000000'];
-
     //   setStatusData({
     //     labels,
     //     datasets: [
@@ -48,26 +45,24 @@ const OrderStatusChart: React.FC = () => {
     //       },
     //     ],
     //   });
-
     //   setTotalOrders(orders.length);
     // };
-
     // fetchOrders();
   }, [mainStore]);
 
-  const getPieOptions: () => ChartOptions<'pie'> = () => ({
+  const getPieOptions: () => ChartOptions<"pie"> = () => ({
     responsive: true,
     plugins: {
       legend: {
         display: true,
-        position: 'right',
+        position: "right",
         labels: {
           usePointStyle: true,
         },
       },
       tooltip: {
         callbacks: {
-          label: function (tooltipItem: TooltipItem<'pie'>) {
+          label: function (tooltipItem: TooltipItem<"pie">) {
             return `${tooltipItem.label}: ${tooltipItem.raw} Orders`;
           },
         },

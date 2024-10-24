@@ -9,10 +9,12 @@ import UserStoreContext from "@/store/UserStore";
 import CartStoreContext, { CartItem } from "@/store/CartStore";
 import { Product } from "@/store/ProductStore"; // Adjust the import path as needed
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStarHalfAlt, faStar as faSolidStar } from "@fortawesome/free-solid-svg-icons";
+import {
+  faStarHalfAlt,
+  faStar as faSolidStar,
+} from "@fortawesome/free-solid-svg-icons";
 import { faStar as faRegularStar } from "@fortawesome/free-regular-svg-icons";
 import Link from "next/link";
-
 
 interface MenuCardProps {
   menuItem: Product;
@@ -22,10 +24,10 @@ interface MenuCardProps {
 const generateSlug = (str: string) => {
   return str
     .toLowerCase()
-    .replace(/\s+/g, '-')  // Replace spaces with hyphens
-    .replace(/[^\w\-]+/g, '')  // Remove non-word characters (except hyphens)
-    .replace(/\-\-+/g, '-')  // Replace multiple hyphens with a single hyphen
-    .trim();  // Trim any leading or trailing hyphens
+    .replace(/\s+/g, "-") // Replace spaces with hyphens
+    .replace(/[^\w\-]+/g, "") // Remove non-word characters (except hyphens)
+    .replace(/\-\-+/g, "-") // Replace multiple hyphens with a single hyphen
+    .trim(); // Trim any leading or trailing hyphens
 };
 
 const MenuCard: React.FC<MenuCardProps> = ({ menuItem, handleCardClick }) => {
@@ -48,8 +50,8 @@ const MenuCard: React.FC<MenuCardProps> = ({ menuItem, handleCardClick }) => {
       quantity: 1, // Adjust quantity as needed
       product_id: item._id,
     };
-console.log(cartItem)
-    await CartStore.addItemToCart(cartItem , UserStore.user?.id); // Use CartStore to add item
+    console.log(cartItem);
+    await CartStore.addItemToCart(cartItem, UserStore.user?.id); // Use CartStore to add item
     // handleCardClick(item); // Optional: trigger any additional behavior
   };
 
@@ -70,11 +72,24 @@ console.log(cartItem)
     return (
       <div className="flex items-center text-xs">
         {[...Array(fullStars)].map((_, index) => (
-          <FontAwesomeIcon icon={faSolidStar} key={index} className="text-themeYellow" />
+          <FontAwesomeIcon
+            icon={faSolidStar}
+            key={index}
+            className="text-themeYellow"
+          />
         ))}
-        {halfStar && <FontAwesomeIcon icon={faStarHalfAlt} className="text-themeYellow text-xs" />}
+        {halfStar && (
+          <FontAwesomeIcon
+            icon={faStarHalfAlt}
+            className="text-themeYellow text-xs"
+          />
+        )}
         {[...Array(emptyStars)].map((_, index) => (
-          <FontAwesomeIcon icon={faRegularStar} key={index} className="text-themeYellow" />
+          <FontAwesomeIcon
+            icon={faRegularStar}
+            key={index}
+            className="text-themeYellow"
+          />
         ))}
       </div>
     );
@@ -82,65 +97,74 @@ console.log(cartItem)
 
   return (
     <div className="cursor-pointer" onClick={() => handleCardClick(menuItem)}>
-      <Div themeDivClasses="overflow-hidden rounded-xl h-[240px] shadow-xl"
-        content={<>
-          <div className="relative">
-            <Image
-              className="items-center !w-full !h-[130px]"
-              src={menuItem.image}
-              width={300}
-              height={250}
-              alt={menuItem.name}
-            />
+      <Div
+        themeDivClasses="overflow-hidden rounded-xl h-[240px] shadow-xl"
+        content={
+          <>
+            <div className="relative">
+              <Image
+                className="items-center !w-full !h-[130px]"
+                src={menuItem.image}
+                width={300}
+                height={250}
+                alt={menuItem.name}
+              />
+              {UserStore.isLoggedin && (
+                <button
+                  className="absolute top-2 right-2 text-2xl"
+                  onClick={handleFavoriteClick}
+                >
+                  {UserStore.favoriteProductIds.has(menuItem._id) ? (
+                    <AiFillHeart className="text-red-500" />
+                  ) : (
+                    <AiOutlineHeart className="text-themeYellow" />
+                  )}
+                </button>
+              )}
+            </div>
+            <div className="flex flex-col items-center justify-center">
+              <Text
+                lightColor="text-dullblack"
+                themeDivClasses="text-medium mt-2 font-semibold"
+                content={
+                  <>
+                    {" "}
+                    <Link href={`/product/${generateSlug(menuItem.name)}`}>
+                      {menuItem.name}
+                    </Link>
+                  </>
+                }
+              />
+              <Text
+                darkColor="text-themeYellow"
+                lightColor="text-themeYellow"
+                themeDivClasses="text-medium font-semibold"
+                content={`Rs ${menuItem.price}`}
+              />
+              <div className="flex items-center mb-1">
+                {renderStars(averageRating)}
+              </div>
+            </div>
             {UserStore.isLoggedin && (
-              <button
-                className="absolute top-2 right-2 text-2xl"
-                onClick={handleFavoriteClick}
-              >
-                {UserStore.favoriteProductIds.has(menuItem._id) ? (
-                  <AiFillHeart className="text-red-500" />
-                ) : (
-                  <AiOutlineHeart className="text-themeYellow" />
-                )}
-              </button>
+              <div className="flex w-full justify-center">
+                <button
+                  type="button"
+                  className="flex w-[50%] rounded-[20px] overflow-hidden"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    addToCart(menuItem);
+                  }}
+                >
+                  <Text
+                    themeDivClasses="flex justify-center p-1 bg-themeYellow w-full text-normal text-white"
+                    content="Add to Cart"
+                  />
+                </button>
+              </div>
             )}
-          </div>
-          <div className="flex flex-col items-center justify-center">
-            <Text
-              lightColor="text-dullblack"
-              themeDivClasses="text-medium mt-2 font-semibold"
-              content={<> <Link href={`/product/${generateSlug(menuItem.name)}`}>{menuItem.name}</Link></>}
-            />
-            <Text
-              darkColor="text-themeYellow"
-              lightColor="text-themeYellow"
-              themeDivClasses="text-medium font-semibold"
-              content={`Rs ${menuItem.price}`}
-            />
-            <div className="flex items-center mb-1">
-              {renderStars(averageRating)}
-            </div>
-          </div>
-          {
-            UserStore.isLoggedin &&
-            <div className="flex w-full justify-center">
-              <button
-                type="button"
-                className="flex w-[50%] rounded-[20px] overflow-hidden"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  addToCart(menuItem);
-                }}
-              >
-                <Text
-                  themeDivClasses="flex justify-center p-1 bg-themeYellow w-full text-normal text-white"
-                  content="Add to Cart"
-                />
-              </button>
-            </div>
-          }
-
-        </>} />
+          </>
+        }
+      />
     </div>
   );
 };

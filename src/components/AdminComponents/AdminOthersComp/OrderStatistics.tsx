@@ -3,12 +3,11 @@ import Div from "../../UI/Div";
 import Text from "../../UI/Text";
 import { Line } from "react-chartjs-2";
 import { observer } from "mobx-react";
-import 'chart.js/auto';
+import "chart.js/auto";
 import { Image } from "react-bootstrap";
 
 type Period = "Year" | "Month" | "Week";
 const getGraphData = (period: Period) => {
-    
   switch (period) {
     case "Year":
       return {
@@ -16,7 +15,9 @@ const getGraphData = (period: Period) => {
         datasets: [
           {
             label: "Yearly Data",
-            data: Array.from({ length: 12 }, () => Math.floor(Math.random() * 100)),
+            data: Array.from({ length: 12 }, () =>
+              Math.floor(Math.random() * 100),
+            ),
             borderColor: "rgba(251, 188, 9, 1)",
             borderWidth: 1,
             borderDash: [5, 5],
@@ -30,7 +31,9 @@ const getGraphData = (period: Period) => {
         datasets: [
           {
             label: "Monthly Data",
-            data: Array.from({ length: 30 }, () => Math.floor(Math.random() * 100)),
+            data: Array.from({ length: 30 }, () =>
+              Math.floor(Math.random() * 100),
+            ),
             borderColor: "rgba(251, 188, 9, 1)",
             borderWidth: 1,
             borderDash: [5, 5],
@@ -40,12 +43,21 @@ const getGraphData = (period: Period) => {
       };
     case "Week":
       return {
-        labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" 
+        labels: [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
         ],
         datasets: [
           {
             label: "Weekly Data",
-            data: Array.from({ length: 7 }, () => Math.floor(Math.random() * 100)),
+            data: Array.from({ length: 7 }, () =>
+              Math.floor(Math.random() * 100),
+            ),
             borderColor: "rgba(251, 188, 9, 1)",
             borderWidth: 1,
             borderDash: [5, 5],
@@ -63,20 +75,26 @@ const getGraphOptions = (period: Period) => ({
     x: {
       title: {
         display: true,
-        text: period === "Year" ? "Months" : period === "Month" ? "Days" : "Days of the Week",
+        text:
+          period === "Year"
+            ? "Months"
+            : period === "Month"
+              ? "Days"
+              : "Days of the Week",
       },
     },
     y: {
       title: {
         display: true,
-        text: period === "Year" ? "Year" : period === "Month" ? "Month" : "Week",
+        text:
+          period === "Year" ? "Year" : period === "Month" ? "Month" : "Week",
       },
     },
   },
   plugins: {
     legend: {
       display: true,
-      position: 'top' as const, // Correctly typing position as 'top'
+      position: "top" as const, // Correctly typing position as 'top'
     },
   },
 });
@@ -128,7 +146,10 @@ const OrderStatistics: React.FC = () => {
 
           {/* Graph Display */}
           <div className="mt-8">
-            <Line data={getGraphData(selectedPeriod)} options={getGraphOptions(selectedPeriod)} />
+            <Line
+              data={getGraphData(selectedPeriod)}
+              options={getGraphOptions(selectedPeriod)}
+            />
           </div>
         </>
       }

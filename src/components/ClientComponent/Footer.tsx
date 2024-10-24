@@ -40,8 +40,9 @@ const Footer: React.FC = () => {
               </Link>
             </div>
             <div
-              className={`relative flex xs:hidden items-center ml-32 transition-all duration-400 ease-in-out text-themeYellow ${isHovered ? "w-60" : "w-10"
-                } overflow-hidden`}
+              className={`relative flex xs:hidden items-center ml-32 transition-all duration-400 ease-in-out text-themeYellow ${
+                isHovered ? "w-60" : "w-10"
+              } overflow-hidden`}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >

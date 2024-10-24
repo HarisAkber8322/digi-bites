@@ -8,15 +8,15 @@ import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
 import DataGridComponent from "@/components/UI/DataGridComponent";
 const formatHeader = (key: string) => {
   return key
-    .split('_')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 };
 const User: React.FC = () => {
   const MainStore = useContext(MainStoreContext);
   const { userList } = MainStore;
 
-  const columns: GridColDef[] = Object.keys(userList[0]).map(key => {
+  const columns: GridColDef[] = Object.keys(userList[0]).map((key) => {
     return {
       field: key,
       headerName: formatHeader(key),
@@ -30,7 +30,9 @@ const User: React.FC = () => {
       id: index, // Use sequential index as the ID
       ...user,
       // Flatten social links for display
-      social_links: user.social_links?.map(link => `${link.name}: ${link.link}`).join(", "),
+      social_links: user.social_links
+        ?.map((link) => `${link.name}: ${link.link}`)
+        .join(", "),
     };
   });
   return (
@@ -47,7 +49,10 @@ const User: React.FC = () => {
         />
       </div> */}
       <div>
-        <Text themeDivClasses="text-3xl font-bold block mb-5" content="Orders" />
+        <Text
+          themeDivClasses="text-3xl font-bold block mb-5"
+          content="Orders"
+        />
         <Div
           themeDivClasses={"flex flex-col !bg-transparent"}
           content={
