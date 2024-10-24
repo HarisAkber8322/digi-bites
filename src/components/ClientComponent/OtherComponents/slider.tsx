@@ -58,11 +58,11 @@ const Slider: React.FC<SliderProps> = ({ interval = 3000 }) => {
                 "opacity-100": index === currentIndex,
               }
             )}
-            // style={{
-            //   backgroundImage: `url(${image})`,
-            //   width: "1180px",
-            //   height: "300px",
-            // }}
+            style={{
+              backgroundImage: `url(${image})`,
+              width: "1180px",
+              height: "300px",
+            }}
             role="img"
             aria-label={`Slide ${index}`}
           />
