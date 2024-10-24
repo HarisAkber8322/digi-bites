@@ -29,7 +29,7 @@ const TopRatedItems: React.FC<TopRatedItemsProps> = ({ items }) => {
 
   return (
     <Div
-      themeDivClasses="relative  rounded-xl shadow-md mr-6"
+      themeDivClasses="relative  rounded-xl shadow-md "
       darkColor="bg-pepperBlack"
       content={
         <>

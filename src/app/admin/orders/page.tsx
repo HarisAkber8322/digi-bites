@@ -76,6 +76,7 @@ const OrdersPage: React.FC = () => {
   }, [orderStore.orderList, userStore, productStore]);
 
   return (
+ 
     <Div
       themeDivClasses="pb-20"
       darkColor="bg-dullBlack"
@@ -139,6 +140,7 @@ const OrdersPage: React.FC = () => {
                         </td>
                         <td className="px-4 py-2 text-center whitespace-nowrap text-sx font-medium text-gray-900 dark:text-gray-100">
                           {order.status}
+                          
                         </td>
                         <td className="px-4 py-2 text-center whitespace-nowrap text-sx font-medium text-gray-900 dark:text-gray-100">
                           {order.products.map((product, productIndex) => (

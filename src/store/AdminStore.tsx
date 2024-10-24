@@ -124,7 +124,7 @@ class AdminStore {
       this.admin = null;
     }
   }
-
+// send OTP
   async sendOtp(email: string) {
     try {
       const response = await axios.post(

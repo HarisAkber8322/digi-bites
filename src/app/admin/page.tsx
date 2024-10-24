@@ -40,14 +40,14 @@ const Dashboard: React.FC = () => {
               }
             />
             <BusinessAnalytics />
-            <div className="grid grid-cols-3 w-full overflow-hidden">
+            {/* <div className="grid grid-cols-3 w-full overflow-hidden">
               <OrderStatistics />
               <OrderStatusChart />
-            </div>
-            <div className="grid grid-cols-3 w-full overflow-hidden">
+            </div> */}
+            {/* <div className="grid grid-cols-3 w-full overflow-hidden">
               <EarningStatistics />
-            </div>
-            <div className="grid grid-cols-3 w-full overflow-hidden pb-6">
+            </div> */}
+            <div className="grid grid-cols-3 w-full overflow-hidden pb-6 mt-10 gap-5">
               <TopRatedItems />
               <TopCustomers items={items} />
               <TopSellingProducts items={items} />

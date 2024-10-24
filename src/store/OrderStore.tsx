@@ -28,6 +28,7 @@ export interface Orders {
   addOns: AddOn[];
 }
 
+
 class OrderStore {
   orderList: Orders[] = [];
   userOrders: any;
@@ -174,3 +175,5 @@ const OrderProvider: React.FC<{ children: React.ReactNode }> = ({
 
 export default OrderStoreContext;
 export { OrderProvider };
+
+

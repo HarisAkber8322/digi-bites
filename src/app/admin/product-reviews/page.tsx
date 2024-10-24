@@ -112,6 +112,7 @@ const RatedProductsPage: React.FC = () => {
                         <td className="px-4 py-2 text-center whitespace-nowrap text-xs text-blue-500">
                           <div className="flex justify-center flex-col gap-1 items-center w-full">
                             {product.ratings.map((item, index) => (
+                              // eslint-disable-next-line react/jsx-key
                               <div>
                                 <div
                                   key={index}
