@@ -70,31 +70,8 @@ class AdminStore {
 
   // Fetch the logged-in admin data using token
   async fetchLoggedInAdmin() {
-    try {
-      const token = Cookies.get("token");
-      if (!token) {
-        this.setIsAdminLoggedIn(false);
-        this.admin = null;
-        return;
-      }
+    console.log('hi')
 
-      const response = await axios.get(
-        "http://localhost:3001/api/auth/admin/loggedinAdmin",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      );
-
-      if (response.status === 200) {
-        const { admin } = response.data;
-        this.setIsAdminLoggedIn(true);
-        this.setAdmin(admin);
-      }
-    } catch (error) {
-      console.error("Error fetching logged-in admin:", error);
-      this.setIsAdminLoggedIn(false);
-      this.admin = null;
-    }
   }
 
   // Logout method
@@ -114,17 +91,40 @@ class AdminStore {
     this.admin = admin;
   }
 
-  checkLoginState() {
-    const token = Cookies.get("token");
-    if (token) {
-      this.fetchLoggedInAdmin();
-    } else {
-      this.setIsAdminLoggedIn(false);
-      // this.setAdmin(null);
-      this.admin = null;
-    }
+  checkLoginState = async () => {
+      try {
+        const token = Cookies.get("token");
+        console.log('token: ', token)
+    
+        if (!token) {
+          console.log('token nahi hai 1')
+          this.setIsAdminLoggedIn(false);
+          this.admin = null;
+          return;
+        }
+
+        const response = await axios.get(
+          "http://localhost:3001/api/auth/admin/loggedinAdmin",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        );
+
+        if (response.status === 200) {
+
+          console.log("response.data: ", response.data);
+          const { admin } = response.data;
+          this.setIsAdminLoggedIn(true);
+          this.setAdmin(admin);
+        }
+ console.log('token nahi hai 1')
+      } catch (error) {
+        console.error("Error fetching logged-in admin:", error);
+        this.setIsAdminLoggedIn(false);
+        this.admin = null;
+      }
   }
-// send OTP
+  // send OTP
   async sendOtp(email: string) {
     try {
       const response = await axios.post(
@@ -194,6 +194,7 @@ const AdminProvider: React.FC<{ children: React.ReactNode }> = ({
   const router = useRouter();
   React.useEffect(() => {
     adminStore.router = router; // Initialize router after component mounts
+    // adminStore.checkLoginState(); // Check the login state on mount
   }, [router]);
 
   return (
@@ -205,3 +206,4 @@ const AdminProvider: React.FC<{ children: React.ReactNode }> = ({
 
 export default AdminStoreContext;
 export { AdminProvider };
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MWE0MTEzOGNkMWI3Njk2ZDYzYjZmZCIsImlhdCI6MTcyOTk3NDEwMCwiZXhwIjoxNzI5OTkyMTAwfQ.CcwUMXx3FZ2Nn-B9KSJXknQKG5KHNYzb8R3S1LBmys8

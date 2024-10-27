@@ -46,9 +46,6 @@ const User: React.FC = () => {
                         First Name
                       </th>
                       <th className="px-6 py-3 text-center text-xs font-semibold text-gray-500">
-                        Last Name
-                      </th>
-                      <th className="px-6 py-3 text-center text-xs font-semibold text-gray-500">
                         Email
                       </th>
                       <th className="px-6 py-3 text-center text-xs font-semibold text-gray-500">
@@ -69,10 +66,7 @@ const User: React.FC = () => {
                           {index + 1}
                         </td>
                         <td className="px-4 py-2 text-center whitespace-nowrap text-sx font-medium text-gray-900 dark:text-gray-100">
-                          {user?.fname}
-                        </td>
-                        <td className="px-4 py-2 text-center whitespace-nowrap text-sx font-medium text-gray-900 dark:text-gray-100">
-                          {user?.lname}
+                          {user?.fname}   {user?.lname}
                         </td>
                         <td className="px-4 py-2 text-center whitespace-nowrap text-sx font-medium text-gray-900 dark:text-gray-100">
                           {user?.email}

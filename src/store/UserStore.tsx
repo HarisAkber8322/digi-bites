@@ -4,7 +4,6 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import React from "react";
 import { useRouter } from "next/navigation";
-import { Product } from "./ProductStore";
 
 export interface User {
   id: string | undefined;
@@ -31,6 +30,7 @@ class UserStore {
   router: ReturnType<typeof useRouter> | null = null;
   favoriteProductIds: Set<string> = new Set();
   currentUser: any;
+  loadUsers: any;
 
   constructor() {
     makeAutoObservable(this);

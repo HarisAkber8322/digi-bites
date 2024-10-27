@@ -41,14 +41,14 @@ class CartStore {
     this.loadCart();
   }
   setCartItems(items: CartItem[]) {
-    console.log(items);
+    // console.log(items);
     this.cartItems = items;
   }
   // Load cart from the server
   loadCart = async () => {
     try {
       const response = await axios.get(`http://localhost:3001/api/cart`);
-      console.log(response.data);
+      // console.log(response.data);
 
       const cart = response.data.firstCartItem;
 
