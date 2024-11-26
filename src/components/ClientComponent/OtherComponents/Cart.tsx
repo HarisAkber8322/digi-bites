@@ -7,6 +7,7 @@ import UserStoreContext from "@/store/UserStore";
 import ProductStoreContext from "@/store/ProductStore";
 import Image from "next/image";
 import { Alert } from "@mui/material";
+import Link from "next/link";
 
 const Cart: React.FC = () => {
   const orderStore = useContext(OrderStoreContext);
@@ -21,6 +22,7 @@ const Cart: React.FC = () => {
       await productStore.fetchProductById(item?.product_id);
     });
   }, [cartStore, productStore]);
+  console.log(cartStore.cart.items)
   const calculateTotalPrice = () => {
     return cartStore.cart.items.reduce((total, item) => {
       const product = productStore.products.find(
@@ -34,35 +36,35 @@ const Cart: React.FC = () => {
     }, 0);
   };
   const totalPrice = calculateTotalPrice();
-  const handlePlaceOrder = async () => {
-    if (!userStore.isLoggedin || !userStore.user) {
-      console.error("User is not logged in");
-      return;
-    }
+  // const handlePlaceOrder = async () => {
+  //   if (!userStore.isLoggedin || !userStore.user) {
+  //     console.error("User is not logged in");
+  //     return;
+  //   }
 
-    const userId = userStore.user.id;
-    const paymentMethod = "credit_card"; // Example payment method
+  //   const userId = userStore.user.id;
+  //   const paymentMethod = "credit_card"; // Example payment method
 
-    try {
-      const result = await orderStore.placeOrder(
-        cartStore.cartItems,
-        userId,
-        paymentMethod,
-        orderNote,
-        totalPrice,
-      );
-      if (result) {
-        await cartStore.clearCart(userStore.user.id);
-        setMessageBox(true);
-        setTimeout(() => {
-          userStore.changePage("/");
-        }, 500);
-      }
-      // Optionally clear the cart or redirect the user here
-    } catch (error) {
-      console.error("Failed to place order:", error);
-    }
-  };
+  //   try {
+  //     const result = await orderStore.placeOrder(
+  //       cartStore.cartItems,
+  //       userId,
+  //       paymentMethod,
+  //       orderNote,
+  //       totalPrice,
+  //     );
+  //     if (result) {
+  //       await cartStore.clearCart(userStore.user.id);
+  //       setMessageBox(true);
+  //       setTimeout(() => {
+  //         userStore.changePage("/");
+  //       }, 500);
+  //     }
+  //     // Optionally clear the cart or redirect the user here
+  //   } catch (error) {
+  //     console.error("Failed to place order:", error);
+  //   }
+  // };
 
   const increaseQuantity = (productId: string) => {
     cartStore.updateQuantity(productId, 1, userStore.user?.id);
@@ -201,20 +203,20 @@ const Cart: React.FC = () => {
                     </Form.Group>
                   </div>
                   <div className="flex justify-center pr-4 pl-4">
-                    <Button
-                      onClick={handlePlaceOrder}
+                    <Link href={"/checkout"}
                       className="text-white bg-themeYellow w-full font-bold text-lg p-2 flex mt-4 align-middle justify-center rounded-md"
                     >
                       Place Order
-                    </Button>
+                    </Link>
                   </div>
                 </div>
               </div>
             </div>
           )}
         </div>
-      )}
-    </div>
+      )
+      }
+    </div >
   );
 };
 

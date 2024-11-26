@@ -8,6 +8,8 @@ import ClientLayout from "@/components/ClientLayout";
 import ClientLoginLayout from "./ClientComponent/ClientLoginLayout";
 import AdminLoginLayout from "./AdminComponents/AdminLoginLayout";
 import { adminStore, AdminProvider } from "@/store/AdminStore";
+import { CartProvider } from "@/store/CartStore";
+import { ProductProvider } from "@/store/ProductStore";
 
 const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const pathname = usePathname();
@@ -15,23 +17,25 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   return (
     <>
-      {isAdminRoute ? (
-        <AdminProvider>
-          {pathname === "/admin/auth" ? (
-            <AdminLoginLayout>{children}</AdminLoginLayout>
-          ) : (
-            <AdminLayout>{children}</AdminLayout>
-          )}
-        </AdminProvider>
-      ) : pathname === "/login" || pathname === "/signup" ? (
-        <ClientLoginLayout>{children}</ClientLoginLayout>
-      ) : (
-        <ClientLayout>{children}</ClientLayout>
-      )}
+      <ProductProvider>
+        {isAdminRoute ? (
+          <AdminProvider>
+            {pathname === "/admin/auth" ? (
+              <AdminLoginLayout>{children}</AdminLoginLayout>
+            ) : (
+              <AdminLayout>{children}</AdminLayout>
+            )}
+          </AdminProvider>
+        ) : pathname === "/login" || pathname === "/signup" ? (
+          <CartProvider>
+            <ClientLoginLayout>{children}</ClientLoginLayout>
+          </CartProvider>
+        ) : (
+          <ClientLayout>{children}</ClientLayout>
+        )}
+      </ProductProvider>
     </>
   );
 };
 
-export default observer(
-  dynamic(() => Promise.resolve(AppLayout), { ssr: false }),
-);
+export default observer(AppLayout);

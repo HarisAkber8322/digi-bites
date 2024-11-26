@@ -353,16 +353,32 @@
 
 // export default observer(Checkout);
 
+
+
+
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Button } from "react-bootstrap";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Div from "@/components/UI/Div";
 import Text from "@/components/UI/Text";
-
+import UserStoreContext from "@/store/UserStore";
+import OrderStoreContext from "@/store/OrderStore";
+import ProductStoreContext from "@/store/ProductStore";
+import CartStoreContext, { AddOn, CartItem } from "@/store/CartStore";
 const CheckoutPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const orderStore = useContext(OrderStoreContext);
+  const userStore = useContext(UserStoreContext);
+  const productStore = useContext(ProductStoreContext);
+  const cartStore = useContext(CartStoreContext);
+  useEffect(() => {
+    // setMessageBox(false);
+    cartStore.cart.items.forEach(async (item) => {
+      await productStore.fetchProductById(item?.product_id);
+    });
+  }, [cartStore, productStore]);
+  console.log(cartStore.cart.items)
   const initialValues = {
     name: "",
     phone: "",
@@ -382,18 +398,7 @@ const CheckoutPage = () => {
     deliveryNote: Yup.string().max(200, "Delivery note can't exceed 200 characters"),
   });
 
-  const handleSubmit = async (values, { setSubmitting }) => {
-    setIsSubmitting(true);
-    try {
-      console.log("Form Submitted", values);
-      alert("Order placed successfully!");
-    } catch (error) {
-      console.error("An error occurred:", error);
-    } finally {
-      setIsSubmitting(false);
-      setSubmitting(false);
-    }
-  };
+
 
   return (
     <div className="flex flex-wrap justify-center items-start gap-6 p-8">
@@ -402,7 +407,7 @@ const CheckoutPage = () => {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={handleSubmit}
+          onSubmit={""}
         >
           {() => (
             <Form className="w-full p-6 rounded-lg shadow-lg bg-white">
