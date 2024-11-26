@@ -22,7 +22,7 @@ const Loader = () => {
   return (
     <>
       {/* FIRST LOADER */}
-      <div className="flex flex-col items-center justify-center  bg-gray-100">
+      <div className="flex flex-col items-center justify-center h-[100vh]  bg-gray-100">
         <div className="flex items-center justify-center mb-6">
           <Image
             src={images[currentImageIndex]}
@@ -37,23 +37,23 @@ const Loader = () => {
           </div>
         </div>
       </div>
-      {/* SECOND LOADER */}
+      {/* SECOND LOADER
       <div className="flex flex-col items-center justify-center  bg-gray-100">
         <div className="w-20 h-20 border-8 border-solid border-t-blue-500 border-r-green-500 border-b-red-500 border-l-pink-500 rounded-full animate-spin"></div>
       </div>
 
-      {/* Third LOADER */}
+       Third LOADER 
       <div className="flex mt-5 flex-col items-center justify-center  bg-gray-100">
         <div className="w-10 h-10 border-4 border-solid border-t-black-500 border-r-gray border-b-gray border-l-gray rounded-full animate-spin"></div>
       </div>
-      {/* FORTH LOADER */}
+      FORTH LOADER 
       <div className="flex items-center mt-7 justify-center bg-gray-100">
         <div className="loader"></div>
       </div>
-      {/* FIFTH LOADER */}
+       FIFTH LOADER 
       <div className="flex items-center mt-7 justify-center bg-gray-100">
         <div className="PizzaLoader"></div>
-      </div>
+      </div> */}
     </>
   );
 };

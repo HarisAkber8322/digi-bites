@@ -177,7 +177,7 @@ const HeaderComponent = () => {
                               <li className="xs:transition-all xs:duration-500 xs:ease-in-out xs:py-2 hover:bg-yellow-100 rounded-xl ">
                                 <Link
                                   href="/"
-                                  className={router === "/home" ? "active" : ""}
+                                  className={router === "/" ? "active" : ""}
                                 >
                                   <Text
                                     themeDivClasses="xs:text-md xs:font-semibold"

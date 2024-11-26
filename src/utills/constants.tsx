@@ -113,7 +113,7 @@ export const cardList = [
     price: 100,
     image: "/images/c3.png", // Adjust path according to your project structure
     description: "Delicious zinger burger with crispy chicken patty.",
-    link: "/profile/profile",
+    link: "/",
   },
   {
     name: "Suggestions",
@@ -142,7 +142,7 @@ export interface MenuItem {
 }
 export const menuData = [
   {
-    category: "Burger",
+    category: "burger",
     image: "/images/burger.jpg",
     items: [
       {
@@ -202,7 +202,7 @@ export const menuData = [
     ],
   },
   {
-    category: "Biryani",
+    category: "biryani",
     image: "/images/biryani.jpg",
     items: [
       {
@@ -280,7 +280,7 @@ export const menuData = [
     ],
   },
   {
-    category: "Pizza",
+    category: "pizza",
     image: "/images/pizza.jpg",
     items: [
       {
@@ -367,7 +367,7 @@ export const menuData = [
     ],
   },
   {
-    category: "Sandwich",
+    category: "sandwich",
     image: "/images/sandwich.jpg",
     items: [
       {
@@ -454,7 +454,7 @@ export const menuData = [
     ],
   },
   {
-    category: "Drinks",
+    category: "drinks",
     image: "/images/drink.jpg",
     items: [
       {
@@ -597,76 +597,76 @@ export const CardData = [
     icon: faAddressBook, // Replace with your desired icon
     name: "Address",
   },
-  {
-    id: 5,
-    icon: faMessage, // Replace with your desired icon
-    name: "Message",
-  },
-  {
-    id: 6,
-    icon: faCircleCheck, // Replace with your desired icon
-    name: "Coupons",
-  },
-  {
-    id: 7,
-    icon: faBell, // Replace with your desired icon
-    name: "Notifications",
-  },
-  {
-    id: 8,
-    icon: faHandshake, // Replace with your desired icon
-    name: "Refer & Earn",
-  },
-  {
-    id: 9,
-    icon: faMoneyBill1, // Replace with your desired icon
-    name: "Wallet",
-  },
-  {
-    id: 10,
-    icon: faFaceGrinStars, // Replace with your desired icon
-    name: "Loylty Points",
-  },
-  {
-    id: 11,
-    icon: faCircleQuestion, // Replace with your desired icon
-    name: "Help & Support",
-  },
-  {
-    id: 12,
-    icon: faShield, // Replace with your desired icon
-    name: "Privacy Policy",
-  },
-  {
-    id: 13,
-    icon: faNewspaper, // Replace with your desired icon
-    name: "Terms & Conditions",
-  },
-  {
-    id: 14,
-    icon: faFileZipper, // Replace with your desired icon
-    name: "Return Policy",
-  },
-  {
-    id: 15,
-    icon: faRectangleXmark, // Replace with your desired icon
-    name: "Cancellation policy",
-  },
-  {
-    id: 14,
-    icon: faFolder, // Replace with your desired icon
-    name: "Version 1.0",
-  },
-  {
-    id: 15,
-    icon: faComment, // Replace with your desired icon
-    name: "About Us",
-  },
-  {
-    id: 16,
-    icon: faChartBar, // Replace with your desired icon
-    name: "Login",
-  },
+  // {
+  //   id: 5,
+  //   icon: faMessage, // Replace with your desired icon
+  //   name: "Message",
+  // },
+  // {
+  //   id: 6,
+  //   icon: faCircleCheck, // Replace with your desired icon
+  //   name: "Coupons",
+  // },
+  // {
+  //   id: 7,
+  //   icon: faBell, // Replace with your desired icon
+  //   name: "Notifications",
+  // },
+  // {
+  //   id: 8,
+  //   icon: faHandshake, // Replace with your desired icon
+  //   name: "Refer & Earn",
+  // },
+  // {
+  //   id: 9,
+  //   icon: faMoneyBill1, // Replace with your desired icon
+  //   name: "Wallet",
+  // },
+  // {
+  //   id: 10,
+  //   icon: faFaceGrinStars, // Replace with your desired icon
+  //   name: "Loylty Points",
+  // },
+  // {
+  //   id: 11,
+  //   icon: faCircleQuestion, // Replace with your desired icon
+  //   name: "Help & Support",
+  // },
+  // {
+  //   id: 12,
+  //   icon: faShield, // Replace with your desired icon
+  //   name: "Privacy Policy",
+  // },
+  // {
+  //   id: 13,
+  //   icon: faNewspaper, // Replace with your desired icon
+  //   name: "Terms & Conditions",
+  // },
+  // {
+  //   id: 14,
+  //   icon: faFileZipper, // Replace with your desired icon
+  //   name: "Return Policy",
+  // },
+  // {
+  //   id: 15,
+  //   icon: faRectangleXmark, // Replace with your desired icon
+  //   name: "Cancellation policy",
+  // },
+  // {
+  //   id: 14,
+  //   icon: faFolder, // Replace with your desired icon
+  //   name: "Version 1.0",
+  // },
+  // {
+  //   id: 15,
+  //   icon: faComment, // Replace with your desired icon
+  //   name: "About Us",
+  // },
+  // {
+  //   id: 16,
+  //   icon: faChartBar, // Replace with your desired icon
+  //   name: "Login",
+  // },
   // Add more cards as needed
 ];
 interface SidebarCategory {
