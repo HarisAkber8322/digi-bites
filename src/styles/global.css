@@ -29,6 +29,10 @@ body {
 .dark-mode {
   /* Dark mode styles */
 }
+.leaflet-container {
+  width: 100%;
+  height: 300px;
+}
 
 .error-message {
   color: red;

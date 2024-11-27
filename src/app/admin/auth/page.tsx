@@ -15,12 +15,13 @@ const AdminLogin = observer(() => {
   const [authComponent, setAuthComponent] = React.useState("login");
   const router = useRouter();
   useEffect(() => {
-    console.log(adminStore.isAdminLoggedIn);
+ 
+    // console.log(adminStore.isAdminLoggedIn);
     // If admin is logged in, redirect to the admin dashboard
     if (adminStore.isAdminLoggedIn) {
       router.push("/admin");
     }
-  }, [adminStore.isAdminLoggedIn, router]);
+  }, [router]);
 
   // if (adminStore.isAdminLoggedIn) {
   //   return null; // Prevent login form from rendering during redirect

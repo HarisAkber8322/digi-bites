@@ -1,3 +1,4 @@
+"use client"
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Text from "@/components/UI/Text";
@@ -6,19 +7,18 @@ import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { observer } from "mobx-react";
 import Link from "next/link";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import Image from "next/image";
 import Div from "@/components/UI/Div";
-import ProductStoreContext from "@/store/ProductStore";
-
 const LoginForm = () => {
   const UserStore = useContext(UserStoreContext);
-  const ProductStore = useContext(ProductStoreContext);
-  const { isLoggedin, handleLogin } = UserStore;
+  const { handleLogin } = UserStore;
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const initialValues = {
-    email: UserStore.user?.email || "",
-    password: UserStore.user?.password || "",
+    email: "",
+    password: "",
   };
 
   const validationSchema = Yup.object().shape({
@@ -28,17 +28,19 @@ const LoginForm = () => {
 
   const handleSubmit = async (
     user: { email: string; password: string },
-    { setSubmitting }: any,
+    { setSubmitting }: any
   ) => {
     try {
-      await handleLogin(user);
-      if (UserStore.isLoggedin) {
+      const isSuccess = await handleLogin(user); // Assuming `handleLogin` returns a boolean
+      if (isSuccess) {
         console.log("Login successful");
+        setErrorMessage(""); // Clear any previous errors
       } else {
-        console.log("Login failed");
+        setErrorMessage("Invalid email or password. Please try again."); // Set the error message
       }
     } catch (error) {
       console.error("An error occurred:", error);
+      setErrorMessage("An unexpected error occurred. Please try again later.");
     } finally {
       setSubmitting(false);
     }
@@ -47,8 +49,6 @@ const LoginForm = () => {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-
-  useEffect(() => {}, [ProductStore]);
 
   return (
     <Formik
@@ -63,7 +63,7 @@ const LoginForm = () => {
             content={
               <>
                 <Text
-                  themeDivClasses="font-bold text-xl flex justify-center "
+                  themeDivClasses="font-bold text-xl flex justify-center"
                   content={<>LOGIN To</>}
                 />
                 <div
@@ -78,11 +78,15 @@ const LoginForm = () => {
                     alt="logo"
                   />
                 </div>
+                {errorMessage && (
+                  <div className="text-red-500 text-sm mb-4">
+                    {errorMessage}
+                  </div>
+                )}
                 <div className="mb-4 relative">
                   <label htmlFor="email" className="block text-sm font-medium">
                     <Text themeDivClasses="" content={<> Email:</>} />
                   </label>
-
                   <Field
                     type="email"
                     id="email"
@@ -114,7 +118,7 @@ const LoginForm = () => {
                     <button
                       type="button"
                       onClick={togglePasswordVisibility}
-                      className="absolute inset-y-0 right-0 px-3 flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      className="absolute inset-y-0 right-0 px-3 flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none"
                     >
                       <FontAwesomeIcon
                         icon={showPassword ? faEyeSlash : faEye}
@@ -130,7 +134,7 @@ const LoginForm = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-themeYellow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-themeYellow focus:outline-none"
                 >
                   {isSubmitting ? "Logging in..." : "Login"}
                 </button>
@@ -148,26 +152,6 @@ const LoginForm = () => {
                     Sign Up
                   </Link>
                 </div>
-                {/* <div className="mt-6 flex justify-center">
-                  <Button className="w-full py-2 px-4 mb-2 flex justify-center items-center bg-blue-600  rounded-md shadow-sm text-sm font-medium text-gray-700 text-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    <FontAwesomeIcon
-                      icon={faFacebookF}
-                      color="white"
-                      className="h-3 w-3 mr-2"
-                    />
-                    Continue with Facebook
-                  </Button>
-                </div>
-                <div className="mt-2 flex justify-center">
-                  <Button className="w-full py-2 px-4 flex justify-center items-center  text-white bg-red-500 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    <FontAwesomeIcon
-                      icon={faGoogle}
-                      color="white"
-                      className="h-3 w-3 mr-2"
-                    />
-                    Continue with Google
-                  </Button>
-                </div> */}
               </>
             }
           />

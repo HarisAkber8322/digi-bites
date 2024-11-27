@@ -28,6 +28,7 @@ export interface Orders {
   addOns: AddOn[];
 }
 
+
 class OrderStore {
   orderList: Orders[] = [];
   userOrders: any;
@@ -159,6 +160,7 @@ class OrderStore {
   }
 }
 
+
 export const orderStore = new OrderStore();
 const OrderStoreContext = React.createContext(orderStore);
 
@@ -174,3 +176,5 @@ const OrderProvider: React.FC<{ children: React.ReactNode }> = ({
 
 export default OrderStoreContext;
 export { OrderProvider };
+
+

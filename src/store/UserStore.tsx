@@ -4,7 +4,6 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import React from "react";
 import { useRouter } from "next/navigation";
-import { Product } from "./ProductStore";
 
 export interface User {
   id: string | undefined;
@@ -31,13 +30,13 @@ class UserStore {
   router: ReturnType<typeof useRouter> | null = null;
   favoriteProductIds: Set<string> = new Set();
   currentUser: any;
+  loadUsers: any;
 
   constructor() {
     makeAutoObservable(this);
-    // this.loadUsers();
     this.checkLoginState();
-    this.setUser(this.user);
-    this.fetchFavoriteProducts(this.user?.id);
+    // this.user;
+    // console.log(this.user);
   }
 
   setIsLoggedIn(value: boolean) {
@@ -89,6 +88,7 @@ class UserStore {
   };
 
   checkLoginState = async () => {
+    console.log('check')
     try {
       const token = Cookies.get("token");
       if (token) {
@@ -99,9 +99,11 @@ class UserStore {
               headers: { Authorization: `Bearer ${token}` },
             },
           );
+          console.log(response)
           if (response.status === 200) {
-            this.setIsLoggedIn(true);
             this.setUser(response.data.user);
+            this.fetchFavoriteProducts(response.data.user.id); // Fetch favorites once user is set
+            this.setIsLoggedIn(true);
           }
         } catch (error) {
           console.error("Error fetching user data:", error);
@@ -196,6 +198,8 @@ const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   const router = useRouter();
   React.useEffect(() => {
     userStore.router = router; // Initialize router after component mounts
+    // userStore.checkLoginState(); 
+    // console.log(userStore.user?.id)
   }, [router]);
 
   return (

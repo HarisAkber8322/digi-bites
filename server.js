@@ -7,7 +7,7 @@ const { connectToDatabase } = require("./src/db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
-const sgMail = require("@sendgrid/mail"); // SendGrid for email sending
+// const sgMail = require("@sendgrid/mail"); // SendGrid for email sending
 require("dotenv").config(); // Load environment variables
 
 const dev = process.env.NODE_ENV !== "production";
@@ -16,43 +16,43 @@ const handle = app.getRequestHandler();
 const PAGE_SIZE = 5;
 
 // Set up SendGrid API key
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+// sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 // Send email function using SendGrid
-const sendEmail = async (to, subject, text, html) => {
-  const msg = {
-    to, // recipient email address
-    from: process.env.VERIFIED_EMAIL, // Your verified sender email from SendGrid
-    subject,
-    text,
-    html,
-  };
-  try {
-    await sgMail.send(msg);
-    console.log("Email sent");
-  } catch (error) {
-    console.error(error);
-    if (error.response) {
-      console.error(error.response.body);
-    }
-  }
-};
+// const sendEmail = async (to, subject, text, html) => {
+//   const msg = {
+//     to, // recipient email address
+//     from: process.env.VERIFIED_EMAIL, // Your verified sender email from SendGrid
+//     subject,
+//     text,
+//     html,
+//   };
+//   try {
+//     await sgMail.send(msg);
+//     console.log("Email sent");
+//   } catch (error) {
+//     console.error(error);
+//     if (error.response) {
+//       console.error(error.response.body);
+//     }
+//   }
+// };
 app.prepare().then(() => {
   const server = express();
   server.use(cors());
   server.use(express.json());
 
-  server.post("/send-email", async (req, res) => {
-    const { to, subject, text, html } = req.body;
+  // server.post("/send-email", async (req, res) => {
+  //   const { to, subject, text, html } = req.body;
 
-    try {
-      await sendEmail(to, subject, text, html);
-      res.status(200).send("Email sent successfully");
-    } catch (error) {
-      console.error("Error sending email:", error);
-      res.status(500).send("Failed to send email");
-    }
-  });
+  //   try {
+  //     await sendEmail(to, subject, text, html);
+  //     res.status(200).send("Email sent successfully");
+  //   } catch (error) {
+  //     console.error("Error sending email:", error);
+  //     res.status(500).send("Failed to send email");
+  //   }
+  // });
 
   //User
   server.get("/api/users", async (req, res) => {
@@ -132,7 +132,7 @@ app.prepare().then(() => {
 
       const result = await usersCollection.updateOne(
         { _id: userId },
-        { $set: updateData },
+        { $set: updateData }
       );
 
       if (result.matchedCount === 0) {
@@ -172,13 +172,13 @@ app.prepare().then(() => {
         // Remove the product ID from favorites
         await usersCollection.updateOne(
           { _id: new ObjectId(userId) },
-          { $pull: { favoriteproductIds: productId } },
+          { $pull: { favoriteproductIds: productId } }
         );
       } else {
         // Add the product ID to favorites
         await usersCollection.updateOne(
           { _id: new ObjectId(userId) },
-          { $addToSet: { favoriteproductIds: productId } },
+          { $addToSet: { favoriteproductIds: productId } }
         );
       }
 
@@ -250,9 +250,13 @@ app.prepare().then(() => {
         return res.status(401).json({ error: "Invalid email or password" });
       }
 
-      const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY, {
-        expiresIn: "5h",
-      });
+      const token = jwt.sign(
+        { id: user._id },
+        process.env.SECRET_KEY
+        //   , {
+        //   expiresIn: "5h",
+        // }
+      );
 
       res.status(200).json({
         token: token, // Include token in response
@@ -360,10 +364,12 @@ app.prepare().then(() => {
         return res.status(401).json({ error: "Invalid email or password" });
       }
 
-      const token = jwt.sign({ id: admin._id }, process.env.SECRET_KEY, {
-        expiresIn: "5h",
-      });
-
+      const token = jwt.sign(
+        { id: admin._id },
+        process.env.SECRET_KEY
+        //   , {
+        //   expiresIn: "5h",
+      );
       res.status(200).json({
         token: token, // Include token in response
         admin: { id: admin._id, email: admin.email },
@@ -422,61 +428,60 @@ app.prepare().then(() => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
-  const transporter = nodemailer.createTransport({
-    service: "Gmail",
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
-  transporter.verify(function (error, success) {
-    if (error) {
-      console.log("Error connecting to Gmail:", error);
-    } else {
-      console.log("Server is ready to send email", success);
-    }
-  });
-  server.post("/api/auth/admin/forgot-password", async (req, res) => {
-    const { email } = req.body;
-    console.log("Received forgot password request for:", email);
+  // const transporter = nodemailer.createTransport({
+  //   service: "Gmail",
+  //   auth: {
+  //     user: process.env.EMAIL_USER,
+  //     pass: process.env.EMAIL_PASS,
+  //   },
+  // });
+  // transporter.verify(function (error, success) {
+  //   if (error) {
+  //     console.log("Error connecting to Gmail:", error);
+  //   } else {
+  //     console.log("Server is ready to send email", success);
+  //   }
+  // });
+  // server.post("/api/auth/admin/forgot-password", async (req, res) => {
+  //   const { email } = req.body;
+  //   console.log("Received forgot password request for:", email);
 
-    try {
-      const db = await connectToDatabase();
-      const adminCollection = db.collection("admin");
-      const admin = await adminCollection.findOne({ email });
+  //   try {
+  //     const db = await connectToDatabase();
+  //     const adminCollection = db.collection("admin");
+  //     const admin = await adminCollection.findOne({ email });
 
-      if (!admin) {
-        return res.status(404).json({ error: "Email not found" });
-      }
+  //     if (!admin) {
+  //       return res.status(404).json({ error: "Email not found" });
+  //     }
 
-      const otp = generateOTP();
-      console.log("Generated OTP:", otp);
+  //     const otp = generateOTP();
+  //     console.log("Generated OTP:", otp);
 
-      const otpToken = jwt.sign(
-        { otp, id: admin._id },
-        process.env.SECRET_KEY,
-        { expiresIn: "10m" },
-      );
-      console.log("Generated OTP token");
+  //     const otpToken = jwt.sign(
+  //       { otp, id: admin._id },
+  //       process.env.SECRET_KEY
+  //       // { expiresIn: "10m" },
+  //     );
+  //     console.log("Generated OTP token");
 
-      // Send OTP to the admin's email
-      await transporter.sendMail({
-        to: email,
-        subject: "Your OTP for Password Reset",
-        text: `Your OTP is: ${otp}`,
-      });
+  //     // Send OTP to the admin's email
+  //     await transporter.sendMail({
+  //       to: email,
+  //       subject: "Your OTP for Password Reset",
+  //       text: `Your OTP is: ${otp}`,
+  //     });
 
-      res.status(200).json({ message: "OTP sent to email", otpToken });
-    } catch (error) {
-      console.error("Error in forgot-password:", error);
-      res.status(500).json({ error: "Internal server error" });
-    }
-  });
-  const generateOTP = () =>
-    Math.floor(100000 + Math.random() * 900000).toString();
+  //     res.status(200).json({ message: "OTP sent to email", otpToken });
+  //   } catch (error) {
+  //     console.error("Error in forgot-password:", error);
+  //     res.status(500).json({ error: "Internal server error" });
+  //   }
+  // });
+  // const generateOTP = () =>
+  //   Math.floor(100000 + Math.random() * 900000).toString();
   server.post("/api/auth/admin/verify-otp", async (req, res) => {
     const { otpToken, otp } = req.body;
-
     try {
       const decoded = jwt.verify(otpToken, process.env.SECRET_KEY);
 
@@ -501,7 +506,7 @@ app.prepare().then(() => {
       const hashedPassword = await bcrypt.hash(newPassword, 10);
       await adminCollection.updateOne(
         { _id: new ObjectId(decoded.id) },
-        { $set: { password: hashedPassword } },
+        { $set: { password: hashedPassword } }
       );
 
       res.status(200).json({ message: "Password reset successfully" });
@@ -532,7 +537,7 @@ app.prepare().then(() => {
       if (isFavorite) {
         // Remove the product ID from the array
         updatedFavorites = user.favoriteproductIds.filter(
-          (id) => id !== productId,
+          (id) => id !== productId
         );
       } else {
         // Add the product ID to the array
@@ -541,7 +546,7 @@ app.prepare().then(() => {
 
       await usersCollection.updateOne(
         { _id: new ObjectId(userId) },
-        { $set: { favoriteproductIds: updatedFavorites } },
+        { $set: { favoriteproductIds: updatedFavorites } }
       );
 
       return res.status(200).json({
@@ -619,11 +624,11 @@ app.prepare().then(() => {
           } catch (userError) {
             console.error(
               `Error fetching user for rating ${rating._id}:`,
-              userError,
+              userError
             );
             return { ...rating, user_id: "Unknown User" };
           }
-        }),
+        })
       );
 
       res.status(200).json({ ...product, ratings: ratingsWithUserDetails });
@@ -710,7 +715,7 @@ app.prepare().then(() => {
             updated_at: new Date(), // Update the timestamp
           },
         },
-        { returnOriginal: false }, // Return the updated document
+        { returnOriginal: false } // Return the updated document
       );
 
       res.status(200).json({
@@ -764,11 +769,11 @@ app.prepare().then(() => {
           } catch (userError) {
             console.error(
               `Error fetching user for rating ${rating._id}:`,
-              userError,
+              userError
             );
             return { ...rating, user_id: "Unknown User" };
           }
-        }),
+        })
       );
 
       res.status(200).json({ ...product, ratings: ratingsWithUserDetails });
@@ -903,7 +908,7 @@ app.prepare().then(() => {
       // Update the order status
       await ordersCollection.updateOne(
         { _id: new ObjectId(orderId) },
-        { $set: { status: nextStatus, updatedAt: new Date() } },
+        { $set: { status: nextStatus, updatedAt: new Date() } }
       );
 
       res
@@ -916,24 +921,32 @@ app.prepare().then(() => {
   });
 
   //Cart
-  server.get("/api/cart", async (req, res) => {
+  server.get("/api/cart/:userId", async (req, res) => {
     try {
+      const { userId } = req.params;  // Extract the userId from the request params
       const db = await connectToDatabase();
       const cartCollection = db.collection("cart");
-
-      const totalCount = await cartCollection.countDocuments();
-      const totalPages = Math.ceil(totalCount / PAGE_SIZE);
-
-      const cart = await cartCollection.find().toArray();
-      // Send only the first cart item if available
-      const firstCartItem = cart.length > 0 ? cart[0] : null;
-
-      res.status(200).json({ firstCartItem, totalCount, totalPages });
+  
+      // Find the user's cart based on user_id
+      const userCart = await cartCollection.findOne({ user_id: userId });
+  
+      if (!userCart) {
+        // If no cart is found for the user, send a 404 response
+        return res.status(404).json({ error: "Cart not found for this user" });
+      }
+  
+      // Get the total number of items in the cart
+      const totalCount = userCart.items.length;
+      const totalPages = Math.ceil(totalCount / PAGE_SIZE);  // Optional pagination logic
+  
+      // Return the full cart object and additional details
+      res.status(200).json({ cart: userCart, totalCount, totalPages });
     } catch (error) {
       console.error("Error:", error);
       res.status(500).json({ error: "Internal server error" });
     }
   });
+  
   server.post("/api/cart/:userId/add", async (req, res) => {
     try {
       const { userId } = req.params;
@@ -961,7 +974,7 @@ app.prepare().then(() => {
 
       // Update cart items
       const itemIndex = cart.items.findIndex(
-        (item) => item.product_id === product_id,
+        (item) => item.product_id === product_id
       );
 
       if (itemIndex > -1) {
@@ -987,7 +1000,7 @@ app.prepare().then(() => {
             updated_at: cart.updated_at,
           },
         },
-        { upsert: true },
+        { upsert: true }
       );
 
       res.status(200).json({ cart });
@@ -1009,7 +1022,7 @@ app.prepare().then(() => {
       }
 
       const item = cart.items.find(
-        (item) => item.product_id.toString() === productId,
+        (item) => item.product_id.toString() === productId
       );
       if (item) {
         item.quantity = quantity;
@@ -1029,7 +1042,7 @@ app.prepare().then(() => {
             total: cart.total,
             updated_at: cart.updated_at,
           },
-        },
+        }
       );
 
       res.status(200).json({ cart });
@@ -1063,7 +1076,7 @@ app.prepare().then(() => {
       // Remove the item from the user's cart
       const result = await cartCollection.updateOne(
         { user_id: userId },
-        { $pull: { items: { product_id: productId } } },
+        { $pull: { items: { product_id: productId } } }
       );
 
       if (result.modifiedCount > 0) {

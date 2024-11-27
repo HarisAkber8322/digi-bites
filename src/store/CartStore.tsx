@@ -2,6 +2,7 @@ import axios from "axios";
 import { makeAutoObservable } from "mobx";
 import React from "react";
 import { productStore } from "./ProductStore";
+import { userStore } from "./UserStore";
 
 export interface Cart {
   items: CartItem[];
@@ -13,6 +14,7 @@ export interface Cart {
 }
 
 export interface CartItem {
+  price: number;
   product_id: string;
   quantity: number;
 }
@@ -41,16 +43,24 @@ class CartStore {
     this.loadCart();
   }
   setCartItems(items: CartItem[]) {
-    console.log(items);
+    // console.log(items);
     this.cartItems = items;
   }
   // Load cart from the server
   loadCart = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/api/cart`);
-      console.log(response.data);
+      await userStore.checkLoginState();
+      const userId = userStore.user?.id;
+      if (!userId) {
+        console.error("User ID is missing. Cannot load cart.");
+        return;  // Or handle this error appropriately
+      }
 
-      const cart = response.data.firstCartItem;
+      console.log("userId: ", userId);
+      const response = await axios.get(`http://localhost:3001/api/cart/${userId}`);
+      console.log("res: ", response.data);
+
+      const cart = response.data.cart;
 
       if (cart) {
         this.cart = cart;

@@ -49,6 +49,7 @@ const MenuCard: React.FC<MenuCardProps> = ({ menuItem, handleCardClick }) => {
     const cartItem: CartItem = {
       quantity: 1, // Adjust quantity as needed
       product_id: item._id,
+      price: 0
     };
     console.log(cartItem);
     await CartStore.addItemToCart(cartItem, UserStore.user?.id); // Use CartStore to add item

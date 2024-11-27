@@ -8,7 +8,7 @@ const CartPage = () => {
     <>
       <CartComponent />
 
-      <MainLoaderComponent />
+      {/* <MainLoaderComponent /> */}
     </>
   );
 };

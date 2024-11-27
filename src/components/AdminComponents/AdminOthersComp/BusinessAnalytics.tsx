@@ -98,7 +98,7 @@ const BusinessAnalytics = () => {
                       content={
                         <div>
                           {data.name} <br></br>
-                          {statusCounts[data.name] || 0}
+                          {statusCounts[data.name]}
                         </div>
                       }
                     />
@@ -132,7 +132,7 @@ const BusinessAnalytics = () => {
                       content={
                         <div className="flex justify-between items-center w-full">
                           <span>{data.name}</span>
-                          <span> {statusCounts[data.name] || 0}</span>
+                          <span> {statusCounts[data.name]}</span>
                         </div>
                       }
                     />
