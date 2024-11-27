@@ -29,17 +29,31 @@ const SignUpForm = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    fname: Yup.string().required("First name is required"),
-    lname: Yup.string().required("Last name is required"),
+    fname: Yup.string()
+      .required("First name is required")
+      .matches(/^[A-Za-z\s]+$/, "First name must only contain letters"),
+    lname: Yup.string()
+      .required("Last name is required")
+      .matches(/^[A-Za-z\s]+$/, "Last name must only contain letters"),
     email: Yup.string()
       .email("Invalid email address")
+      .matches(
+        /^[A-Za-z0-9._%+-]+@(gmail\.com|hotmail\.com|outlook\.com)$/,
+        "invalid email"
+      )
       .required("Email is required"),
     password: Yup.string()
       .min(6, "Password must be at least 6 characters")
+      .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+      .matches(/[a-z]/, "Password must contain at least one lowercase letter")
+      .matches(/[0-9]/, "Password must contain at least one digit")
       .required("Password is required"),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password"), undefined], "Passwords must match")
       .required("Confirm Password is required"),
+    contact_no: Yup.string()
+      .required("required")
+      .matches(/^\d{11}$/, "Contact number must be  11 digits"),
     favoriteProductsIds: Yup.array().of(Yup.string()),
   });
 
@@ -135,7 +149,7 @@ const SignUpForm = () => {
                       type="email"
                       id="email"
                       name="email"
-                      placeholder="Enter your email"
+                      placeholder="****@gmail.com"
                       className="mt-1 block w-full px-3 py-2 border border-lightGray rounded-md shadow-sm focus:outline-none focus:themeOrange focus:border-themeOrange sm:text-sm"
                     />
                     <ErrorMessage

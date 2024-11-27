@@ -79,17 +79,6 @@ const HeaderComponent = () => {
                 {/* DESKTOP MENU */}
                 <div className={` duration-75 xs:hidden md:left-0 md:block`}>
                   <ul className="md:flex  md:gap-10 md:text-lg md:font-semibold md:items-center">
-                    <li className="md:transition-all md:duration-500 md:ease-in-out">
-                      <Link
-                        href=""
-                        className={router === "/home" ? "active" : ""}
-                      >
-                        <Text
-                          themeDivClasses="md:text-md md:font-semibold"
-                          content={"Home"}
-                        />
-                      </Link>
-                    </li>
                     <Text
                       themeDivClasses=""
                       content={
@@ -98,7 +87,7 @@ const HeaderComponent = () => {
                           onMouseEnter={handleMouseEnter}
                           onMouseLeave={handleMouseLeave}
                         >
-                          <span className="md:cursor-pointer">Categories</span>
+                          <span className="md:cursor-pointer ml-3">Categories</span>
                           {isDropdownOpen && (
                             <ul className="absolute bg-white shadow-lg rounded-md mt-2 z-10">
                               {menuData.map((category) => (
