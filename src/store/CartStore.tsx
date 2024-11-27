@@ -52,19 +52,12 @@ class CartStore {
       await userStore.checkLoginState();
       const userId = userStore.user?.id;
       if (!userId) {
-        console.error("User ID is missing. Cannot load cart.");
         return;  // Or handle this error appropriately
-      }
-
-      console.log("userId: ", userId);
+      }      
       const response = await axios.get(`http://localhost:3001/api/cart/${userId}`);
-      console.log("res: ", response.data);
-
       const cart = response.data.cart;
-
       if (cart) {
         this.cart = cart;
-
         this.setCartItems(cart.items);
         this.calculateTotal();
       } else {

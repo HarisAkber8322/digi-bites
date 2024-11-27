@@ -6,7 +6,7 @@ const { ObjectId } = require("mongodb");
 const { connectToDatabase } = require("./src/db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const nodemailer = require("nodemailer");
+// const nodemailer = require("nodemailer");
 // const sgMail = require("@sendgrid/mail"); // SendGrid for email sending
 require("dotenv").config(); // Load environment variables
 

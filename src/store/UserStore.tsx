@@ -88,7 +88,6 @@ class UserStore {
   };
 
   checkLoginState = async () => {
-    console.log('check')
     try {
       const token = Cookies.get("token");
       if (token) {

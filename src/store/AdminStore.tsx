@@ -94,10 +94,7 @@ class AdminStore {
   checkLoginState = async () => {
       try {
         const token = Cookies.get("token");
-        console.log('token: ', token)
-    
         if (!token) {
-          console.log('token nahi hai 1')
           this.setIsAdminLoggedIn(false);
           this.admin = null;
           return;
