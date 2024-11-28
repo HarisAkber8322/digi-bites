@@ -1,12 +1,42 @@
 "use client"
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { SetStateAction, useState } from "react";
-
+import { Button } from "react-bootstrap";
+import Image from "next/image";
+import { Alert } from "@mui/material";
+import Link from "next/link";
+import { SetStateAction, useContext, useEffect, useState } from "react";
+import CartStoreContext, { AddOn, CartItem } from "@/store/CartStore";
+import OrderStoreContext from "@/store/OrderStore";
+import UserStoreContext from "@/store/UserStore";
+import ProductStoreContext from "@/store/ProductStore";
 const CheckoutPage = () => {
+  const orderStore = useContext(OrderStoreContext);
+  const userStore = useContext(UserStoreContext);
+  const productStore = useContext(ProductStoreContext);
+  const cartStore = useContext(CartStoreContext);
   const [deliveryMethod, setDeliveryMethod] = useState("homeDelivery"); // State to toggle delivery method
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  useEffect(() => {
+    cartStore.cart.items.forEach(async (item) => {
+      await productStore.fetchProductById(item?.product_id);
+    });
+  }, [cartStore, productStore]);
+  const calculateTotalPrice = () => {
+    return cartStore.cart.items.reduce((total, item) => {
+      const product = productStore.products.find(
+        (p) => p._id === item.product_id,
+      );
+      const productPrice = product ? product.price : 0;
+      // const addOnsPrice = item.addOns
+      //   .filter((addOn: AddOn) => addOn.value)
+      //   .reduce((sum, addOn) => sum + addOn.price, 0);
+      return total + productPrice * item.quantity; // + addOnsPrice;
+    }, 0);
+  };
+  const totalPrice = calculateTotalPrice();
+  const deliveryFee = 100;
+  const total = deliveryFee + totalPrice;
   const initialValues = {
     name: "",
     phone: "",
@@ -34,8 +64,56 @@ const CheckoutPage = () => {
 
   return (
     <div className="flex flex-wrap justify-center items-start gap-6 p-8">
+
+
       {/* Left Section: Checkout Form */}
-      <div className="w-[55%]">
+      <div className="w-[55%] p-6 rounded-lg shadow-lg bg-white">
+        <div className="gap-4 flex flex-col w-[60%]">
+          {cartStore.cartItems.map((item: CartItem, index: number) => {
+            const product = productStore.products.find(
+              (p) => p._id === item.product_id,
+            );
+            // console.log(product)
+            if (!product) {
+              return (
+                <div
+                  key={index}
+                  className="flex shadow-xl rounded-lg items-center justify-between p-4 h-[100px]"
+                >
+                  <p>Loading product details...</p>
+                </div>
+              );
+            }
+
+            return (
+              <div
+                key={index}
+                className="bg-white flex shadow-xl rounded-lg items-center justify-between p-4 h-[100px]"
+              >
+                <div className="flex cursor-pointer w-full">
+                  <Image
+                    className="rounded-md"
+                    src={product.image}
+                    width={80}
+                    height={60}
+                    alt={product.name}
+                  />
+                  <div className="ml-3">
+                    <p className="text-lg font-semibold">
+                      {product.name} -{" "}
+                      <span className="text-sm text-gray-600">
+                        {product.price.toFixed(2)} rs
+                      </span>
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs pt-2">Quantity: {item.quantity}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
@@ -56,11 +134,10 @@ const CheckoutPage = () => {
                 </label>
                 <div className="flex flex-row gap-4">
                   <label
-                    className={`flex w-full items-center border p-2 rounded-md transition duration-150 ease-in-out hover:cursor-pointer ${
-                      deliveryMethod === "homeDelivery"
-                        ? "bg-red-100 border-red-400"
-                        : "border-ExtraLightGray hover:bg-red-100 hover:border-red-400"
-                    }`}
+                    className={`flex w-full items-center border p-2 rounded-md transition duration-150 ease-in-out hover:cursor-pointer ${deliveryMethod === "homeDelivery"
+                      ? "bg-red-100 border-red-400"
+                      : "border-ExtraLightGray hover:bg-red-100 hover:border-red-400"
+                      }`}
                   >
                     <input
                       type="radio"
@@ -73,11 +150,10 @@ const CheckoutPage = () => {
                     <span className="flex justify-end w-[60%]">$30.00</span>
                   </label>
                   <label
-                    className={`flex w-full items-center border p-2 rounded-md transition duration-150 ease-in-out hover:cursor-pointer ${
-                      deliveryMethod === "takeaway"
-                        ? "bg-red-100 border-red-400"
-                        : "border-ExtraLightGray hover:bg-red-100 hover:border-red-400"
-                    }`}
+                    className={`flex w-full items-center border p-2 rounded-md transition duration-150 ease-in-out hover:cursor-pointer ${deliveryMethod === "takeaway"
+                      ? "bg-red-100 border-red-400"
+                      : "border-ExtraLightGray hover:bg-red-100 hover:border-red-400"
+                      }`}
                   >
                     <input
                       type="radio"
@@ -95,8 +171,6 @@ const CheckoutPage = () => {
               {/* Conditional Fields for Home Delivery */}
               {deliveryMethod === "homeDelivery" && (
                 <>
-                
-   
                   <div className="mb-4">
                     <label htmlFor="address" className="block text-sm font-medium mb-2">
                       Address:
@@ -115,11 +189,11 @@ const CheckoutPage = () => {
                       className="text-red-500 text-xs mt-1"
                     />
                   </div>
-        
+
                 </>
               )}
-                         {/* Phone Field */}
-                         <div className="mb-4">
+              {/* Phone Field */}
+              <div className="mb-4">
                 <label htmlFor="phone" className="block text-sm font-medium mb-2">
                   Phone Number:
                 </label>
@@ -136,24 +210,24 @@ const CheckoutPage = () => {
                   className="text-red-500 text-xs mt-1"
                 />
               </div>
-                        <div className="mb-4">
-                    <label htmlFor="deliveryNote" className="block text-sm font-medium mb-2">
-                      Delivery Note:
-                    </label>
-                    <Field
-                      as="textarea"
-                      id="deliveryNote"
-                      name="deliveryNote"
-                      placeholder="Add any delivery instructions"
-                      rows={3}
-                      className="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-themeOrange focus:border-themeOrange"
-                    />
-                    <ErrorMessage
-                      name="deliveryNote"
-                      component="div"
-                      className="text-red-500 text-xs mt-1"
-                    />
-                  </div>
+              <div className="mb-4">
+                <label htmlFor="deliveryNote" className="block text-sm font-medium mb-2">
+                  Delivery Note:
+                </label>
+                <Field
+                  as="textarea"
+                  id="deliveryNote"
+                  name="deliveryNote"
+                  placeholder="Add any delivery instructions"
+                  rows={3}
+                  className="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-themeOrange focus:border-themeOrange"
+                />
+                <ErrorMessage
+                  name="deliveryNote"
+                  component="div"
+                  className="text-red-500 text-xs mt-1"
+                />
+              </div>
 
             </Form>
           )}
@@ -170,19 +244,19 @@ const CheckoutPage = () => {
           </div>
           <div className="items-center p-1 flex justify-between">
             <span className="font-semibold text-base">Subtotal</span>
-            <span className="text-base">200 rs</span>
+            <span className="text-base"> {totalPrice} Rs</span>
           </div>
           <div className="items-center p-1 flex justify-between">
             <span className="font-semibold text-base">Delivery fee</span>
-            <span className="text-base">150 rs</span>
+            <span className="text-base">{deliveryFee} Rs</span>
           </div>
           <div className="items-center p-1 pt-4 border-t-2 mt-5 border-ExtraLightGray flex justify-between">
             <span className="font-semibold text-lg">Total:</span>
-            <span className="text-lg font-semibold">$00.00</span>
+            <span className="text-lg font-semibold">{total} Rs</span>
           </div>
           <div className="flex justify-center pr-4 pl-4">
             <button className="text-white bg-themeYellow w-full font-bold text-lg p-2 flex mt-4 align-middle justify-center rounded-md">
-              Place Order
+              Checkout
             </button>
           </div>
         </div>
