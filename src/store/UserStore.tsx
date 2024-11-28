@@ -17,12 +17,6 @@ export interface User {
   favoriteProductsIds: string[];
 }
 
-// export interface Product {
-//   _id: string;
-//   name: string;
-//   average_rating: number;
-// }
-
 class UserStore {
   user: User | null = null;
   userList: User[] = [];
@@ -35,8 +29,6 @@ class UserStore {
   constructor() {
     makeAutoObservable(this);
     this.checkLoginState();
-    // this.user;
-    // console.log(this.user);
   }
 
   setIsLoggedIn(value: boolean) {
@@ -88,15 +80,8 @@ class UserStore {
   };
 
   checkLoginState = async () => {
-    console.log('check')
     try {
       const token = Cookies.get("token");
-      console.log(this.user)
-      // const userId = this.user?.id;
-      // if (!userId) {
-      //   console.error("User ID is missing. User not found.");
-      //   return;  // Or handle this error appropriately
-      // }
       if (token) {
         try {
           const response = await axios.get(
@@ -105,7 +90,6 @@ class UserStore {
               headers: { Authorization: `Bearer ${token}` },
             },
           );
-          console.log(response)
           if (response.status === 200) {
             this.setUser(response.data.user);
             this.fetchFavoriteProducts(response.data.user.id); // Fetch favorites once user is set
@@ -122,7 +106,6 @@ class UserStore {
       console.error("Error checking login state:", error);
       this.setIsLoggedIn(false);
     }
-    // console.log(this.user)
   };
 
   async handleSignUp(user: User) {

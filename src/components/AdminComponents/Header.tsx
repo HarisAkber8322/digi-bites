@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
 } from "@fortawesome/free-solid-svg-icons";
-import ToggleThemeComponent from "../ToggleThemeButton";
+import ToggleThemeComponent from "../UI/ToggleThemeButton";
 import AdminProfileComponent from "../AdminComponents/AdminOthersComp/AdminProfile";
 import { Image } from "react-bootstrap";
 import { usePathname } from "next/navigation";

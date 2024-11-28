@@ -52,19 +52,12 @@ class CartStore {
       await userStore.checkLoginState();
       const userId = userStore.user?.id;
       if (!userId) {
-        console.error("User ID is missing. Cannot load cart.");
         return;  // Or handle this error appropriately
-      }
-
-      console.log("userId: ", userId);
+      }      
       const response = await axios.get(`http://localhost:3001/api/cart/${userId}`);
-      console.log("res: ", response.data);
-
       const cart = response.data.cart;
-
       if (cart) {
         this.cart = cart;
-
         this.setCartItems(cart.items);
         this.calculateTotal();
       } else {
@@ -82,7 +75,7 @@ class CartStore {
   addItemToCart = async (item: CartItem, userId: string | undefined) => {
     try {
       if (!item.product_id || !userId) return;
-      console.log(item, userId);
+      // console.log(item, userId);
 
       const response = await axios.post(
         `http://localhost:3001/api/cart/${userId}/add`,
@@ -195,7 +188,6 @@ class CartStore {
 
     for (const item of this.cartItems) {
       // Fetch product details
-      console.log(item.product_id);
       const product = await this.productStore.fetchProductById(item.product_id);
 
       if (product) {

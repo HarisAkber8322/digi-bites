@@ -190,7 +190,7 @@ const Cart: React.FC = () => {
                       {totalPrice.toFixed(2)} rs
                     </span>
                   </div>
-                  <div className="mt-3">
+                  {/* <div className="mt-3">
                     <Form.Group controlId="orderNote">
                       <Form.Label>Order Note</Form.Label>
                       <Form.Control
@@ -201,7 +201,7 @@ const Cart: React.FC = () => {
                         placeholder="Enter any special instructions here"
                       />
                     </Form.Group>
-                  </div>
+                  </div> */}
                   <div className="flex justify-center pr-4 pl-4">
                     <Link href={"/checkout"}
                       className="text-white bg-themeYellow w-full font-bold text-lg p-2 flex mt-4 align-middle justify-center rounded-md"

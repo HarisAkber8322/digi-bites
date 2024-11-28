@@ -94,10 +94,7 @@ class AdminStore {
   checkLoginState = async () => {
       try {
         const token = Cookies.get("token");
-        console.log('token: ', token)
-    
         if (!token) {
-          console.log('token nahi hai 1')
           this.setIsAdminLoggedIn(false);
           this.admin = null;
           return;
@@ -192,9 +189,10 @@ const AdminProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const router = useRouter();
+  
   React.useEffect(() => {
     adminStore.router = router; // Initialize router after component mounts
-    // adminStore.checkLoginState(); // Check the login state on mount
+    adminStore.checkLoginState(); // Check the login state on mount
   }, [router]);
 
   return (
