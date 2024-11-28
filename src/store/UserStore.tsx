@@ -90,6 +90,12 @@ class UserStore {
   checkLoginState = async () => {
     try {
       const token = Cookies.get("token");
+      console.log(this.user)
+      // const userId = this.user?.id;
+      // if (!userId) {
+      //   console.error("User ID is missing. User not found.");
+      //   return;  // Or handle this error appropriately
+      // }
       if (token) {
         try {
           const response = await axios.get(
@@ -197,9 +203,9 @@ const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   const router = useRouter();
   React.useEffect(() => {
     userStore.router = router; // Initialize router after component mounts
-    // userStore.checkLoginState(); 
+    userStore.checkLoginState(); 
     // console.log(userStore.user?.id)
-  }, [router]);
+  }, [router, userStore.user]);
 
   return (
     <UserStoreContext.Provider value={userStore}>
