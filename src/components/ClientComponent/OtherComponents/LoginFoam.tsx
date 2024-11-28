@@ -17,8 +17,8 @@ const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const initialValues = {
-    email: "",
-    password: "",
+    email: "admin@digibites.com",
+    password: "tacos1",
   };
 
   const validationSchema = Yup.object().shape({

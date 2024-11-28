@@ -5,68 +5,51 @@ import Text from "../../UI/Text";
 import { observer } from "mobx-react";
 import { Image } from "react-bootstrap";
 import OrderStoreContext from "@/store/OrderStore";
-
 const statusData = [
-  { name: "Pending", imageUrl: "/images/Icons/icons8-pending-96.png" },
-  { name: "Confirmed", imageUrl: "/images/Icons/icons8-confirmed-96.png" },
+  { name: "In Process", imageUrl: "/images/Icons/icons8-pending-96.png" },
   {
-    name: "Processing",
+    name: "Delayed",
     imageUrl: "/images/Icons/icons8-submit-progress-96.png",
   },
-  { name: "Readyforpickup", imageUrl: "/images/Icons/icons8-waiter-96.png" },
+  { name: "Ready", imageUrl: "/images/Icons/icons8-confirmed-96.png" },
+  { name: "On Way", imageUrl: "/images/Icons/deliver.png" },
+  { name: "Delivered", imageUrl: "/images/Icons/icons8-waiter-96.png" },
 ];
 
-const smallDivData = [
-  { name: "Picked", imageUrl: "/images/Icons/icons8-done-96.png" },
-  { name: "Canceled", imageUrl: "/images/Icons/icons8-clear-search-96.png" },
-  { name: "Returned", imageUrl: "/images/Icons/icons8-homework-96.png" },
-  { name: "Discard", imageUrl: "/images/Icons/icons8-fail-96.png" },
-];
+
 
 const BusinessAnalytics = () => {
   const orderStore = useContext(OrderStoreContext); // Access OrderStore from context
-  const [statusCounts, setStatusCounts] = useState({
-    Pending: 0,
-    Picked: 0,
-    Returned: 0,
-    Readyforpickup: 0,
-    Confirmed: 0,
-    Processing: 0,
-    Canceled: 0,
-    Discard: 0,
-  });
-
+   // Dynamically initialize statusCounts based on statusData
+   const initialCounts = statusData.reduce((acc, status) => {
+    acc[status.name] = 0;
+    return acc;
+  }, {});
+  const [statusCounts, setStatusCounts] = useState(initialCounts);
   useEffect(() => {
     orderStore.loadOrders(); // Load orders on component mount
-
+  }, [orderStore]);
+  useEffect(() => {
     // Calculate status counts when orders are loaded
     const calculateStatusCounts = () => {
-      const counts = {
-        Pending: 0,
-        Picked: 0,
-        Returned: 0,
-        Readyforpickup: 0,
-        Confirmed: 0,
-        Processing: 0,
-        Canceled: 0,
-        Discard: 0,
-      };
-
+      const counts = { ...initialCounts }; // Start with the initialized counts
       orderStore.orderList.forEach((order) => {
         if (counts.hasOwnProperty(order.status)) {
-          counts[order?.status]++;
+          counts[order.status]++;
         }
       });
-
       setStatusCounts(counts);
     };
 
-    calculateStatusCounts();
-  }, [orderStore]);
+    if (orderStore.orderList.length > 0) {
+      calculateStatusCounts();
+    }
+  }, [orderStore.orderList, initialCounts]);
 
+  
   return (
     <Div
-      themeDivClasses="h-[325px] rounded-xl shadow-md p-6 overflow-hidden"
+      themeDivClasses="rounded-xl shadow-md p-6 overflow-hidden"
       darkColor="bg-pepperBlack"
       content={
         <>
@@ -80,13 +63,13 @@ const BusinessAnalytics = () => {
                   alt="name"
                   className="h-8 w-8"
                 />
-                Business Analytics
+                Orders Analytics
               </>
             }
           />
 
           {/* Grid of Divs */}
-          <div className="grid grid-cols-4 gap-5">
+          <div className="grid grid-cols-5 gap-5">
             {statusData.map((data, index) => (
               <Div
                 key={index}
@@ -97,8 +80,7 @@ const BusinessAnalytics = () => {
                       themeDivClasses="pl-4 text-medium font-medium"
                       content={
                         <div>
-                          {data.name} <br></br>
-                          {statusCounts[data.name]}
+                          <p>{data.name} <br></br>{statusCounts[data.name]}</p>
                         </div>
                       }
                     />
@@ -109,33 +91,6 @@ const BusinessAnalytics = () => {
                         className="h-8 w-8"
                       />
                     </div>
-                  </>
-                }
-              />
-            ))}
-            {smallDivData.map((data, index) => (
-              <Div
-                key={index}
-                themeDivClasses="h-[65px] rounded-xl p-4 flex items-center"
-                lightColor="bg-bgGrey"
-                content={
-                  <>
-                    <div className="flex justify-start">
-                      <Image
-                        src={data.imageUrl}
-                        alt={data.name}
-                        className="h-6 w-6"
-                      />
-                    </div>
-                    <Text
-                      themeDivClasses="pl-2 block w-full font-medium text-gray"
-                      content={
-                        <div className="flex justify-between items-center w-full">
-                          <span>{data.name}</span>
-                          <span> {statusCounts[data.name]}</span>
-                        </div>
-                      }
-                    />
                   </>
                 }
               />

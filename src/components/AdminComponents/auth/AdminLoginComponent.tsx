@@ -21,8 +21,8 @@ const AdminLoginComponent = ({ setAuthComponent }: AuthComponentProps) => {
   };
 
   const initialValues = {
-    email: adminStore.admin?.email || "",
-    password: adminStore.admin?.password || "",
+    email: adminStore.admin?.email || "admin@digibites.com",
+    password: adminStore.admin?.password || "tacos1",
   };
 
   const validationSchema = Yup.object({

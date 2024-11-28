@@ -602,39 +602,18 @@ interface SidebarItem {
 
 export const sidebarItems: SidebarCategory[] = [
   {
-  //   category: "Orders Management",
-  //   items: [{ title: "Orders", link: "/admin/orders", icon: faFolderTree }],
-  // },
-  // {
-  //   category: "Product Management",
-  //   items: [
-  //     {
-  //       title: "Products",
-  //       link: "/admin/product-listing",
-  //       icon: faCircle,
-  //     },
-  //     { title: "Add Product", link: "/admin/product-add", icon: faPlusCircle },
-  //     {
-  //       title: "Product Reviews",
-  //       link: "/admin/product-reviews",
-  //       icon: faStarHalfAlt,
-  //     },
-  //   ],
-  category: "Orders Management",
-  items: [
-    { title: "All Orders", link: "/admin/orders", icon: faFolderTree },
-    { title: "Pending", link: "/admin/orders/pending", icon: faClock },
-    { title: "Completed", link: "/admin/orders/completed", icon: faCheck },
-    { title: "Canceled", link: "/admin/orders/canceled", icon: faBan },
-  ],
-},
-{
-  category: "Product Management",
-  items: [
-    { title: "All Products", link: "/admin/product-listing", icon: faCircle },
-    { title: "Add Product", link: "/admin/product-add", icon: faPlusCircle },
-    { title: "Product Reviews", link: "/admin/product-reviews", icon: faStarHalfAlt },
-  ],
+    category: "Orders Management",
+    items: [
+      { title: "All Orders", link: "/admin/orders", icon: faFolderTree },
+    ],
+  },
+  {
+    category: "Product Management",
+    items: [
+      { title: "All Products", link: "/admin/product-listing", icon: faCircle },
+      { title: "Add Product", link: "/admin/product-add", icon: faPlusCircle },
+      { title: "Product Reviews", link: "/admin/product-reviews", icon: faStarHalfAlt },
+    ],
   },
   // Add more categories and items as needed
 ];
