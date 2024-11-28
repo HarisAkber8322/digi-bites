@@ -192,7 +192,7 @@ const AdminProvider: React.FC<{ children: React.ReactNode }> = ({
   
   React.useEffect(() => {
     adminStore.router = router; // Initialize router after component mounts
-    // adminStore.checkLoginState(); // Check the login state on mount
+    adminStore.checkLoginState(); // Check the login state on mount
   }, [router]);
 
   return (
