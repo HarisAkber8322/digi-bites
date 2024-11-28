@@ -17,36 +17,34 @@ const statusData = [
 ];
 
 
-
+const initialCounts = statusData.reduce((acc, status) => {
+  acc[status.name] = 0;
+  return acc;
+}, {});
 const BusinessAnalytics = () => {
   const orderStore = useContext(OrderStoreContext); // Access OrderStore from context
-   // Dynamically initialize statusCounts based on statusData
-   const initialCounts = statusData.reduce((acc, status) => {
-    acc[status.name] = 0;
-    return acc;
-  }, {});
+  // Dynamically initialize statusCounts based on statusData
   const [statusCounts, setStatusCounts] = useState(initialCounts);
   useEffect(() => {
     orderStore.loadOrders(); // Load orders on component mount
   }, [orderStore]);
   useEffect(() => {
-    // Calculate status counts when orders are loaded
-    const calculateStatusCounts = () => {
-      const counts = { ...initialCounts }; // Start with the initialized counts
-      orderStore.orderList.forEach((order) => {
-        if (counts.hasOwnProperty(order.status)) {
-          counts[order.status]++;
-        }
-      });
-      setStatusCounts(counts);
-    };
+    const counts = statusData.reduce((acc, status) => {
+      acc[status.name] = 0;
+      return acc;
+    }, {});
 
-    if (orderStore.orderList.length > 0) {
-      calculateStatusCounts();
-    }
-  }, [orderStore.orderList, initialCounts]);
+    orderStore.orderList.forEach((order) => {
+      if (counts.hasOwnProperty(order.status)) {
+        counts[order.status]++;
+      }
+    });
 
-  
+    setStatusCounts(counts);
+  }, [statusData, orderStore.orderList]);
+
+
+
   return (
     <Div
       themeDivClasses="rounded-xl shadow-md p-6 overflow-hidden"
