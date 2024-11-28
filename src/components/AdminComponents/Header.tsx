@@ -3,8 +3,6 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
-  faUser,
-  faCartShopping,
 } from "@fortawesome/free-solid-svg-icons";
 import ToggleThemeComponent from "../ToggleThemeButton";
 import AdminProfileComponent from "../AdminComponents/AdminOthersComp/AdminProfile";

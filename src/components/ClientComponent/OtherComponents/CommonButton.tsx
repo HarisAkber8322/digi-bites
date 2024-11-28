@@ -1,11 +1,6 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ThemeStore from "@/store/ThemeStore";
 import { observer } from "mobx-react";
 import Link from "next/link";
-// import Div from "../../UI/Div";
-// import Text from "../../UI/Text";
-
 const CommonButton = () => {
   return (
     <>
@@ -17,13 +12,6 @@ const CommonButton = () => {
           Add To Cart
         </Link>
       </button>
-
-      {/* <Div themeDivClasses={""} 
-      content={
-      <>
-      <button className=""></button>
-      </>
-    } /> */}
     </>
   );
 };

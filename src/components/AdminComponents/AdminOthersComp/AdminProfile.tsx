@@ -1,11 +1,6 @@
 import React, { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSignOutAlt,
-  faUser,
-  faEnvelope,
-  faGear,
-} from "@fortawesome/free-solid-svg-icons";
+import { faSignOutAlt, faGear } from "@fortawesome/free-solid-svg-icons";
 import { Image } from "react-bootstrap";
 import classNames from "classnames";
 import Div from "../../UI/Div";
@@ -47,7 +42,7 @@ const AdminProfile: React.FC = () => {
               "transform opacity-0 scale-95": !dropdownOpen,
               "transform opacity-100 scale-100": dropdownOpen,
             },
-            "transition ease-out duration-100",
+            "transition ease-out duration-100"
           )}
         >
           <div className="py-1">
