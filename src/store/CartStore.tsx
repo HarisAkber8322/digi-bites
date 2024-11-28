@@ -75,7 +75,7 @@ class CartStore {
   addItemToCart = async (item: CartItem, userId: string | undefined) => {
     try {
       if (!item.product_id || !userId) return;
-      console.log(item, userId);
+      // console.log(item, userId);
 
       const response = await axios.post(
         `http://localhost:3001/api/cart/${userId}/add`,
@@ -188,7 +188,6 @@ class CartStore {
 
     for (const item of this.cartItems) {
       // Fetch product details
-      console.log(item.product_id);
       const product = await this.productStore.fetchProductById(item.product_id);
 
       if (product) {

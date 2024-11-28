@@ -15,7 +15,7 @@ import {
   faChevronDown,
   faChevronUp,
 } from "@fortawesome/free-solid-svg-icons";
-import ToggleThemeComponent from "../ToggleThemeButton";
+import ToggleThemeComponent from "../UI/ToggleThemeButton";
 import { Image } from "react-bootstrap";
 import { usePathname } from "next/navigation";
 // import { useRouter } from "next/router";
