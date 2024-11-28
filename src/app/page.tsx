@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { observer } from "mobx-react";
-import CardGrid from "@/components/ClientComponent/OtherComponents/CardGrid";
+// import CardGrid from "@/components/ClientComponent/OtherComponents/CardGrid";
 import Slider from "@/components/ClientComponent/OtherComponents/slider";
 import CompleteMenu from "@/components/ClientComponent/OtherComponents/CompleteMenu";
 
