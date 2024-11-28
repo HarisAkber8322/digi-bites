@@ -16,21 +16,19 @@ export interface UserInfo {
   orderNote: string;
 }
 
-export interface Orders {
+export interface Order {
   _id: string;
   status: string;
   paymentMethod: string;
-  products: Product[];
+  products: { productId: string; quantity: number; }[];
   totalAmount: number;
-  userInfo: UserInfo;
+  userInfo: { userId: string | undefined; orderNote: string; phoneNumber: string | undefined; }; address: string | undefined;
   createdAt: string;
   updatedAt: string;
-  addOns: AddOn[];
 }
 
-
 class OrderStore {
-  orderList: Orders[] = [];
+  orderList: Order[] = [];
   userOrders: any;
   statusCounts: any;
   statusProgression: Record<string, string> = {
@@ -82,39 +80,11 @@ class OrderStore {
     }
   }
 
-  async placeOrder(
-    cartItems: CartItem[],
-    userId: string | undefined,
-    paymentMethod: string,
-    orderNote: string,
-    totalPrice: number,
-  ) {
+  async placeOrder(orderDetails: Order) {
     try {
-      if (!userId) throw new Error("User ID is required");
-
-      const products = cartItems.map((item) => ({
-        productId: item.product_id,
-        quantity: item.quantity,
-      }));
-
-      const totalAmount = totalPrice;
-
-      const userInfo = {
-        userId,
-        orderNote,
-      };
-
-      const orderData = {
-        status: "Pending",
-        paymentMethod,
-        products,
-        totalAmount,
-        userInfo,
-      };
-
       const response = await axios.post(
         "http://localhost:3001/api/orders",
-        orderData,
+        orderDetails,
       );
 
       if (response.status === 201) {
@@ -125,6 +95,8 @@ class OrderStore {
       console.error("Error placing order:", error);
     }
   }
+
+
   async updateStatus(orderId: string) {
     try {
       const response = await axios.put(

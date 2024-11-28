@@ -17,14 +17,13 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
 
   useEffect(() => {
-    // If admin is not logged in, redirect to the login page
     if (!adminStore.isAdminLoggedIn) {
       router.push("/admin/auth");
     }
   }, [adminStore.isAdminLoggedIn, router]);
 
   if (!adminStore.isAdminLoggedIn) {
-    return null; // Prevent page content from rendering during redirect
+    return null; 
   }
   return (
     <>

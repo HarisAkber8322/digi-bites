@@ -4,15 +4,12 @@ import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,
-  faEnvelope,
   faLock,
   faHouse,
   faEye,
   faEyeSlash,
   faInfoCircle,
   faGear,
-  faPen,
-  faPenClip,
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import { Image } from "react-bootstrap";
@@ -66,7 +63,7 @@ const AdminProfileSetting: React.FC = () => {
   };
 
   const togglePasswordVisibility = (
-    field: "currentPassword" | "newPassword" | "confirmNewPassword",
+    field: "currentPassword" | "newPassword" | "confirmNewPassword"
   ) => {
     setShowPassword((prevShowPassword) => ({
       ...prevShowPassword,

@@ -1,11 +1,9 @@
-"use client"; // Add this line to indicate it's a Client Component
-
+"use client";
 import React, { useEffect, useState } from "react";
 import { Image } from "react-bootstrap";
-import { adminStore } from "@/store/AdminStore"; // Ensure this path is correct based on your project structure
+import { adminStore } from "@/store/AdminStore"; 
 import { observer } from "mobx-react-lite";
-import { useRouter } from "next/navigation"; // Use this hook for navigation in Next.js
-import * as Yup from "yup"; // For validation schema
+import { useRouter } from "next/navigation";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import SignupForm from "@/components/AdminComponents/auth/SignupForm";
@@ -15,17 +13,10 @@ const AdminLogin = observer(() => {
   const [authComponent, setAuthComponent] = React.useState("login");
   const router = useRouter();
   useEffect(() => {
- 
-    // console.log(adminStore.isAdminLoggedIn);
-    // If admin is logged in, redirect to the admin dashboard
     if (adminStore.isAdminLoggedIn) {
       router.push("/admin");
     }
   }, [router]);
-
-  // if (adminStore.isAdminLoggedIn) {
-  //   return null; // Prevent login form from rendering during redirect
-  // }
   const handleChange = (
     event: React.MouseEvent<HTMLElement>,
     value: string,

@@ -7,11 +7,7 @@ import {
   faUser,
   faCartShopping,
   faPowerOff,
-  faCross,
-  faCancel,
-  faClose,
-  faArrowDownWideShort,
-  faArrowDown,
+ faClose,
   faChevronDown,
   faChevronUp,
 } from "@fortawesome/free-solid-svg-icons";
@@ -25,7 +21,6 @@ import { observer } from "mobx-react";
 import { menuData } from "../../utills/constants"; // Adjust the path to where your menuData is located
 import UserStoreContext from "@/store/UserStore";
 import CartStoreContext from "@/store/CartStore";
-import { FaBars } from "react-icons/fa";
 
 const HeaderComponent = () => {
   const router = usePathname();
@@ -89,11 +84,11 @@ const HeaderComponent = () => {
                         >
                           <span className="md:cursor-pointer ml-3">Categories</span>
                           {isDropdownOpen && (
-                            <ul className="absolute bg-white shadow-lg rounded-md mt-2 z-10">
+                            <ul className="absolute bg-white shadow-lg rounded-md mt-0 z-10">
                               {menuData.map((category) => (
                                 <li
                                   key={category.category}
-                                  className="px-4 text-black hover:bg-yellow-100 rounded-xl text-base font-semibold w-40"
+                                  className="px-4 text-black hover:bg-yellow-100 rounded-xl text-base font-normal w-40"
                                 >
                                   <Link href={`/category/${category.category}`}>
                                     {category.category}
