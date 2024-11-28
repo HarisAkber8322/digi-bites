@@ -108,11 +108,9 @@ const CheckoutPage = () => {
     <div className={`relative ${isLoading ? 'opacity-0 pointer-events-none' : ''}`}>
       {/* Show Alert on Successful Order */}
       {showAlert && (
-        <div className="absolute top-0 left-0 w-full h-full bg-white flex justify-center items-center z-50">
-          <Alert severity="success" sx={{ width: '100%' }}>
-            Your order has been placed!
-          </Alert>
-        </div>
+        <Alert severity="success" variant="outlined"  sx={{ width: '100%' }}>
+          Your order has been placed!
+        </Alert>
       )}
 
       {/* Checkout Form */}

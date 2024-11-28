@@ -122,7 +122,29 @@ class UserStore {
       console.error("Error signing up:", error);
     }
   }
-
+  async updateUserById(userId, updateData) {
+    if (!userId) {
+      console.error("User ID is required for updating user.");
+      return;
+    }
+  
+    try {
+      const response = await axios.put(`http://localhost:3001/api/users/${userId}`, updateData);
+  
+      if (response.status === 200) {
+        console.log("User updated successfully:", response.data);
+        // Optionally, update the local user object
+        if (this.user?.id === userId) {
+          this.setUser({ ...this.user, ...updateData });
+        }
+      } else {
+        console.error("Failed to update user:", response.data);
+      }
+    } catch (error) {
+      console.error("Error updating user:", error);
+    }
+  }
+  
   logout() {
     Cookies.remove("token");
     this.user = null;

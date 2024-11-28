@@ -67,11 +67,13 @@ class OrderStore {
     }
   }
 
-  async getOrdersByUserId(userId: string) {
+  async getOrdersByUserId(userId: string | undefined) {
+    console.log(userId)
     try {
       const response = await axios.get(
         `http://localhost:3001/api/orders/userInfo/${userId}`,
       );
+      console.log(response.data)
       if (response.status === 200) {
         this.userOrders = response.data.orders; // Store user-specific orders
       }

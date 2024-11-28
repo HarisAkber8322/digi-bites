@@ -124,28 +124,36 @@ app.prepare().then(() => {
     try {
       const db = await connectToDatabase();
       const usersCollection = db.collection("users");
-
+  
       const userId = new ObjectId(req.params.id);
-
-      // Extract the _id field from the update data
-      const { _id, ...updateData } = req.body;
-
+  
+      // Ensure only valid fields are updated
+      const allowedUpdates = ["fname", "lname", "email", "contact_no", "social_links"];
+      const updateData = {};
+  
+      for (const key of Object.keys(req.body)) {
+        if (allowedUpdates.includes(key)) {
+          updateData[key] = req.body[key];
+        }
+      }
+  
       const result = await usersCollection.updateOne(
         { _id: userId },
         { $set: updateData }
       );
-
+  
       if (result.matchedCount === 0) {
         res.status(404).json({ error: "User not found" });
         return;
       }
-
+  
       res.status(200).json({ message: "User updated successfully" });
     } catch (error) {
       console.error("Error updating user:", error);
       res.status(500).json({ error: "Internal server error" });
     }
   });
+  
   server.post("/api/users/:id/favoritestoggle", async (req, res) => {
     const userId = req.params.id;
     const { productId } = req.body;
