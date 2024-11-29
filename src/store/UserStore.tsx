@@ -24,7 +24,6 @@ class UserStore {
   router: ReturnType<typeof useRouter> | null = null;
   favoriteProductIds: Set<string> = new Set();
   currentUser: any;
-  loadUsers: any;
 
   constructor() {
     makeAutoObservable(this);
@@ -40,14 +39,14 @@ class UserStore {
   setUsers(userList: User[]) {
     this.userList = userList;
   }
-  // async loadUsers() {
-  //   try {
-  //     const response = await axios.get("http://localhost:3001/api/users");
-  //     this.setUsers(response.data.users);
-  //   } catch (error) {
-  //     console.error("Error loading users:", error);
-  //   }
-  // }
+  async loadUsers() {
+    try {
+      const response = await axios.get("http://localhost:3001/api/users");
+      this.setUsers(response.data.users);
+    } catch (error) {
+      console.error("Error loading users:", error);
+    }
+  }
 
   async getUserById(id: string | undefined) {
     try {
@@ -122,7 +121,7 @@ class UserStore {
       console.error("Error signing up:", error);
     }
   }
-  async updateUserById(userId, updateData) {
+  async updateUserById(userId: string | undefined, updateData: User | null) {
     if (!userId) {
       console.error("User ID is required for updating user.");
       return;

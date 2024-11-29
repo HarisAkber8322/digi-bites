@@ -26,7 +26,7 @@ const CheckoutPage = () => {
   });
   const [showAlert, setShowAlert] = useState(false); // State to control the visibility of the Alert
   const [isLoading, setIsLoading] = useState(false); // State to control the loading animation
-
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
   useEffect(() => {
     setIsLoading(true);
     if (cartStore.cart.items.length > 0) {
@@ -38,7 +38,22 @@ const CheckoutPage = () => {
       userStore.changePage('/')
     }
   }, [cartStore, productStore]);
+  const validateFields = () => {
+    const newErrors: { [key: string]: string } = {};
 
+    if (!formData.phone) {
+      newErrors.phone = "Phone number is required.";
+    }
+    if (!formData.orderNote) {
+      newErrors.orderNote = "Order note is required.";
+    }
+    if (deliveryMethod === "homeDelivery" && !formData.address) {
+      newErrors.address = "Address is required for home delivery.";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0; // Valid if no errors.
+  };
   const calculateTotalPrice = () => {
     return cartStore.cart.items.reduce((total, item) => {
       const product = productStore.products.find(
@@ -63,6 +78,7 @@ const CheckoutPage = () => {
   };
 
   const handleCheckout = async () => {
+    if (!validateFields()) return; // Stop if validation fails.
     setIsLoading(true); // Start loading state
     try {
       const orderObject = {
@@ -117,15 +133,15 @@ const CheckoutPage = () => {
         </Alert>
       )} */}
       {showAlert && (
-  <div className="fixed top-0 left-0 right-0 bottom-0 bg-green-800 bg-opacity-80 flex justify-center items-center z-50 p-6">
-    <div className="bg-white p-12 rounded-lg text-center shadow-lg">
-      <FontAwesomeIcon icon={faCheckCircle} size="6x" className="text-green-600" />
-      <h1 className="text-3xl font-bold mt-6 text-green-800">
-        Your order has been placed!
-      </h1>
-    </div>
-  </div>
-)}
+        <div className="fixed top-0 left-0 right-0 bottom-0 bg-green-800 bg-opacity-80 flex justify-center items-center z-50 p-6">
+          <div className="bg-white p-12 rounded-lg text-center shadow-lg">
+            <FontAwesomeIcon icon={faCheckCircle} size="6x" className="text-green-600" />
+            <h1 className="text-3xl font-bold mt-6 text-green-800">
+              Your order has been placed!
+            </h1>
+          </div>
+        </div>
+      )}
 
       {/* Checkout Form */}
       <form className={`flex flex-wrap justify-center items-start gap-6 p-8 ${isLoading ? 'opacity-0' : ''}`}>
@@ -183,6 +199,7 @@ const CheckoutPage = () => {
               onChange={handleInputChange}
               className="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none"
             />
+             {errors.phone && <p className="text-red-500 text-xs">{errors.phone}</p>}
           </div>
 
           {deliveryMethod === "homeDelivery" && (
@@ -196,7 +213,7 @@ const CheckoutPage = () => {
                 value={formData.address}
                 onChange={handleInputChange}
                 className="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none"
-              ></textarea>
+              ></textarea>{errors.address && <p className="text-red-500 text-xs">{errors.address}</p>}
             </div>
           )}
 
@@ -211,6 +228,7 @@ const CheckoutPage = () => {
               onChange={handleInputChange}
               className="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none"
             ></textarea>
+             {errors.orderNote && <p className="text-red-500 text-xs">{errors.orderNote}</p>}
           </div>
         </div>
 
@@ -234,34 +252,34 @@ const CheckoutPage = () => {
                 }
 
                 return (
-                  <>  
-                  <div
-                    key={index}
-                    className="bg-white flex shadow-xl mb-2 rounded-lg items-center justify-between p-4 h-[100px]"
-                  >
-                  
-                    <div className="flex cursor-pointer w-full">
-                      <Image
-                        className="rounded-md"
-                        src={product.image}
-                        width={80}
-                        height={60}
-                        alt={product.name}
-                      />
-                      <div className="ml-2">
-                        <p>{product.name}</p>
-                        <p className="text-xs text-gray-400">Quantity: {item.quantity}</p>
+                  <>
+                    <div
+                      key={index}
+                      className="bg-white flex shadow-xl mb-2 rounded-lg items-center justify-between p-4 h-[100px]"
+                    >
+
+                      <div className="flex cursor-pointer w-full">
+                        <Image
+                          className="rounded-md"
+                          src={product.image}
+                          width={80}
+                          height={60}
+                          alt={product.name}
+                        />
+                        <div className="ml-2">
+                          <p>{product.name}</p>
+                          <p className="text-xs text-gray-400">Quantity: {item.quantity}</p>
+                        </div>
                       </div>
+                      <div className="font-bold w-16">Rs {product.price * item.quantity}</div>
                     </div>
-                    <div className="font-bold w-16">Rs {product.price * item.quantity}</div>
-                  </div>
                   </>
                 );
               })}
             </div>
-     {/* delivery cost Summary */}
-     <h2 className="font-bold text-xl pt-2 mb-4 text-center">Cost Summary</h2>
-     <div className="flex justify-between py-2 pt-4 border-t-2 mt-5 border-ExtraLightGray">
+            {/* delivery cost Summary */}
+            <h2 className="font-bold text-xl pt-2 mb-4 text-center">Cost Summary</h2>
+            <div className="flex justify-between py-2 pt-4 border-t-2 mt-5 border-ExtraLightGray">
               <p className="text-lg font-semibold">Delivery Cost:</p>
               <p className="font-bold">Rs {deliveryFee}</p>
             </div>

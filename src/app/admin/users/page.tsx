@@ -97,8 +97,9 @@
 import Div from "@/components/UI/Div";
 import Text from "@/components/UI/Text";
 import MainStoreContext from "@/store/Mainstore";
+import { userStore } from "@/store/UserStore";
 import { observer } from "mobx-react";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 const User: React.FC = () => {
   const MainStore = useContext(MainStoreContext);
@@ -110,7 +111,9 @@ const User: React.FC = () => {
     const fullName = `${user.fname} ${user.lname}`.toLowerCase();
     return fullName.includes(searchTerm.toLowerCase()) || user.email.toLowerCase().includes(searchTerm.toLowerCase());
   });
-
+  useEffect(() => {
+    userStore.loadUsers();
+  }, [userStore.userList])
   return (
     <Div
       themeDivClasses="pb-20"
@@ -132,7 +135,7 @@ const User: React.FC = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search Users..."
-className="p-2 border rounded-lg w-full text-black"
+              className="p-2 border rounded-lg w-full text-black"
             />
           </div>
 
