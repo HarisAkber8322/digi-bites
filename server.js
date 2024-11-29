@@ -332,11 +332,11 @@ app.prepare().then(() => {
 
   // admin Auth
   server.get("/api/auth/admin/loggedinAdmin", async (req, res) => {
-    const token = req.headers.authorization?.split(" ")[1];
-    if (!token) return res.status(401).json({ error: "No token provided" });
+    const adminToken = req.headers.authorization?.split(" ")[1];
+    if (!adminToken) return res.status(401).json({ error: "No adminToken provided" });
 
     try {
-      const decoded = jwt.verify(token, process.env.SECRET_KEY);
+      const decoded = jwt.verify(adminToken, process.env.SECRET_KEY);
       const db = await connectToDatabase();
       const adminCollection = db.collection("admin");
       const admin = await adminCollection.findOne({
@@ -372,14 +372,14 @@ app.prepare().then(() => {
         return res.status(401).json({ error: "Invalid email or password" });
       }
 
-      const token = jwt.sign(
+      const adminToken = jwt.sign(
         { id: admin._id },
         process.env.SECRET_KEY
         //   , {
         //   expiresIn: "5h",
       );
       res.status(200).json({
-        token: token, // Include token in response
+        adminToken: adminToken, // Include adminToken in response
         admin: { id: admin._id, email: admin.email },
       });
     } catch (error) {

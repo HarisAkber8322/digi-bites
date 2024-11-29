@@ -1,8 +1,10 @@
+"use client";
 import { makeAutoObservable } from "mobx";
 import axios from "axios";
 import Cookies from "js-cookie";
 import React from "react";
 import { useRouter } from "next/navigation";
+
 export interface Admin {
   id: string | undefined;
   username: string;
@@ -21,7 +23,6 @@ class AdminStore {
 
   // Login method
   async handleLogin(admin: { email: string; password: string }) {
-    console.log("Admin credentials sent to backend:", admin);
     try {
       const response = await axios.post(
         "http://localhost:3001/api/auth/admin/login",
@@ -29,8 +30,8 @@ class AdminStore {
       );
 
       if (response.status === 200) {
-        const { token, admin } = response.data;
-        Cookies.set("token", token, { expires: 7 });
+        const { adminToken, admin } = response.data;
+        Cookies.set("adminToken", adminToken, { expires: 7 });
         this.changePage("/admin");
         this.setIsAdminLoggedIn(true);
         this.setAdmin(admin);
@@ -68,15 +69,15 @@ class AdminStore {
     }
   }
 
-  // Fetch the logged-in admin data using token
+  // Fetch the logged-in admin data using adminToken
   async fetchLoggedInAdmin() {
-    console.log('hi')
+    // console.log('hi')
 
   }
 
   // Logout method
   logout() {
-    Cookies.remove("token");
+    Cookies.remove("adminToken");
     this.admin = null;
     this.setIsAdminLoggedIn(false);
     this.changePage("/admin/auth");
@@ -93,8 +94,8 @@ class AdminStore {
 
   checkLoginState = async () => {
       try {
-        const token = Cookies.get("token");
-        if (!token) {
+        const adminToken = Cookies.get("adminToken");
+        if (!adminToken) {
           this.setIsAdminLoggedIn(false);
           this.admin = null;
           return;
@@ -103,18 +104,15 @@ class AdminStore {
         const response = await axios.get(
           "http://localhost:3001/api/auth/admin/loggedinAdmin",
           {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: { Authorization: `Bearer ${adminToken}` },
           },
         );
 
         if (response.status === 200) {
-
-          console.log("response.data: ", response.data);
           const { admin } = response.data;
           this.setIsAdminLoggedIn(true);
           this.setAdmin(admin);
         }
- console.log('token nahi hai 1')
       } catch (error) {
         console.error("Error fetching logged-in admin:", error);
         this.setIsAdminLoggedIn(false);
