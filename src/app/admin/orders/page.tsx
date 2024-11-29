@@ -1,6 +1,7 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
 import { observer } from "mobx-react";
+import Select from "react-select";  // Import Select component from react-select
 import OrderStoreContext from "@/store/OrderStore";
 import UserStoreContext from "@/store/UserStore";
 import ProductStoreContext from "@/store/ProductStore";
@@ -92,6 +93,15 @@ const OrdersPage: React.FC = () => {
     );
   });
 
+  // Handle the status change
+  const handleStatusChange = async (orderId: string, newStatus: string) => {
+    try {
+      await orderStore.updateOrderStatus(orderId, newStatus);  // Call the store method to update the status
+    } catch (error) {
+      console.error("Error updating status", error);
+    }
+  };
+
   return (
     <Div
       themeDivClasses="pb-20"
@@ -118,73 +128,70 @@ const OrdersPage: React.FC = () => {
           </div>
 
           <Div
-            themeDivClasses="shadow-lg mt-10 rounded-2xl overflow-hidden pb-14"
-            darkColor="bg-dullblack"
+            themeDivClasses="bg-[#00000000] mt-5 rounded-2xl overflow-hidden pb-14"
+            darkColor="bg-dullBlack"
             content={
               filteredOrders.length === 0 ? (
                 <Text
-                  themeDivClasses="text-center mt-10"
+                  themeDivClasses="text-center "
                   lightColor="text-black"
                   darkColor="text-white"
                   content="No orders available."
                 />
               ) : (
-                <table className="min-w-full rounded-lg">
-                  <thead className="bg-lightGray">
-                    <tr className="py-3">
-                      <th className="px-6 py-3 text-center text-xs font-semibold text-gray-500">
-                        SL
-                      </th>
-                      <th className="px-6 py-3 text-center text-xs font-semibold text-gray-500">
-                        User Name
-                      </th>
-                      <th className="px-6 py-3 text-center text-xs font-semibold text-gray-500">
-                        Status
-                      </th>
-                      <th className="px-6 py-3 text-center text-xs font-semibold text-gray-500">
-                        Product Name
-                      </th>
-                      {/* <th className="px-6 py-3 text-center text-xs font-semibold text-gray-500">
-                        Payment Method
-                      </th> */}
-                      <th className="px-6 py-3 text-center text-xs font-semibold text-gray-500">
-                        Total Amount (Rs)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white dark:bg-gray-900">
-                    {filteredOrders.map((order, index) => (
-                      <tr
-                        key={order._id}
-                        className="hover:bg-gray-100 dark:hover:bg-gray-700 border-b border-b-lightGray h-[20px]"
-                      >
-                        <td className="px-4 py-2 text-center whitespace-nowrap text-sx font-medium text-gray-900 dark:text-gray-100 w-[80px]">
-                          {index + 1}
-                        </td>
-                        <td className="px-4 py-2 text-center whitespace-nowrap text-sx font-medium text-gray-900 dark:text-gray-100">
-                          {userNames[order.userInfo.userId] || "Loading..."}
-                        </td>
-                        <td className="px-4 py-2 text-center whitespace-nowrap text-sx font-medium text-gray-900 dark:text-gray-100">
-                          {order.status}
-                        </td>
-                        <td className="px-4 py-2 text-center whitespace-nowrap text-sx font-medium text-gray-900 dark:text-gray-100">
-                          {order.products.map((product, productIndex) => (
-                            <p key={productIndex}>
-                              {productNames[product.productId] || "Loading..."}{" "}
-                              (Quantity: {product.quantity})
-                            </p>
-                          ))}
-                        </td>
-                        {/* <td className="px-4 py-2 text-center whitespace-nowrap text-sx font-medium text-gray-900 dark:text-gray-100">
-                          {order.paymentMethod}
-                        </td> */}
-                        <td className="px-4 py-2 text-center whitespace-nowrap text-sx font-medium text-gray-900 dark:text-gray-100">
-                          Rs. {order.totalAmount.toFixed(2)}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 ">
+                  {filteredOrders.map((order) => (
+                    <div
+                      key={order._id}
+                      className="shadow-lg p-4 rounded-lg bg-white"
+                    >
+                      <p className="font-bold text-sm text-gray-500 dark:text-gray-400">
+                        User Name:
+                      </p>
+                      <p className="mb-2 text-gray-900 dark:text-gray-100">
+                        {userNames[order.userInfo.userId] || "Loading..."}
+                      </p>
+
+                      <p className="font-bold text-sm text-gray-500 dark:text-gray-400">
+                        Status:
+                      </p>
+                      <Select
+                        value={{ label: order.status, value: order.status }}
+                        onChange={(selectedOption) => {
+                          handleStatusChange(order._id, selectedOption?.value || order.status);
+                        }}
+                        options={[
+                          { value: 'In Process', label: 'In Process' },
+                          { value: 'Delayed', label: 'Delayed' },
+                          { value: 'Ready', label: 'Ready' },
+                          { value: 'On Way', label: 'On Way' },
+                          { value: 'Delivered', label: 'Delivered' },
+                          // Add more statuses as required
+                        ]}
+                        className="mb-2"
+                      />
+
+                      <p className="font-bold text-sm text-gray-500 dark:text-gray-400">
+                        Products:
+                      </p>
+                      <ul className="mb-2 text-gray-900 dark:text-gray-100 list-disc list-inside">
+                        {order.products.map((product) => (
+                          <li key={product.productId}>
+                            {productNames[product.productId] || "Loading..."}{" "}
+                            (Qty: {product.quantity})
+                          </li>
+                        ))}
+                      </ul>
+
+                      <p className="font-bold text-sm text-gray-500 dark:text-gray-400">
+                        Total Amount:
+                      </p>
+                      <p className="text-gray-900 dark:text-gray-100">
+                        Rs. {order.totalAmount.toFixed(2)}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               )
             }
           />

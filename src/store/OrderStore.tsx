@@ -81,6 +81,31 @@ class OrderStore {
       console.error("Error fetching orders by user ID:", error);
     }
   }
+  // Update order status function (using axios)
+  async updateOrderStatus(orderId, currentStatus) {
+    try {
+      const response = await axios.put(
+        `http://localhost:3001/api/orders/${orderId}/update-status`,
+        { status: currentStatus }
+      );
+
+      if (response.status === 200) {
+        const { nextStatus } = response.data;
+
+        // Find and update the order status in the local state
+        const orderIndex = this.orderList.findIndex(order => order._id === orderId);
+        if (orderIndex !== -1) {
+          this.orderList[orderIndex].status = nextStatus;
+        }
+
+        console.log('Order status updated to:', nextStatus);
+      } else {
+        console.error('Error updating order status:', response.data.error);
+      }
+    } catch (error) {
+      console.error('Error while sending status update request:', error);
+    }
+  }
 
   async placeOrder(orderDetails: Order) {
     try {
