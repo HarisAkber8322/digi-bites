@@ -879,52 +879,49 @@ app.prepare().then(() => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
-  const statusProgression = {
-    Pending: "Confirmed",
-    Confirmed: "Processing",
-    Processing: "Readyforpickup",
-    Readyforpickup: "Completed",
-    Completed: "", // No next status
-  };
+
+  const allowedStatuses = ["In Process", "Delayed", "Ready", "On Way", "Delivered"]; // Define valid statuses
   server.put("/api/orders/:orderId/update-status", async (req, res) => {
     const { orderId } = req.params;
-
+    const { status } = req.body; // Expect status from the request body
+  
+    if (!allowedStatuses.includes(status)) {
+      return res.status(400).json({ error: "Invalid status value" });
+    }
+  
     try {
       const db = await connectToDatabase();
       const ordersCollection = db.collection("orders");
-
+  
       // Find the order by ID
       const order = await ordersCollection.findOne({
         _id: new ObjectId(orderId),
       });
-
+  
       if (!order) {
         return res.status(404).json({ error: "Order not found" });
       }
-
-      // Determine the next status
-      const nextStatus = statusProgression[order.status];
-
-      if (!nextStatus) {
-        return res
-          .status(400)
-          .json({ error: "Order is already completed or in an invalid state" });
-      }
-
+  
       // Update the order status
-      await ordersCollection.updateOne(
+      const updateResult = await ordersCollection.updateOne(
         { _id: new ObjectId(orderId) },
-        { $set: { status: nextStatus, updatedAt: new Date() } }
+        { $set: { status: status, updatedAt: new Date() } }
       );
-
-      res
-        .status(200)
-        .json({ message: "Order status updated successfully", nextStatus });
+  
+      if (updateResult.modifiedCount === 0) {
+        return res.status(400).json({ error: "Failed to update order status" });
+      }
+  
+      res.status(200).json({
+        message: "Order status updated successfully",
+        updatedStatus: status,
+      });
     } catch (error) {
       console.error("Error updating order status:", error);
       res.status(500).json({ error: "Internal server error" });
     }
   });
+  
 
   //Cart
   server.get("/api/cart/:userId", async (req, res) => {

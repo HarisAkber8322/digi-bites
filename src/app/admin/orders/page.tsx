@@ -96,7 +96,9 @@ const OrdersPage: React.FC = () => {
   // Handle the status change
   const handleStatusChange = async (orderId: string, newStatus: string) => {
     try {
-      await orderStore.updateOrderStatus(orderId, newStatus);  // Call the store method to update the status
+      await orderStore.updateOrderStatus(orderId, newStatus);
+      // Optionally reload orders here if the issue persists
+      await orderStore.loadOrders(); // Re-fetching after status change
     } catch (error) {
       console.error("Error updating status", error);
     }
@@ -156,21 +158,19 @@ const OrdersPage: React.FC = () => {
                         Status:
                       </p>
                       <Select
-                        value={{ label: order.status, value: order.status }}
-                        onChange={(selectedOption) => {
-                          handleStatusChange(order._id, selectedOption?.value || order.status);
+                        value={{
+                          label: order.status,
+                          value: order.status,
                         }}
-                        options={[
-                          { value: 'In Process', label: 'In Process' },
-                          { value: 'Delayed', label: 'Delayed' },
-                          { value: 'Ready', label: 'Ready' },
-                          { value: 'On Way', label: 'On Way' },
-                          { value: 'Delivered', label: 'Delivered' },
-                          // Add more statuses as required
-                        ]}
+                        onChange={(selectedOption) =>
+                          handleStatusChange(
+                            order._id,
+                            selectedOption?.value || order.status
+                          )
+                        }
+                        options={orderStore.getStatusOptions()}
                         className="mb-2"
                       />
-
                       <p className="font-bold text-sm text-gray-500 dark:text-gray-400">
                         Products:
                       </p>

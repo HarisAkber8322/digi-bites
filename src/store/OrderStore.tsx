@@ -31,18 +31,17 @@ class OrderStore {
   orderList: Order[] = [];
   userOrders: any;
   statusCounts: any;
-  statusProgression: Record<string, string> = {
-    Pending: "Confirmed",
-    Confirmed: "Processing",
-    Processing: "Readyforpickup",
-    Readyforpickup: "Completed",
-    Completed: "", // No next status
-  };
+  customStatusOptions: { value: string; label: string }[] = [   
+    { value: "In Process", label: "In Process" },
+    { value: "Ready", label: "Ready" },
+    { value: "Delayed", label: "Delayed" },
+    { value: "On Way", label: "On Way" },
+    { value: "Delivered", label: "Delivered" },
+  ];
 
   constructor() {
     makeAutoObservable(this);
     this.loadOrders();
-    this.startStatusUpdateInterval();
   }
 
   async loadOrders() {
@@ -82,31 +81,32 @@ class OrderStore {
     }
   }
   // Update order status function (using axios)
-  async updateOrderStatus(orderId, currentStatus) {
+  async updateOrderStatus(orderId: string, newStatus: string) {
     try {
       const response = await axios.put(
         `http://localhost:3001/api/orders/${orderId}/update-status`,
-        { status: currentStatus }
+        { status: newStatus }
       );
 
       if (response.status === 200) {
-        const { nextStatus } = response.data;
+        const updatedOrder = response.data.updatedOrder;
+        const orderIndex = this.orderList.findIndex((o) => o._id === orderId);
 
-        // Find and update the order status in the local state
-        const orderIndex = this.orderList.findIndex(order => order._id === orderId);
         if (orderIndex !== -1) {
-          this.orderList[orderIndex].status = nextStatus;
+          this.orderList[orderIndex].status = updatedOrder.status;
         }
 
-        console.log('Order status updated to:', nextStatus);
+        console.log("Order status updated successfully:", updatedOrder.status);
       } else {
-        console.error('Error updating order status:', response.data.error);
+        console.error("Error updating order status:", response.data.error);
       }
     } catch (error) {
-      console.error('Error while sending status update request:', error);
+      console.error("Error while updating order status:", error);
     }
   }
-
+  getStatusOptions() {
+    return this.customStatusOptions;
+  }
   async placeOrder(orderDetails: Order) {
     try {
       const response = await axios.post(
@@ -138,24 +138,6 @@ class OrderStore {
     } catch (error) {
       console.error("Failed to update status:", error);
     }
-  }
-  startStatusUpdateInterval() {
-    setInterval(
-      () => {
-        this.orderList.forEach((order) => {
-          setTimeout(
-            () => {
-              const nextStatus = this.statusProgression[order.status];
-              if (nextStatus) {
-                this.updateStatus(order._id);
-              }
-            },
-            1 * 60 * 1000,
-          );
-        });
-      },
-      5 * 60 * 1000,
-    ); // 5 minutes in milliseconds
   }
 }
 
