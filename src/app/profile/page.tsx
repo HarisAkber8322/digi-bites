@@ -8,20 +8,20 @@ import UserStoreContext from "@/store/UserStore";
 import ProductStoreContext from "@/store/ProductStore";
 import Div from "@/components/UI/Div";
 
-import { Alert } from "@mui/material"; // Import Alert component
+import { Alert } from "@mui/material"; 
 const Profile = () => {
   const orderStore = useContext(OrderStoreContext);
   const userStore = useContext(UserStoreContext);
   const productStore = useContext(ProductStoreContext);
-  const [userDetails, setUserDetails] = useState(null); // State for user details
-  const [showAlert, setShowAlert] = useState(false); // State to control the visibility of the Alert
-  const [orderProductsMap, setOrderProductsMap] = useState({}); // Map orders to products
+  const [userDetails, setUserDetails] = useState(null); 
+  const [showAlert, setShowAlert] = useState(false);
+  const [orderProductsMap, setOrderProductsMap] = useState({});
   const [updatedDetails, setUpdatedDetails] = useState({
     fname: "",
     lname: "",
     email: "",
     contact_no: "",
-  }); // State for handling updated form data
+  }); 
   useEffect(() => {
     const fetchOrdersAndProducts = async () => {
       if (userStore.user?.id) {
@@ -69,7 +69,6 @@ const Profile = () => {
           contact_no: userDetails.contact_no,
         });
         setShowAlert(true)
-        // alert("Profile updated successfully!");
         setTimeout(() => {
           setShowAlert(false)
         }, 3000);
@@ -81,8 +80,8 @@ const Profile = () => {
   };
   const [selectedStatus, setSelectedStatus] = useState("All");
   const filteredOrders = orderStore.userOrders?.filter((order: { status: string; }) => {
-    if (selectedStatus === "All") return true; // Show all orders
-    return order.status === selectedStatus; // Filter by selected status
+    if (selectedStatus === "All") return true; 
+    return order.status === selectedStatus;
   });
   console.log(orderStore.userOrders)
   return (
@@ -152,7 +151,6 @@ const Profile = () => {
                   </div>
 
                 </div>
-                 {/* Update Button */}
               <button
                 type="button"
                 onClick={handleUpdateProfile}
@@ -163,7 +161,6 @@ const Profile = () => {
               </form>
              
             </div>
-            {/* Sidebar with Orders */}
             <div className="w-full md:w-1/4 mt-10 md:mt-0 mb-8">
               <h3 className="text-xl font-semibold">Your Orders</h3>
               <div className="mt-4">

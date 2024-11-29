@@ -3,19 +3,15 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEllipsisH,
-  faChevronDown,
-  faChevronUp,
 } from "@fortawesome/free-solid-svg-icons";
 import { usePathname } from "next/navigation";
 import { sidebarItems, uncategorizedItems } from "@/utills/constants";
 import Div from "../UI/Div";
 import Text from "../UI/Text";
 import classNames from "classnames";
-
 interface SideBarProps {
   toggle: boolean;
 }
-
 const SideBarComponent: React.FC<SideBarProps> = (props) => {
   const router = usePathname();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);

@@ -1,10 +1,10 @@
 import { GetServerSideProps } from "next";
 import axios from "axios";
-import { Product } from "@/store/ProductStore"; // Adjust the import path as needed
+import { Product } from "@/store/ProductStore";
 
 interface ProductPageProps {
   product: Product | null;
-  error?: string; // Add an error prop to handle errors
+  error?: string; 
 }
 
 const ProductPage: React.FC<ProductPageProps> = ({ product, error }) => {
@@ -48,7 +48,7 @@ export const getServerSideProps: GetServerSideProps<ProductPageProps> = async (
   }
 
   try {
-    const apiUrl = process.env.API_URL || "http://localhost:3001"; // Use environment variable for API URL
+    const apiUrl = process.env.API_URL || "http://localhost:3001";
     const response = await axios.get(`${apiUrl}/api/products/slug/${slug}`);
     const product = response.data as Product;
 

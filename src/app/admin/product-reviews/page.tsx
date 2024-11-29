@@ -6,6 +6,7 @@ import { FaStar } from "react-icons/fa";
 import ProductStoreContext from "@/store/ProductStore";
 import { observer } from "mobx-react";
 import UserStoreContext from "@/store/UserStore";
+import { Image } from "react-bootstrap";
 
 const RatedProductsPage: React.FC = () => {
   const ProductStore = useContext(ProductStoreContext);
@@ -43,7 +44,6 @@ const RatedProductsPage: React.FC = () => {
     fetchUserNames();
   }, [ProductStore.products, UserStore]);
 
-  // Filter products based on the search term
   const filteredProducts = ProductStore.products.filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -62,7 +62,6 @@ const RatedProductsPage: React.FC = () => {
             content="Product Ratings"
           />
 
-          {/* Search Bar */}
           <div className="flex justify-center mt-6">
             <input
               type="text"
@@ -105,7 +104,7 @@ const RatedProductsPage: React.FC = () => {
                           {index + 1}
                         </td>
                         <td className="px-4 py-2 text-center text-sx flex justify-start items-center gap-3">
-                          <img
+                          <Image
                             src={product.image}
                             alt={product.name}
                             className="w-10 h-10 object-cover rounded-full"

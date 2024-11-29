@@ -3,7 +3,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import axios from "axios";
 import React from "react";
-import { AddOn, CartItem } from "./CartStore"; // Import the cartStore instance
+import { AddOn, CartItem } from "./CartStore";
 
 export interface Product {
   productId: string;
@@ -59,7 +59,7 @@ class OrderStore {
         `http://localhost:3001/api/orders/${orderId}`,
       );
       if (response.status === 200) {
-        return response.data; // Returns the specific order
+        return response.data; 
       }
     } catch (error) {
       console.error("Error fetching order by ID:", error);
@@ -74,13 +74,13 @@ class OrderStore {
       );
       console.log(response.data)
       if (response.status === 200) {
-        this.userOrders = response.data.orders; // Store user-specific orders
+        this.userOrders = response.data.orders; 
       }
     } catch (error) {
       console.error("Error fetching orders by user ID:", error);
     }
   }
-  // Update order status function (using axios)
+  // Update order status function
   async updateOrderStatus(orderId: string, newStatus: string) {
     try {
       const response = await axios.put(
@@ -133,7 +133,7 @@ class OrderStore {
 
       const index = this.orderList.findIndex((order) => order._id === orderId);
       if (index !== -1) {
-        this.orderList[index] = updatedOrder; // Replace with the updated order
+        this.orderList[index] = updatedOrder; 
       }
     } catch (error) {
       console.error("Failed to update status:", error);

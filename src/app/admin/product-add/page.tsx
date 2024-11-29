@@ -11,7 +11,6 @@ const AddProductComponent = () => {
   const initialValues = {
     name: "",
     price: 0,
-    // description: "",
     category: "",
     image: "",
   };
@@ -23,7 +22,6 @@ const AddProductComponent = () => {
       .min(0, "Price must be greater than zero"),
     description: Yup.string().required("Required"),
     category: Yup.string().required("Required"),
-    // image: Yup.string().url("Must be a valid URL").required("Required"),
     stock: Yup.number()
       .required("Required")
       .min(0, "Stock must be greater than zero"),
@@ -81,7 +79,6 @@ const AddProductComponent = () => {
       >
         {({ isSubmitting }) => (
           <Form className="space-y-4">
-            {/* Product Name */}
             <div className="flex flex-col">
               <label className="font-semibold">Product Name</label>
               <Field
@@ -95,8 +92,6 @@ const AddProductComponent = () => {
                 className="text-themeYellow"
               />
             </div>
-
-            {/* Price */}
             <div className="flex flex-col">
               <label className="font-semibold">Price</label>
               <Field
@@ -111,22 +106,6 @@ const AddProductComponent = () => {
               />
             </div>
 
-            {/* Description */}
-            {/* <div className="flex flex-col">
-              <label className="font-semibold">Description</label>
-              <Field
-                as="textarea"
-                name="description"
-                className="mt-1 block w-full px-3 py-2 border border-lightGray rounded-md shadow-sm focus:outline-none focus:themeOrange focus:border-themeOrange sm:text-sm"
-              />
-              <ErrorMessage
-                name="description"
-                component="div"
-                className="text-themeYellow"
-              />
-            </div> */}
-
-            {/* Category */}
             <div className="flex flex-col">
               <label className="font-semibold">Category</label>
               <Field
@@ -147,8 +126,6 @@ const AddProductComponent = () => {
                 className="text-themeYellow"
               />
             </div>
-
-            {/* Image URL */}
             <div className="flex flex-col">
               <label className="font-semibold">Image URL</label>
               <Field
@@ -162,11 +139,6 @@ const AddProductComponent = () => {
                 className="text-themeYellow"
               />
             </div>
-
-            {/* Stock */}
-         
-
-            {/* Submit Button */}
             <button
               type="submit"
               className="bg-themeYellow text-white rounded-md p-2 mt-4 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-themeYellow focus:ring-offset-2"

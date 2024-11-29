@@ -6,55 +6,19 @@ const { ObjectId } = require("mongodb");
 const { connectToDatabase } = require("./src/db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-// const nodemailer = require("nodemailer");
-// const sgMail = require("@sendgrid/mail"); // SendGrid for email sending
-require("dotenv").config(); // Load environment variables
+require("dotenv").config(); 
 
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
 const PAGE_SIZE = 5;
 
-// Set up SendGrid API key
-// sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-// Send email function using SendGrid
-// const sendEmail = async (to, subject, text, html) => {
-//   const msg = {
-//     to, // recipient email address
-//     from: process.env.VERIFIED_EMAIL, // Your verified sender email from SendGrid
-//     subject,
-//     text,
-//     html,
-//   };
-//   try {
-//     await sgMail.send(msg);
-//     console.log("Email sent");
-//   } catch (error) {
-//     console.error(error);
-//     if (error.response) {
-//       console.error(error.response.body);
-//     }
-//   }
-// };
 app.prepare().then(() => {
   const server = express();
   server.use(cors());
   server.use(express.json());
 
-  // server.post("/send-email", async (req, res) => {
-  //   const { to, subject, text, html } = req.body;
-
-  //   try {
-  //     await sendEmail(to, subject, text, html);
-  //     res.status(200).send("Email sent successfully");
-  //   } catch (error) {
-  //     console.error("Error sending email:", error);
-  //     res.status(500).send("Failed to send email");
-  //   }
-  // });
-
-  //User
   server.get("/api/users", async (req, res) => {
     const page = parseInt(req.query.page, 10) || 1;
     const searchQuery = req.query.q || "";
@@ -366,7 +330,7 @@ app.prepare().then(() => {
         return res.status(401).json({ error: "Invalid email or password" });
       }
 
-      const passwordMatch = await bcrypt.compare(password, admin.password); // Fix here
+      const passwordMatch = await bcrypt.compare(password, admin.password);
 
       if (!passwordMatch) {
         return res.status(401).json({ error: "Invalid email or password" });
@@ -375,11 +339,10 @@ app.prepare().then(() => {
       const adminToken = jwt.sign(
         { id: admin._id },
         process.env.SECRET_KEY
-        //   , {
-        //   expiresIn: "5h",
+ 
       );
       res.status(200).json({
-        adminToken: adminToken, // Include adminToken in response
+        adminToken: adminToken, e
         admin: { id: admin._id, email: admin.email },
       });
     } catch (error) {
@@ -399,8 +362,6 @@ app.prepare().then(() => {
     try {
       const db = await connectToDatabase();
       const usersCollection = db.collection("admin");
-
-      // Check if the user already exists
       const existingUser = await usersCollection.findOne({ email });
       if (existingUser) {
         return res
@@ -436,58 +397,6 @@ app.prepare().then(() => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
-  // const transporter = nodemailer.createTransport({
-  //   service: "Gmail",
-  //   auth: {
-  //     user: process.env.EMAIL_USER,
-  //     pass: process.env.EMAIL_PASS,
-  //   },
-  // });
-  // transporter.verify(function (error, success) {
-  //   if (error) {
-  //     console.log("Error connecting to Gmail:", error);
-  //   } else {
-  //     console.log("Server is ready to send email", success);
-  //   }
-  // });
-  // server.post("/api/auth/admin/forgot-password", async (req, res) => {
-  //   const { email } = req.body;
-  //   console.log("Received forgot password request for:", email);
-
-  //   try {
-  //     const db = await connectToDatabase();
-  //     const adminCollection = db.collection("admin");
-  //     const admin = await adminCollection.findOne({ email });
-
-  //     if (!admin) {
-  //       return res.status(404).json({ error: "Email not found" });
-  //     }
-
-  //     const otp = generateOTP();
-  //     console.log("Generated OTP:", otp);
-
-  //     const otpToken = jwt.sign(
-  //       { otp, id: admin._id },
-  //       process.env.SECRET_KEY
-  //       // { expiresIn: "10m" },
-  //     );
-  //     console.log("Generated OTP token");
-
-  //     // Send OTP to the admin's email
-  //     await transporter.sendMail({
-  //       to: email,
-  //       subject: "Your OTP for Password Reset",
-  //       text: `Your OTP is: ${otp}`,
-  //     });
-
-  //     res.status(200).json({ message: "OTP sent to email", otpToken });
-  //   } catch (error) {
-  //     console.error("Error in forgot-password:", error);
-  //     res.status(500).json({ error: "Internal server error" });
-  //   }
-  // });
-  // const generateOTP = () =>
-  //   Math.floor(100000 + Math.random() * 900000).toString();
   server.post("/api/auth/admin/verify-otp", async (req, res) => {
     const { otpToken, otp } = req.body;
     try {
@@ -526,7 +435,7 @@ app.prepare().then(() => {
 
   //Products
   server.post("/api/products/:id/favorite", async (req, res) => {
-    const { userId } = req.body; // Assuming userId is passed in the request body
+    const { userId } = req.body; 
     const productId = req.params.id;
 
     try {
@@ -614,7 +523,7 @@ app.prepare().then(() => {
       const ratingsWithUserDetails = await Promise.all(
         product.ratings.map(async (rating) => {
           try {
-            const userId = rating.user_id; // Assuming user_id is a plain ObjectId
+            const userId = rating.user_id; 
 
             // Check if userId is a valid ObjectId
             if (!ObjectId.isValid(userId)) {
@@ -720,10 +629,10 @@ app.prepare().then(() => {
         {
           $set: {
             recommended: !product.recommended,
-            updated_at: new Date(), // Update the timestamp
+            updated_at: new Date(), 
           },
         },
-        { returnOriginal: false } // Return the updated document
+        { returnOriginal: false } 
       );
 
       res.status(200).json({
@@ -759,7 +668,7 @@ app.prepare().then(() => {
       const ratingsWithUserDetails = await Promise.all(
         product.ratings.map(async (rating) => {
           try {
-            const userId = rating.user_id; // Assuming user_id is a plain ObjectId
+            const userId = rating.user_id; 
 
             // Check if userId is a valid ObjectId
             if (!ObjectId.isValid(userId)) {
@@ -880,11 +789,10 @@ app.prepare().then(() => {
     }
   });
 
-  const allowedStatuses = ["In Process", "Delayed", "Ready", "On Way", "Delivered"]; // Define valid statuses
+  const allowedStatuses = ["In Process", "Delayed", "Ready", "On Way", "Delivered"]; 
   server.put("/api/orders/:orderId/update-status", async (req, res) => {
     const { orderId } = req.params;
-    const { status } = req.body; // Expect status from the request body
-  
+    const { status } = req.body;
     if (!allowedStatuses.includes(status)) {
       return res.status(400).json({ error: "Invalid status value" });
     }
@@ -926,7 +834,7 @@ app.prepare().then(() => {
   //Cart
   server.get("/api/cart/:userId", async (req, res) => {
     try {
-      const { userId } = req.params;  // Extract the userId from the request params
+      const { userId } = req.params; 
       const db = await connectToDatabase();
       const cartCollection = db.collection("cart");
   
@@ -940,7 +848,7 @@ app.prepare().then(() => {
   
       // Get the total number of items in the cart
       const totalCount = userCart.items.length;
-      const totalPages = Math.ceil(totalCount / PAGE_SIZE);  // Optional pagination logic
+      const totalPages = Math.ceil(totalCount / PAGE_SIZE); 
   
       // Return the full cart object and additional details
       res.status(200).json({ cart: userCart, totalCount, totalPages });

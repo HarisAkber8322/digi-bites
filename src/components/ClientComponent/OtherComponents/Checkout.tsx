@@ -5,8 +5,6 @@ import CartStoreContext from "@/store/CartStore";
 import OrderStoreContext from "@/store/OrderStore";
 import UserStoreContext from "@/store/UserStore";
 import ProductStoreContext from "@/store/ProductStore";
-import { Alert } from "@mui/material"; // Import Alert component
-import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 const CheckoutPage = () => {
@@ -24,8 +22,8 @@ const CheckoutPage = () => {
     address: "",
     orderNote: "",
   });
-  const [showAlert, setShowAlert] = useState(false); // State to control the visibility of the Alert
-  const [isLoading, setIsLoading] = useState(false); // State to control the loading animation
+  const [showAlert, setShowAlert] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   useEffect(() => {
     setIsLoading(true);
@@ -52,7 +50,7 @@ const CheckoutPage = () => {
     }
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0; // Valid if no errors.
+    return Object.keys(newErrors).length === 0;
   };
   const calculateTotalPrice = () => {
     return cartStore.cart.items.reduce((total, item) => {
@@ -78,8 +76,8 @@ const CheckoutPage = () => {
   };
 
   const handleCheckout = async () => {
-    if (!validateFields()) return; // Stop if validation fails.
-    setIsLoading(true); // Start loading state
+    if (!validateFields()) return; 
+    setIsLoading(true);
     try {
       const orderObject = {
         status: "In Process",
@@ -102,36 +100,28 @@ const CheckoutPage = () => {
         },
       };
 
-      // Place the order
+
       await orderStore.placeOrder(orderObject);
 
-      // Clear the cart
       await cartStore.clearCart(userStore.user?.id);
 
-      // Show success alert and hide page content
       setShowAlert(true);
       setIsLoading(false);
 
-      // After 3 seconds, hide the alert and redirect to "/"
+
       setTimeout(() => {
-        userStore.changePage("/"); // Redirect to home page
+        userStore.changePage("/"); 
       }, 3000);
 
     } catch (error) {
       console.error("Error placing order:", error);
       alert("There was an issue placing your order. Please try again.");
-      setIsLoading(false); // Stop loading if there's an error
+      setIsLoading(false); 
     }
   };
 
   return (
     <div className={`relative ${isLoading ? 'opacity-0 pointer-events-none' : ''}`}>
-      {/* Show Alert on Successful Order */}
-      {/* {showAlert && (
-        <Alert severity="success" variant="outlined"  sx={{ width: '100%' }}>
-          Your order has been placed!
-        </Alert>
-      )} */}
       {showAlert && (
         <div className="fixed top-0 left-0 right-0 bottom-0 bg-green-800 bg-opacity-80 flex justify-center items-center z-50 p-6">
           <div className="bg-white p-12 rounded-lg text-center shadow-lg">
@@ -143,12 +133,12 @@ const CheckoutPage = () => {
         </div>
       )}
 
-      {/* Checkout Form */}
+
       <form className={`flex flex-wrap justify-center items-start gap-6 p-8 ${isLoading ? 'opacity-0' : ''}`}>
-        {/* Left Section: Checkout Form */}
+
         <div className="w-[55%] p-6 rounded-lg shadow-lg bg-white">
           <h2 className="font-bold text-2xl mb-6 text-center">Checkout</h2>
-          {/* Delivery Method Selection */}
+
           <div className="mb-4">
             <label className="block text-sm font-medium mb-2">Delivery Method:</label>
             <div className="flex flex-row gap-4">
@@ -186,8 +176,6 @@ const CheckoutPage = () => {
               </label>
             </div>
           </div>
-
-          {/* Input Fields */}
           <div className="mb-4">
             <label htmlFor="phone" className="block text-sm font-medium mb-2">Phone Number:</label>
             <input
@@ -232,7 +220,6 @@ const CheckoutPage = () => {
           </div>
         </div>
 
-        {/* Right Section: Cost Summary */}
         <div className="w-[40%]">
           <div className="shadow-xl rounded-lg px-3 pb-6 pt-3 bg-white">
             <div className="gap-4 grid grid-cols-1 mb-4">
@@ -277,19 +264,17 @@ const CheckoutPage = () => {
                 );
               })}
             </div>
-            {/* delivery cost Summary */}
+
             <h2 className="font-bold text-xl pt-2 mb-4 text-center">Cost Summary</h2>
             <div className="flex justify-between py-2 pt-4 border-t-2 mt-5 border-ExtraLightGray">
               <p className="text-lg font-semibold">Delivery Cost:</p>
               <p className="font-bold">Rs {deliveryFee}</p>
             </div>
-            {/* Order Summary */}
+
             <div className="flex justify-between py-2 pt-4 border-t-2 mt-5 border-ExtraLightGray">
               <p className="text-lg font-semibold">Total Amount:</p>
               <p className="font-bold">Rs {total}</p>
             </div>
-
-            {/* Checkout Button */}
             <button
               type="button"
               onClick={handleCheckout}

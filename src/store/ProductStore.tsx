@@ -21,9 +21,9 @@ export interface Product {
     user_id: string;
     rating: number;
   }>;
-  created_at: string; // or Date if you prefer
-  updated_at: string; // or Date if you prefer
-  average_rating?: number; // Optional field, as it might be computed
+  created_at: string; 
+  updated_at: string; 
+  average_rating?: number;
   ratings_count?: number;
   recommended: false;
 }
@@ -56,7 +56,6 @@ class ProductStore {
       );
 
       const newProduct = response.data as Product;
-      // Add the new product to the store
       this.products.push(newProduct);
 
       if (response.status === 201) {
@@ -145,7 +144,6 @@ class ProductStore {
   }
 
   changePage(url: string) {
-    // Implement page redirection logic here, e.g., using `window.location` or a routing library
     window.location.href = url;
   }
   async deleteProduct(productId: string) {
@@ -174,7 +172,7 @@ class ProductStore {
       );
       if (response.status === 200) {
         const updatedProduct = response.data.product;
-        console.log("Updated Product from Server:", updatedProduct); // Debug log
+        console.log("Updated Product from Server:", updatedProduct); 
         runInAction(() => {
           this.products = this.products.map((product) =>
             product._id === productId ? updatedProduct : product,
@@ -202,9 +200,6 @@ class ProductStore {
     }
   }
 }
-
-
-
 
 export const productStore = new ProductStore();
 const ProductStoreContext = React.createContext(productStore);

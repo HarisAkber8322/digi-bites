@@ -11,8 +11,8 @@ const withPWA = withPWAInit({
   workboxOptions: {
     disableDevLogs: true,
   },
-  register: true, // Register the service worker
-  skipWaiting: true, // Skip waiting for the old service worker to be replaced
+  register: true, 
+  skipWaiting: true,
   runtimeCaching: [
     {
       urlPattern: /^https:\/\/.*\.(jpg|jpeg|png|gif|svg)$/,
@@ -21,11 +21,10 @@ const withPWA = withPWAInit({
         cacheName: "images-cache",
         expiration: {
           maxEntries: 100,
-          maxAgeSeconds: 7 * 24 * 60 * 60, // 7 days
+          maxAgeSeconds: 7 * 24 * 60 * 60, 
         },
       },
     },
-    // You can add more caching rules here
   ],
 });
 
@@ -38,7 +37,7 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: ["plus.unsplash.com"], // Add the domain here
+    domains: ["plus.unsplash.com"],
   },
 };
 

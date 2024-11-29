@@ -7,6 +7,7 @@ import ProductStoreContext from "@/store/ProductStore";
 import Div from "@/components/UI/Div";
 import Text from "@/components/UI/Text";
 import { FaHashtag } from "react-icons/fa";
+import { Image } from "react-bootstrap";
 
 const OrdersPage: React.FC = observer(() => {
   const orderStore = useContext(OrderStoreContext);
@@ -132,7 +133,7 @@ const OrdersPage: React.FC = observer(() => {
                                 </>
                               )}
                               <td className="px-4 py-2 text-center text-sx flex justify-center items-center gap-3">
-                                <img
+                                <Image
                                   src={
                                     productDetails[product.productId]?.image ||
                                     ""

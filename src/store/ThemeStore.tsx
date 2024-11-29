@@ -6,7 +6,7 @@ class Theme {
 
   constructor() {
     makeAutoObservable(this);
-    // Retrieve theme mode from localStorage if available
+  
     if (typeof window !== "undefined") {
       const storedThemeMode = localStorage.getItem("themeMode");
       if (storedThemeMode) {

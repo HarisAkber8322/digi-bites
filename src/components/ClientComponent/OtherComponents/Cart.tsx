@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { observer } from "mobx-react";
-import { Button, Form } from "react-bootstrap";
-import CartStoreContext, { AddOn, CartItem } from "@/store/CartStore";
+import { Button } from "react-bootstrap";
+import CartStoreContext, { CartItem } from "@/store/CartStore";
 import OrderStoreContext from "@/store/OrderStore";
 import UserStoreContext from "@/store/UserStore";
 import ProductStoreContext from "@/store/ProductStore";
@@ -14,7 +14,6 @@ const Cart: React.FC = () => {
   const userStore = useContext(UserStoreContext);
   const productStore = useContext(ProductStoreContext);
   const cartStore = useContext(CartStoreContext);
-  const [orderNote, setOrderNote] = useState<string>("");
   const [messageBox, setMessageBox] = useState(false);
   useEffect(() => {
     setMessageBox(false);
@@ -29,51 +28,17 @@ const Cart: React.FC = () => {
         (p) => p._id === item.product_id,
       );
       const productPrice = product ? product.price : 0;
-      // const addOnsPrice = item.addOns
-      //   .filter((addOn: AddOn) => addOn.value)
-      //   .reduce((sum, addOn) => sum + addOn.price, 0);
-      return total + productPrice * item.quantity; // + addOnsPrice;
+
+      return total + productPrice * item.quantity;
     }, 0);
   };
   const totalPrice = calculateTotalPrice();
-  // const handlePlaceOrder = async () => {
-  //   if (!userStore.isLoggedin || !userStore.user) {
-  //     console.error("User is not logged in");
-  //     return;
-  //   }
-
-  //   const userId = userStore.user.id;
-  //   const paymentMethod = "credit_card"; // Example payment method
-
-  //   try {
-  //     const result = await orderStore.placeOrder(
-  //       cartStore.cartItems,
-  //       userId,
-  //       paymentMethod,
-  //       orderNote,
-  //       totalPrice,
-  //     );
-  //     if (result) {
-  //       await cartStore.clearCart(userStore.user.id);
-  //       setMessageBox(true);
-  //       setTimeout(() => {
-  //         userStore.changePage("/");
-  //       }, 500);
-  //     }
-  //     // Optionally clear the cart or redirect the user here
-  //   } catch (error) {
-  //     console.error("Failed to place order:", error);
-  //   }
-  // };
-
   const increaseQuantity = (productId: string) => {
     cartStore.updateQuantity(productId, 1, userStore.user?.id);
   };
-
   const decreaseQuantity = (productId: string) => {
     cartStore.updateQuantity(productId, -1, userStore.user?.id);
   };
-
   return (
     <div className="w-full md:w-[1180px] m-auto mt-5 pb-10">
       <h2 className="font-bold text-2xl mt-4 mb-5">Cart</h2>
@@ -95,7 +60,6 @@ const Cart: React.FC = () => {
                   const product = productStore.products.find(
                     (p) => p._id === item.product_id,
                   );
-                  // console.log(product)
                   if (!product) {
                     return (
                       <div
@@ -106,7 +70,6 @@ const Cart: React.FC = () => {
                       </div>
                     );
                   }
-
                   return (
                     <div
                       key={index}
@@ -149,9 +112,6 @@ const Cart: React.FC = () => {
                               </Button>
                             </div>
                             <div className="text-xs pt-2 ml-4">
-                              {/* {item.addOns.map((addOn: AddOn) => (
-                            addOn.value && <span key={addOn.name}>{addOn.name} </span>
-                          ))} */}
                             </div>
                           </div>
                         </div>
@@ -190,18 +150,6 @@ const Cart: React.FC = () => {
                       {totalPrice.toFixed(2)} rs
                     </span>
                   </div>
-                  {/* <div className="mt-3">
-                    <Form.Group controlId="orderNote">
-                      <Form.Label>Order Note</Form.Label>
-                      <Form.Control
-                        as="textarea"
-                        rows={3}
-                        value={orderNote}
-                        onChange={(e) => setOrderNote(e.target.value)}
-                        placeholder="Enter any special instructions here"
-                      />
-                    </Form.Group>
-                  </div> */}
                   <div className="flex justify-center pr-4 pl-4">
                     <Link href={"/checkout"}
                       className="text-white bg-themeYellow w-full font-bold text-lg p-2 flex mt-4 align-middle justify-center rounded-md"

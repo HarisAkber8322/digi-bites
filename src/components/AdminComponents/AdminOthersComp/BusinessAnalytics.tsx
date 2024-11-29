@@ -15,18 +15,15 @@ const statusData = [
   { name: "On Way", imageUrl: "/images/Icons/deliver.png" },
   { name: "Delivered", imageUrl: "/images/Icons/icons8-waiter-96.png" },
 ];
-
-
 const initialCounts = statusData.reduce((acc, status) => {
   acc[status.name] = 0;
   return acc;
 }, {});
 const BusinessAnalytics = () => {
-  const orderStore = useContext(OrderStoreContext); // Access OrderStore from context
-  // Dynamically initialize statusCounts based on statusData
+  const orderStore = useContext(OrderStoreContext);
   const [statusCounts, setStatusCounts] = useState(initialCounts);
   useEffect(() => {
-    orderStore.loadOrders(); // Load orders on component mount
+    orderStore.loadOrders();
   }, [orderStore]);
   useEffect(() => {
     const counts = statusData.reduce((acc, status) => {
@@ -43,15 +40,12 @@ const BusinessAnalytics = () => {
     setStatusCounts(counts);
   }, [statusData, orderStore.orderList]);
 
-
-
   return (
     <Div
       themeDivClasses="rounded-xl shadow-md p-6 overflow-hidden"
       darkColor="bg-pepperBlack"
       content={
         <>
-          {/* Upper Corner Text */}
           <Text
             themeDivClasses="text-lg flex flex-row items-center font-medium mb-6 gap-2"
             content={
@@ -65,8 +59,6 @@ const BusinessAnalytics = () => {
               </>
             }
           />
-
-          {/* Grid of Divs */}
           <div className="grid grid-cols-5 gap-5">
             {statusData.map((data, index) => (
               <Div

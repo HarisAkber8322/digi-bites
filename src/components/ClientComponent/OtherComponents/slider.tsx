@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react";
 import classNames from "classnames";
-import Image from "next/image";
 import Text from "../../UI/Text";
 const images = [
   "/images/s1.jpg",
@@ -40,7 +39,6 @@ const Slider: React.FC<SliderProps> = ({ interval = 3000 }) => {
 
   const handleClick = (index: number) => {
     console.log(`Image ${index + 1} clicked!`);
-    // Add your custom click handler logic here
   };
 
   return (

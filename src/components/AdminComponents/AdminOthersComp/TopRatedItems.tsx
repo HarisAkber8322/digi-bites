@@ -5,7 +5,7 @@ import Image from "next/image";
 import Div from "../../UI/Div";
 import Text from "../../UI/Text";
 import ProductStoreContext from "@/store/ProductStore";
-import { Product } from "@/store/ProductStore"; // Adjust the import path as needed
+import { Product } from "@/store/ProductStore";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -20,9 +20,8 @@ const TopRatedItems = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      await ProductStore.fetchProducts(); // Fetch products
+      await ProductStore.fetchProducts(); 
       const itemsWithRatings = ProductStore.products.map((item) => {
-        // Calculate the average rating
         const totalRating = item.ratings.reduce(
           (acc, rating) => acc + rating.rating,
           0,
@@ -36,23 +35,18 @@ const TopRatedItems = () => {
           ratings_count: item.ratings.length,
         };
       });
-
-      // Sort items by rating in descending order
       const sortedItems = itemsWithRatings
         .sort((a, b) => (b.average_rating ?? 0) - (a.average_rating ?? 0))
-        .slice(0, 6); // Display top 6 or all items
+        .slice(0, 6);
 
       setTopRatedItems(sortedItems);
     };
-
     fetchProducts();
   }, [ProductStore]);
-
   const renderStars = (rating: number) => {
     const fullStars = Math.floor(rating);
     const halfStar = rating % 1 >= 0.5;
     const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
-
     return (
       <div className="flex items-center text-[10px]">
         {[...Array(fullStars)].map((_, index) => (
@@ -64,8 +58,7 @@ const TopRatedItems = () => {
         ))}
         {halfStar && (
           <FontAwesomeIcon icon={faStarHalfAlt} className="text-themeYellow " />
-        )}{" "}
-        {/* No half-star icon */}
+        )}
         {[...Array(emptyStars)].map((_, index) => (
           <FontAwesomeIcon
             icon={faRegularStar}
@@ -92,7 +85,7 @@ const TopRatedItems = () => {
                 <div className="w-full flex flex-row justify-between items-center p-2 border-b-[1px] !border-zinc-100">
                   <div>Top Rated Products</div>
                   <Link
-                    href="/admin/product-reviews" // Use Link for navigation
+                    href="/admin/product-reviews" 
                     className="text-blue-500 hover:text-themeYellow text-xs font-semibold"
                   >
                     {"View All"}

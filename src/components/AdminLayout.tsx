@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useEffect } from "react";
+import React, {useEffect } from "react";
 import HeaderComponent from "@/components/AdminComponents/Header";
 import SideBarComponent from "@/components/AdminComponents/Sidebar";
 import { useState } from "react";

@@ -13,12 +13,11 @@ const Menu: React.FC = () => {
   const UserStore = useContext(UserStoreContext);
 
   useEffect(() => {
-    ProductStore.fetchProducts(); // Fetch products when component mounts
+    ProductStore.fetchProducts();
     UserStore.fetchFavoriteProducts(UserStore.user?.id);
   }, [ProductStore, UserStore]);
 
   const handleCardClick = (menuItem: Product) => {
-    // Handle card click if needed
   };
 
   const categories = Array.from(
@@ -38,7 +37,7 @@ const Menu: React.FC = () => {
                     className="flex items-center bg-themeYellow text-white p-2 rounded-lg"
                     href={`/category/${category.toLowerCase()}`}
                   >
-                    <FaArrowRight className="" /> {/* Arrow icon */}
+                    <FaArrowRight className="" />
                   </Link>
                 </div>
               </>
@@ -48,7 +47,7 @@ const Menu: React.FC = () => {
           <div className="grid grid-cols-6 xs:flex xs:flex-col gap-4 my-[28px]">
             {ProductStore.products
               .filter((menuItem) => menuItem.category === category)
-              .slice(0, 6) // Show only the first 6 products per category
+              .slice(0, 6)
               .map((menuItem, itemIndex) => (
                 <MenuCard
                   key={itemIndex}

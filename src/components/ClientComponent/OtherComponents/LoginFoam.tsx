@@ -31,12 +31,12 @@ const LoginForm = () => {
     { setSubmitting }: any
   ) => {
     try {
-      const  isSuccess  = await handleLogin(user); // Assuming `handleLogin` returns a boolean
+      const  isSuccess  = await handleLogin(user);
       if (isSuccess) {
         console.log("Login successful");
-        setErrorMessage(""); // Clear any previous errors
+        setErrorMessage("");
       } else {
-        setErrorMessage("Invalid email or password. Please try again."); // Set the error message
+        setErrorMessage("Invalid email or password. Please try again."); 
       }
     } catch (error) {
       console.error("An error occurred:", error);
