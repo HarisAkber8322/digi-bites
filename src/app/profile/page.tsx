@@ -79,11 +79,12 @@ const Profile = () => {
       }
     }
   };
-  const [selectedStatus, setSelectedStatus] = useState("in process");
-  const filteredOrders = orderStore.userOrders?.filter((order) => {
-    if (selectedStatus === "all") return true; // Show all orders
-    return order.status.toLowerCase() === selectedStatus.toLowerCase(); // Filter by selected status
+  const [selectedStatus, setSelectedStatus] = useState("All");
+  const filteredOrders = orderStore.userOrders?.filter((order: { status: string; }) => {
+    if (selectedStatus === "All") return true; // Show all orders
+    return order.status === selectedStatus; // Filter by selected status
   });
+  console.log(orderStore.userOrders)
   return (
     <Div
       themeDivClasses="min-h-screen md:w-[1180px] m-auto pt-6"
@@ -175,12 +176,12 @@ const Profile = () => {
                   onChange={(e) => setSelectedStatus(e.target.value)}
                   className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md"
                 >
-                  <option value="all">All Orders</option>
-                  <option value="in process">In Process</option>
-                  <option value="delayed">Delayed</option>
-                  <option value="on way">On Way</option>
-                  <option value="ready">Ready</option>
-                  <option value="delivered">Delivered</option>
+                  <option value="All">All Orders</option>
+                  <option value="In Process">In Process</option>
+                  <option value="Delayed">Delayed</option>
+                  <option value="On Way">On Way</option>
+                  <option value="Ready">Ready</option>
+                  <option value="Delivered">Delivered</option>
                 </select>
               </div>
               <ul className="mt-4 flex flex-col gap-6">
