@@ -555,9 +555,6 @@ import {
   faCircle,
   faPlusCircle,
   faStarHalfAlt,
-  faClock,
-  faCheck,
-  faBan,
 } from "@fortawesome/free-solid-svg-icons";
 
 export const CardData = [
@@ -601,6 +598,12 @@ interface SidebarItem {
 }
 
 export const sidebarItems: SidebarCategory[] = [
+  {  
+    category: "Users Management",
+    items: [
+      { title: "All Users", link: "/admin/users", icon: faUser },
+    ],
+  },
   {
     category: "Orders Management",
     items: [
@@ -611,7 +614,6 @@ export const sidebarItems: SidebarCategory[] = [
     category: "Product Management",
     items: [
       { title: "All Products", link: "/admin/product-listing", icon: faCircle },
-      { title: "Add Product", link: "/admin/product-add", icon: faPlusCircle },
       { title: "Product Reviews", link: "/admin/product-reviews", icon: faStarHalfAlt },
     ],
   },
@@ -620,6 +622,6 @@ export const sidebarItems: SidebarCategory[] = [
 
 export const uncategorizedItems = [
   { title: "Dashboard", link: "/admin", icon: faHome },
-  { title: "Users", link: "/admin/users", icon: faUser },
+
 ];
 

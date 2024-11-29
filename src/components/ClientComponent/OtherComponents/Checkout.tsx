@@ -7,12 +7,16 @@ import UserStoreContext from "@/store/UserStore";
 import ProductStoreContext from "@/store/ProductStore";
 import { Alert } from "@mui/material"; // Import Alert component
 import * as Yup from "yup";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 const CheckoutPage = () => {
   const orderStore = useContext(OrderStoreContext);
   const userStore = useContext(UserStoreContext);
   const productStore = useContext(ProductStoreContext);
   const cartStore = useContext(CartStoreContext);
   const userId = userStore.user?.id;
+
+
   const [deliveryMethod, setDeliveryMethod] = useState("homeDelivery");
   const [formData, setFormData] = useState({
     name: "",
@@ -104,35 +108,24 @@ const CheckoutPage = () => {
     }
   };
 
-
-
-
-  const validationSchema = Yup.object().shape({
-    phone_number: Yup.string()
-      .required("Phone number is required")
-      .matches(/^\d{11}$/, "Phone number must be exactly 11 digits"),
-    address: Yup.string()
-      .when("deliveryMethod", {
-        is: "homeDelivery",
-        then: Yup.string().required("Address is required for Home Delivery"),
-        otherwise: Yup.string(),
-      }),
-    favoriteProductsIds: Yup.array().of(Yup.string()),
-  });
-  
-
-
-
-
-  
   return (
     <div className={`relative ${isLoading ? 'opacity-0 pointer-events-none' : ''}`}>
       {/* Show Alert on Successful Order */}
-      {showAlert && (
+      {/* {showAlert && (
         <Alert severity="success" variant="outlined"  sx={{ width: '100%' }}>
           Your order has been placed!
         </Alert>
-      )}
+      )} */}
+      {showAlert && (
+  <div className="fixed top-0 left-0 right-0 bottom-0 bg-green-800 bg-opacity-80 flex justify-center items-center z-50 p-6">
+    <div className="bg-white p-12 rounded-lg text-center shadow-lg">
+      <FontAwesomeIcon icon={faCheckCircle} size="6x" className="text-green-600" />
+      <h1 className="text-3xl font-bold mt-6 text-green-800">
+        Your order has been placed!
+      </h1>
+    </div>
+  </div>
+)}
 
       {/* Checkout Form */}
       <form className={`flex flex-wrap justify-center items-start gap-6 p-8 ${isLoading ? 'opacity-0' : ''}`}>
@@ -185,6 +178,7 @@ const CheckoutPage = () => {
               type="text"
               id="phone"
               name="phone"
+              placeholder="Enter your number"
               value={formData.phone}
               onChange={handleInputChange}
               className="block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none"
@@ -197,6 +191,7 @@ const CheckoutPage = () => {
               <textarea
                 id="address"
                 name="address"
+                placeholder="Enter your address"
                 rows={3}
                 value={formData.address}
                 onChange={handleInputChange}
@@ -210,6 +205,7 @@ const CheckoutPage = () => {
             <textarea
               id="orderNote"
               name="orderNote"
+              placeholder="Enter delivery note"
               rows={3}
               value={formData.orderNote}
               onChange={handleInputChange}
@@ -238,10 +234,10 @@ const CheckoutPage = () => {
                 }
 
                 return (
-                  <>  <h2 className="font-bold text-xl pt-2 mb-4 text-center">Your Selected Items</h2>
+                  <>  
                   <div
                     key={index}
-                    className="bg-white flex shadow-xl mb-6 rounded-lg items-center justify-between p-4 h-[100px]"
+                    className="bg-white flex shadow-xl mb-2 rounded-lg items-center justify-between p-4 h-[100px]"
                   >
                   
                     <div className="flex cursor-pointer w-full">

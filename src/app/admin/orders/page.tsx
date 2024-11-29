@@ -361,7 +361,7 @@ const OrdersPage: React.FC = () => {
               placeholder="Search orders..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="p-2 border rounded-lg w-full text-black dark:text-white"
+              className="p-2 border rounded-lg w-full text-black"
             />
           </div>
 

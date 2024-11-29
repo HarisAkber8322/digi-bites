@@ -79,8 +79,11 @@ const Profile = () => {
       }
     }
   };
-
-
+  const [selectedStatus, setSelectedStatus] = useState("in process");
+  const filteredOrders = orderStore.userOrders?.filter((order) => {
+    if (selectedStatus === "all") return true; // Show all orders
+    return order.status.toLowerCase() === selectedStatus.toLowerCase(); // Filter by selected status
+  });
   return (
     <Div
       themeDivClasses="min-h-screen md:w-[1180px] m-auto pt-6"
@@ -160,16 +163,33 @@ const Profile = () => {
              
             </div>
             {/* Sidebar with Orders */}
-            <div className="w-full md:w-1/4 mt-10 md:mt-0">
+            <div className="w-full md:w-1/4 mt-10 md:mt-0 mb-8">
               <h3 className="text-xl font-semibold">Your Orders</h3>
-              <ul className="mt-4 space-y-3">
-                {orderStore.userOrders?.length > 0 ? (
-                  orderStore.userOrders?.map((order, index) => (
-                    <div className="bg-white p-4 rounded-lg shadow-md" key={index}>
-                      <p>Order #{index + 1}</p>
-                      <p className="text-sm text-gray-500">
-                        Total: {order.totalAmount} RS
-                      </p>
+              <div className="mt-4">
+                <label htmlFor="order-status" className="block text-sm font-semibold">
+                  Check Your Order Status
+                </label>
+                <select
+                  id="order-status"
+                  value={selectedStatus}
+                  onChange={(e) => setSelectedStatus(e.target.value)}
+                  className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md"
+                >
+                  <option value="all">All Orders</option>
+                  <option value="in process">In Process</option>
+                  <option value="delayed">Delayed</option>
+                  <option value="on way">On Way</option>
+                  <option value="ready">Ready</option>
+                  <option value="delivered">Delivered</option>
+                </select>
+              </div>
+              <ul className="mt-4 flex flex-col gap-6">
+                {filteredOrders?.length > 0 ? (
+                  filteredOrders.map((order, index) => (
+                    <div className="bg-white p-4 flex flex-col gap-1 rounded-lg shadow-md" key={index}>
+                      <p className="font-medium">Order #{index + 1}</p>
+                      <p className="text-sm text-gray-500">Total: {order.totalAmount} RS</p>
+                      <p className="text-base text-gray-500 text-orange-400 ">Your Order is {order.status}</p>
 
                       <div className="mt-2">
                         <h4 className="text-sm font-semibold">Products:</h4>

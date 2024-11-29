@@ -132,7 +132,7 @@ const User: React.FC = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search Users..."
-              className="w-1/2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+className="p-2 border rounded-lg w-full text-black"
             />
           </div>
 
