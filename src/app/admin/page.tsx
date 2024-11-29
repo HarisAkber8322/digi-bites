@@ -35,7 +35,7 @@ const Dashboard: React.FC = () => {
               }
             />
             <BusinessAnalytics />
-            <div className="grid grid-cols-3 w-full overflow-hidden pb-6 mt-10 gap-5">
+            <div className="grid grid-cols-2 w-full overflow-hidden pb-6 mt-10 gap-5">
               <TopRatedItems />
               <TopCustomers />
               {/* <TopSellingProducts items={items} /> */}
