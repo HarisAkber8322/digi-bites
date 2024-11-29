@@ -84,12 +84,7 @@ const TopRatedItems = () => {
               <>
                 <div className="w-full flex flex-row justify-between items-center p-2 border-b-[1px] !border-zinc-100">
                   <div>Top Rated Products</div>
-                  <Link
-                    href="/admin/product-reviews" 
-                    className="text-blue-500 hover:text-themeYellow text-xs font-semibold"
-                  >
-                    {"View All"}
-                  </Link>
+             
                 </div>
 
                 <div className="flex flex-col space-y-[10px] p-4">

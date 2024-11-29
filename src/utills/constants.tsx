@@ -97,7 +97,6 @@ export const sidebarItems: SidebarCategory[] = [
     category: "Product Management",
     items: [
       { title: "All Products", link: "/admin/product-listing", icon: faCircle },
-      { title: "Product Reviews", link: "/admin/product-reviews", icon: faStarHalfAlt },
     ],
   },
 ];

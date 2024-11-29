@@ -50,7 +50,6 @@ const Cart: React.FC = () => {
         <div>
           {messageBox ? (
             <Alert variant="outlined" severity="success">
-              {" "}
               Your Order has been Placed
             </Alert>
           ) : (

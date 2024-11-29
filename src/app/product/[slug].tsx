@@ -1,6 +1,7 @@
 import { GetServerSideProps } from "next";
 import axios from "axios";
 import { Product } from "@/store/ProductStore";
+import { Image } from "react-bootstrap";
 
 interface ProductPageProps {
   product: Product | null;
@@ -19,7 +20,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ product, error }) => {
   return (
     <div style={{ padding: "20px" }}>
       <h1>{product.name}</h1>
-      <img src={product.image} alt={product.name} style={{ width: "200px" }} />
+      <Image src={product.image} alt={product.name} style={{ width: "200px" }} />
       <p>
         <strong>Price:</strong> ${product.price}
       </p>

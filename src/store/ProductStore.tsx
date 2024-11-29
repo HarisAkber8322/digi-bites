@@ -9,24 +9,34 @@ export interface Ratings {
   rating: number;
 }
 
+// export interface Product {
+//   _id: string;
+//   name: string;
+//   price: number;
+//   description: string;
+//   category: string;
+//   image: string;
+//   stock: number;
+//   ratings: Array<{
+//     user_id: string;
+//     rating: number;
+//   }>;
+//   created_at: string; 
+//   updated_at: string; 
+//   average_rating?: number;
+//   ratings_count?: number;
+//   recommended: false;
+// }
 export interface Product {
   _id: string;
   name: string;
   price: number;
-  description: string;
   category: string;
   image: string;
-  stock: number;
-  ratings: Array<{
-    user_id: string;
-    rating: number;
-  }>;
   created_at: string; 
   updated_at: string; 
-  average_rating?: number;
-  ratings_count?: number;
-  recommended: false;
 }
+
 
 class ProductStore {
   favorites: any;
@@ -115,15 +125,15 @@ class ProductStore {
       const product = response.data as Product;
 
       // Calculate average rating if not included in the response
-      if (product.ratings.length > 0) {
-        const totalRating = product.ratings.reduce(
-          (acc, rating) => acc + rating.rating,
-          0,
-        );
-        product.average_rating = totalRating / product.ratings.length;
-      } else {
-        product.average_rating = 0;
-      }
+      // if (product.ratings.length > 0) {
+      //   const totalRating = product.ratings.reduce(
+      //     (acc, rating) => acc + rating.rating,
+      //     0,
+      //   );
+      //   product.average_rating = totalRating / product.ratings.length;
+      // } else {
+      //   product.average_rating = 0;
+      // }
 
       // Update the product list
       const index = this.products.findIndex((p) => p._id === productId);

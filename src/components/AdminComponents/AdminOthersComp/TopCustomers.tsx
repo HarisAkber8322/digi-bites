@@ -9,7 +9,7 @@ import Link from "next/link";
 const TopCustomers: React.FC = () => {
   const MainStore = useContext(MainStoreContext);
   const { userList } = MainStore;
-
+  const topCustomers = userList.slice(0, 6);
   return (
     <Div
       themeDivClasses="relative rounded-xl shadow-md"
@@ -34,8 +34,8 @@ const TopCustomers: React.FC = () => {
                 </div>
 
                 <div className="flex flex-col space-y-[10px] p-4">
-                  {userList.length > 0 ? (
-                    userList.map((user, index) => (
+                  {topCustomers.length > 0 ? (
+                    topCustomers.map((user, index) => (
                       <Div
                         key={index}
                         themeDivClasses="rounded-lg"

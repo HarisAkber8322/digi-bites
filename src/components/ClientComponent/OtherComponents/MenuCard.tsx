@@ -90,7 +90,6 @@ const MenuCard: React.FC<MenuCardProps> = ({ menuItem, handleCardClick }) => {
                 themeDivClasses="text-medium mt-2 font-semibold"
                 content={
                   <>
-                    {" "}
                     <Link href={`/product/${generateSlug(menuItem.name)}`}>
                       {menuItem.name}
                     </Link>
