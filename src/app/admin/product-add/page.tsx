@@ -11,11 +11,9 @@ const AddProductComponent = () => {
   const initialValues = {
     name: "",
     price: 0,
-    description: "",
+    // description: "",
     category: "",
     image: "",
-    stock: 0,
-    addons: "",
   };
 
   const validationSchema = Yup.object({
@@ -114,7 +112,7 @@ const AddProductComponent = () => {
             </div>
 
             {/* Description */}
-            <div className="flex flex-col">
+            {/* <div className="flex flex-col">
               <label className="font-semibold">Description</label>
               <Field
                 as="textarea"
@@ -126,7 +124,7 @@ const AddProductComponent = () => {
                 component="div"
                 className="text-themeYellow"
               />
-            </div>
+            </div> */}
 
             {/* Category */}
             <div className="flex flex-col">
@@ -166,34 +164,7 @@ const AddProductComponent = () => {
             </div>
 
             {/* Stock */}
-            <div className="flex flex-col">
-              <label className="font-semibold">Stock</label>
-              <Field
-                type="number"
-                name="stock"
-                className="mt-1 block w-full px-3 py-2 border border-lightGray rounded-md shadow-sm focus:outline-none focus:themeOrange focus:border-themeOrange sm:text-sm"
-              />
-              <ErrorMessage
-                name="stock"
-                component="div"
-                className="text-themeYellow"
-              />
-            </div>
-
-            {/* Add-ons */}
-            <div className="flex flex-col">
-              <label className="font-semibold">Add-ons</label>
-              <Field
-                type="text"
-                name="addons"
-                className="mt-1 block w-full px-3 py-2 border border-lightGray rounded-md shadow-sm focus:outline-none focus:themeOrange focus:border-themeOrange sm:text-sm"
-              />
-              <ErrorMessage
-                name="addons"
-                component="div"
-                className="text-themeYellow"
-              />
-            </div>
+         
 
             {/* Submit Button */}
             <button

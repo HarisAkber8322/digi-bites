@@ -94,9 +94,9 @@ const Profile = () => {
             </Alert>
           )}
           <div className="md:flex  md:space-x-10">
-            <div className="w-full md:w-3/4">
+            <div className="w-full md:w-3/4 ">
               <h1 className="flex justify-start text-3xl font-semibold mb-10">User Profile</h1>
-              <form>
+              <form className="bg-white p-7 rounded-lg shadow-lg">
                 <div className="grid grid-cols-1 gap-4">
                   <div>
                     <label htmlFor="fname" className="block text-sm font-semibold">
@@ -146,16 +146,18 @@ const Profile = () => {
                       className="mt-1 block w-full px-4 py-2 border rounded-md bg-gray-100"
                     />
                   </div>
+
                 </div>
-              </form>
-              {/* Update Button */}
+                 {/* Update Button */}
               <button
                 type="button"
                 onClick={handleUpdateProfile}
-                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                className="mt-7 px-4 py-2 bg-themeYellow text-white rounded-md "
               >
                 Update Profile
               </button>
+              </form>
+             
             </div>
             {/* Sidebar with Orders */}
             <div className="w-full md:w-1/4 mt-10 md:mt-0">

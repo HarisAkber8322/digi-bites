@@ -53,10 +53,9 @@ const AdminProfile: React.FC = () => {
                 alt="Admin Profile Photo"
               />
               <div className="flex flex-col gap-2">
-                {" "}
                 <span>admin</span>
                 <span className="font-normal text-slate-400">
-                  a*******@admin.com
+                 {AdminStore.admin?.email}                  
                 </span>
               </div>
             </div>

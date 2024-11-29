@@ -6,7 +6,7 @@ import OrderStoreContext from "@/store/OrderStore";
 import UserStoreContext from "@/store/UserStore";
 import ProductStoreContext from "@/store/ProductStore";
 import { Alert } from "@mui/material"; // Import Alert component
-
+import * as Yup from "yup";
 const CheckoutPage = () => {
   const orderStore = useContext(OrderStoreContext);
   const userStore = useContext(UserStoreContext);
@@ -104,6 +104,27 @@ const CheckoutPage = () => {
     }
   };
 
+
+
+
+  const validationSchema = Yup.object().shape({
+    phone_number: Yup.string()
+      .required("Phone number is required")
+      .matches(/^\d{11}$/, "Phone number must be exactly 11 digits"),
+    address: Yup.string()
+      .when("deliveryMethod", {
+        is: "homeDelivery",
+        then: Yup.string().required("Address is required for Home Delivery"),
+        otherwise: Yup.string(),
+      }),
+    favoriteProductsIds: Yup.array().of(Yup.string()),
+  });
+  
+
+
+
+
+  
   return (
     <div className={`relative ${isLoading ? 'opacity-0 pointer-events-none' : ''}`}>
       {/* Show Alert on Successful Order */}
@@ -136,7 +157,7 @@ const CheckoutPage = () => {
                   className="mr-2"
                 />
                 Home Delivery
-                <span className="flex justify-end w-[60%]">$30.00</span>
+                <span className="flex justify-end w-[60%]">Rs 100</span>
               </label>
               <label
                 className={`flex w-full items-center border p-2 rounded-md transition duration-150 ease-in-out hover:cursor-pointer ${deliveryMethod === "takeaway"
@@ -152,7 +173,7 @@ const CheckoutPage = () => {
                   className="mr-2"
                 />
                 Takeaway
-                <span className="flex justify-end w-[60%]">$0.00</span>
+                <span className="flex justify-end w-[60%]">Rs 0</span>
               </label>
             </div>
           </div>
@@ -217,10 +238,12 @@ const CheckoutPage = () => {
                 }
 
                 return (
+                  <>  <h2 className="font-bold text-xl pt-2 mb-4 text-center">Your Selected Items</h2>
                   <div
                     key={index}
-                    className="bg-white flex shadow-xl rounded-lg items-center justify-between p-4 h-[100px]"
+                    className="bg-white flex shadow-xl mb-6 rounded-lg items-center justify-between p-4 h-[100px]"
                   >
+                  
                     <div className="flex cursor-pointer w-full">
                       <Image
                         className="rounded-md"
@@ -234,16 +257,22 @@ const CheckoutPage = () => {
                         <p className="text-xs text-gray-400">Quantity: {item.quantity}</p>
                       </div>
                     </div>
-                    <div className="font-bold">${product.price * item.quantity}</div>
+                    <div className="font-bold w-16">Rs {product.price * item.quantity}</div>
                   </div>
+                  </>
                 );
               })}
             </div>
-
+     {/* delivery cost Summary */}
+     <h2 className="font-bold text-xl pt-2 mb-4 text-center">Cost Summary</h2>
+     <div className="flex justify-between py-2 pt-4 border-t-2 mt-5 border-ExtraLightGray">
+              <p className="text-lg font-semibold">Delivery Cost:</p>
+              <p className="font-bold">Rs {deliveryFee}</p>
+            </div>
             {/* Order Summary */}
-            <div className="flex justify-between py-2">
+            <div className="flex justify-between py-2 pt-4 border-t-2 mt-5 border-ExtraLightGray">
               <p className="text-lg font-semibold">Total Amount:</p>
-              <p className="font-bold">${total}</p>
+              <p className="font-bold">Rs {total}</p>
             </div>
 
             {/* Checkout Button */}

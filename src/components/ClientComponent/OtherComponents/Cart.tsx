@@ -206,7 +206,7 @@ const Cart: React.FC = () => {
                     <Link href={"/checkout"}
                       className="text-white bg-themeYellow w-full font-bold text-lg p-2 flex mt-4 align-middle justify-center rounded-md"
                     >
-                      Place Order
+                      Proceed to Checkout
                     </Link>
                   </div>
                 </div>

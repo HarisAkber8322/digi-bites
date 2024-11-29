@@ -203,7 +203,7 @@ export const menuData = [
   },
   {
     category: "biryani",
-    image: "/images/biryani.jpg",
+    // image: "/images/biryani.jpg",
     // items: [
     //   {
     //     name: "Chicken Biryani",

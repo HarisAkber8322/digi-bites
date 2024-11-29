@@ -88,7 +88,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({
                 </div>
                 <div className="md:text-lg md:flex md:items-center md:gap-8">
                   <AdminProfileComponent />
-                  <ToggleThemeComponent />
+                  {/* <ToggleThemeComponent /> */}
                 </div>
               </div>
             </div>

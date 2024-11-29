@@ -252,7 +252,7 @@ const HeaderComponent = () => {
                           />
                         </Link>
                       )}
-                      <ToggleThemeComponent />
+                      {/* <ToggleThemeComponent /> */}
 
                       {isLoggedin ? (
                         <Link href={"/profile"} className="cursor-pointer">

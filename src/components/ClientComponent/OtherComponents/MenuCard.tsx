@@ -9,11 +9,11 @@ import UserStoreContext from "@/store/UserStore";
 import CartStoreContext, { CartItem } from "@/store/CartStore";
 import { Product } from "@/store/ProductStore"; // Adjust the import path as needed
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faStarHalfAlt,
-  faStar as faSolidStar,
-} from "@fortawesome/free-solid-svg-icons";
-import { faStar as faRegularStar } from "@fortawesome/free-regular-svg-icons";
+// import {
+//   faStarHalfAlt,
+//   faStar as faSolidStar,
+// } from "@fortawesome/free-solid-svg-icons";
+// import { faStar as faRegularStar } from "@fortawesome/free-regular-svg-icons";
 import Link from "next/link";
 
 interface MenuCardProps {
@@ -65,36 +65,36 @@ const MenuCard: React.FC<MenuCardProps> = ({ menuItem, handleCardClick }) => {
 
   const averageRating = product?.average_rating || 0;
 
-  const renderStars = (rating: number) => {
-    const fullStars = Math.floor(rating);
-    const halfStar = rating % 1 >= 0.5;
-    const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+  // const renderStars = (rating: number) => {
+  //   const fullStars = Math.floor(rating);
+  //   const halfStar = rating % 1 >= 0.5;
+  //   const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
 
-    return (
-      <div className="flex items-center text-xs">
-        {[...Array(fullStars)].map((_, index) => (
-          <FontAwesomeIcon
-            icon={faSolidStar}
-            key={index}
-            className="text-themeYellow"
-          />
-        ))}
-        {halfStar && (
-          <FontAwesomeIcon
-            icon={faStarHalfAlt}
-            className="text-themeYellow text-xs"
-          />
-        )}
-        {[...Array(emptyStars)].map((_, index) => (
-          <FontAwesomeIcon
-            icon={faRegularStar}
-            key={index}
-            className="text-themeYellow"
-          />
-        ))}
-      </div>
-    );
-  };
+  //   return (
+  //     <div className="flex items-center text-xs">
+  //       {[...Array(fullStars)].map((_, index) => (
+  //         <FontAwesomeIcon
+  //           icon={faSolidStar}
+  //           key={index}
+  //           className="text-themeYellow"
+  //         />
+  //       ))}
+  //       {halfStar && (
+  //         <FontAwesomeIcon
+  //           icon={faStarHalfAlt}
+  //           className="text-themeYellow text-xs"
+  //         />
+  //       )}
+  //       {[...Array(emptyStars)].map((_, index) => (
+  //         <FontAwesomeIcon
+  //           icon={faRegularStar}
+  //           key={index}
+  //           className="text-themeYellow"
+  //         />
+  //       ))}
+  //     </div>
+  //   );
+  // };
 
   return (
     <div className="cursor-pointer" onClick={() => handleCardClick(menuItem)}>
@@ -142,15 +142,15 @@ const MenuCard: React.FC<MenuCardProps> = ({ menuItem, handleCardClick }) => {
                 themeDivClasses="text-medium font-semibold"
                 content={`Rs ${menuItem.price}`}
               />
-              <div className="flex items-center mb-1">
+              {/* <div className="flex items-center mb-1">
                 {renderStars(averageRating)}
-              </div>
+              </div> */}
             </div>
             {UserStore.isLoggedin && (
               <div className="flex w-full justify-center">
                 <button
                   type="button"
-                  className="flex w-[50%] rounded-[20px] overflow-hidden"
+                  className="flex w-[50%] mt-2 rounded-[20px] overflow-hidden"
                   onClick={(e) => {
                     e.stopPropagation();
                     addToCart(menuItem);
