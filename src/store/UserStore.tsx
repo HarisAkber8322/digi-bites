@@ -43,6 +43,7 @@ class UserStore {
     try {
       const response = await axios.get("http://localhost:3001/api/users");
       this.setUsers(response.data.users);
+      console.log(response.data.users);
     } catch (error) {
       console.error("Error loading users:", error);
     }
@@ -77,7 +78,6 @@ class UserStore {
       this.setIsLoggedIn(false);
     }
   };
-
   checkLoginState = async () => {
     try {
       const token = Cookies.get("token");

@@ -1,15 +1,24 @@
-
 // "use client";
 // import Div from "@/components/UI/Div";
 // import Text from "@/components/UI/Text";
 // import MainStoreContext from "@/store/Mainstore";
+// import { userStore } from "@/store/UserStore";
 // import { observer } from "mobx-react";
-// import { useContext } from "react";
+// import { useContext, useEffect, useState } from "react";
 
 // const User: React.FC = () => {
 //   const MainStore = useContext(MainStoreContext);
 //   const { userList } = MainStore;
+//   const [searchTerm, setSearchTerm] = useState(""); // State to hold search input
 
+//   // Filter users based on the search term
+//   const filteredUsers = userList.filter((user) => {
+//     const fullName = `${user.fname} ${user.lname}`.toLowerCase();
+//     return fullName.includes(searchTerm.toLowerCase()) || user.email.toLowerCase().includes(searchTerm.toLowerCase());
+//   });
+//   useEffect(() => {
+//     userStore.loadUsers();
+//   }, [userStore.userList])
 //   return (
 //     <Div
 //       themeDivClasses="pb-20"
@@ -24,11 +33,22 @@
 //             content="Users List"
 //           />
 
+//           {/* Search Bar */}
+//           <div className="flex justify-center mt-6">
+//             <input
+//               type="text"
+//               value={searchTerm}
+//               onChange={(e) => setSearchTerm(e.target.value)}
+//               placeholder="Search Users..."
+//               className="p-2 border rounded-lg w-full text-black"
+//             />
+//           </div>
+
 //           <Div
 //             themeDivClasses="shadow-lg mt-10 rounded-2xl overflow-hidden pb-14"
 //             darkColor="bg-dullblack"
 //             content={
-//               userList.length === 0 ? (
+//               filteredUsers.length === 0 ? (
 //                 <Text
 //                   themeDivClasses="text-center mt-10"
 //                   lightColor="text-black"
@@ -57,7 +77,7 @@
 //                     </tr>
 //                   </thead>
 //                   <tbody className="bg-white dark:bg-gray-900">
-//                     {userList.map((user, index) => (
+//                     {filteredUsers.map((user, index) => (
 //                       <tr
 //                         key={index}
 //                         className="hover:bg-gray-100 dark:hover:bg-gray-700 border-b border-b-lightGray h-[20px]"
@@ -66,7 +86,7 @@
 //                           {index + 1}
 //                         </td>
 //                         <td className="px-4 py-2 text-center whitespace-nowrap text-sx font-medium text-gray-900 dark:text-gray-100">
-//                           {user?.fname}   {user?.lname}
+//                           {user?.fname} {user?.lname}
 //                         </td>
 //                         <td className="px-4 py-2 text-center whitespace-nowrap text-sx font-medium text-gray-900 dark:text-gray-100">
 //                           {user?.email}
@@ -96,24 +116,31 @@
 "use client";
 import Div from "@/components/UI/Div";
 import Text from "@/components/UI/Text";
-import MainStoreContext from "@/store/Mainstore";
 import { userStore } from "@/store/UserStore";
 import { observer } from "mobx-react";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const User: React.FC = () => {
-  const MainStore = useContext(MainStoreContext);
-  const { userList } = MainStore;
-  const [searchTerm, setSearchTerm] = useState(""); // State to hold search input
+  const [searchTerm, setSearchTerm] = useState(""); 
+  const [users, setUsers] = useState(userStore.userList); 
 
-  // Filter users based on the search term
-  const filteredUsers = userList.filter((user) => {
-    const fullName = `${user.fname} ${user.lname}`.toLowerCase();
-    return fullName.includes(searchTerm.toLowerCase()) || user.email.toLowerCase().includes(searchTerm.toLowerCase());
-  });
   useEffect(() => {
     userStore.loadUsers();
-  }, [userStore.userList])
+  }, []);
+
+  useEffect(() => {
+
+    setUsers(userStore.userList);
+  }, [userStore.userList]);
+
+  const filteredUsers = users.filter((user) => {
+    const fullName = `${user.fname} ${user.lname}`.toLowerCase();
+    return (
+      fullName.includes(searchTerm.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
+
   return (
     <Div
       themeDivClasses="pb-20"
@@ -174,7 +201,7 @@ const User: React.FC = () => {
                   <tbody className="bg-white dark:bg-gray-900">
                     {filteredUsers.map((user, index) => (
                       <tr
-                        key={index}
+                        key={user.id}
                         className="hover:bg-gray-100 dark:hover:bg-gray-700 border-b border-b-lightGray h-[20px]"
                       >
                         <td className="px-4 py-2 text-center whitespace-nowrap text-sx font-medium text-gray-900 dark:text-gray-100 w-[80px]">
