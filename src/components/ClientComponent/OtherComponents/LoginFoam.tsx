@@ -17,8 +17,8 @@ const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const initialValues = {
-    email: "admin@digibites.com",
-    password: "tacos1",
+    email: "",
+    password: "",
   };
 
   const validationSchema = Yup.object().shape({
@@ -138,13 +138,13 @@ const LoginForm = () => {
                 >
                   {isSubmitting ? "Logging in..." : "Login"}
                 </button>
-                <div className="mt-4 flex justify-between text-sm">
-                  <Link
+                <div className="mt-4 flex justify-end text-sm">
+                  {/* <Link
                     href="/forgetPassword"
                     className="text-themeOrange hover:underline"
                   >
                     Forgot Password?
-                  </Link>
+                  </Link> */}
                   <Link
                     href="/signup"
                     className="text-themeOrange hover:underline"

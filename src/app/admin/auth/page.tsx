@@ -54,7 +54,7 @@ const AdminLogin = observer(() => {
           </div>
         </div>
         <div className="w-[30%] flex flex-col items-center justify-center mx-auto p-6 bg-white">
-          <ToggleButtonGroup
+          {/* <ToggleButtonGroup
             color="primary"
             value={authComponent}
             exclusive
@@ -63,7 +63,7 @@ const AdminLogin = observer(() => {
             <ToggleButton value="login">Login</ToggleButton>
             <ToggleButton value="sign_up">Sign Up</ToggleButton>
             <ToggleButton value="forget">Forget</ToggleButton>
-          </ToggleButtonGroup>
+          </ToggleButtonGroup> */}
           {authComponent === "login" ? (
             <AdminLoginComponent setAuthComponent={setAuthComponent} />
           ) : authComponent === "sign_up" ? (
