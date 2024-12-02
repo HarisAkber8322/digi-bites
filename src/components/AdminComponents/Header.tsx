@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
 } from "@fortawesome/free-solid-svg-icons";
-import ToggleThemeComponent from "../UI/ToggleThemeButton";
 import AdminProfileComponent from "../AdminComponents/AdminOthersComp/AdminProfile";
 import { Image } from "react-bootstrap";
 import { usePathname } from "next/navigation";
@@ -36,13 +35,8 @@ const HeaderComponent: React.FC<HeaderProps> = ({
       );
       MainStore.setCartCount(totalCount);
     };
-
-    // Listen for changes in localStorage
     window.addEventListener("storage", updateCartCount);
-    // Initial count update
     updateCartCount();
-
-    // Cleanup function
     return () => {
       window.removeEventListener("storage", updateCartCount);
     };
@@ -84,11 +78,9 @@ const HeaderComponent: React.FC<HeaderProps> = ({
               </div>
               <div className="md:flex md:items-center md:gap-5">
                 <div className="md:flex md:items-center">
-                  {/* <SearchInput onSearch={handleSearch} /> */}
                 </div>
                 <div className="md:text-lg md:flex md:items-center md:gap-8">
                   <AdminProfileComponent />
-                  {/* <ToggleThemeComponent /> */}
                 </div>
               </div>
             </div>

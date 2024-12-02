@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt, faGear } from "@fortawesome/free-solid-svg-icons";
 import { Image } from "react-bootstrap";
 import classNames from "classnames";
-import Div from "../../UI/Div";
 import Text from "../../UI/Text";
 import Link from "next/link";
 import AdminStoreContext from "@/store/AdminStore";
@@ -29,7 +28,7 @@ const AdminProfile: React.FC = () => {
         </div>
         <Image
           className="h-10 w-10 rounded-full"
-          src="/images/admin.png" // Replace with actual profile photo path
+          src="/images/admin.png"
           alt="Admin Profile Photo"
         />
       </div>
@@ -49,7 +48,7 @@ const AdminProfile: React.FC = () => {
             <div className="px-4 py-5 text-sm text-gray-700 flex gap-3 items-start   border-b  border-ExtraLightGray">
               <Image
                 className="h-8 w-8 rounded-full"
-                src="./images/admin.png" // Replace with actual profile photo path
+                src="./images/admin.png"
                 alt="Admin Profile Photo"
               />
               <div className="flex flex-col gap-2">
@@ -64,7 +63,7 @@ const AdminProfile: React.FC = () => {
               className="px-4 py-3 text-sm text-gray-700 flex items-center  border-b  border-ExtraLightGray"
             >
               <FontAwesomeIcon icon={faGear} className="mr-2" />
-              <span>Settings</span> {/* Replace with actual email */}
+              <span>Settings</span>
             </Link>
 
             <div

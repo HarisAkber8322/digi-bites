@@ -6,16 +6,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { observer } from "mobx-react";
 import Link from "next/link";
-import { Button } from "react-bootstrap";
 import Div from "@/components/UI/Div";
 import Image from "next/image";
 import UserStoreContext, { User } from "@/store/UserStore";
-import { faFacebook, faGoogle } from "@fortawesome/free-brands-svg-icons";
-
 const SignUpForm = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const userStore = useContext(UserStoreContext); // Use UserStoreContext
-
+  const userStore = useContext(UserStoreContext); 
   const initialValues: User = {
     id: "",
     fname: "",
@@ -249,7 +245,6 @@ const SignUpForm = () => {
                     className="text-themeYellow text-xs absolute left-2 bottom-[-15px]"
                   />
                 </div>
-                {/* Hidden field for favoriteProductsIds */}
                 <Field type="hidden" name="favoriteProductsIds" />
                 <button
                   type="submit"
@@ -266,27 +261,6 @@ const SignUpForm = () => {
                     Already have an account? Login
                   </Link>
                 </div>
-                {/* <div className="grid grid-cols-2 gap-4"> */}
-                {/* <div className="mt-6 flex justify-center">
-                  <Button className="w-full py-2 px-4 mb-2 flex justify-center items-center bg-blue-600  rounded-md shadow-sm text-sm font-medium text-gray-700 text-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    <FontAwesomeIcon
-                      icon={faFacebook}
-                      color="white"
-                      className="h-3 w-3 mr-2"
-                    />
-                    Continue with Facebook
-                  </Button>
-                </div>
-                <div className="mt-2 flex justify-center">
-                  <Button className="w-full py-2 px-4 flex justify-center items-center  text-white bg-red-500 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    <FontAwesomeIcon
-                      icon={faGoogle}
-                      color="white"
-                      className="h-3 w-3 mr-2"
-                    />
-                    Continue with Google
-                  </Button>
-                </div> */}
               </>
             }
           />

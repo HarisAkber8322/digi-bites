@@ -9,24 +9,34 @@ export interface Ratings {
   rating: number;
 }
 
+// export interface Product {
+//   _id: string;
+//   name: string;
+//   price: number;
+//   description: string;
+//   category: string;
+//   image: string;
+//   stock: number;
+//   ratings: Array<{
+//     user_id: string;
+//     rating: number;
+//   }>;
+//   created_at: string; 
+//   updated_at: string; 
+//   average_rating?: number;
+//   ratings_count?: number;
+//   recommended: false;
+// }
 export interface Product {
   _id: string;
   name: string;
   price: number;
-  description: string;
   category: string;
   image: string;
-  stock: number;
-  ratings: Array<{
-    user_id: string;
-    rating: number;
-  }>;
-  created_at: string; // or Date if you prefer
-  updated_at: string; // or Date if you prefer
-  average_rating?: number; // Optional field, as it might be computed
-  ratings_count?: number;
-  recommended: false;
+  created_at: string; 
+  updated_at: string; 
 }
+
 
 class ProductStore {
   favorites: any;
@@ -56,7 +66,6 @@ class ProductStore {
       );
 
       const newProduct = response.data as Product;
-      // Add the new product to the store
       this.products.push(newProduct);
 
       if (response.status === 201) {
@@ -116,15 +125,15 @@ class ProductStore {
       const product = response.data as Product;
 
       // Calculate average rating if not included in the response
-      if (product.ratings.length > 0) {
-        const totalRating = product.ratings.reduce(
-          (acc, rating) => acc + rating.rating,
-          0,
-        );
-        product.average_rating = totalRating / product.ratings.length;
-      } else {
-        product.average_rating = 0;
-      }
+      // if (product.ratings.length > 0) {
+      //   const totalRating = product.ratings.reduce(
+      //     (acc, rating) => acc + rating.rating,
+      //     0,
+      //   );
+      //   product.average_rating = totalRating / product.ratings.length;
+      // } else {
+      //   product.average_rating = 0;
+      // }
 
       // Update the product list
       const index = this.products.findIndex((p) => p._id === productId);
@@ -145,7 +154,6 @@ class ProductStore {
   }
 
   changePage(url: string) {
-    // Implement page redirection logic here, e.g., using `window.location` or a routing library
     window.location.href = url;
   }
   async deleteProduct(productId: string) {
@@ -174,7 +182,7 @@ class ProductStore {
       );
       if (response.status === 200) {
         const updatedProduct = response.data.product;
-        console.log("Updated Product from Server:", updatedProduct); // Debug log
+        console.log("Updated Product from Server:", updatedProduct); 
         runInAction(() => {
           this.products = this.products.map((product) =>
             product._id === productId ? updatedProduct : product,
@@ -202,9 +210,6 @@ class ProductStore {
     }
   }
 }
-
-
-
 
 export const productStore = new ProductStore();
 const ProductStoreContext = React.createContext(productStore);

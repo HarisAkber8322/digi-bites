@@ -1,13 +1,14 @@
-"use client"; // Add this line to indicate it's a Client Component
 
-import React, { Dispatch, SetStateAction, useState } from "react";
+"use client";
+
+import React, { useState } from "react";
 import { Image } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { adminStore } from "@/store/AdminStore"; // Ensure this path is correct based on your project structure
+import { adminStore } from "@/store/AdminStore"; 
 import { observer } from "mobx-react-lite";
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import * as Yup from "yup"; // For validation schema
+import * as Yup from "yup";
 
 interface AuthComponentProps {
   setAuthComponent: React.Dispatch<React.SetStateAction<string>>;
@@ -15,14 +16,15 @@ interface AuthComponentProps {
 
 const AdminLoginComponent = ({ setAuthComponent }: AuthComponentProps) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
   const initialValues = {
-    email: adminStore.admin?.email || "admin@digibites.com",
-    password: adminStore.admin?.password || "tacos1",
+    email: adminStore.admin?.email || "",
+    password: adminStore.admin?.password || "",
   };
 
   const validationSchema = Yup.object({
@@ -33,19 +35,22 @@ const AdminLoginComponent = ({ setAuthComponent }: AuthComponentProps) => {
       .min(6, "Password must be at least 6 characters long")
       .required("Password is required"),
   });
+
   const handleSubmit = async (
     admin: { email: string; password: string },
-    { setSubmitting }: any,
+    { setSubmitting }: any
   ) => {
     try {
       await adminStore.handleLogin(admin);
       if (adminStore.isAdminLoggedIn) {
         console.log("Login successful");
+        setError(null);
       } else {
-        console.log("Login failed");
+        setError("Invalid email or password. Please try again.");
       }
     } catch (error) {
       console.error("An error occurred:", error);
+      setError("An unexpected error occurred. Please try again later.");
     } finally {
       setSubmitting(false);
     }
@@ -70,6 +75,11 @@ const AdminLoginComponent = ({ setAuthComponent }: AuthComponentProps) => {
       >
         {({ isSubmitting }) => (
           <Form className="w-full">
+            {error && (
+              <div className="mb-4 text-red-500 font-semibold text-sm text-center">
+                {error}
+              </div>
+            )}
             <div className="mb-4 relative">
               <label htmlFor="email" className="block text-sm font-medium">
                 Email:
@@ -131,14 +141,14 @@ const AdminLoginComponent = ({ setAuthComponent }: AuthComponentProps) => {
             >
               {isSubmitting ? "Logging in..." : "Login"}
             </button>
-            <div className="mt-4 flex justify-between text-sm">
+            {/* <div className="mt-4 flex justify-between text-sm">
               <span
                 onClick={() => setAuthComponent("forget")}
                 className="cursor-pointer text-themeOrange hover:underline"
               >
                 Forgot Password?
               </span>
-            </div>
+            </div> */}
           </Form>
         )}
       </Formik>

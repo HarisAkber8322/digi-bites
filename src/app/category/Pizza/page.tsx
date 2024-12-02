@@ -1,4 +1,4 @@
-// pages/burgers.tsx
+
 "use client";
 import React, { useContext, useEffect } from "react";
 import Link from "next/link";
@@ -13,11 +13,11 @@ const BurgersPage: React.FC = () => {
   const ProductStore = useContext(ProductStoreContext);
 
   useEffect(() => {
-    ProductStore.fetchProducts(); // Fetch products when component mounts
+    ProductStore.fetchProducts();
   }, [ProductStore]);
 
   const handleCardClick = (menuItem: Product) => {
-    // Handle card click if needed
+   
   };
 
   const burgers = ProductStore.products.filter(
@@ -40,7 +40,7 @@ const BurgersPage: React.FC = () => {
               className="flex items-center justify-center text-white bg-themeYellow p-2 rounded-lg"
               href="/"
             >
-              <FaArrowLeft className="" /> {/* Arrow icon */}
+              <FaArrowLeft className="" />
             </Link>
           </div>
           <div className="grid grid-cols-5 gap-4 pb-52">

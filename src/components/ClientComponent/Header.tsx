@@ -11,20 +11,17 @@ import {
   faChevronDown,
   faChevronUp,
 } from "@fortawesome/free-solid-svg-icons";
-import ToggleThemeComponent from "../UI/ToggleThemeButton";
 import { Image } from "react-bootstrap";
 import { usePathname } from "next/navigation";
-// import { useRouter } from "next/router";
 import Div from "../UI/Div";
 import Text from "../UI/Text";
 import { observer } from "mobx-react";
-import { menuData } from "../../utills/constants"; // Adjust the path to where your menuData is located
+import { menuData } from "../../utills/constants";
 import UserStoreContext from "@/store/UserStore";
 import CartStoreContext from "@/store/CartStore";
 
 const HeaderComponent = () => {
   const router = usePathname();
-  // const routerTwo = useRouter();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const CartStore = useContext(CartStoreContext);
@@ -32,7 +29,6 @@ const HeaderComponent = () => {
   const { isLoggedin } = UserStore;
 
   useEffect(() => {
-    // CartStore.loadCart();
   }, [CartStore.cartItems, CartStore.cart]);
 
   const [isMenuOpen, setIsMenuOpen] = useState(true);
@@ -60,7 +56,6 @@ const HeaderComponent = () => {
           <>
             <div className="md:w-[1180px] md:m-auto md:h-[64px] md:flex md:justify-between md:flex-row md:items-center">
               <div className="md:flex md:gap-4 md:flex-row md:items-center">
-                {/* DIGIBITES LOGO */}
                 <div className="xs:flex xs:items-center xs:justify-center xs:pt-5">
                   <Link href="/">
                     <Image
@@ -70,8 +65,6 @@ const HeaderComponent = () => {
                     />
                   </Link>
                 </div>
-
-                {/* DESKTOP MENU */}
                 <div className={` duration-75 xs:hidden md:left-0 md:block`}>
                   <ul className="md:flex  md:gap-10 md:text-lg md:font-semibold md:items-center">
                     <Text
@@ -100,7 +93,6 @@ const HeaderComponent = () => {
                         </li>
                       }
                     />
-                    {/* FOR LOGEDIN USER */}
                     {UserStore.isLoggedin && (
                       <li className="md:transition-all md:duration-500 md:ease-in-out">
                         <Link
@@ -119,12 +111,9 @@ const HeaderComponent = () => {
               </div>
               <div className="md:flex md:items-center md:gap-5">
                 <div className="md:flex md:items-center">
-                  {/* <SearchInput onSearch={handleSearch} /> */}
                 </div>
                 <div className="md:text-lg md:flex items-center md:gap-5 xs:flex xs:gap-1">
                   <div className="xs:flex xs:w-full xs:justify-between xs:p-4 ">
-                    {/* MOBILE MENU */}
-
                     <div>
                       <div className=" md:hidden md:gap-4 md:flex-row md:items-center">
                         <button className="close_btn" onClick={toggleMenu}>
@@ -252,8 +241,6 @@ const HeaderComponent = () => {
                           />
                         </Link>
                       )}
-                      {/* <ToggleThemeComponent /> */}
-
                       {isLoggedin ? (
                         <Link href={"/profile"} className="cursor-pointer">
                           <Text

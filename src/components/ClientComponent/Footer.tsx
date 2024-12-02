@@ -12,11 +12,11 @@ import Text from "../UI/Text";
 import { Image } from "react-bootstrap";
 import Link from "next/link";
 import Div from "../UI/Div";
-import ThemeStoreContext from "../../store/ThemeStore"; // Adjust the import path as needed
+import ThemeStoreContext from "../../store/ThemeStore"; 
 
 const Footer: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
-  const themeStore = useContext(ThemeStoreContext); // Use the ThemeStore
+  const themeStore = useContext(ThemeStoreContext);
 
   return (
     <Div

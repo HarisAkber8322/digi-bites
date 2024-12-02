@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
-import { MenuItem } from "../../../utills/constants"; // Adjust the import path
+import { MenuItem } from "../../../utills/constants"; 
 import Div from "../../UI/Div";
 import Text from "../../UI/Text";
 interface TopRatedItemsProps {
@@ -13,17 +13,14 @@ const TopRatedItems: React.FC<TopRatedItemsProps> = ({ items }) => {
   const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
-    // Retrieve ratings from local storage
     const itemsWithRatings = items.map((item) => ({
       ...item,
       rating:
         Number(localStorage.getItem(`rating-${item.name}`)) || item.rating || 0,
     }));
-
-    // Sort items by rating in descending order
     const sortedItems = itemsWithRatings
       .sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0))
-      .slice(0, showAll ? undefined : 6); // Display top 8 or all items
+      .slice(0, showAll ? undefined : 6); 
 
     setTopRatedItems(sortedItems);
   }, [items, showAll]);

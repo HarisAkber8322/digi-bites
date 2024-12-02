@@ -17,8 +17,8 @@ const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const initialValues = {
-    email: "admin@digibites.com",
-    password: "tacos1",
+    email: "",
+    password: "",
   };
 
   const validationSchema = Yup.object().shape({
@@ -31,12 +31,12 @@ const LoginForm = () => {
     { setSubmitting }: any
   ) => {
     try {
-      const  isSuccess  = await handleLogin(user); // Assuming `handleLogin` returns a boolean
+      const  isSuccess  = await handleLogin(user);
       if (isSuccess) {
         console.log("Login successful");
-        setErrorMessage(""); // Clear any previous errors
+        setErrorMessage("");
       } else {
-        setErrorMessage("Invalid email or password. Please try again."); // Set the error message
+        setErrorMessage("Invalid email or password. Please try again."); 
       }
     } catch (error) {
       console.error("An error occurred:", error);
@@ -138,13 +138,13 @@ const LoginForm = () => {
                 >
                   {isSubmitting ? "Logging in..." : "Login"}
                 </button>
-                <div className="mt-4 flex justify-between text-sm">
-                  <Link
+                <div className="mt-4 flex justify-end text-sm">
+                  {/* <Link
                     href="/forgetPassword"
                     className="text-themeOrange hover:underline"
                   >
                     Forgot Password?
-                  </Link>
+                  </Link> */}
                   <Link
                     href="/signup"
                     className="text-themeOrange hover:underline"

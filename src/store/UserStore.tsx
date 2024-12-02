@@ -43,6 +43,7 @@ class UserStore {
     try {
       const response = await axios.get("http://localhost:3001/api/users");
       this.setUsers(response.data.users);
+      console.log(response.data.users);
     } catch (error) {
       console.error("Error loading users:", error);
     }
@@ -77,7 +78,6 @@ class UserStore {
       this.setIsLoggedIn(false);
     }
   };
-
   checkLoginState = async () => {
     try {
       const token = Cookies.get("token");
@@ -91,7 +91,7 @@ class UserStore {
           );
           if (response.status === 200) {
             this.setUser(response.data.user);
-            this.fetchFavoriteProducts(response.data.user.id); // Fetch favorites once user is set
+            this.fetchFavoriteProducts(response.data.user.id);
             this.setIsLoggedIn(true);
           }
         } catch (error) {
@@ -132,7 +132,6 @@ class UserStore {
   
       if (response.status === 200) {
         console.log("User updated successfully:", response.data);
-        // Optionally, update the local user object
         if (this.user?.id === userId) {
           this.setUser({ ...this.user, ...updateData });
         }
@@ -164,7 +163,7 @@ class UserStore {
           `http://localhost:3001/api/users/${userId}/favorites`,
         );
         if (response.status === 200) {
-          const favProductIds: string[] = response.data; // Assuming response.data is an array of IDs
+          const favProductIds: string[] = response.data; 
           this.setFavoriteProductIds(new Set(favProductIds));
         }
       } catch (error) {
@@ -177,13 +176,10 @@ class UserStore {
     if (!userId) return;
 
     try {
-      // Send request to add/remove favorite product ID in the user’s favoriteproductIds array
       await axios.post(
         `http://localhost:3001/api/users/${userId}/favoritestoggle`,
         { productId },
       );
-
-      // Update local favorite product IDs
       if (this.favoriteProductIds.has(productId)) {
         this.favoriteProductIds.delete(productId);
       } else {
@@ -207,9 +203,9 @@ const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const router = useRouter();
   React.useEffect(() => {
-    userStore.router = router; // Initialize router after component mounts
+    userStore.router = router;
     userStore.checkLoginState(); 
-    // console.log(userStore.user?.id)
+
   }, [router, userStore.user]);
 
   return (

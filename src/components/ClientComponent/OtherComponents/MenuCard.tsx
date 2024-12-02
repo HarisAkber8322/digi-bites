@@ -7,13 +7,7 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import ProductStoreContext from "@/store/ProductStore";
 import UserStoreContext from "@/store/UserStore";
 import CartStoreContext, { CartItem } from "@/store/CartStore";
-import { Product } from "@/store/ProductStore"; // Adjust the import path as needed
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import {
-//   faStarHalfAlt,
-//   faStar as faSolidStar,
-// } from "@fortawesome/free-solid-svg-icons";
-// import { faStar as faRegularStar } from "@fortawesome/free-regular-svg-icons";
+import { Product } from "@/store/ProductStore";
 import Link from "next/link";
 
 interface MenuCardProps {
@@ -24,10 +18,10 @@ interface MenuCardProps {
 const generateSlug = (str: string) => {
   return str
     .toLowerCase()
-    .replace(/\s+/g, "-") // Replace spaces with hyphens
-    .replace(/[^\w\-]+/g, "") // Remove non-word characters (except hyphens)
-    .replace(/\-\-+/g, "-") // Replace multiple hyphens with a single hyphen
-    .trim(); // Trim any leading or trailing hyphens
+    .replace(/\s+/g, "-")
+    .replace(/[^\w\-]+/g, "")
+    .replace(/\-\-+/g, "-") 
+    .trim();
 };
 
 const MenuCard: React.FC<MenuCardProps> = ({ menuItem, handleCardClick }) => {
@@ -47,13 +41,12 @@ const MenuCard: React.FC<MenuCardProps> = ({ menuItem, handleCardClick }) => {
 
   const addToCart = async (item: Product) => {
     const cartItem: CartItem = {
-      quantity: 1, // Adjust quantity as needed
+      quantity: 1, 
       product_id: item._id,
       price: 0
     };
     console.log(cartItem);
-    await CartStore.addItemToCart(cartItem, UserStore.user?.id); // Use CartStore to add item
-    // handleCardClick(item); // Optional: trigger any additional behavior
+    await CartStore.addItemToCart(cartItem, UserStore.user?.id); 
   };
 
   const handleFavoriteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -64,38 +57,6 @@ const MenuCard: React.FC<MenuCardProps> = ({ menuItem, handleCardClick }) => {
   };
 
   const averageRating = product?.average_rating || 0;
-
-  // const renderStars = (rating: number) => {
-  //   const fullStars = Math.floor(rating);
-  //   const halfStar = rating % 1 >= 0.5;
-  //   const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
-
-  //   return (
-  //     <div className="flex items-center text-xs">
-  //       {[...Array(fullStars)].map((_, index) => (
-  //         <FontAwesomeIcon
-  //           icon={faSolidStar}
-  //           key={index}
-  //           className="text-themeYellow"
-  //         />
-  //       ))}
-  //       {halfStar && (
-  //         <FontAwesomeIcon
-  //           icon={faStarHalfAlt}
-  //           className="text-themeYellow text-xs"
-  //         />
-  //       )}
-  //       {[...Array(emptyStars)].map((_, index) => (
-  //         <FontAwesomeIcon
-  //           icon={faRegularStar}
-  //           key={index}
-  //           className="text-themeYellow"
-  //         />
-  //       ))}
-  //     </div>
-  //   );
-  // };
-
   return (
     <div className="cursor-pointer" onClick={() => handleCardClick(menuItem)}>
       <Div
@@ -129,7 +90,6 @@ const MenuCard: React.FC<MenuCardProps> = ({ menuItem, handleCardClick }) => {
                 themeDivClasses="text-medium mt-2 font-semibold"
                 content={
                   <>
-                    {" "}
                     <Link href={`/product/${generateSlug(menuItem.name)}`}>
                       {menuItem.name}
                     </Link>
@@ -142,9 +102,6 @@ const MenuCard: React.FC<MenuCardProps> = ({ menuItem, handleCardClick }) => {
                 themeDivClasses="text-medium font-semibold"
                 content={`Rs ${menuItem.price}`}
               />
-              {/* <div className="flex items-center mb-1">
-                {renderStars(averageRating)}
-              </div> */}
             </div>
             {UserStore.isLoggedin && (
               <div className="flex w-full justify-center">

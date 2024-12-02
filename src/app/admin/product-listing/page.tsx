@@ -4,8 +4,8 @@ import Div from "@/components/UI/Div";
 import Text from "@/components/UI/Text";
 import ProductStoreContext from "@/store/ProductStore";
 import { observer } from "mobx-react";
-import { FaAd, FaTrash } from "react-icons/fa";
-import { Switch } from "@mui/material";
+import { FaTrash } from "react-icons/fa";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
@@ -44,8 +44,6 @@ const RatedProductsPage: React.FC = () => {
             darkColor="text-white"
             content="Product Listings"
           />
-
-          {/* Search Bar */}
           <div className="flex justify-center mt-6">
             <input
               type="text"
@@ -73,9 +71,6 @@ const RatedProductsPage: React.FC = () => {
                       <th className="px-6 py-3 text-center text-xs font-semibold text-gray-500">
                         Price
                       </th>
-                      {/* <th className="px-6 py-3 text-center text-xs font-semibold text-gray-500">
-                        Recommended
-                      </th> */}
                       <th className="px-6 py-3 text-center text-xs font-semibold text-gray-500">
                         Action
                       </th>

@@ -56,32 +56,52 @@ app.prepare().then(() => {
 
   //User
   server.get("/api/users", async (req, res) => {
-    const page = parseInt(req.query.page, 10) || 1;
     const searchQuery = req.query.q || "";
     const sortOrder = req.query.sort || "asc";
-
+  
     try {
       const db = await connectToDatabase();
       const usersCollection = db.collection("users");
-
-      const totalCount = await usersCollection.countDocuments();
-      const totalPages = Math.ceil(totalCount / PAGE_SIZE);
-
-      const skip = (page - 1) * PAGE_SIZE;
-
+  
       const users = await usersCollection
         .find({ fname: { $regex: new RegExp(searchQuery, "i") } }) // Case-insensitive search
         .sort({ fname: sortOrder === "asc" ? 1 : -1 })
-        .skip(skip)
-        .limit(PAGE_SIZE)
-        .toArray();
-
-      res.status(200).json({ users, totalCount, totalPages });
+        .toArray();  // Fetch all users without pagination
+  
+      res.status(200).json({ users });
     } catch (error) {
       console.error("Error:", error);
       res.status(500).json({ error: "Internal server error" });
     }
   });
+  
+  // server.get("/api/users", async (req, res) => {
+  //   const page = parseInt(req.query.page, 20) || 1;
+  //   const searchQuery = req.query.q || "";
+  //   const sortOrder = req.query.sort || "asc";
+
+  //   try {
+  //     const db = await connectToDatabase();
+  //     const usersCollection = db.collection("users");
+
+  //     const totalCount = await usersCollection.countDocuments();
+  //     const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+
+  //     const skip = (page - 1) * PAGE_SIZE;
+
+  //     const users = await usersCollection
+  //       .find({ fname: { $regex: new RegExp(searchQuery, "i") } }) // Case-insensitive search
+  //       .sort({ fname: sortOrder === "asc" ? 1 : -1 })
+  //       .skip(skip)
+  //       .limit(PAGE_SIZE)
+  //       .toArray();
+
+  //     res.status(200).json({ users, totalCount, totalPages });
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //     res.status(500).json({ error: "Internal server error" });
+  //   }
+  // });
   server.get("/api/users/:id", async (req, res) => {
     try {
       const db = await connectToDatabase();

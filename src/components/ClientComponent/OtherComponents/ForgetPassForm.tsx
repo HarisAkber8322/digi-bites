@@ -1,4 +1,4 @@
-// components/ForgotPasswordForm.tsx
+
 import Text from "@/components/UI/Text";
 import MainStoreContext from "@/store/Mainstore";
 import { observer } from "mobx-react";

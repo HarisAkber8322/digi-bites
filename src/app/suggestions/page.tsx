@@ -5,16 +5,15 @@ import Div from "@/components/UI/Div";
 import Text from "@/components/UI/Text";
 import ProductStoreContext, { Product } from "@/store/ProductStore";
 import { observer } from "mobx-react";
-import MenuCard from "../../components/ClientComponent/OtherComponents/MenuCard"; // Import MenuCard
+import MenuCard from "../../components/ClientComponent/OtherComponents/MenuCard";
 
 const RecommendedProductsPage: React.FC = () => {
   const ProductStore = useContext(ProductStoreContext);
   const [recommendedProducts, setRecommendedProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    // Fetch and filter recommended products
     const fetchRecommendedProducts = async () => {
-      await ProductStore.fetchProducts(); // Ensure this fetches all products and updates the store
+      await ProductStore.fetchProducts(); 
       const recommended = ProductStore.products.filter(
         (product) => product.recommended,
       );
@@ -23,10 +22,7 @@ const RecommendedProductsPage: React.FC = () => {
 
     fetchRecommendedProducts();
   }, [ProductStore]);
-
-  // Function to handle card clicks (if needed)
   const handleCardClick = (product: Product) => {
-    // Implement click behavior if needed
     console.log("Card clicked:", product);
   };
 

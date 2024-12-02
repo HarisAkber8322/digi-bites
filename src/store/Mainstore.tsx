@@ -69,7 +69,6 @@ class AppStore {
   };
 
   handleSignUp = async (user: { email: string; password: string }) => {
-    // Add your sign-up logic here
   };
 
   setCartCount(value: number) {
@@ -96,7 +95,7 @@ const MainProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const router = useRouter();
   React.useEffect(() => {
-    mainStore.router = router; // Initialize router after component mounts
+    mainStore.router = router;
   }, [router]);
 
   return (

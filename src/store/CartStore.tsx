@@ -43,7 +43,7 @@ class CartStore {
     this.loadCart();
   }
   setCartItems(items: CartItem[]) {
-    // console.log(items);
+
     this.cartItems = items;
   }
   // Load cart from the server
@@ -52,7 +52,7 @@ class CartStore {
       await userStore.checkLoginState();
       const userId = userStore.user?.id;
       if (!userId) {
-        return;  // Or handle this error appropriately
+        return;  
       }      
       const response = await axios.get(`http://localhost:3001/api/cart/${userId}`);
       const cart = response.data.cart;
@@ -75,7 +75,6 @@ class CartStore {
   addItemToCart = async (item: CartItem, userId: string | undefined) => {
     try {
       if (!item.product_id || !userId) return;
-      // console.log(item, userId);
 
       const response = await axios.post(
         `http://localhost:3001/api/cart/${userId}/add`,
@@ -99,7 +98,6 @@ class CartStore {
     }
   };
 
-  // Remove item from the cart
   // Remove item from the cart
   removeItemFromCart = async (
     productId: string,
@@ -193,14 +191,7 @@ class CartStore {
       if (product) {
         const productPrice = product.price;
         const quantity = item.quantity;
-
-        // Calculate add-ons total
-        // const addOnsTotal = item.addOns
-        //   .filter(addOn => addOn.value)
-        //   .reduce((sum, addOn) => sum + addOn.price, 0);
-
-        // Calculate total for this item
-        const itemTotal = productPrice * quantity; //+  addOnsTotal|0;
+        const itemTotal = productPrice * quantity;
         total += itemTotal;
       }
     }
@@ -223,7 +214,7 @@ class CartStore {
         this.totalPrice,
       );
       if (order) {
-        await this.clearCart(userId); // Clear cart after placing order
+        await this.clearCart(userId); 
       }
     } catch (error) {
       console.error("Failed to place order:", error);
@@ -238,8 +229,8 @@ class CartStore {
   ) => {
     const item = this.cartItems.find((item) => item.product_id === productId);
     if (item) {
-      item.quantity = Math.max(1, item.quantity + delta); // Ensure quantity is at least 1
-      this.calculateTotal(); // Recalculate total price
+      item.quantity = Math.max(1, item.quantity + delta); 
+      this.calculateTotal(); 
       try {
         const response = await axios.post(
           `http://localhost:3001/api/cart/${userId}/update-quantity`,
@@ -265,7 +256,7 @@ class CartStore {
   };
 }
 
-// Create and export CartStore instance
+
 export const cartStore = new CartStore();
 const CartStoreContext = React.createContext(cartStore);
 

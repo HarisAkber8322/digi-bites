@@ -69,7 +69,6 @@ class AdminStore {
     }
   }
 
-  // Fetch the logged-in admin data using adminToken
   async fetchLoggedInAdmin() {
     // console.log('hi')
 
@@ -130,7 +129,7 @@ class AdminStore {
       );
       if (response.status === 200) {
         console.log("OTP sent to email:", email);
-        return response.data.otpToken; // return OTP token to use for later steps
+        return response.data.otpToken; 
       }
     } catch (error) {
       console.error("Error sending OTP:", error);
@@ -189,8 +188,8 @@ const AdminProvider: React.FC<{ children: React.ReactNode }> = ({
   const router = useRouter();
   
   React.useEffect(() => {
-    adminStore.router = router; // Initialize router after component mounts
-    adminStore.checkLoginState(); // Check the login state on mount
+    adminStore.router = router; 
+    adminStore.checkLoginState();
   }, [router]);
 
   return (
@@ -202,4 +201,3 @@ const AdminProvider: React.FC<{ children: React.ReactNode }> = ({
 
 export default AdminStoreContext;
 export { AdminProvider };
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MWE0MTEzOGNkMWI3Njk2ZDYzYjZmZCIsImlhdCI6MTcyOTk3NDEwMCwiZXhwIjoxNzI5OTkyMTAwfQ.CcwUMXx3FZ2Nn-B9KSJXknQKG5KHNYzb8R3S1LBmys8

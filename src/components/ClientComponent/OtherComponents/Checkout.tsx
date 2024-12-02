@@ -9,7 +9,6 @@ import CartStoreContext from "@/store/CartStore";
 import OrderStoreContext from "@/store/OrderStore";
 import UserStoreContext from "@/store/UserStore";
 import ProductStoreContext from "@/store/ProductStore";
-
 const CheckoutPage = () => {
   const orderStore = useContext(OrderStoreContext);
   const userStore = useContext(UserStoreContext);

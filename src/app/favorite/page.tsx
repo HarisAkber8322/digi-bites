@@ -24,16 +24,12 @@ const FavoritePage: React.FC = () => {
         const favoriteProductIdsArray = Array.from(
           UserStore.favoriteProductIds,
         );
-
-        // Fetch products by ID
         const favoriteProducts = await Promise.all(
           favoriteProductIdsArray.map(async (favProductId: string) => {
             const product = await ProductStore.fetchProductById(favProductId);
             return product;
           }),
         );
-
-        // Filter out any null values and update state
         const validProducts = favoriteProducts.filter(
           (product): product is Product => product !== null,
         );

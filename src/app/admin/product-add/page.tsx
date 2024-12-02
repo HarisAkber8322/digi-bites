@@ -8,60 +8,53 @@ import ProductStoreContext from "@/store/ProductStore";
 const AddProductComponent = () => {
   const productStore = useContext(ProductStoreContext);
 
+  // Initial Values
   const initialValues = {
     name: "",
     price: 0,
-    // description: "",
     category: "",
     image: "",
   };
 
+  // Validation Schema
   const validationSchema = Yup.object({
     name: Yup.string().required("Required"),
     price: Yup.number()
       .required("Required")
       .min(0, "Price must be greater than zero"),
-    description: Yup.string().required("Required"),
     category: Yup.string().required("Required"),
-    // image: Yup.string().url("Must be a valid URL").required("Required"),
-    stock: Yup.number()
-      .required("Required")
-      .min(0, "Stock must be greater than zero"),
-    addons: Yup.string().required("Required"),
+    // image: Yup.string()
+    //   .url("Must be a valid URL")
+    //   .required("Required"),
   });
 
+  // Form Submission Handler
   const handleSubmit = async (
     values: {
       name: string;
       price: number;
-      description: string;
       category: string;
       image: string;
-      stock: number;
-      addons: string;
     },
     { setSubmitting, resetForm }: any
   ) => {
     console.log("Form Submitted with values:", values);
+
+    // Check for duplicate product
     if (productStore.isProductDuplicate(values.name)) {
       alert("Product with this name already exists.");
       setSubmitting(false);
       return;
     }
+
     try {
       await productStore.addProduct({
         name: values.name,
         price: values.price,
-        description: values.description,
         category: values.category,
         image: values.image,
-        stock: values.stock,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-        ratings: [],
-        recommended: false,
-        average_rating: 0,
-        ratings_count: 0,
+        created_at: "",
+        updated_at: ""
       });
       resetForm();
     } catch (error) {
@@ -111,21 +104,6 @@ const AddProductComponent = () => {
               />
             </div>
 
-            {/* Description */}
-            {/* <div className="flex flex-col">
-              <label className="font-semibold">Description</label>
-              <Field
-                as="textarea"
-                name="description"
-                className="mt-1 block w-full px-3 py-2 border border-lightGray rounded-md shadow-sm focus:outline-none focus:themeOrange focus:border-themeOrange sm:text-sm"
-              />
-              <ErrorMessage
-                name="description"
-                component="div"
-                className="text-themeYellow"
-              />
-            </div> */}
-
             {/* Category */}
             <div className="flex flex-col">
               <label className="font-semibold">Category</label>
@@ -162,9 +140,6 @@ const AddProductComponent = () => {
                 className="text-themeYellow"
               />
             </div>
-
-            {/* Stock */}
-         
 
             {/* Submit Button */}
             <button
