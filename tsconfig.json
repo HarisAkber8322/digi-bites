@@ -37,6 +37,6 @@
     "src/db.js",
     "server.js",
     "server.js"
-  ],
+, "src/api/users/users.js"  ],
   "exclude": ["node_modules"]
 }

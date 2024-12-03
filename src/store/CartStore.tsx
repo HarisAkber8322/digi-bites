@@ -39,8 +39,8 @@ class CartStore {
   };
 
   constructor() {
-    makeAutoObservable(this);
-    this.loadCart();
+    // makeAutoObservable(this);
+    // this.loadCart();
   }
   setCartItems(items: CartItem[]) {
 
@@ -49,7 +49,7 @@ class CartStore {
   // Load cart from the server
   loadCart = async () => {
     try {
-      await userStore.checkLoginState();
+      // await userStore.checkLoginState();
       const userId = userStore.user?.id;
       if (!userId) {
         return;  

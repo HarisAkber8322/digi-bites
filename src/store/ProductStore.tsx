@@ -53,7 +53,7 @@ class ProductStore {
   product: Product | null | undefined;
   constructor() {
     makeAutoObservable(this);
-    this.fetchProducts();
+    // this.fetchProducts();
   }
   async addProduct(product: Omit<Product, "_id">) {
     this.loading = true;

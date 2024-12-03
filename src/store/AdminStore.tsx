@@ -18,7 +18,7 @@ class AdminStore {
   router: ReturnType<typeof useRouter> | null = null;
   constructor() {
     makeAutoObservable(this);
-    this.checkLoginState();
+    // this.checkLoginState();
   }
 
   // Login method

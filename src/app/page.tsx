@@ -11,7 +11,7 @@ const App = () => {
         <Slider />
       </div>
       <div className="w-full md:w-[1180px] m-auto py-[28px]">
-        <CompleteMenu />
+        {/* <CompleteMenu /> */}
       </div>
     </>
   );

@@ -58,11 +58,11 @@ const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             `}</style>
       </head>
       <body>
-        <MainProvider>
+        {/* <MainProvider> */}
           <UserProvider>
             <AppLayout>{children}</AppLayout>
           </UserProvider>
-        </MainProvider>
+        {/* </MainProvider> */}
       </body>
     </html>
   );

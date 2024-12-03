@@ -25,7 +25,7 @@ class AppStore {
   constructor() {
     makeAutoObservable(this);
     this.loadUsers();
-    this.loadProducts();
+    // this.loadProducts();
   }
 
   user = {

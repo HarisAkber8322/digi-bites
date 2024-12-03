@@ -16,23 +16,9 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const isClientAuthRoute = pathname === "/login" || pathname === "/signup";
 
   return (
-    <ProductProvider>
-      {isAdminRoute ? (
-        <AdminProvider>
-          {pathname === "/admin/auth" ? (
-            <AdminLoginLayout>{children}</AdminLoginLayout>
-          ) : (
-            <AdminLayout>{children}</AdminLayout>
-          )}
-        </AdminProvider>
-      ) : isClientAuthRoute ? (
-        <CartProvider>
-          <ClientLoginLayout>{children}</ClientLoginLayout>
-        </CartProvider>
-      ) : (
+         
         <ClientLayout>{children}</ClientLayout>
-      )}
-    </ProductProvider>
+  
   );
 };
 
