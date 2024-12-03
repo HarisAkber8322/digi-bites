@@ -1,17 +1,18 @@
 const db = require("../config/db");
-
-// Get all users
+// // Get all users
 const getUsers = async (req, res) => {
-    try {
-      const result = await db.query("SELECT * FROM users");
-      console.log("Query result:", result.rows);  // Log the result here
-      res.status(200).json(result.rows);  // Send the result back
-    } catch (error) {
-      console.error("Error fetching users:", error);
-      res.status(500).json({ error: error.message });
-    }
-  };
-  
+  try {
+    // const result = await db.query("SELECT * FROM users");
+    //       console.log("Query result:", result.rows);  // Log the result here
+    //       res.status(200).json(result.rows);  // Send the result back
+    const [rows] = await db.query("SELECT * FROM users");
+    console.log("Query result:", rows);  // Log the result here
+    res.status(200).json(rows);  // Send the result back as JSON
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    res.status(500).json({ error: error.message });
+  }
+};
 
 // Get user by ID
 // const getUserById = async (req, res) => {
