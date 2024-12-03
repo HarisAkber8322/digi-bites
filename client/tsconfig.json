@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["node_modules/src/*
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "node_modules/src/app/**/*.ts
+    "node_modules/src/app/**/*.tsx
+    "node_modules/src/app/**/*.js
+    "tailwind.config.js",
+    "postcss.config.ts",
+    "postcss.config.js",
+    "node_modules/src/db.js
+    "server.js",
+    "server.js"
+, "node_modules/src/api/users/users.js
+  "exclude": ["node_modules
+}
