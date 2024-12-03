@@ -20,7 +20,7 @@
       }
     ],
     "paths": {
-      "@/*": ["node_modules/src/*
+      "@/*": ["src/*"]
     }
   },
   "include": [
@@ -28,15 +28,13 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "node_modules/src/app/**/*.ts
-    "node_modules/src/app/**/*.tsx
-    "node_modules/src/app/**/*.js
+    "src/**/*.js",
+    "src/**/*.ts",
+    "src/**/*.tsx",
     "tailwind.config.js",
     "postcss.config.ts",
     "postcss.config.js",
-    "node_modules/src/db.js
-    "server.js",
     "server.js"
-, "node_modules/src/api/users/users.js
-  "exclude": ["node_modules
+  ],
+  "exclude": ["node_modules"]
 }
